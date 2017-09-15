@@ -18,4 +18,21 @@
       directory="static"
       />
 
+  <!-- vista form per iscrizione newsletter -->
+  <browser:page
+      for="*"
+      name="subscribe_newsletter"
+      permission="zope2.View"
+      class=".newsletter.subscribe.SubscribeForm"
+      />
+
+  <!-- vista form per disiscrizione newsletter -->
+  <browser:page
+      for="*"
+      name="unsubscribe_newsletter"
+      permission="zope2.View"
+      class=".newsletter.unsubscribe.UnsubscribeForm"
+      />
+
+
 </configure>
