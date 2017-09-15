@@ -30,6 +30,7 @@
    <element value="plone.app.versioningbehavior.behaviors.IVersionable" />
    <element value="plone.app.contenttypes.behaviors.tableofcontents.ITableOfContents"/>
    <element value="plone.app.lockingbehavior.behaviors.ILocking" />
+   <element value="rer.newsletter.behaviors.ships.IShips"  />
  </property>
  <property name="schema">rer.newsletter.interfaces.INewsletterSchema</property>
  <property name="model_source"></property>
