@@ -29,6 +29,12 @@
       post_handler=".setuphandlers.uninstall"
       />
 
+  <subscriber
+      for=".interfaces.IMessage
+      Products.CMFCore.interfaces.IActionSucceededEvent"
+      handler=".eventhandler.changeMessageState"
+    />
+
   <utility
       provides=".utility.mailmanhandler.IMailmanHandler"
       factory=".utility.mailmanhandler.MailmanHandler" />

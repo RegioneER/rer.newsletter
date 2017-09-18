@@ -16,3 +16,8 @@ class MailmanHandler(object):
     def unsubscribe(self, mail):
         print mail
         return True
+
+    def sendMessage(self, message):
+        # come posso tornare eccezioni all'interno dell'utility
+        print message
+        return True
