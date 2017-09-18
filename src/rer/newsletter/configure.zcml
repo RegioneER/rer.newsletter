@@ -30,6 +30,10 @@
       />
 
   <utility
+      provides=".utility.mailmanhandler.IMailmanHandler"
+      factory=".utility.mailmanhandler.MailmanHandler" />
+
+  <utility
       factory=".setuphandlers.HiddenProfiles"
       name="rer.newsletter-hiddenprofiles" />
 

@@ -18,7 +18,7 @@
  </property>
  <property name="default_view_fallback">False</property>
  <property name="add_permission">cmf.AddPortalContent</property>
- <property name="klass">rer.newsletter.content.newsletter.Newsletter</property>
+ <property name="klass">rer.newsletter.content.message.Message</property>
  <property name="behaviors">
    <element value="plone.app.content.interfaces.INameFromTitle"/>
    <element value="plone.app.dexterity.behaviors.discussion.IAllowDiscussion"/>
@@ -30,9 +30,9 @@
    <element value="plone.app.versioningbehavior.behaviors.IVersionable" />
    <element value="plone.app.contenttypes.behaviors.tableofcontents.ITableOfContents"/>
    <element value="plone.app.lockingbehavior.behaviors.ILocking" />
-   <element value="rer.newsletter.behaviors.ships.IShips"  />
+   <element value="rer.newsletter.behaviors.ships.IShippable"  />
  </property>
- <property name="schema">rer.newsletter.interfaces.INewsletterSchema</property>
+ <property name="schema">rer.newsletter.interfaces.IMessageSchema</property>
  <property name="model_source"></property>
  <property name="model_file"></property>
  <property name="schema_policy">dexterity</property>

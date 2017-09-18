@@ -1,7 +1,8 @@
 from zope.interface import Interface
 from zope import schema
 from z3c.form import button, form, field
-from rer.newsletter.api.mailmanhandler import MailmanHandler
+from rer.newsletter.utility.mailmanhandler import IMailmanHandler
+from zope.component import getUtility
 
 
 def mailValidation(mail):
@@ -35,7 +36,7 @@ class UnsubscribeForm(form.Form):
 
         # Do something with valid data here
         try:
-            mh = MailmanHandler()
+            mh = getUtility(IMailmanHandler)
             mh.unsubscribe(self.request['form.widgets.mail'])
         except Exception:
             self.errors = "Problem with subscribe"

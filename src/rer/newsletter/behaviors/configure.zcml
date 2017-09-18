@@ -7,7 +7,7 @@
     <plone:behavior
       title="Ships Behaviors"
       description="Adds ships workflow to content type"
-      provides=".ships.IShips"
+      provides=".ships.IShippable"
       />
 
 </configure>

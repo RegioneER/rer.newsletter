@@ -2,8 +2,8 @@ from zope.interface import Interface
 from zope.interface import alsoProvides
 
 
-class IShips(Interface):
+class IShippable(Interface):
     ''' Marker interface for ships object '''
 
 
-alsoProvides(IShips)
+alsoProvides(IShippable)
