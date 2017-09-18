@@ -18,6 +18,6 @@ class MailmanHandler(object):
         return True
 
     def sendMessage(self, message):
-        # come posso tornare eccezioni all'interno dell'utility
         print message
+        raise Exception('eccezione di prova')
         return True

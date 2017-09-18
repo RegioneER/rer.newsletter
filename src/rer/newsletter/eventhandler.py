@@ -8,8 +8,7 @@ def changeMessageState(message, event):
 
         try:
             mh = getUtility(IMailmanHandler)
-            mh.subscribe(message.text.output)
+            mh.sendMessage(message.text.output)
         except Exception:
             # trovare modo di gestire il ritorno di qualcosa che e andato storto
-            # import pdb; pdb.set_trace()
-            pass
+            raise Exception("Problem with server comunication")
