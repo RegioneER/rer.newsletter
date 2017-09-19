@@ -1,4 +1,5 @@
 from zope.interface import Interface, implements
+# from json import dumps
 
 
 class IMailmanHandler(Interface):
@@ -19,5 +20,9 @@ class MailmanHandler(object):
 
     def sendMessage(self, message):
         print message
-        raise Exception('eccezione di prova')
+        # vedere se organizzare o meno le eccezioni
+        # response = {}
+        # response['error'] = "Problem with server comunication"
+        #
+        # return dumps(response)
         return True

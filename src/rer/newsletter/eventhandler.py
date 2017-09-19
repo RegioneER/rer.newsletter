@@ -12,3 +12,6 @@ def changeMessageState(message, event):
         except Exception:
             # trovare modo di gestire il ritorno di qualcosa che e andato storto
             raise Exception("Problem with server comunication")
+
+        # guardare se usare eccezioni
+        # oppure fare cio con i messaggi di errore
