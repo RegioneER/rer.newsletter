@@ -20,11 +20,20 @@ Examples
 This add-on can be seen in action at the following sites:
 - Is there a page on the internet where everybody can see the features?
 
+::
+
+    >>> from mailmanclient import Client
+    >>> client = Client('http://localhost:9001/3.1', 'restadmin', 'restpass')
+    >>> domain = client.create_domain('example.org')
+    >>> list = domain.create_list('newsletter')
+    >>> list
+    <List "newsletter@example.org">
+    >>> client.get_list("newsletter@example.org")
+    <List "newsletter@example.org">
+
 
 Documentation
 -------------
-
-Full documentation for end users can be found in the "docs" folder, and is also available online at http://docs.plone.org/foo/bar
 
 
 Translations

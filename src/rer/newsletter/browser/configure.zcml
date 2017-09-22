@@ -34,5 +34,11 @@
       class=".newsletter.unsubscribe.UnsubscribeForm"
       />
 
+  <browser:page
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      name="newsletter-settings"
+      permission="cmf.ManagePortal"
+      class=".settings.NewsletterSettings"
+      />
 
 </configure>

@@ -1,8 +1,14 @@
+# -*- coding: utf-8 -*-
+from zope.component import getUtility
 from zope.interface import Interface
 from zope import schema
 from z3c.form import button, form, field
+
+from rer.newsletter import _
+from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
-from zope.component import getUtility
+from rer.newsletter.utility.newsletter import SUBSCRIBED
+from rer.newsletter.utility.newsletter import UNHANDLED
 
 
 def mailValidation(mail):
@@ -33,13 +39,18 @@ class SubscribeForm(form.Form):
         if errors:
             self.status = self.formErrorsMessage
             return
-
         # Do something with valid data here
         try:
-            mh = getUtility(INewsletterUtility)
-            mh.subscribe(self.request['form.widgets.mail'])
-        except Exception:
-            self.errors = "Problem with subscribe"
+            mail = data['mail']
+            newsletter = u'newsletter@example.org'  # TODO
+            api = getUtility(INewsletterUtility)
+            status = api.subscribe(newsletter, mail)
+        except:
+            logger.exception('unhandled error subscribing %s %s', newsletter, mail)
+            self.errors = u"Problem with subscribe"
+            status = UNHANDLED
 
-        # Set status on this form page
-        self.status = "Thank you very much!"
+        if status == SUBSCRIBED:
+            self.status = u"Thank you very much!"
+        else:
+            self.status = u"Ouch .... {}".format(status)

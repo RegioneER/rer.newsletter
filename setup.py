@@ -42,7 +42,7 @@ setup(
         'Products.GenericSetup>=1.8.2',
         'setuptools',
         'z3c.jbot',
-        'mailmanclient',
+        'mailmanclient>=3.1',
     ],
     extras_require={
         'test': [
