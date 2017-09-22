@@ -34,6 +34,16 @@
       class=".newsletter.unsubscribe.UnsubscribeForm"
       />
 
+  <!-- customize addForm for newsletter -->
+  <adapter
+    for="Products.CMFCore.interfaces.IFolderish
+         rer.newsletter.interfaces.IRerNewsletterLayer
+         plone.dexterity.interfaces.IDexterityFTI"
+    provides="zope.publisher.interfaces.browser.IBrowserPage"
+    factory=".newsletter.add.AddView"
+    name="Newsletter"
+    />
+
   <browser:page
       for="Products.CMFCore.interfaces.ISiteRoot"
       name="newsletter-settings"
