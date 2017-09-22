@@ -25,15 +25,18 @@ class MailmanHandler(object):
             logger.error('Could not connect to Mailman API %s', API_ENDPOINT)
             raise
 
-    def subscribe(self, mail):
+    def subscribe(self, newsletter, mail):
+        print newsletter
         print mail
         return True
 
-    def unsubscribe(self, mail):
+    def unsubscribe(self, newsletter, mail):
+        print newsletter
         print mail
         return True
 
-    def sendMessage(self, message):
+    def sendMessage(self, newsletter, message):
+        print newsletter
         print message
         # vedere se organizzare o meno le eccezioni
         # response = {}
