@@ -59,13 +59,11 @@ class MailmanHandler(object):
         return SUBSCRIBED
 
     def unsubscribe(self, newsletter, mail):
-        print newsletter
-        print mail
+        logger.info("DEBUG: unsubscribe %s %s", newsletter, mail)
         return True
 
     def sendMessage(self, newsletter, message):
-        print newsletter
-        print message
+        logger.info("DEBUG: sendMessage %s %s", newsletter, message)
         # vedere se organizzare o meno le eccezioni
         # response = {}
         # response['error'] = "Problem with server comunication"
