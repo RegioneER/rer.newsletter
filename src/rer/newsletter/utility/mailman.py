@@ -72,5 +72,4 @@ class MailmanHandler(object):
         return True
 
     def addNewsletter(self, newsletter):
-        print newsletter
         return True
