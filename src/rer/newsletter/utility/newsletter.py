@@ -13,6 +13,9 @@ INVALID_EMAIL = 3
 # unsubscribe
 INEXISTENT_MAIL = 4
 
+# add newsletter
+NEWSLETTER_USED = 6
+
 
 class INewsletterUtility(Interface):
     """ """
@@ -34,7 +37,7 @@ class INewsletterUtility(Interface):
         Raises:
         """
 
-    def unsubscribe(self, newsletter, mail):
+    def unsubscribe(newsletter, mail):
         """
         Unsubscribe from newsletter
 
@@ -50,7 +53,7 @@ class INewsletterUtility(Interface):
         Raises:
         """
 
-    def sendMessage(self, newsletter, message):
+    def sendMessage(newsletter, message):
         """
         Send message to mailman server
 
@@ -63,4 +66,18 @@ class INewsletterUtility(Interface):
                  INVALID_NEWSLETTER (5) newsletter not found.
 
         Raises:
+        """
+
+    def addNewsletter(newsletter):
+        """
+        add new newsletter to mailman server
+
+        Args:
+            newsletter (str): newsletter id
+
+        Returns:
+            int: OK (1) if succesful,
+                 NEWSLETTER_USED (6) newsletter already used.
+
+        Raised:
         """

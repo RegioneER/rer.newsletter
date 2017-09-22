@@ -1,9 +1,14 @@
 from plone.dexterity.browser import add
 from z3c.form import button
+from zope.component import getUtility
 
-# messaggi standard della form di dexterity
-from Products.statusmessages.interfaces import IStatusMessage
-from plone.dexterity.i18n import MessageFactory as dmf
+# logger
+from rer.newsletter import logger
+
+# utility
+from rer.newsletter.utility.newsletter import INewsletterUtility
+from rer.newsletter.utility.newsletter import UNHANDLED
+from rer.newsletter.utility.newsletter import OK
 
 
 class AddForm(add.DefaultAddForm):
@@ -16,14 +21,25 @@ class AddForm(add.DefaultAddForm):
         # validazione dei campi della form
         # calcolo id della newsletter che viene creata
         # chiamo l'utility per la creazione della newsletter
+        try:
+            # get newsletter mail from form
+            newsletter = u'newsletter@example.org'  # TODO
+            api = getUtility(INewsletterUtility)
+            status = api.addNewsletter(newsletter)
 
-        obj = self.createAndAdd(data)
+            # da sistemare inserimento
+            self.createAndAdd(data)
+        except:
+            logger.exception('unhandled error adding newsletter %s %s',
+                             newsletter)
+            self.errors = u"Problem with adding"
+            status = UNHANDLED
 
-        if obj is not None:
-            self._finishedAdd = True
-            # setto il messaggio di inserimento andato a buon fine
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(u"Item created"), "info")
+        if status == OK:
+            self.status = u"Thank you very much!"
+        else:
+            self.status = u"Ouch .... {}".format(status)
+
 
 
 class AddView(add.DefaultAddView):
