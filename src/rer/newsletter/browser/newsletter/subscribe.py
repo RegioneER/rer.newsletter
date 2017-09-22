@@ -1,7 +1,7 @@
 from zope.interface import Interface
 from zope import schema
 from z3c.form import button, form, field
-from rer.newsletter.utility.mailmanhandler import IMailmanHandler
+from rer.newsletter.utility.newsletter import INewsletterUtility
 from zope.component import getUtility
 
 
@@ -36,7 +36,7 @@ class SubscribeForm(form.Form):
 
         # Do something with valid data here
         try:
-            mh = getUtility(IMailmanHandler)
+            mh = getUtility(INewsletterUtility)
             mh.subscribe(self.request['form.widgets.mail'])
         except Exception:
             self.errors = "Problem with subscribe"
