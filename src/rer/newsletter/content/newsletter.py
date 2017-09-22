@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from zope.interface import implements
 from rer.newsletter.interfaces import INewsletter
 from plone.dexterity.content import Container
