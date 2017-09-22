@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from zope.interface import implements
 from rer.newsletter.interfaces import INewsletter
-from plone.dexterity.content import Container
+from plone.app.contenttypes.content import Folder
 
 
-class Newsletter(Container):
+class Newsletter(Folder):
     implements(INewsletter)

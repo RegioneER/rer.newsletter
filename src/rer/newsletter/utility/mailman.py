@@ -59,10 +59,12 @@ class MailmanHandler(object):
         return SUBSCRIBED
 
     def unsubscribe(self, newsletter, mail):
+        print newsletter
         print mail
         return True
 
     def sendMessage(self, newsletter, message):
+        print newsletter
         print message
         # vedere se organizzare o meno le eccezioni
         # response = {}

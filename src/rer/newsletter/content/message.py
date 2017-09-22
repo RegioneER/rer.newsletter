@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from zope.interface import implements
 from rer.newsletter.interfaces import IMessage
-from plone.dexterity.content import Container
+from plone.app.contenttypes.content import Document
 
 
-class Message(Container):
+class Message(Document):
     implements(IMessage)
