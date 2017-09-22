@@ -4,7 +4,7 @@ from zope.interface import Interface
 from zope import schema
 from z3c.form import button, form, field
 
-from rer.newsletter import _
+from rer.newsletter import newsletterMessageFactory as _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter.utility.newsletter import SUBSCRIBED
