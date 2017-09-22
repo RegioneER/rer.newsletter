@@ -23,6 +23,7 @@
  <property name="behaviors">
   <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
   <element value="plone.app.content.interfaces.INameFromTitle"/>
+  <element value="rer.newsletter.behaviors.newsletter.INewsletter" />
  </property>
  <property name="schema">rer.newsletter.interfaces.INewsletterSchema</property>
  <property name="model_source"></property>

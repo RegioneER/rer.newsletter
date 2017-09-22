@@ -20,7 +20,7 @@
 
   <!-- vista form per iscrizione newsletter -->
   <browser:page
-      for="rer.newsletter.interface.INewsletter"
+      for="rer.newsletter.interfaces.INewsletter"
       name="subscribe_newsletter"
       permission="zope2.View"
       class=".newsletter.subscribe.SubscribeForm"
@@ -28,7 +28,7 @@
 
   <!-- vista form per disiscrizione newsletter -->
   <browser:page
-      for="rer.newsletter.interface.INewsletter"
+      for="rer.newsletter.interfaces.INewsletter"
       name="unsubscribe_newsletter"
       permission="zope2.View"
       class=".newsletter.unsubscribe.UnsubscribeForm"

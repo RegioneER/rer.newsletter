@@ -6,8 +6,14 @@
 
     <plone:behavior
       title="Ships Behaviors"
-      description="Adds ships workflow to content type"
+      description="Adds shippable workflows to content type"
       provides=".ships.IShippable"
+      />
+
+    <plone:behavior
+      title="Newsletter behavior"
+      description="Adds newsletter fields to a content type content type"
+      provides=".newsletter.INewsletter"
       />
 
 </configure>
