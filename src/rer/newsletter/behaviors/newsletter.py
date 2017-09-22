@@ -51,6 +51,4 @@ class INewsletter(model.Schema):
     )
 
 
-
-
 alsoProvides(INewsletter, IFormFieldProvider)
