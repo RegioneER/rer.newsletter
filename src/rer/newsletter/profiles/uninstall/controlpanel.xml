@@ -8,7 +8,7 @@
         <configlet
             action_id="rer_newsletter"
             appId="rer.newsletter"
-            remove="True"
+	    remove="True">
         </configlet>
 
 </object>
