@@ -1,17 +1,24 @@
 # -*- coding: utf-8 -*-
 from zope.interface import Interface
 
-# return type
+# RETURN TYPE
+# general
 UNHANDLED = 0
-SUBSCRIBED = 1
+POSITIVE_RESPONSE = 1
+INVALID_NEWSLETTER = 5
+
+# subscribe
 ALREADY_SUBSCRIBED = 2
 INVALID_EMAIL = 3
+
+# unsubscribe
+INEXISTENT_MAIL = 4
 
 
 class INewsletterUtility(Interface):
     """ """
 
-    def subscribe(mail):
+    def subscribe(newsletter, mail):
         """
         Subscribe to newsletter
 
@@ -20,8 +27,41 @@ class INewsletterUtility(Interface):
             mail (str): email address
 
         Returns:
-            int: SUBSCRIBED (1) if succesful, ALREADY_SUBSCRIBED (2),
-                INVALD_EMAIL (3) otherwise.
+            int: POSITIVE_RESPONSE (1) if succesful,
+                 ALREADY_SUBSCRIBED (2),
+                 INVALID_NEWSLETTER (5) newsletter not found,
+                 INVALID_EMAIL (3) problem with mail.
+
+        Raises:
+        """
+
+    def unsubscribe(self, newsletter, mail):
+        """
+        Unsubscribe from newsletter
+
+        Args:
+            newsletter (str): newsletter id
+            mail (str): email address
+
+        Returns:
+            int: POSITIVE_RESPONSE (1) if succesful,
+                 INVALID_NEWSLETTER (5) newsletter not found,
+                 INEXISTENT_MAIL (4) mail not found.
+
+        Raises:
+        """
+
+    def sendMessage(self, newsletter, message):
+        """
+        Send message to mailman server
+
+        Args:
+            newsletter (str): newsletter id
+            message (str): message
+
+        Returns:
+            int: POSITIVE_RESPONSE (1) if succesful,
+                 INVALID_NEWSLETTER (5) newsletter not found.
 
         Raises:
         """
