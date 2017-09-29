@@ -64,12 +64,8 @@ class MailmanHandler(object):
 
     def sendMessage(self, newsletter, message):
         logger.info("DEBUG: sendMessage %s %s", newsletter, message)
-        # vedere se organizzare o meno le eccezioni
-        # response = {}
-        # response['error'] = "Problem with server comunication"
-        #
-        # return dumps(response)
         return True
 
     def addNewsletter(self, newsletter):
+        logger.info("DEBUG: addNewsletter %s", newsletter)
         return True
