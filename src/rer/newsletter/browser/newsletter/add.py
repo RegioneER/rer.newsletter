@@ -10,6 +10,9 @@ from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter.utility.newsletter import UNHANDLED
 from rer.newsletter.utility.newsletter import OK
 
+# unique identifier
+from plone.uuid.interfaces import IUUIDGenerator
+
 
 class AddForm(add.DefaultAddForm):
 
@@ -18,16 +21,19 @@ class AddForm(add.DefaultAddForm):
     def handleAdd(self, action):
         data, errors = self.extractData()
 
+        # controllo se presente l'id della newsletter
+        if not data['INewsletter.id_newsletter']:
+            generator = getUtility(IUUIDGenerator)
+            uuid = generator()
+            data['INewsletter.id_newsletter'] = uuid
+
         # validazione dei campi della form
         # calcolo id della newsletter che viene creata
         # chiamo l'utility per la creazione della newsletter
         try:
-            # get newsletter mail from form
-            newsletter = u'newsletter@example.org'  # TODO
             api = getUtility(INewsletterUtility)
-            status = api.addNewsletter(newsletter)
+            status = api.addNewsletter(data['INewsletter.id_newsletter'])
 
-            # da sistemare inserimento
             self.createAndAdd(data)
         except:
             logger.exception('unhandled error adding newsletter %s %s',
@@ -39,7 +45,6 @@ class AddForm(add.DefaultAddForm):
             self.status = u"Thank you very much!"
         else:
             self.status = u"Ouch .... {}".format(status)
-
 
 
 class AddView(add.DefaultAddView):
