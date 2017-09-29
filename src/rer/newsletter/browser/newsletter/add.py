@@ -13,6 +13,10 @@ from rer.newsletter.utility.newsletter import OK
 # unique identifier
 from plone.uuid.interfaces import IUUIDGenerator
 
+# messaggi standard della form di dexterity
+from Products.statusmessages.interfaces import IStatusMessage
+from plone.dexterity.i18n import MessageFactory as dmf
+
 
 class AddForm(add.DefaultAddForm):
 
@@ -25,7 +29,7 @@ class AddForm(add.DefaultAddForm):
         if not data['INewsletter.id_newsletter']:
             generator = getUtility(IUUIDGenerator)
             uuid = generator()
-            data['INewsletter.id_newsletter'] = uuid
+            newsletter = data['INewsletter.id_newsletter'] = uuid
 
         # validazione dei campi della form
         # calcolo id della newsletter che viene creata
@@ -34,15 +38,18 @@ class AddForm(add.DefaultAddForm):
             api = getUtility(INewsletterUtility)
             status = api.addNewsletter(data['INewsletter.id_newsletter'])
 
-            self.createAndAdd(data)
+            obj = self.createAndAdd(data)
         except:
             logger.exception('unhandled error adding newsletter %s %s',
                              newsletter)
             self.errors = u"Problem with adding"
             status = UNHANDLED
 
-        if status == OK:
-            self.status = u"Thank you very much!"
+        if obj is not None:
+            self._finishedAdd = True
+            # setto il messaggio di inserimento andato a buon fine
+            IStatusMessage(self.request).addStatusMessage(
+                dmf(u"Item created"), "info")
         else:
             self.status = u"Ouch .... {}".format(status)
 
