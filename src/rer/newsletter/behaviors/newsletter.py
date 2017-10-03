@@ -49,13 +49,6 @@ class INewsletter(model.Schema):
                ]
     )
 
-    active = schema.Bool(
-        title=_("active_newsletter", default="Active newsletter"),
-        description=_("description_active_newsletter",
-                      default="Make newsletter active"),
-        required=False
-    )
-
     sender_name = schema.TextLine(
         title=_("sender_name", default="Sender's Fullname"),
         description=_("description_sender_name",
