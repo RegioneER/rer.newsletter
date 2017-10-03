@@ -67,4 +67,12 @@
     template="newsletter/templates/manageusers.pt"
     permission="zope2.View"
     />
+
+  <browser:pages
+    for="rer.newsletter.interfaces.INewsletter"
+    permission="zope2.View"
+    class=".newsletter.manageusers.ManageUsers">
+       <browser:page name="exportUsersList" attribute="exportUsersList" />
+  </browser:pages>
+  
 </configure>
