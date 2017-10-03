@@ -94,7 +94,21 @@ class INewsletterUtility(Interface):
 
         Returns:
             int: OK (1) if succesful,
-                 FILE_FORMAT (7) if incorrect format file,
+                 FILE_FORMAT (7) if incorrect format file.
+
+        Raised:
+        """
+
+    def emptyNewsletterUsersList(newsletter):
+        """
+        empties newsletter users list
+
+        Args:
+            newsletter (str): newsletter id
+
+        Returns:
+            int: OK (1) if succesful,
+                 INVALID_NEWSLETTER (5) newsletter not found.
 
         Raised:
         """

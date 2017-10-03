@@ -18,12 +18,16 @@
         <div id="content-core">
           <h1>Gestione degli Utenti</h1>
 
-          <div id="users-import">
+          <span id="users-import">
             <button type='button'>Import Users List</button>
             <a href="users_import" class="plone-btn plone-btn-large plone-btn-primary pat-plone-modal"
                     data-pat-plone-modal="width: '770px',height: '430px'," style="display: none;">
             </a>
-          </div>
+          </span>
+
+          <span id="users-export">
+            <button type='button'>Export Users List</button>
+          </span>
 
         </div>
       </metal:main-macro>

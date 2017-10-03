@@ -16,3 +16,7 @@ class ManageUsers(BrowserView):
         self.request = request
 
         add_bundle_on_request(self.request, 'datatables')
+
+    def exportUsersList(self):
+        import pdb; pdb.set_trace()
+        pass
