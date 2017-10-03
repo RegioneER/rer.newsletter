@@ -37,7 +37,6 @@ class INewsletter(model.Schema):
         "Newsletter's fields",
         label=_(u"Newsletter's Fields"),
         fields=[
-                'active',
                 'sender_name',
                 'sender_email',
                 'subject_email',
