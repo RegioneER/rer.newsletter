@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+  <metal:block metal:fill-slot="style_slot">
+  </metal:block>
+
+  <metal:block metal:fill-slot="javascript_head_slot">
+  </metal:block>
+
+  <body>
+    <metal:main fill-slot="main">
+      <metal:main-macro define-macro="main">
+        <div id="content-core">
+          <h1>Gestione degli Utenti</h1>
+
+          <div id="users-import">
+            <button type='button'>Import Users List</button>
+            <a href="users_import" class="plone-btn plone-btn-large plone-btn-primary pat-plone-modal"
+                    data-pat-plone-modal="width: '770px',height: '430px'," style="display: none;">
+            </a>
+          </div>
+
+        </div>
+      </metal:main-macro>
+    </metal:main>
+  </body>
+</html>

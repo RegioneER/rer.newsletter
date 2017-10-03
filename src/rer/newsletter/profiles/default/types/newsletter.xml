@@ -43,4 +43,8 @@
     url_expr="string:${object_url}/edit" visible="True">
   <permission value="Modify portal content"/>
  </action>
+ <action title="Users Manage" action_id="manageusers_view" category="object" condition_expr=""
+    url_expr="string:${object_url}/manageusers_view" visible="True">
+    <permission value="Users Manage" />
+  </action>
 </object>

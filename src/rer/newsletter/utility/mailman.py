@@ -69,3 +69,7 @@ class MailmanHandler(object):
     def addNewsletter(self, newsletter):
         logger.info("DEBUG: addNewsletter %s", newsletter)
         return True
+
+    def importUsersList(self, usersList):
+        logger.info("DEBUG: userslist %s", usersList)
+        return True

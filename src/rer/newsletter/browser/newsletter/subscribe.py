@@ -10,6 +10,8 @@ from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter.utility.newsletter import SUBSCRIBED
 from rer.newsletter.utility.newsletter import UNHANDLED
 
+from plone import api
+
 
 def mailValidation(mail):
     # TODO
@@ -39,14 +41,26 @@ class SubscribeForm(form.Form):
         if errors:
             self.status = self.formErrorsMessage
             return
-        # Do something with valid data here
+
         try:
+
+            # TODO
+            newsletter = u'newsletter@example.org'
             mail = data['mail']
-            newsletter = u'newsletter@example.org'  # TODO
-            api = getUtility(INewsletterUtility)
-            status = api.subscribe(newsletter, mail)
+
+            # controllo se la newsletter è attiva
+            # se la newsletter non è attiva non faccio nemmeno vedere la form
+            if not api.content.get_state(obj=self.context) == 'activated':
+                raise Exception('Newsletter not activated')
+
+            api_newsletter = getUtility(INewsletterUtility)
+            status = api_newsletter.subscribe(newsletter, mail)
         except:
-            logger.exception('unhandled error subscribing %s %s', newsletter, mail)
+            logger.exception(
+                'unhandled error subscribing %s %s',
+                newsletter,
+                mail
+            )
             self.errors = u"Problem with subscribe"
             status = UNHANDLED
 

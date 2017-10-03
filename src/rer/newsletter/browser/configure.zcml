@@ -51,4 +51,20 @@
       class=".settings.NewsletterSettings"
       />
 
+  <!-- view for users import -->
+  <browser:page
+      for="rer.newsletter.interfaces.INewsletter"
+      name="users_import"
+      permission="zope2.View"
+      class=".newsletter.users.usersimport.UsersImport"
+      />
+
+  <!-- view for manage users of newsletter -->
+  <browser:page
+    for="rer.newsletter.interfaces.INewsletter"
+    name="manageusers_view"
+    class=".newsletter.manageusers.ManageUsers"
+    template="newsletter/templates/manageusers.pt"
+    permission="zope2.View"
+    />
 </configure>

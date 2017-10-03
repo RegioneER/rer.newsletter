@@ -16,6 +16,9 @@ INEXISTENT_MAIL = 4
 # add newsletter
 NEWSLETTER_USED = 6
 
+# import usersList
+FILE_FORMAT = 7
+
 
 class INewsletterUtility(Interface):
     """ """
@@ -78,6 +81,20 @@ class INewsletterUtility(Interface):
         Returns:
             int: OK (1) if succesful,
                  NEWSLETTER_USED (6) newsletter already used.
+
+        Raised:
+        """
+
+    def importUsersList(usersList):
+        """
+        import list of email
+
+        Args:
+            usersList (list): email
+
+        Returns:
+            int: OK (1) if succesful,
+                 FILE_FORMAT (7) if incorrect format file,
 
         Raised:
         """

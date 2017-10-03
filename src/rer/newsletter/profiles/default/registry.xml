@@ -1,0 +1,23 @@
+<registry xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+          i18n:domain="rer.newsletter">
+
+          <records prefix="plone.resources/datatables"
+                  interface='Products.CMFPlone.interfaces.IResourceRegistry'>
+            <value key="js">++plone++rer.newsletter/scripts/manageusers.js</value>
+            <value key="css">
+              <element>++plone++rer.newsletter/datatables.css</element>
+            </value>
+          </records>
+
+          <records prefix="plone.bundles/datatables"
+                  interface='Products.CMFPlone.interfaces.IBundleRegistry'>
+            <value key="resources">
+              <element>datatables</element>
+            </value>
+            <value key="enabled">False</value>
+            <value key="jscompilation">++plone++rer.newsletter/scripts/manageusers.js</value>
+            <value key="csscompilation">++plone++rer.newsletter/datatables.css</value>
+            <value key="last_compilation">2017-10-03 15:00:00</value>
+          </records>
+
+</registry>
