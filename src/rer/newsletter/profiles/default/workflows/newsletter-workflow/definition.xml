@@ -1,0 +1,2318 @@
+<?xml version="1.0"?>
+<ZopeData>
+  <record id="16039" aka="AAAAAAAAPqc=">
+    <pickle>
+      <global id="16039.1" name="DCWorkflowDefinition" module="Products.DCWorkflow.DCWorkflow"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16039.2">
+        <item>
+            <key><string id="16039.3" encoding="">state_var</string></key>
+            <value><string id="16039.4" encoding="">review_state</string></value>
+        </item>
+        <item>
+            <key><string id="16039.5" encoding="">worklists</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16039.6" encoding="base64">AAAAAAAAPqg=</string>
+                    <global id="16039.7" name="Worklists" module="Products.DCWorkflow.Worklists"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16039.8" encoding="">description</string></key>
+            <value><string id="16039.9" encoding="">A workflow for manage newsletter's state</string></value>
+        </item>
+        <item>
+            <key><string id="16039.10" encoding="">title</string></key>
+            <value><string id="16039.11" encoding="">Newsletter Workflow</string></value>
+        </item>
+        <item>
+            <key><string id="16039.12" encoding="">variables</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16039.13" encoding="base64">AAAAAAAAPqo=</string>
+                    <global id="16039.14" name="Variables" module="Products.DCWorkflow.Variables"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16039.15" encoding="">scripts</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16039.16" encoding="base64">AAAAAAAAPqs=</string>
+                    <global id="16039.17" name="Scripts" module="Products.DCWorkflow.Scripts"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16039.18" encoding="">initial_state</string></key>
+            <value><string id="16039.19" encoding="">draft</string></value>
+        </item>
+        <item>
+            <key><string id="16039.20" encoding="">states</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16039.21" encoding="base64">AAAAAAAAPqw=</string>
+                    <global id="16039.22" name="States" module="Products.DCWorkflow.States"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16039.23" encoding="">groups</string></key>
+            <value>
+              <tuple/>
+            </value>
+        </item>
+        <item>
+            <key><string id="16039.24" encoding="">creation_guard</string></key>
+            <value>
+              <none/>
+            </value>
+        </item>
+        <item>
+            <key><string id="16039.25" encoding="">_objects</string></key>
+            <value>
+              <tuple id="16039.34">
+                  <dictionary id="16039.26">
+                    <item>
+                        <key><string id="16039.27" encoding="">meta_type</string></key>
+                        <value><string encoding="">Workflow States</string></value>
+                    </item>
+                    <item>
+                        <key><string id="16039.28" encoding="">id</string></key>
+                        <value><reference id="16039.20"/></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16039.29">
+                    <item>
+                        <key><reference id="16039.27"/></key>
+                        <value><string encoding="">Workflow Transitions</string></value>
+                    </item>
+                    <item>
+                        <key><reference id="16039.28"/></key>
+                        <value><string id="16039.30" encoding="">transitions</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16039.31">
+                    <item>
+                        <key><reference id="16039.27"/></key>
+                        <value><string encoding="">Workflow Variables</string></value>
+                    </item>
+                    <item>
+                        <key><reference id="16039.28"/></key>
+                        <value><reference id="16039.12"/></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16039.32">
+                    <item>
+                        <key><reference id="16039.27"/></key>
+                        <value><string encoding="">Worklists</string></value>
+                    </item>
+                    <item>
+                        <key><reference id="16039.28"/></key>
+                        <value><reference id="16039.5"/></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16039.33">
+                    <item>
+                        <key><reference id="16039.27"/></key>
+                        <value><string encoding="">Workflow Scripts</string></value>
+                    </item>
+                    <item>
+                        <key><reference id="16039.28"/></key>
+                        <value><reference id="16039.15"/></value>
+                    </item>
+                  </dictionary>
+              </tuple>
+            </value>
+        </item>
+        <item>
+            <key><reference id="16039.30"/></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16039.35" encoding="base64">AAAAAAAAPqk=</string>
+                    <global id="16039.36" name="Transitions" module="Products.DCWorkflow.Transitions"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16039.37" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16039.38">
+                <item>
+                    <key><string encoding="">admin</string></key>
+                    <value>
+                      <list id="16039.39">
+                          <string id="16039.40" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><reference id="16039.28"/></key>
+            <value><string id="16039.41" encoding="">newsletter_workflow</string></value>
+        </item>
+        <item>
+            <key><string id="16039.42" encoding="">manager_bypass</string></key>
+            <value><int>0</int></value>
+        </item>
+        <item>
+            <key><string id="16039.43" encoding="">permissions</string></key>
+            <value>
+              <tuple id="16039.44">
+                  <string encoding="">Access contents information</string>
+                  <string encoding="">Modify portal content</string>
+                  <string encoding="">View</string>
+              </tuple>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16040" aka="AAAAAAAAPqg=">
+    <pickle>
+      <global id="16040.1" name="Worklists" module="Products.DCWorkflow.Worklists"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16040.2">
+        <item>
+            <key><string id="16040.3" encoding="">_objects</string></key>
+            <value>
+              <tuple id="16040.9">
+                  <dictionary id="16040.4">
+                    <item>
+                        <key><string id="16040.5" encoding="">meta_type</string></key>
+                        <value><string id="16040.6" encoding="">Worklist</string></value>
+                    </item>
+                    <item>
+                        <key><string id="16040.7" encoding="">id</string></key>
+                        <value><string id="16040.8" encoding="">reviewer_queue</string></value>
+                    </item>
+                  </dictionary>
+              </tuple>
+            </value>
+        </item>
+        <item>
+            <key><reference id="16040.7"/></key>
+            <value><string id="16040.10" encoding="">worklists</string></value>
+        </item>
+        <item>
+            <key><string id="16040.11" encoding="">_mapping</string></key>
+            <value>
+              <dictionary id="16040.12">
+                <item>
+                    <key><reference id="16040.8"/></key>
+                    <value>
+                      <persistent>
+                        <tuple id="16040.15">
+                            <string id="16040.13" encoding="base64">AAAAAAAAPq0=</string>
+                            <global id="16040.14" name="WorklistDefinition" module="Products.DCWorkflow.Worklists"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16042" aka="AAAAAAAAPqo=">
+    <pickle>
+      <global id="16042.1" name="Variables" module="Products.DCWorkflow.Variables"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16042.2">
+        <item>
+            <key><string id="16042.3" encoding="">_objects</string></key>
+            <value>
+              <tuple id="16042.17">
+                  <dictionary id="16042.4">
+                    <item>
+                        <key><string id="16042.5" encoding="">meta_type</string></key>
+                        <value><string id="16042.6" encoding="">Workflow Variable</string></value>
+                    </item>
+                    <item>
+                        <key><string id="16042.7" encoding="">id</string></key>
+                        <value><string id="16042.8" encoding="">action</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16042.9">
+                    <item>
+                        <key><reference id="16042.5"/></key>
+                        <value><reference id="16042.6"/></value>
+                    </item>
+                    <item>
+                        <key><reference id="16042.7"/></key>
+                        <value><string id="16042.10" encoding="">actor</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16042.11">
+                    <item>
+                        <key><reference id="16042.5"/></key>
+                        <value><reference id="16042.6"/></value>
+                    </item>
+                    <item>
+                        <key><reference id="16042.7"/></key>
+                        <value><string id="16042.12" encoding="">comments</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16042.13">
+                    <item>
+                        <key><reference id="16042.5"/></key>
+                        <value><reference id="16042.6"/></value>
+                    </item>
+                    <item>
+                        <key><reference id="16042.7"/></key>
+                        <value><string id="16042.14" encoding="">review_history</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16042.15">
+                    <item>
+                        <key><reference id="16042.5"/></key>
+                        <value><reference id="16042.6"/></value>
+                    </item>
+                    <item>
+                        <key><reference id="16042.7"/></key>
+                        <value><string id="16042.16" encoding="">time</string></value>
+                    </item>
+                  </dictionary>
+              </tuple>
+            </value>
+        </item>
+        <item>
+            <key><reference id="16042.7"/></key>
+            <value><string id="16042.18" encoding="">variables</string></value>
+        </item>
+        <item>
+            <key><string id="16042.19" encoding="">_mapping</string></key>
+            <value>
+              <dictionary id="16042.20">
+                <item>
+                    <key><reference id="16042.8"/></key>
+                    <value>
+                      <persistent>
+                        <tuple id="16042.22">
+                            <string encoding="base64">AAAAAAAAPrE=</string>
+                            <global id="16042.21" name="VariableDefinition" module="Products.DCWorkflow.Variables"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16042.14"/></key>
+                    <value>
+                      <persistent>
+                        <tuple id="16042.24">
+                            <string id="16042.23" encoding="base64">AAAAAAAAPrU=</string>
+                            <reference id="16042.21"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16042.10"/></key>
+                    <value>
+                      <persistent>
+                        <tuple id="16042.25">
+                            <string encoding="base64">AAAAAAAAPrQ=</string>
+                            <reference id="16042.21"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16042.12"/></key>
+                    <value>
+                      <persistent>
+                        <tuple id="16042.26">
+                            <string encoding="base64">AAAAAAAAPrM=</string>
+                            <reference id="16042.21"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16042.16"/></key>
+                    <value>
+                      <persistent>
+                        <tuple id="16042.27">
+                            <string encoding="base64">AAAAAAAAPrI=</string>
+                            <reference id="16042.21"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16043" aka="AAAAAAAAPqs=">
+    <pickle>
+      <global id="16043.1" name="Scripts" module="Products.DCWorkflow.Scripts"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16043.2">
+        <item>
+            <key><string id="16043.3" encoding="">id</string></key>
+            <value><string id="16043.4" encoding="">scripts</string></value>
+        </item>
+        <item>
+            <key><string id="16043.5" encoding="">_mapping</string></key>
+            <value>
+              <dictionary id="16043.6"/>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16044" aka="AAAAAAAAPqw=">
+    <pickle>
+      <global id="16044.1" name="States" module="Products.DCWorkflow.States"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16044.2">
+        <item>
+            <key><string id="16044.3" encoding="">_objects</string></key>
+            <value>
+              <tuple id="16044.18">
+                  <dictionary id="16044.4">
+                    <item>
+                        <key><string id="16044.5" encoding="">meta_type</string></key>
+                        <value><string id="16044.6" encoding="">Workflow State</string></value>
+                    </item>
+                    <item>
+                        <key><string id="16044.7" encoding="">id</string></key>
+                        <value><string id="16044.8" encoding="">draft</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16044.9">
+                    <item>
+                        <key><reference id="16044.5"/></key>
+                        <value><reference id="16044.6"/></value>
+                    </item>
+                    <item>
+                        <key><reference id="16044.7"/></key>
+                        <value><string id="16044.10" encoding="">review</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16044.11">
+                    <item>
+                        <key><string id="16044.12" encoding="">meta_type</string></key>
+                        <value><string id="16044.13" encoding="">Workflow State</string></value>
+                    </item>
+                    <item>
+                        <key><string id="16044.14" encoding="">id</string></key>
+                        <value><string id="16044.15" encoding="">activated</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16044.16">
+                    <item>
+                        <key><reference id="16044.12"/></key>
+                        <value><reference id="16044.13"/></value>
+                    </item>
+                    <item>
+                        <key><reference id="16044.14"/></key>
+                        <value><string id="16044.17" encoding="">sospended</string></value>
+                    </item>
+                  </dictionary>
+              </tuple>
+            </value>
+        </item>
+        <item>
+            <key><reference id="16044.7"/></key>
+            <value><string id="16044.19" encoding="">states</string></value>
+        </item>
+        <item>
+            <key><string id="16044.20" encoding="">_mapping</string></key>
+            <value>
+              <dictionary id="16044.21">
+                <item>
+                    <key><reference id="16044.17"/></key>
+                    <value>
+                      <persistent>
+                        <tuple>
+                            <string id="16044.22" encoding="base64">AAAAAAAAPs4=</string>
+                            <global id="16044.23" name="StateDefinition" module="Products.DCWorkflow.States"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16044.15"/></key>
+                    <value>
+                      <persistent>
+                        <tuple>
+                            <string id="16044.24" encoding="base64">AAAAAAAAPs0=</string>
+                            <reference id="16044.23"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16044.10"/></key>
+                    <value>
+                      <persistent>
+                        <tuple>
+                            <string id="16044.25" encoding="base64">AAAAAAAAPrY=</string>
+                            <reference id="16044.23"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16044.8"/></key>
+                    <value>
+                      <persistent>
+                        <tuple>
+                            <string id="16044.26" encoding="base64">AAAAAAAAPrc=</string>
+                            <reference id="16044.23"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16041" aka="AAAAAAAAPqk=">
+    <pickle>
+      <global id="16041.1" name="Transitions" module="Products.DCWorkflow.Transitions"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16041.2">
+        <item>
+            <key><string id="16041.3" encoding="">_objects</string></key>
+            <value>
+              <tuple id="16041.26">
+                  <dictionary id="16041.4">
+                    <item>
+                        <key><string id="16041.5" encoding="">meta_type</string></key>
+                        <value><string id="16041.6" encoding="">Workflow Transition</string></value>
+                    </item>
+                    <item>
+                        <key><string id="16041.7" encoding="">id</string></key>
+                        <value><string id="16041.8" encoding="">retract</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16041.9">
+                    <item>
+                        <key><reference id="16041.5"/></key>
+                        <value><reference id="16041.6"/></value>
+                    </item>
+                    <item>
+                        <key><reference id="16041.7"/></key>
+                        <value><string id="16041.10" encoding="">submit</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16041.11">
+                    <item>
+                        <key><string id="16041.12" encoding="">meta_type</string></key>
+                        <value><string id="16041.13" encoding="">Workflow Transition</string></value>
+                    </item>
+                    <item>
+                        <key><string id="16041.14" encoding="">id</string></key>
+                        <value><string id="16041.15" encoding="">reviewActivate</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16041.16">
+                    <item>
+                        <key><reference id="16041.12"/></key>
+                        <value><reference id="16041.13"/></value>
+                    </item>
+                    <item>
+                        <key><reference id="16041.14"/></key>
+                        <value><string id="16041.17" encoding="">activateReview</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16041.18">
+                    <item>
+                        <key><reference id="16041.12"/></key>
+                        <value><reference id="16041.13"/></value>
+                    </item>
+                    <item>
+                        <key><reference id="16041.14"/></key>
+                        <value><string id="16041.19" encoding="">activateSuspend</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16041.20">
+                    <item>
+                        <key><reference id="16041.12"/></key>
+                        <value><reference id="16041.13"/></value>
+                    </item>
+                    <item>
+                        <key><reference id="16041.14"/></key>
+                        <value><string id="16041.21" encoding="">suspendActivate</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16041.22">
+                    <item>
+                        <key><reference id="16041.12"/></key>
+                        <value><reference id="16041.13"/></value>
+                    </item>
+                    <item>
+                        <key><reference id="16041.14"/></key>
+                        <value><string id="16041.23" encoding="">reviewSuspend</string></value>
+                    </item>
+                  </dictionary>
+                  <dictionary id="16041.24">
+                    <item>
+                        <key><reference id="16041.12"/></key>
+                        <value><reference id="16041.13"/></value>
+                    </item>
+                    <item>
+                        <key><reference id="16041.14"/></key>
+                        <value><string id="16041.25" encoding="">suspendReview</string></value>
+                    </item>
+                  </dictionary>
+              </tuple>
+            </value>
+        </item>
+        <item>
+            <key><reference id="16041.7"/></key>
+            <value><string id="16041.27" encoding="">transitions</string></value>
+        </item>
+        <item>
+            <key><string id="16041.28" encoding="">_mapping</string></key>
+            <value>
+              <dictionary id="16041.29">
+                <item>
+                    <key><reference id="16041.21"/></key>
+                    <value>
+                      <persistent>
+                        <tuple>
+                            <string id="16041.30" encoding="base64">AAAAAAAAPtI=</string>
+                            <global id="16041.31" name="TransitionDefinition" module="Products.DCWorkflow.Transitions"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16041.17"/></key>
+                    <value>
+                      <persistent>
+                        <tuple>
+                            <string id="16041.32" encoding="base64">AAAAAAAAPtA=</string>
+                            <reference id="16041.31"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16041.23"/></key>
+                    <value>
+                      <persistent>
+                        <tuple>
+                            <string id="16041.33" encoding="base64">AAAAAAAAPtM=</string>
+                            <reference id="16041.31"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16041.15"/></key>
+                    <value>
+                      <persistent>
+                        <tuple>
+                            <string id="16041.34" encoding="base64">AAAAAAAAPs8=</string>
+                            <reference id="16041.31"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16041.25"/></key>
+                    <value>
+                      <persistent>
+                        <tuple>
+                            <string id="16041.35" encoding="base64">AAAAAAAAPtQ=</string>
+                            <reference id="16041.31"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16041.10"/></key>
+                    <value>
+                      <persistent>
+                        <tuple>
+                            <string id="16041.36" encoding="base64">AAAAAAAAPq8=</string>
+                            <reference id="16041.31"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16041.19"/></key>
+                    <value>
+                      <persistent>
+                        <tuple>
+                            <string id="16041.37" encoding="base64">AAAAAAAAPtE=</string>
+                            <reference id="16041.31"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+                <item>
+                    <key><reference id="16041.8"/></key>
+                    <value>
+                      <persistent>
+                        <tuple>
+                            <string id="16041.38" encoding="base64">AAAAAAAAPq4=</string>
+                            <reference id="16041.31"/>
+                        </tuple>
+                      </persistent>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16045" aka="AAAAAAAAPq0=">
+    <pickle>
+      <global id="16045.1" name="WorklistDefinition" module="Products.DCWorkflow.Worklists"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16045.2">
+        <item>
+            <key><string id="16045.3" encoding="">description</string></key>
+            <value><string id="16045.4" encoding="">Reviewer tasks</string></value>
+        </item>
+        <item>
+            <key><string id="16045.5" encoding="">var_matches</string></key>
+            <value>
+              <persistent>
+                <tuple id="16045.7">
+                    <string encoding="base64">AAAAAAAAPrk=</string>
+                    <global id="16045.6" name="PersistentMapping" module="Persistence.mapping"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16045.8" encoding="">actbox_category</string></key>
+            <value><string id="16045.9" encoding="">global</string></value>
+        </item>
+        <item>
+            <key><string id="16045.10" encoding="">actbox_icon</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16045.11" encoding="">actbox_name</string></key>
+            <value><string id="16045.12" encoding="">Pending (%(count)d)</string></value>
+        </item>
+        <item>
+            <key><string id="16045.13" encoding="">guard</string></key>
+            <value>
+              <persistent>
+                <tuple id="16045.16">
+                    <string id="16045.14" encoding="base64">AAAAAAAAPro=</string>
+                    <global id="16045.15" name="Guard" module="Products.DCWorkflow.Guard"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16045.17" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16045.18">
+                <item>
+                    <key><string id="16045.19" encoding="">admin</string></key>
+                    <value>
+                      <list id="16045.20">
+                          <string id="16045.21" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16045.22" encoding="">id</string></key>
+            <value><string id="16045.23" encoding="">reviewer_queue</string></value>
+        </item>
+        <item>
+            <key><string id="16045.24" encoding="">actbox_url</string></key>
+            <value><string id="16045.25" encoding="">%(portal_url)s/search?review_state=pending</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16049" aka="AAAAAAAAPrE=">
+    <pickle>
+      <global id="16049.1" name="VariableDefinition" module="Products.DCWorkflow.Variables"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16049.2">
+        <item>
+            <key><string id="16049.3" encoding="">default_value</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16049.4" encoding="">description</string></key>
+            <value><string id="16049.5" encoding="">Previous transition</string></value>
+        </item>
+        <item>
+            <key><string id="16049.6" encoding="">default_expr</string></key>
+            <value>
+              <persistent>
+                <tuple id="16049.9">
+                    <string id="16049.7" encoding="base64">AAAAAAAAPsE=</string>
+                    <global id="16049.8" name="Expression" module="Products.CMFCore.Expression"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16049.10" encoding="">for_status</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16049.11" encoding="">info_guard</string></key>
+            <value>
+              <none/>
+            </value>
+        </item>
+        <item>
+            <key><string id="16049.12" encoding="">for_catalog</string></key>
+            <value><int>0</int></value>
+        </item>
+        <item>
+            <key><string id="16049.13" encoding="">update_always</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16049.14" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16049.15">
+                <item>
+                    <key><string id="16049.16" encoding="">admin</string></key>
+                    <value>
+                      <list id="16049.17">
+                          <string id="16049.18" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16049.19" encoding="">id</string></key>
+            <value><string id="16049.20" encoding="">action</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16053" aka="AAAAAAAAPrU=">
+    <pickle>
+      <global id="16053.1" name="VariableDefinition" module="Products.DCWorkflow.Variables"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16053.2">
+        <item>
+            <key><string id="16053.3" encoding="">default_value</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16053.4" encoding="">description</string></key>
+            <value><string id="16053.5" encoding="">Provides access to workflow history</string></value>
+        </item>
+        <item>
+            <key><string id="16053.6" encoding="">default_expr</string></key>
+            <value>
+              <persistent>
+                <tuple id="16053.8">
+                    <string encoding="base64">AAAAAAAAPsU=</string>
+                    <global id="16053.7" name="Expression" module="Products.CMFCore.Expression"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16053.9" encoding="">for_status</string></key>
+            <value><int>0</int></value>
+        </item>
+        <item>
+            <key><string id="16053.10" encoding="">info_guard</string></key>
+            <value>
+              <persistent>
+                <tuple id="16053.13">
+                    <string id="16053.11" encoding="base64">AAAAAAAAPsY=</string>
+                    <global id="16053.12" name="Guard" module="Products.DCWorkflow.Guard"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16053.14" encoding="">for_catalog</string></key>
+            <value><int>0</int></value>
+        </item>
+        <item>
+            <key><string id="16053.15" encoding="">update_always</string></key>
+            <value><int>0</int></value>
+        </item>
+        <item>
+            <key><string id="16053.16" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16053.17">
+                <item>
+                    <key><string id="16053.18" encoding="">admin</string></key>
+                    <value>
+                      <list id="16053.19">
+                          <string id="16053.20" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16053.21" encoding="">id</string></key>
+            <value><string id="16053.22" encoding="">review_history</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16052" aka="AAAAAAAAPrQ=">
+    <pickle>
+      <global id="16052.1" name="VariableDefinition" module="Products.DCWorkflow.Variables"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16052.2">
+        <item>
+            <key><string id="16052.3" encoding="">default_value</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16052.4" encoding="">description</string></key>
+            <value><string id="16052.5" encoding="">The ID of the user who performed the previous transition</string></value>
+        </item>
+        <item>
+            <key><string id="16052.6" encoding="">default_expr</string></key>
+            <value>
+              <persistent>
+                <tuple id="16052.9">
+                    <string id="16052.7" encoding="base64">AAAAAAAAPsQ=</string>
+                    <global id="16052.8" name="Expression" module="Products.CMFCore.Expression"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16052.10" encoding="">for_status</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16052.11" encoding="">info_guard</string></key>
+            <value>
+              <none/>
+            </value>
+        </item>
+        <item>
+            <key><string id="16052.12" encoding="">for_catalog</string></key>
+            <value><int>0</int></value>
+        </item>
+        <item>
+            <key><string id="16052.13" encoding="">update_always</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16052.14" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16052.15">
+                <item>
+                    <key><string id="16052.16" encoding="">admin</string></key>
+                    <value>
+                      <list id="16052.17">
+                          <string id="16052.18" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16052.19" encoding="">id</string></key>
+            <value><string id="16052.20" encoding="">actor</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16051" aka="AAAAAAAAPrM=">
+    <pickle>
+      <global id="16051.1" name="VariableDefinition" module="Products.DCWorkflow.Variables"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16051.2">
+        <item>
+            <key><string id="16051.3" encoding="">default_value</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16051.4" encoding="">description</string></key>
+            <value><string id="16051.5" encoding="">Comment about the last transition</string></value>
+        </item>
+        <item>
+            <key><string id="16051.6" encoding="">default_expr</string></key>
+            <value>
+              <persistent>
+                <tuple id="16051.9">
+                    <string id="16051.7" encoding="base64">AAAAAAAAPsM=</string>
+                    <global id="16051.8" name="Expression" module="Products.CMFCore.Expression"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16051.10" encoding="">for_status</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16051.11" encoding="">info_guard</string></key>
+            <value>
+              <none/>
+            </value>
+        </item>
+        <item>
+            <key><string id="16051.12" encoding="">for_catalog</string></key>
+            <value><int>0</int></value>
+        </item>
+        <item>
+            <key><string id="16051.13" encoding="">update_always</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16051.14" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16051.15">
+                <item>
+                    <key><string id="16051.16" encoding="">admin</string></key>
+                    <value>
+                      <list id="16051.17">
+                          <string id="16051.18" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16051.19" encoding="">id</string></key>
+            <value><string id="16051.20" encoding="">comments</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16050" aka="AAAAAAAAPrI=">
+    <pickle>
+      <global id="16050.1" name="VariableDefinition" module="Products.DCWorkflow.Variables"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16050.2">
+        <item>
+            <key><string id="16050.3" encoding="">default_value</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16050.4" encoding="">description</string></key>
+            <value><string id="16050.5" encoding="">When the previous transition was performed</string></value>
+        </item>
+        <item>
+            <key><string id="16050.6" encoding="">default_expr</string></key>
+            <value>
+              <persistent>
+                <tuple id="16050.9">
+                    <string id="16050.7" encoding="base64">AAAAAAAAPsI=</string>
+                    <global id="16050.8" name="Expression" module="Products.CMFCore.Expression"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16050.10" encoding="">for_status</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16050.11" encoding="">info_guard</string></key>
+            <value>
+              <none/>
+            </value>
+        </item>
+        <item>
+            <key><string id="16050.12" encoding="">for_catalog</string></key>
+            <value><int>0</int></value>
+        </item>
+        <item>
+            <key><string id="16050.13" encoding="">update_always</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16050.14" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16050.15">
+                <item>
+                    <key><string id="16050.16" encoding="">admin</string></key>
+                    <value>
+                      <list id="16050.17">
+                          <string id="16050.18" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16050.19" encoding="">id</string></key>
+            <value><string id="16050.20" encoding="">time</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16078" aka="AAAAAAAAPs4=">
+    <pickle>
+      <global id="16078.1" name="StateDefinition" module="Products.DCWorkflow.States"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16078.2">
+        <item>
+            <key><string id="16078.3" encoding="">title</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16078.4" encoding="">transitions</string></key>
+            <value>
+              <tuple id="16078.7">
+                  <string id="16078.5" encoding="">suspendActivate</string>
+                  <string id="16078.6" encoding="">suspendReview</string>
+              </tuple>
+            </value>
+        </item>
+        <item>
+            <key><string id="16078.8" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16078.9">
+                <item>
+                    <key><string id="16078.10" encoding="">admin</string></key>
+                    <value>
+                      <list id="16078.11">
+                          <string id="16078.12" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16078.13" encoding="">description</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16078.14" encoding="">id</string></key>
+            <value><string id="16078.15" encoding="">sospended</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16077" aka="AAAAAAAAPs0=">
+    <pickle>
+      <global id="16077.1" name="StateDefinition" module="Products.DCWorkflow.States"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16077.2">
+        <item>
+            <key><string id="16077.3" encoding="">title</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16077.4" encoding="">transitions</string></key>
+            <value>
+              <tuple id="16077.7">
+                  <string id="16077.5" encoding="">activateReview</string>
+                  <string id="16077.6" encoding="">activateSuspend</string>
+              </tuple>
+            </value>
+        </item>
+        <item>
+            <key><string id="16077.8" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16077.9">
+                <item>
+                    <key><string id="16077.10" encoding="">admin</string></key>
+                    <value>
+                      <list id="16077.11">
+                          <string id="16077.12" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16077.13" encoding="">description</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16077.14" encoding="">id</string></key>
+            <value><string id="16077.15" encoding="">activated</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16054" aka="AAAAAAAAPrY=">
+    <pickle>
+      <global id="16054.1" name="StateDefinition" module="Products.DCWorkflow.States"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16054.2">
+        <item>
+            <key><string id="16054.3" encoding="">group_roles</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16054.4" encoding="base64">AAAAAAAAPsc=</string>
+                    <global id="16054.5" name="PersistentMapping" module="Persistence.mapping"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16054.6" encoding="">description</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16054.7" encoding="">title</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16054.8" encoding="">var_values</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16054.9" encoding="base64">AAAAAAAAPsg=</string>
+                    <reference id="16054.5"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16054.10" encoding="">transitions</string></key>
+            <value>
+              <tuple id="16054.14">
+                  <string id="16054.11" encoding="">retract</string>
+                  <string id="16054.12" encoding="">reviewActivate</string>
+                  <string id="16054.13" encoding="">reviewSuspend</string>
+              </tuple>
+            </value>
+        </item>
+        <item>
+            <key><string id="16054.15" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16054.16">
+                <item>
+                    <key><string encoding="">admin</string></key>
+                    <value>
+                      <list id="16054.17">
+                          <string id="16054.18" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16054.19" encoding="">id</string></key>
+            <value><string id="16054.20" encoding="">review</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16055" aka="AAAAAAAAPrc=">
+    <pickle>
+      <global id="16055.1" name="StateDefinition" module="Products.DCWorkflow.States"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16055.2">
+        <item>
+            <key><string id="16055.3" encoding="">group_roles</string></key>
+            <value>
+              <persistent>
+                <tuple id="16055.5">
+                    <string encoding="base64">AAAAAAAAPsk=</string>
+                    <global id="16055.4" name="PersistentMapping" module="Persistence.mapping"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16055.6" encoding="">description</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16055.7" encoding="">title</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16055.8" encoding="">var_values</string></key>
+            <value>
+              <persistent>
+                <tuple id="16055.10">
+                    <string id="16055.9" encoding="base64">AAAAAAAAPso=</string>
+                    <reference id="16055.4"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16055.11" encoding="">transitions</string></key>
+            <value>
+              <tuple id="16055.12">
+                  <string encoding="">submit</string>
+              </tuple>
+            </value>
+        </item>
+        <item>
+            <key><string id="16055.13" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16055.14">
+                <item>
+                    <key><string id="16055.15" encoding="">admin</string></key>
+                    <value>
+                      <list id="16055.16">
+                          <string id="16055.17" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16055.18" encoding="">id</string></key>
+            <value><string id="16055.19" encoding="">draft</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16082" aka="AAAAAAAAPtI=">
+    <pickle>
+      <global id="16082.1" name="TransitionDefinition" module="Products.DCWorkflow.Transitions"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16082.2">
+        <item>
+            <key><string id="16082.3" encoding="">new_state_id</string></key>
+            <value><string id="16082.4" encoding="">activated</string></value>
+        </item>
+        <item>
+            <key><string id="16082.5" encoding="">description</string></key>
+            <value><string id="16082.6" encoding="">send newsletter's state from suspend to activate</string></value>
+        </item>
+        <item>
+            <key><string id="16082.7" encoding="">title</string></key>
+            <value><string id="16082.8" encoding="">Suspend To Activate</string></value>
+        </item>
+        <item>
+            <key><string id="16082.9" encoding="">trigger_type</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16082.10" encoding="">guard</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16082.11" encoding="base64">AAAAAAAAP/U=</string>
+                    <global id="16082.12" name="Guard" module="Products.DCWorkflow.Guard"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16082.13" encoding="">script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16082.14" encoding="">id</string></key>
+            <value><string id="16082.15" encoding="">suspendActivate</string></value>
+        </item>
+        <item>
+            <key><string id="16082.16" encoding="">actbox_icon</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16082.17" encoding="">after_script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16082.18" encoding="">actbox_name</string></key>
+            <value><string id="16082.19" encoding="">SuspendToActivate</string></value>
+        </item>
+        <item>
+            <key><string id="16082.20" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16082.21">
+                <item>
+                    <key><string id="16082.22" encoding="">admin</string></key>
+                    <value>
+                      <list id="16082.23">
+                          <string id="16082.24" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16082.25" encoding="">actbox_category</string></key>
+            <value><string id="16082.26" encoding="">workflow</string></value>
+        </item>
+        <item>
+            <key><string id="16082.27" encoding="">actbox_url</string></key>
+            <value><string id="16082.28" encoding="">%(content_url)s/content_status_modify?workflow_action=suspendActivate</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16080" aka="AAAAAAAAPtA=">
+    <pickle>
+      <global id="16080.1" name="TransitionDefinition" module="Products.DCWorkflow.Transitions"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16080.2">
+        <item>
+            <key><string id="16080.3" encoding="">new_state_id</string></key>
+            <value><string id="16080.4" encoding="">review</string></value>
+        </item>
+        <item>
+            <key><string id="16080.5" encoding="">description</string></key>
+            <value><string id="16080.6" encoding="">send newsletter from activate state to review state</string></value>
+        </item>
+        <item>
+            <key><string id="16080.7" encoding="">title</string></key>
+            <value><string id="16080.8" encoding="">Activate to Review</string></value>
+        </item>
+        <item>
+            <key><string id="16080.9" encoding="">trigger_type</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16080.10" encoding="">guard</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16080.11" encoding="base64">AAAAAAAAPtU=</string>
+                    <global id="16080.12" name="Guard" module="Products.DCWorkflow.Guard"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16080.13" encoding="">script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16080.14" encoding="">id</string></key>
+            <value><string id="16080.15" encoding="">activateReview</string></value>
+        </item>
+        <item>
+            <key><string id="16080.16" encoding="">actbox_icon</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16080.17" encoding="">after_script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16080.18" encoding="">actbox_name</string></key>
+            <value><string id="16080.19" encoding="">ActivateToReview</string></value>
+        </item>
+        <item>
+            <key><string id="16080.20" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16080.21">
+                <item>
+                    <key><string id="16080.22" encoding="">admin</string></key>
+                    <value>
+                      <list id="16080.23">
+                          <string id="16080.24" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16080.25" encoding="">actbox_category</string></key>
+            <value><string id="16080.26" encoding="">workflow</string></value>
+        </item>
+        <item>
+            <key><string id="16080.27" encoding="">actbox_url</string></key>
+            <value><string id="16080.28" encoding="">%(content_url)s/content_status_modify?workflow_action=activateReview</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16083" aka="AAAAAAAAPtM=">
+    <pickle>
+      <global id="16083.1" name="TransitionDefinition" module="Products.DCWorkflow.Transitions"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16083.2">
+        <item>
+            <key><string id="16083.3" encoding="">new_state_id</string></key>
+            <value><string id="16083.4" encoding="">sospended</string></value>
+        </item>
+        <item>
+            <key><string id="16083.5" encoding="">description</string></key>
+            <value><string id="16083.6" encoding="">send newsletter's state from review to suspend</string></value>
+        </item>
+        <item>
+            <key><string id="16083.7" encoding="">title</string></key>
+            <value><string id="16083.8" encoding="">Review To Suspend</string></value>
+        </item>
+        <item>
+            <key><string id="16083.9" encoding="">trigger_type</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16083.10" encoding="">guard</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16083.11" encoding="base64">AAAAAAAAP/Q=</string>
+                    <global id="16083.12" name="Guard" module="Products.DCWorkflow.Guard"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16083.13" encoding="">script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16083.14" encoding="">id</string></key>
+            <value><string id="16083.15" encoding="">reviewSuspend</string></value>
+        </item>
+        <item>
+            <key><string id="16083.16" encoding="">actbox_icon</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16083.17" encoding="">after_script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16083.18" encoding="">actbox_name</string></key>
+            <value><string id="16083.19" encoding="">ReviewToSuspend</string></value>
+        </item>
+        <item>
+            <key><string id="16083.20" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16083.21">
+                <item>
+                    <key><string id="16083.22" encoding="">admin</string></key>
+                    <value>
+                      <list id="16083.23">
+                          <string id="16083.24" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16083.25" encoding="">actbox_category</string></key>
+            <value><string id="16083.26" encoding="">workflow</string></value>
+        </item>
+        <item>
+            <key><string id="16083.27" encoding="">actbox_url</string></key>
+            <value><string id="16083.28" encoding="">%(content_url)s/content_status_modify?workflow_action=reviewSuspend</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16079" aka="AAAAAAAAPs8=">
+    <pickle>
+      <global id="16079.1" name="TransitionDefinition" module="Products.DCWorkflow.Transitions"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16079.2">
+        <item>
+            <key><string id="16079.3" encoding="">new_state_id</string></key>
+            <value><string id="16079.4" encoding="">activated</string></value>
+        </item>
+        <item>
+            <key><string id="16079.5" encoding="">description</string></key>
+            <value><string id="16079.6" encoding="">send newsletter's state from review to active</string></value>
+        </item>
+        <item>
+            <key><string id="16079.7" encoding="">title</string></key>
+            <value><string id="16079.8" encoding="">Review To Activate</string></value>
+        </item>
+        <item>
+            <key><string id="16079.9" encoding="">trigger_type</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16079.10" encoding="">guard</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16079.11" encoding="base64">AAAAAAAAP/I=</string>
+                    <global id="16079.12" name="Guard" module="Products.DCWorkflow.Guard"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16079.13" encoding="">script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16079.14" encoding="">id</string></key>
+            <value><string id="16079.15" encoding="">reviewActivate</string></value>
+        </item>
+        <item>
+            <key><string id="16079.16" encoding="">actbox_icon</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16079.17" encoding="">after_script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16079.18" encoding="">actbox_name</string></key>
+            <value><string id="16079.19" encoding="">ReviewToActivate</string></value>
+        </item>
+        <item>
+            <key><string id="16079.20" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16079.21">
+                <item>
+                    <key><string id="16079.22" encoding="">admin</string></key>
+                    <value>
+                      <list id="16079.23">
+                          <string id="16079.24" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16079.25" encoding="">actbox_category</string></key>
+            <value><string id="16079.26" encoding="">workflow</string></value>
+        </item>
+        <item>
+            <key><string id="16079.27" encoding="">actbox_url</string></key>
+            <value><string id="16079.28" encoding="">%(content_url)s/content_status_modify?workflow_action=reviewActivate</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16084" aka="AAAAAAAAPtQ=">
+    <pickle>
+      <global id="16084.1" name="TransitionDefinition" module="Products.DCWorkflow.Transitions"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16084.2">
+        <item>
+            <key><string id="16084.3" encoding="">new_state_id</string></key>
+            <value><string id="16084.4" encoding="">review</string></value>
+        </item>
+        <item>
+            <key><string id="16084.5" encoding="">description</string></key>
+            <value><string id="16084.6" encoding="">send newsletter's state from suspend to review</string></value>
+        </item>
+        <item>
+            <key><string id="16084.7" encoding="">title</string></key>
+            <value><string id="16084.8" encoding="">Suspend to Review</string></value>
+        </item>
+        <item>
+            <key><string id="16084.9" encoding="">trigger_type</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16084.10" encoding="">guard</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16084.11" encoding="base64">AAAAAAAAP/Y=</string>
+                    <global id="16084.12" name="Guard" module="Products.DCWorkflow.Guard"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16084.13" encoding="">script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16084.14" encoding="">id</string></key>
+            <value><string id="16084.15" encoding="">suspendReview</string></value>
+        </item>
+        <item>
+            <key><string id="16084.16" encoding="">actbox_icon</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16084.17" encoding="">after_script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16084.18" encoding="">actbox_name</string></key>
+            <value><string id="16084.19" encoding="">SuspendToReview</string></value>
+        </item>
+        <item>
+            <key><string id="16084.20" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16084.21">
+                <item>
+                    <key><string id="16084.22" encoding="">admin</string></key>
+                    <value>
+                      <list id="16084.23">
+                          <string id="16084.24" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16084.25" encoding="">actbox_category</string></key>
+            <value><string id="16084.26" encoding="">workflow</string></value>
+        </item>
+        <item>
+            <key><string id="16084.27" encoding="">actbox_url</string></key>
+            <value><string id="16084.28" encoding="">%(content_url)s/content_status_modify?workflow_action=suspendReview</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16047" aka="AAAAAAAAPq8=">
+    <pickle>
+      <global id="16047.1" name="TransitionDefinition" module="Products.DCWorkflow.Transitions"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16047.2">
+        <item>
+            <key><string id="16047.3" encoding="">new_state_id</string></key>
+            <value><string id="16047.4" encoding="">review</string></value>
+        </item>
+        <item>
+            <key><string id="16047.5" encoding="">description</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16047.6" encoding="">trigger_type</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16047.7" encoding="">title</string></key>
+            <value><string id="16047.8" encoding="">Member submits content for sending message</string></value>
+        </item>
+        <item>
+            <key><string id="16047.9" encoding="">guard</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16047.10" encoding="base64">AAAAAAAAP1k=</string>
+                    <global id="16047.11" name="Guard" module="Products.DCWorkflow.Guard"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16047.12" encoding="">script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16047.13" encoding="">id</string></key>
+            <value><string id="16047.14" encoding="">submit</string></value>
+        </item>
+        <item>
+            <key><string id="16047.15" encoding="">actbox_icon</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16047.16" encoding="">after_script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16047.17" encoding="">actbox_name</string></key>
+            <value><string id="16047.18" encoding="">Submit</string></value>
+        </item>
+        <item>
+            <key><string id="16047.19" encoding="">var_exprs</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16047.20" encoding="base64">AAAAAAAAPr4=</string>
+                    <global id="16047.21" name="PersistentMapping" module="Persistence.mapping"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16047.22" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16047.23">
+                <item>
+                    <key><string encoding="">admin</string></key>
+                    <value>
+                      <list id="16047.24">
+                          <string id="16047.25" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16047.26" encoding="">actbox_category</string></key>
+            <value><string id="16047.27" encoding="">workflow</string></value>
+        </item>
+        <item>
+            <key><string id="16047.28" encoding="">actbox_url</string></key>
+            <value><string id="16047.29" encoding="">%(content_url)s/content_status_modify?workflow_action=submit</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16081" aka="AAAAAAAAPtE=">
+    <pickle>
+      <global id="16081.1" name="TransitionDefinition" module="Products.DCWorkflow.Transitions"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16081.2">
+        <item>
+            <key><string id="16081.3" encoding="">new_state_id</string></key>
+            <value><string id="16081.4" encoding="">sospended</string></value>
+        </item>
+        <item>
+            <key><string id="16081.5" encoding="">description</string></key>
+            <value><string id="16081.6" encoding="">send newsletter's state from active to suspend</string></value>
+        </item>
+        <item>
+            <key><string id="16081.7" encoding="">title</string></key>
+            <value><string id="16081.8" encoding="">Activate To Suspend</string></value>
+        </item>
+        <item>
+            <key><string id="16081.9" encoding="">trigger_type</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16081.10" encoding="">guard</string></key>
+            <value>
+              <persistent>
+                <tuple>
+                    <string id="16081.11" encoding="base64">AAAAAAAAP/M=</string>
+                    <global id="16081.12" name="Guard" module="Products.DCWorkflow.Guard"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16081.13" encoding="">script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16081.14" encoding="">id</string></key>
+            <value><string id="16081.15" encoding="">activateSuspend</string></value>
+        </item>
+        <item>
+            <key><string id="16081.16" encoding="">actbox_icon</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16081.17" encoding="">after_script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16081.18" encoding="">actbox_name</string></key>
+            <value><string id="16081.19" encoding="">ActivateToSuspend</string></value>
+        </item>
+        <item>
+            <key><string id="16081.20" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16081.21">
+                <item>
+                    <key><string id="16081.22" encoding="">admin</string></key>
+                    <value>
+                      <list id="16081.23">
+                          <string id="16081.24" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16081.25" encoding="">actbox_category</string></key>
+            <value><string id="16081.26" encoding="">workflow</string></value>
+        </item>
+        <item>
+            <key><string id="16081.27" encoding="">actbox_url</string></key>
+            <value><string id="16081.28" encoding="">%(content_url)s/content_status_modify?workflow_action=activateSuspend</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16046" aka="AAAAAAAAPq4=">
+    <pickle>
+      <global id="16046.1" name="TransitionDefinition" module="Products.DCWorkflow.Transitions"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16046.2">
+        <item>
+            <key><string id="16046.3" encoding="">new_state_id</string></key>
+            <value><string id="16046.4" encoding="">draft</string></value>
+        </item>
+        <item>
+            <key><string id="16046.5" encoding="">description</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16046.6" encoding="">trigger_type</string></key>
+            <value><int>1</int></value>
+        </item>
+        <item>
+            <key><string id="16046.7" encoding="">title</string></key>
+            <value><string id="16046.8" encoding="">Member retracts submission</string></value>
+        </item>
+        <item>
+            <key><string id="16046.9" encoding="">actbox_icon</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16046.10" encoding="">script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16046.11" encoding="">actbox_category</string></key>
+            <value><string id="16046.12" encoding="">workflow</string></value>
+        </item>
+        <item>
+            <key><string id="16046.13" encoding="">guard</string></key>
+            <value>
+              <persistent>
+                <tuple id="16046.15">
+                    <string encoding="base64">AAAAAAAAPrs=</string>
+                    <global id="16046.14" name="Guard" module="Products.DCWorkflow.Guard"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16046.16" encoding="">after_script_name</string></key>
+            <value><string encoding=""></string></value>
+        </item>
+        <item>
+            <key><string id="16046.17" encoding="">actbox_name</string></key>
+            <value><string id="16046.18" encoding="">Retract</string></value>
+        </item>
+        <item>
+            <key><string id="16046.19" encoding="">var_exprs</string></key>
+            <value>
+              <persistent>
+                <tuple id="16046.22">
+                    <string id="16046.20" encoding="base64">AAAAAAAAPrw=</string>
+                    <global id="16046.21" name="PersistentMapping" module="Persistence.mapping"/>
+                </tuple>
+              </persistent>
+            </value>
+        </item>
+        <item>
+            <key><string id="16046.23" encoding="">__ac_local_roles__</string></key>
+            <value>
+              <dictionary id="16046.24">
+                <item>
+                    <key><string id="16046.25" encoding="">admin</string></key>
+                    <value>
+                      <list id="16046.26">
+                          <string id="16046.27" encoding="">Owner</string>
+                      </list>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+        <item>
+            <key><string id="16046.28" encoding="">id</string></key>
+            <value><string id="16046.29" encoding="">retract</string></value>
+        </item>
+        <item>
+            <key><string id="16046.30" encoding="">actbox_url</string></key>
+            <value><string id="16046.31" encoding="">%(content_url)s/content_status_modify?workflow_action=retract</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16057" aka="AAAAAAAAPrk=">
+    <pickle>
+      <global id="16057.1" name="PersistentMapping" module="Persistence.mapping"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16057.2">
+        <item>
+            <key><string id="16057.3" encoding="">data</string></key>
+            <value>
+              <dictionary id="16057.4">
+                <item>
+                    <key><string encoding="">review_state</string></key>
+                    <value>
+                      <tuple>
+                          <string encoding="">pending</string>
+                      </tuple>
+                    </value>
+                </item>
+              </dictionary>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16058" aka="AAAAAAAAPro=">
+    <pickle>
+      <global id="16058.1" name="Guard" module="Products.DCWorkflow.Guard"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16058.2">
+        <item>
+            <key><string id="16058.3" encoding="">permissions</string></key>
+            <value>
+              <tuple id="16058.4">
+                  <string encoding="">Review portal content</string>
+              </tuple>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16065" aka="AAAAAAAAPsE=">
+    <pickle>
+      <global id="16065.1" name="Expression" module="Products.CMFCore.Expression"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16065.2">
+        <item>
+            <key><string id="16065.3" encoding="">text</string></key>
+            <value><string id="16065.4" encoding="">transition/getId|nothing</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16069" aka="AAAAAAAAPsU=">
+    <pickle>
+      <global id="16069.1" name="Expression" module="Products.CMFCore.Expression"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16069.2">
+        <item>
+            <key><string id="16069.3" encoding="">text</string></key>
+            <value><string id="16069.4" encoding="">state_change/getHistory</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16070" aka="AAAAAAAAPsY=">
+    <pickle>
+      <global id="16070.1" name="Guard" module="Products.DCWorkflow.Guard"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16070.2">
+        <item>
+            <key><string id="16070.3" encoding="">permissions</string></key>
+            <value>
+              <tuple id="16070.4">
+                  <string encoding="">Request review</string>
+                  <string encoding="">Review portal content</string>
+              </tuple>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16068" aka="AAAAAAAAPsQ=">
+    <pickle>
+      <global id="16068.1" name="Expression" module="Products.CMFCore.Expression"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16068.2">
+        <item>
+            <key><string id="16068.3" encoding="">text</string></key>
+            <value><string id="16068.4" encoding="">user/getId</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16067" aka="AAAAAAAAPsM=">
+    <pickle>
+      <global id="16067.1" name="Expression" module="Products.CMFCore.Expression"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16067.2">
+        <item>
+            <key><string id="16067.3" encoding="">text</string></key>
+            <value><string id="16067.4" encoding="">python:state_change.kwargs.get('comment', '')</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16066" aka="AAAAAAAAPsI=">
+    <pickle>
+      <global id="16066.1" name="Expression" module="Products.CMFCore.Expression"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16066.2">
+        <item>
+            <key><string id="16066.3" encoding="">text</string></key>
+            <value><string id="16066.4" encoding="">state_change/getDateTime</string></value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16071" aka="AAAAAAAAPsc=">
+    <pickle>
+      <global id="16071.1" name="PersistentMapping" module="Persistence.mapping"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16071.2">
+        <item>
+            <key><string id="16071.3" encoding="">data</string></key>
+            <value>
+              <dictionary id="16071.4"/>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16072" aka="AAAAAAAAPsg=">
+    <pickle>
+      <global id="16072.1" name="PersistentMapping" module="Persistence.mapping"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16072.2">
+        <item>
+            <key><string id="16072.3" encoding="">data</string></key>
+            <value>
+              <dictionary id="16072.4"/>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16073" aka="AAAAAAAAPsk=">
+    <pickle>
+      <global id="16073.1" name="PersistentMapping" module="Persistence.mapping"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16073.2">
+        <item>
+            <key><string id="16073.3" encoding="">data</string></key>
+            <value>
+              <dictionary id="16073.4"/>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16074" aka="AAAAAAAAPso=">
+    <pickle>
+      <global id="16074.1" name="PersistentMapping" module="Persistence.mapping"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16074.2">
+        <item>
+            <key><string id="16074.3" encoding="">data</string></key>
+            <value>
+              <dictionary id="16074.4"/>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16373" aka="AAAAAAAAP/U=">
+    <pickle>
+      <global id="16373.1" name="Guard" module="Products.DCWorkflow.Guard"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16373.2">
+        <item>
+            <key><string id="16373.3" encoding="">permissions</string></key>
+            <value>
+              <tuple id="16373.5">
+                  <string id="16373.4" encoding="">Review portal content</string>
+              </tuple>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16085" aka="AAAAAAAAPtU=">
+    <pickle>
+      <global id="16085.1" name="Guard" module="Products.DCWorkflow.Guard"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16085.2">
+        <item>
+            <key><string id="16085.3" encoding="">permissions</string></key>
+            <value>
+              <tuple id="16085.5">
+                  <string id="16085.4" encoding="">Request review</string>
+              </tuple>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16372" aka="AAAAAAAAP/Q=">
+    <pickle>
+      <global id="16372.1" name="Guard" module="Products.DCWorkflow.Guard"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16372.2">
+        <item>
+            <key><string id="16372.3" encoding="">permissions</string></key>
+            <value>
+              <tuple id="16372.5">
+                  <string id="16372.4" encoding="">Review portal content</string>
+              </tuple>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16370" aka="AAAAAAAAP/I=">
+    <pickle>
+      <global id="16370.1" name="Guard" module="Products.DCWorkflow.Guard"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16370.2">
+        <item>
+            <key><string id="16370.3" encoding="">permissions</string></key>
+            <value>
+              <tuple id="16370.5">
+                  <string id="16370.4" encoding="">Review portal content</string>
+              </tuple>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16374" aka="AAAAAAAAP/Y=">
+    <pickle>
+      <global id="16374.1" name="Guard" module="Products.DCWorkflow.Guard"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16374.2">
+        <item>
+            <key><string id="16374.3" encoding="">permissions</string></key>
+            <value>
+              <tuple id="16374.5">
+                  <string id="16374.4" encoding="">Request review</string>
+              </tuple>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16217" aka="AAAAAAAAP1k=">
+    <pickle>
+      <global id="16217.1" name="Guard" module="Products.DCWorkflow.Guard"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16217.2">
+        <item>
+            <key><string id="16217.3" encoding="">permissions</string></key>
+            <value>
+              <tuple id="16217.5">
+                  <string id="16217.4" encoding="">Request review</string>
+              </tuple>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16062" aka="AAAAAAAAPr4=">
+    <pickle>
+      <global id="16062.1" name="PersistentMapping" module="Persistence.mapping"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16062.2">
+        <item>
+            <key><string id="16062.3" encoding="">data</string></key>
+            <value>
+              <dictionary id="16062.4"/>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16371" aka="AAAAAAAAP/M=">
+    <pickle>
+      <global id="16371.1" name="Guard" module="Products.DCWorkflow.Guard"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16371.2">
+        <item>
+            <key><string id="16371.3" encoding="">permissions</string></key>
+            <value>
+              <tuple id="16371.5">
+                  <string id="16371.4" encoding="">Review portal content</string>
+              </tuple>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16059" aka="AAAAAAAAPrs=">
+    <pickle>
+      <global id="16059.1" name="Guard" module="Products.DCWorkflow.Guard"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16059.2">
+        <item>
+            <key><string id="16059.3" encoding="">permissions</string></key>
+            <value>
+              <tuple id="16059.4">
+                  <string encoding="">Request review</string>
+              </tuple>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+  <record id="16060" aka="AAAAAAAAPrw=">
+    <pickle>
+      <global id="16060.1" name="PersistentMapping" module="Persistence.mapping"/>
+    </pickle>
+    <pickle>
+      <dictionary id="16060.2">
+        <item>
+            <key><string id="16060.3" encoding="">data</string></key>
+            <value>
+              <dictionary id="16060.4"/>
+            </value>
+        </item>
+      </dictionary>
+    </pickle>
+  </record>
+</ZopeData>
