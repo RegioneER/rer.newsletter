@@ -72,7 +72,8 @@
     for="rer.newsletter.interfaces.INewsletter"
     permission="zope2.View"
     class=".newsletter.manageusers.ManageUsers">
-       <browser:page name="exportUsersList" attribute="exportUsersList" />
+       <browser:page name="exportUsersListAsFile" attribute="exportUsersListAsFile" />
+       <browser:page name="exportUsersListAsJson" attribute="exportUsersListAsJson" />
   </browser:pages>
-  
+
 </configure>

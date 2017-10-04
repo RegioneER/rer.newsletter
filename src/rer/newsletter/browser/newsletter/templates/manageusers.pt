@@ -29,6 +29,38 @@
             <button type='button'>Export Users List</button>
           </span>
 
+          <span id="add-user">
+            <button type='button'>Add User</button>
+            <a href="subscribe_newsletter" class="plone-btn plone-btn-large plone-btn-primary pat-plone-modal"
+                    data-pat-plone-modal="width: '770px',height: '430px'," style="display: none;">
+            </a>
+          </span>
+
+          <table id="users-table" class="display" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>filippo.campi@redturtle.it</td>
+              </tr>
+              <tr>
+                <td>filippo.campi@redturtle.it</td>
+              </tr>
+              <tr>
+                <td>filippo.campi@redturtle.it</td>
+              </tr>
+              <tr>
+                <td>filippo.campi@redturtle.it</td>
+              </tr>
+              <tr>
+                <td>filippo.campi@redturtle.it</td>
+              </tr>
+            </tbody>
+          </table>
+
         </div>
       </metal:main-macro>
     </metal:main>
