@@ -26,32 +26,33 @@ class AddForm(add.DefaultAddForm):
         data, errors = self.extractData()
 
         # controllo se presente l'id della newsletter
-        if not data['INewsletter.id_newsletter']:
+        if not data['INewsletter.idNewsletter']:
             generator = getUtility(IUUIDGenerator)
             uuid = generator()
-            newsletter = data['INewsletter.id_newsletter'] = uuid
+            newsletter = data['INewsletter.idNewsletter'] = uuid
 
         # validazione dei campi della form
         # calcolo id della newsletter che viene creata
         # chiamo l'utility per la creazione della newsletter
         try:
             api = getUtility(INewsletterUtility)
-            status = api.addNewsletter(data['INewsletter.id_newsletter'])
+            status = api.addNewsletter(data['INewsletter.idNewsletter'])
 
             obj = self.createAndAdd(data)
+
+            if obj:
+                self._finishedAdd = True
+                # setto il messaggio di inserimento andato a buon fine
+                IStatusMessage(self.request).addStatusMessage(
+                    dmf(u"Item created"), "info")
+            else:
+                self.status = u"Ouch .... {}".format(status)
+
         except:
             logger.exception('unhandled error adding newsletter %s %s',
                              newsletter)
             self.errors = u"Problem with adding"
             status = UNHANDLED
-
-        if obj is not None:
-            self._finishedAdd = True
-            # setto il messaggio di inserimento andato a buon fine
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(u"Item created"), "info")
-        else:
-            self.status = u"Ouch .... {}".format(status)
 
 
 class AddView(add.DefaultAddView):

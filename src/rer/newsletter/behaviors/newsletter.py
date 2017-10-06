@@ -15,16 +15,16 @@ from zope.interface import Invalid
 import re
 
 
-def mailValidation(mailList):
+def mailValidation(mail):
 
-    for mail in mailList:
-        # valido la mail
-        match = re.match(
-            '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
-            mail
-        )
-        if match is None:
-            raise Invalid(u"Una o piu delle mail inserite non sono valide")
+    # valido la mail
+    match = re.match(
+        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+        mail
+    )
+    if match is None:
+        raise Invalid(u"Una o piu delle mail inserite non sono valide")
+
     return True
 
 
@@ -44,7 +44,7 @@ class INewsletter(model.Schema):
                 'header',
                 'footer',
                 'css_style',
-                'id_newsletter',
+                'idNewsletter',
                ]
     )
 
@@ -60,7 +60,7 @@ class INewsletter(model.Schema):
         description=_("description_sender_email",
                       default="Email of sender"),
         required=False,
-        constraint=mailValidation
+        # constraint=mailValidation
     )
 
     subject_email = schema.TextLine(
@@ -75,7 +75,7 @@ class INewsletter(model.Schema):
         description=_("description_response_email",
                       default="Response email of newsletter"),
         required=False,
-        constraint=mailValidation
+        # constraint=mailValidation
     )
 
     header = RichTextField(
@@ -102,8 +102,10 @@ class INewsletter(model.Schema):
     )
 
     # probabilemente un campo che va nascosto
-    id_newsletter = schema.TextLine(
-        title=_("id_newsletter", default="Newsletter's ID"),
+    idNewsletter = schema.TextLine(
+        title=_("idNewsletter", default="Newsletter's ID"),
+        description=_("description_IDNewsletter",
+                      "Newsletter's ID"),
         required=False
     )
 
