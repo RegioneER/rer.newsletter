@@ -25,13 +25,20 @@ class ManageUsers(BrowserView):
         pass
 
     def exportUsersListAsJson(self):
-        response = {}
-        data = []
-        data.append('filippo.campi@redturtle.it')
-        data.append('filippo.campi@redturtle.it')
-        data.append('filippo.campi@redturtle.it')
-        data.append('filippo.campi@redturtle.it')
-        data.append('filippo.campi@redturtle.it')
+        # questa funzione andra a chiedere all'unitily di mailman
+        # gli utenti da listare
+        # torna dati formattati per datatables
 
-        response['data'] = data
+        response = []
+
+        element = {}
+        element['id'] = 1
+        element['Emails'] = 'filippo.campi@redturtle.it'
+        response.append(element)
+
+        element = {}
+        element['id'] = 2
+        element['Emails'] = 'giacomo.monari@redturtle.it'
+        response.append(element)
+
         return json.dumps(response)

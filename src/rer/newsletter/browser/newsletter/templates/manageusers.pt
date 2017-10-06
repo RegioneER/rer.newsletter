@@ -18,47 +18,32 @@
         <div id="content-core">
           <h1>Gestione degli Utenti</h1>
 
-          <span id="users-import">
-            <button type='button'>Import Users List</button>
-            <a href="users_import" class="plone-btn plone-btn-large plone-btn-primary pat-plone-modal"
-                    data-pat-plone-modal="width: '770px',height: '430px'," style="display: none;">
-            </a>
-          </span>
+          <div style="margin-bottom: 2%;">
+            <span id="users-import">
+              <button type='button'>Import Users List</button>
+              <a href="users_import" class="plone-btn plone-btn-large plone-btn-primary pat-plone-modal"
+                      data-pat-plone-modal="width: '770px',height: '430px'," style="display: none;">
+              </a>
+            </span>
 
-          <span id="users-export">
-            <button type='button'>Export Users List</button>
-          </span>
+            <span id="users-export">
+              <button type='button'>Export Users List</button>
+            </span>
 
-          <span id="add-user">
-            <button type='button'>Add User</button>
-            <a href="subscribe_newsletter" class="plone-btn plone-btn-large plone-btn-primary pat-plone-modal"
-                    data-pat-plone-modal="width: '770px',height: '430px'," style="display: none;">
-            </a>
-          </span>
+            <span id="add-user">
+              <button type='button'>Add User</button>
+              <a href="subscribe_newsletter" class="plone-btn plone-btn-large plone-btn-primary pat-plone-modal"
+                      data-pat-plone-modal="width: '770px',height: '430px'," style="display: none;">
+              </a>
+            </span>
+          </div>
 
           <table id="users-table" class="display" cellspacing="0" width="100%">
             <thead>
               <tr>
-                <th>Email</th>
+                <th>Emails</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>filippo.campi@redturtle.it</td>
-              </tr>
-              <tr>
-                <td>filippo.campi@redturtle.it</td>
-              </tr>
-              <tr>
-                <td>filippo.campi@redturtle.it</td>
-              </tr>
-              <tr>
-                <td>filippo.campi@redturtle.it</td>
-              </tr>
-              <tr>
-                <td>filippo.campi@redturtle.it</td>
-              </tr>
-            </tbody>
           </table>
 
         </div>

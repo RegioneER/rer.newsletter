@@ -22,19 +22,34 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
     });
   });
 
-  function renderTables(d){
-    var t = $('#users-table').DataTable({
-      "ajax": d,
+  function populateTables(data){
+    $('#users-table').DataTable({
+      "ajax": {
+            "url": "exportUsersListAsJson",
+            "dataSrc": ""
+        },
+      "columns": [
+            { "data": "Emails" },
+        ]
     });
   }
 
   $(document).ready(function() {
-    // chiamata ajax per riempire la tabella
-    $.ajax({
-      url: "exportUsersListAsJson"
-    })
-    .done(function(data){
-      renderTables(data);
+    // // chiamata ajax per riempire la tabella
+    // $.ajax({
+    //   url: "exportUsersListAsJson"
+    // })
+    // .done(function(data){
+    //   populateTables(data);
+    // });
+    $('#users-table').DataTable({
+      "ajax": {
+            "url": "exportUsersListAsJson",
+            "dataSrc": ""
+        },
+      "columns": [
+            { "data": "Emails" },
+        ]
     });
   });
 });
