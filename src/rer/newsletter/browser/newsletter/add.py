@@ -2,7 +2,6 @@ from plone.dexterity.browser import add
 from z3c.form import button
 from zope.component import getUtility
 
-# logger
 from rer.newsletter import logger
 
 # utility
@@ -49,8 +48,7 @@ class AddForm(add.DefaultAddForm):
                 self.status = u"Ouch .... {}".format(status)
 
         except:
-            logger.exception('unhandled error adding newsletter %s %s',
-                             newsletter)
+            logger.exception('unhandled error adding newsletter %s', newsletter)
             self.errors = u"Problem with adding"
             status = UNHANDLED
 
