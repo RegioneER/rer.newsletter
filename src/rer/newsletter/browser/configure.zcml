@@ -74,6 +74,7 @@
     class=".newsletter.manageusers.ManageUsers">
        <browser:page name="exportUsersListAsFile" attribute="exportUsersListAsFile" />
        <browser:page name="exportUsersListAsJson" attribute="exportUsersListAsJson" />
+       <browser:page name="deleteUserFromNewsletter" attribute="deleteUserFromNewsletter" />
   </browser:pages>
 
 </configure>

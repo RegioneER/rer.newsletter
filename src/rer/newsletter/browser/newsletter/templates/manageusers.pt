@@ -36,6 +36,10 @@
                       data-pat-plone-modal="width: '770px',height: '430px'," style="display: none;">
               </a>
             </span>
+
+            <span id="delete-user">
+              <button type='button'>Delete User</button>
+            </span>
           </div>
 
           <table id="users-table" class="display" cellspacing="0" width="100%">

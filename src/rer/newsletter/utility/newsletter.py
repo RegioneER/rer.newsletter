@@ -112,3 +112,34 @@ class INewsletterUtility(Interface):
 
         Raised:
         """
+
+    def deleteUser(mail, newsletter):
+        """
+        delete a user from newsletter
+
+        Args:
+            mail (str): email
+            newsletter (str): newsletter id
+
+        Returns:
+            int OK (1) if succesful,
+                INVALID_NEWSLETTER (5) newsletter not found,
+                INVALID_EMAIL (3) user's email not found.
+
+        Raised:
+        """
+
+    def exportUsersList(newsletter):
+        """
+        export all user of newsletter
+
+        Args:
+            newsletter (str): newsletter id
+
+        Returns:
+            (List and Status together)
+            list of string List of email if succesful,
+            Int INVALID_NEWSLETTER (5) newsletter not found.
+
+        Raised:
+        """

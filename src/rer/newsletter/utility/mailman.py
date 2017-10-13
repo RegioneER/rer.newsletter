@@ -6,7 +6,9 @@ from zope.interface import implements
 
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import ALREADY_SUBSCRIBED, SUBSCRIBED
+from rer.newsletter.utility.newsletter import ALREADY_SUBSCRIBED, SUBSCRIBED, OK
+
+import json
 
 # TODO: move to p.a.registry or zope.conf
 # Please note that port ‘9001’ is used above, since mailman’s test server
@@ -77,3 +79,23 @@ class MailmanHandler(object):
     def emptyNewsletterUsersList(self, newsletter):
         logger.info("DEBUG: emptyNewsletterUsersList %s", newsletter)
         return True
+
+    def deleteUser(self, mail, newsletter):
+        logger.info("DEBUG: delete user %s from newsletter %s", mail, newsletter)
+        return True
+
+    def exportUsersList(self, newsletter):
+        logger.info("DEBUG: export users of newsletter: %s", newsletter)
+        response = []
+
+        element = {}
+        element['id'] = 1
+        element['Emails'] = 'filippo.campi@redturtle.it'
+        response.append(element)
+
+        element = {}
+        element['id'] = 2
+        element['Emails'] = 'giacomo.monari@redturtle.it'
+        response.append(element)
+
+        return json.dumps(response), OK

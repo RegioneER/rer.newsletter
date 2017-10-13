@@ -5,6 +5,8 @@ require.config({
 });
 requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, datatables){
 
+  var table = null;
+
   $('#users-import > button').on('click', function(){
     $('#users-import > a').click();
   });
@@ -18,31 +20,42 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
       url: "exportUsersListAsFile"
     })
     .done(function(data){
-      debugger;
+
+      var blob = new Blob(["\ufeff", data]);
+      var url = URL.createObjectURL(blob);
+
+      var downloadLink = document.createElement("a");
+      downloadLink.href = url;
+      downloadLink.download = "data.csv";
+
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+
     });
   });
 
-  function populateTables(data){
-    $('#users-table').DataTable({
-      "ajax": {
-            "url": "exportUsersListAsJson",
-            "dataSrc": ""
-        },
-      "columns": [
-            { "data": "Emails" },
-        ]
+  $('#delete-user > button').on('click', function(){
+    $.ajax({
+      url: "deleteUserFromNewsletter",
+      type: "post",
+      data: {
+        email: table.row('.selected').data().Emails
+      }
+    })
+    .done(function(data){
+      if (JSON.parse(data).ok){
+        table.row('.selected').remove().draw( false );
+      }
+      else{
+        alert("problem with user's delete");
+      }
     });
-  }
+  });
 
   $(document).ready(function() {
-    // // chiamata ajax per riempire la tabella
-    // $.ajax({
-    //   url: "exportUsersListAsJson"
-    // })
-    // .done(function(data){
-    //   populateTables(data);
-    // });
-    $('#users-table').DataTable({
+    // inizializzazione datatables
+    table = $('#users-table').DataTable({
       "ajax": {
             "url": "exportUsersListAsJson",
             "dataSrc": ""
@@ -51,5 +64,16 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
             { "data": "Emails" },
         ]
     });
+
+    $('#users-table tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+
   });
 });
