@@ -72,11 +72,12 @@ class MailmanHandler(object):
         logger.info("DEBUG: addNewsletter %s", newsletter)
         return True
 
-    def importUsersList(self, usersList):
-        logger.info("DEBUG: userslist %s", usersList)
+    def importUsersList(self, usersList, newsletter):
+        logger.info("DEBUG: import userslist %s in %s", usersList, newsletter)
         return True
 
     def emptyNewsletterUsersList(self, newsletter):
+        # vedere logica per eliminazione dell'intera lista di utenti di una nl
         logger.info("DEBUG: emptyNewsletterUsersList %s", newsletter)
         return True
 
@@ -99,3 +100,7 @@ class MailmanHandler(object):
         response.append(element)
 
         return json.dumps(response), OK
+
+    def deleteUserList(self, usersList, newsletter):
+        logger.info("DEBUG: delete userslist %s from %s", usersList, newsletter)
+        return True

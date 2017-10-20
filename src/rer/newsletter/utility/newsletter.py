@@ -94,7 +94,8 @@ class INewsletterUtility(Interface):
 
         Returns:
             int: OK (1) if succesful,
-                 FILE_FORMAT (7) if incorrect format file.
+                 INVALID_NEWSLETTER (5) newsletter not found,
+                 INVALID_EMAIL (3) user's email not found.
 
         Raised:
         """
@@ -127,6 +128,20 @@ class INewsletterUtility(Interface):
                 INVALID_EMAIL (3) user's email not found.
 
         Raised:
+        """
+
+    def deleteUserList(usersList, newsletter):
+        """
+        delete a usersList from newsletter
+
+        Args:
+            usersList (list): email
+            newsletter (str): newsletter id
+
+        Returns:
+            int OK (1) if succesful,
+                INVALID_NEWSLETTER (5) newsletter not found,
+                INVALID_EMAIL (3) user's email not found.
         """
 
     def exportUsersList(newsletter):
