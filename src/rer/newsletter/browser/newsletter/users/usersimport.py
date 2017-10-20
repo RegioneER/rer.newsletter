@@ -72,6 +72,7 @@ class UsersImport(form.Form):
             quotechar="\""
         )
 
+        index = 0
         if headerline:
             header = reader.next()
 
@@ -144,3 +145,5 @@ class UsersImport(form.Form):
             self.status = u"Thank you very much!"
         else:
             self.status = u"Ouch .... {}".format(self.status)
+
+        return
