@@ -12,6 +12,10 @@ from rer.newsletter.utility.newsletter import UNHANDLED
 
 from plone import api
 
+# messaggi standard della form di dexterity
+from Products.statusmessages.interfaces import IStatusMessage
+from plone.dexterity.i18n import MessageFactory as dmf
+
 
 def mailValidation(mail):
     # TODO
@@ -62,9 +66,14 @@ class SubscribeForm(form.Form):
                 mail
             )
             self.errors = u"Problem with subscribe"
-            status = UNHANDLED
 
         if status == SUBSCRIBED:
             self.status = u"Thank you very much!"
+            IStatusMessage(self.request).addStatusMessage(
+                dmf(self.status), "info")
+            return
         else:
             self.status = u"Ouch .... {}".format(status)
+            IStatusMessage(self.request).addStatusMessage(
+                dmf(self.errors + ' status: ' + self.status), "error")
+            return

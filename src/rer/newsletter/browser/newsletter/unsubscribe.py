@@ -4,6 +4,10 @@ from z3c.form import button, form, field
 from rer.newsletter.utility.newsletter import INewsletterUtility
 from zope.component import getUtility
 
+# messaggi standard della form di dexterity
+from Products.statusmessages.interfaces import IStatusMessage
+from plone.dexterity.i18n import MessageFactory as dmf
+
 
 def mailValidation(mail):
     # TODO
@@ -40,6 +44,12 @@ class UnsubscribeForm(form.Form):
             mh.unsubscribe(self.request['form.widgets.mail'])
         except Exception:
             self.errors = "Problem with subscribe"
+            IStatusMessage(self.request).addStatusMessage(
+                dmf(self.errors), "error")
+            return
 
         # Set status on this form page
         self.status = "Thank you very much!"
+        IStatusMessage(self.request).addStatusMessage(
+            dmf(self.status), "info")
+        return

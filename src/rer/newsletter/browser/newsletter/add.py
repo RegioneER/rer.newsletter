@@ -41,6 +41,7 @@ class AddForm(add.DefaultAddForm):
 
             if obj:
                 self._finishedAdd = True
+                self.status = OK
                 # setto il messaggio di inserimento andato a buon fine
                 IStatusMessage(self.request).addStatusMessage(
                     dmf(u"Item created"), "info")
@@ -50,7 +51,15 @@ class AddForm(add.DefaultAddForm):
         except:
             logger.exception('unhandled error adding newsletter %s', newsletter)
             self.errors = u"Problem with adding"
-            status = UNHANDLED
+            self.status = UNHANDLED
+
+        if self.status == OK:
+            return
+        elif self.status == UNHANDLED:
+            IStatusMessage(self.request).addStatusMessage(
+                dmf(self.errors + 'status: ' + str(status)), "error")
+            return
+
 
 
 class AddView(add.DefaultAddView):
