@@ -3,6 +3,7 @@ from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter.utility.newsletter import OK, ALREADY_SUBSCRIBED, INVALID_NEWSLETTER, INVALID_EMAIL, INEXISTENT_EMAIL, MAIL_NOT_PRESENT
 import json
+import re
 
 # api
 from plone import api
@@ -65,7 +66,7 @@ class BaseHandler(object):
 
         for user in usersList:
             if user not in self.annotations:
-                    self.annotations.append(user)
+                self.annotations.append(user)
 
         # catch exception
         return OK

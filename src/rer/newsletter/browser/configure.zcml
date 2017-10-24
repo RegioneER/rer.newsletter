@@ -77,4 +77,13 @@
        <browser:page name="deleteUserFromNewsletter" attribute="deleteUserFromNewsletter" />
   </browser:pages>
 
+  <!-- view for message preview -->
+  <browser:page
+    for="rer.newsletter.interfaces.IMessage"
+    name="messagepreview_view"
+    class=".message.messagepreview.MessagePreview"
+    template="message/templates/messagepreview.pt"
+    permission="zope2.View"
+    />
+
 </configure>
