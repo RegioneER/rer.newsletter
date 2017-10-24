@@ -41,6 +41,7 @@ class SubscribeForm(form.Form):
 
     @button.buttonAndHandler(u"subscribe")
     def handleSave(self, action):
+        status = UNHANDLED
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage
@@ -73,7 +74,9 @@ class SubscribeForm(form.Form):
                 dmf(self.status), "info")
             return
         else:
-            self.status = u"Ouch .... {}".format(status)
+            if 'errors' not in self.__dict__.keys():
+                self.errors = u"Ouch .... {}".format(status)
+
             IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors + ' status: ' + self.status), "error")
+                dmf(self.errors), "error")
             return

@@ -39,7 +39,7 @@ class ManageUsers(BrowserView):
 
         try:
             email = self.request['email']
-            newsletter = self.context.idNewsletter
+            newsletter = self.context.id_newsletter
 
             api_newsletter = getUtility(INewsletterUtility)
             status = api_newsletter.deleteUser(newsletter, email)
@@ -52,7 +52,7 @@ class ManageUsers(BrowserView):
             self.errors = u"Problem with subscribe"
             status = UNHANDLED
             IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors + 'status: ' + str(status)), "error")
+                dmf(self.errors + '. status: ' + str(status)), "error")
             return
 
         response = {}
@@ -66,7 +66,7 @@ class ManageUsers(BrowserView):
     def exportUsersListAsFile(self):
 
         try:
-            newsletter = self.context.idNewsletter
+            newsletter = self.context.id_newsletter
 
             api_newsletter = getUtility(INewsletterUtility)
             userList, status = api_newsletter.exportUsersList(newsletter)
@@ -78,7 +78,7 @@ class ManageUsers(BrowserView):
             self.errors = u"Problem with export"
             status = UNHANDLED
             IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors + 'status: ' + str(status)), "error")
+                dmf(self.errors + '. status: ' + str(status)), "error")
             return
 
         if status == OK:
@@ -105,7 +105,7 @@ class ManageUsers(BrowserView):
     def exportUsersListAsJson(self):
 
         try:
-            newsletter = self.context.idNewsletter
+            newsletter = self.context.id_newsletter
 
             api_newsletter = getUtility(INewsletterUtility)
             userList, status = api_newsletter.exportUsersList(newsletter)
@@ -117,7 +117,7 @@ class ManageUsers(BrowserView):
             self.errors = u"Problem with export"
             status = UNHANDLED
             IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors + 'status: ' + str(status)), "error")
+                dmf(self.errors + '. status: ' + str(status)), "error")
             return
 
         if status == OK:

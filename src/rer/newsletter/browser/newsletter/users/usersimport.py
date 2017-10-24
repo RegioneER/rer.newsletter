@@ -107,7 +107,7 @@ class UsersImport(form.Form):
             # devo svuotare la lista di utenti della newsletter
             if data['emptyList']:
                 self.status = api_newsletter.emptyNewsletterUsersList(
-                    self.context.idNewsletter
+                    self.context.id_newsletter
                 )
 
             csv_file = data['userListFile'].data
@@ -124,14 +124,14 @@ class UsersImport(form.Form):
                 # chiamo l'api per rimuovere l'intera lista di utenti
                 self.status = api_newsletter.deleteUserList(
                     usersList,
-                    self.context.idNewsletter
+                    self.context.id_newsletter
                 )
 
             else:
                 # mi connetto con le api di mailman
                 self.status = api_newsletter.importUsersList(
                     usersList,
-                    self.context.idNewsletter
+                    self.context.id_newsletter
                 )
 
         except:
