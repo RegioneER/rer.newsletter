@@ -50,11 +50,13 @@ class SubscribeForm(form.Form):
         try:
 
             # TODO
+            # questo valore va preso dal contesto in cui mi trovo....
             newsletter = u'newsletter@example.org'
             mail = data['mail']
 
             # controllo se la newsletter è attiva
             # se la newsletter non è attiva non faccio nemmeno vedere la form
+            # controllare perche il raise di Exception non viene catchato dal try except in cui mi trovo
             if not api.content.get_state(obj=self.context) == 'activated':
                 raise Exception('Newsletter not activated')
 
