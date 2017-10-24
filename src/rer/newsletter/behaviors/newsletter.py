@@ -44,7 +44,7 @@ class INewsletter(model.Schema):
                 'header',
                 'footer',
                 'css_style',
-                'idNewsletter',
+                'id_newsletter',
                ]
     )
 
@@ -102,7 +102,7 @@ class INewsletter(model.Schema):
     )
 
     # probabilemente un campo che va nascosto
-    idNewsletter = schema.TextLine(
+    id_newsletter = schema.TextLine(
         title=_("idNewsletter", default="Newsletter's ID"),
         description=_("description_IDNewsletter",
                       "Newsletter's ID"),

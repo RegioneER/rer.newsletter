@@ -8,6 +8,10 @@ from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import OK, UNHANDLED, INVALID_NEWSLETTER
 
+# messaggi standard della form di dexterity
+from Products.statusmessages.interfaces import IStatusMessage
+from plone.dexterity.i18n import MessageFactory as dmf
+
 import StringIO
 import csv
 
@@ -79,19 +83,20 @@ class UsersImport(form.Form):
             # leggo solo la colonna della email
             index = None
             for i in range(0, len(header)):
-                if header[i].decode("utf-8") == "email":
+                if header[i].decode("utf-8-sig") == "email":
                     index = i
             if index is None:
                 raise RuntimeError("CSV data does not have column:" + "email")
 
         usersList = []
         for row in reader:
-            usersList.append(row[index].decode("utf-8"))
+            usersList.append(row[index].decode("utf-8-sig"))
 
         return usersList
 
     @button.buttonAndHandler(u"charge")
     def handleSave(self, action):
+        status = UNHANDLED
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage
@@ -106,8 +111,8 @@ class UsersImport(form.Form):
 
             # devo svuotare la lista di utenti della newsletter
             if data['emptyList']:
-                self.status = api_newsletter.emptyNewsletterUsersList(
-                    self.context.idNewsletter
+                status = api_newsletter.emptyNewsletterUsersList(
+                    self.context.id_newsletter
                 )
 
             csv_file = data['userListFile'].data
@@ -122,16 +127,16 @@ class UsersImport(form.Form):
             # invece di importarla
             if data['removeSubscribers'] and not data['emptyList']:
                 # chiamo l'api per rimuovere l'intera lista di utenti
-                self.status = api_newsletter.deleteUserList(
+                status = api_newsletter.deleteUserList(
                     usersList,
-                    self.context.idNewsletter
+                    self.context.id_newsletter
                 )
 
             else:
                 # mi connetto con le api di mailman
-                self.status = api_newsletter.importUsersList(
+                status = api_newsletter.importUsersList(
                     usersList,
-                    self.context.idNewsletter
+                    self.context.id_newsletter
                 )
 
         except:
@@ -139,11 +144,15 @@ class UsersImport(form.Form):
                 'unhandled error users import'
             )
             self.errors = u"Problem with subscribe"
-            self.status = UNHANDLED
 
-        if self.status == OK:
-            self.status = u"Thank you very much!"
+        if status == OK:
+            status = u"Thank you very much!"
+            IStatusMessage(self.request).addStatusMessage(
+                dmf(status), "info")
         else:
-            self.status = u"Ouch .... {}".format(self.status)
+            if 'errors' not in self.__dict__.keys():
+                self.errors = u"Ouch .... {}".format(status)
+            IStatusMessage(self.request).addStatusMessage(
+                dmf(self.errors), "error")
 
         return

@@ -12,6 +12,10 @@ from rer.newsletter.utility.newsletter import UNHANDLED
 
 from plone import api
 
+# messaggi standard della form di dexterity
+from Products.statusmessages.interfaces import IStatusMessage
+from plone.dexterity.i18n import MessageFactory as dmf
+
 
 def mailValidation(mail):
     # TODO
@@ -37,6 +41,7 @@ class SubscribeForm(form.Form):
 
     @button.buttonAndHandler(u"subscribe")
     def handleSave(self, action):
+        status = UNHANDLED
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage
@@ -62,9 +67,16 @@ class SubscribeForm(form.Form):
                 mail
             )
             self.errors = u"Problem with subscribe"
-            status = UNHANDLED
 
         if status == SUBSCRIBED:
             self.status = u"Thank you very much!"
+            IStatusMessage(self.request).addStatusMessage(
+                dmf(self.status), "info")
+            return
         else:
-            self.status = u"Ouch .... {}".format(status)
+            if 'errors' not in self.__dict__.keys():
+                self.errors = u"Ouch .... {}".format(status)
+
+            IStatusMessage(self.request).addStatusMessage(
+                dmf(self.errors), "error")
+            return

@@ -11,13 +11,16 @@ ALREADY_SUBSCRIBED = 2
 INVALID_EMAIL = 3
 
 # unsubscribe
-INEXISTENT_MAIL = 4
+INEXISTENT_EMAIL = 4
 
 # add newsletter
 NEWSLETTER_USED = 6
 
 # import usersList
 FILE_FORMAT = 7
+
+# delete user
+MAIL_NOT_PRESENT = 8
 
 
 class INewsletterUtility(Interface):
@@ -125,7 +128,7 @@ class INewsletterUtility(Interface):
         Returns:
             int OK (1) if succesful,
                 INVALID_NEWSLETTER (5) newsletter not found,
-                INVALID_EMAIL (3) user's email not found.
+                MAIL_NOT_PRESENT (8) mail not present.
 
         Raised:
         """
@@ -141,7 +144,7 @@ class INewsletterUtility(Interface):
         Returns:
             int OK (1) if succesful,
                 INVALID_NEWSLETTER (5) newsletter not found,
-                INVALID_EMAIL (3) user's email not found.
+                MAIL_NOT_PRESENT (8 user's email not found.
         """
 
     def exportUsersList(newsletter):

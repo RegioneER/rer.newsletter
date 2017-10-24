@@ -2,7 +2,13 @@ from zope.interface import Interface
 from zope import schema
 from z3c.form import button, form, field
 from rer.newsletter.utility.newsletter import INewsletterUtility
+from rer.newsletter.utility.newsletter import OK, UNHANDLED
 from zope.component import getUtility
+from rer.newsletter import logger
+
+# messaggi standard della form di dexterity
+from Products.statusmessages.interfaces import IStatusMessage
+from plone.dexterity.i18n import MessageFactory as dmf
 
 
 def mailValidation(mail):
@@ -29,6 +35,7 @@ class UnsubscribeForm(form.Form):
 
     @button.buttonAndHandler(u"unsubscribe")
     def handleSave(self, action):
+        status = UNHANDLED
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage
@@ -36,10 +43,29 @@ class UnsubscribeForm(form.Form):
 
         # Do something with valid data here
         try:
-            mh = getUtility(INewsletterUtility)
-            mh.unsubscribe(self.request['form.widgets.mail'])
+            # TODO
+            mail = ''
+            newsletter = ''
+
+            utility = getUtility(INewsletterUtility)
+            status = utility.unsubscribe(self.request['form.widgets.mail'])
         except Exception:
+            logger.exception(
+                'unhandled error subscribing %s %s',
+                newsletter,
+                mail
+            )
             self.errors = "Problem with subscribe"
 
-        # Set status on this form page
-        self.status = "Thank you very much!"
+        if status == OK:
+            self.status = "Thank you very much!"
+            IStatusMessage(self.request).addStatusMessage(
+                dmf(self.status), "info")
+            return
+        else:
+            if 'errors' not in self.__dict__.keys():
+                self.errors = u"Ouch .... {}".format(status)
+
+            IStatusMessage(self.request).addStatusMessage(
+                dmf(self.errors), "error")
+            return
