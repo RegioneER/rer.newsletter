@@ -18,6 +18,14 @@
       directory="static"
       />
 
+  <!-- vista form per aggiungere singoli utenti alla newsletter, lato admin -->
+  <browser:page
+      for="rer.newsletter.interfaces.INewsletter"
+      name="adduser_newsletter"
+      permission="zope2.View"
+      class=".newsletter.users.add.AddForm"
+      />
+
   <!-- vista form per iscrizione newsletter -->
   <browser:page
       for="rer.newsletter.interfaces.INewsletter"
@@ -83,6 +91,14 @@
     name="messagepreview_view"
     class=".message.messagepreview.MessagePreview"
     template="message/templates/messagepreview.pt"
+    permission="zope2.View"
+    />
+
+  <!-- view for sending proof of message -->
+  <browser:page
+    for="rer.newsletter.interfaces.IMessage"
+    name="sendingproof_view"
+    class=".message.sendingproof.message_sending_proof"
     permission="zope2.View"
     />
 

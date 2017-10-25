@@ -43,6 +43,7 @@ setup(
         'setuptools',
         'z3c.jbot',
         'mailmanclient>=3.1',
+        'premailer==3.1.1',
     ],
     extras_require={
         'test': [

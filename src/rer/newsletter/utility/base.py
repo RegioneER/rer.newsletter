@@ -10,7 +10,16 @@ from plone import api
 
 # annotations
 from persistent.list import PersistentList
+from persistent.dict import PersistentDict
 from zope.annotation.interfaces import IAnnotations
+
+# for calculate email uuid
+from zope.component import getUtility
+from plone.uuid.interfaces import IUUIDGenerator
+
+# datetime
+from datetime import datetime
+
 KEY = "rer.newsletter.subscribers"
 
 
@@ -48,7 +57,7 @@ class BaseHandler(object):
         annotations = IAnnotations(nl[0].getObject())
         if KEY not in annotations.keys():
             # inizializzo l'annotations
-            annotations[KEY] = PersistentList()
+            annotations[KEY] = PersistentList([PersistentDict()])
         self.annotations = annotations[KEY]
 
         return nl[0].getObject()
@@ -64,9 +73,18 @@ class BaseHandler(object):
             if not mailValidation(user):
                 return INVALID_EMAIL
 
+        # calculate new uuid for email
+        generator = getUtility(IUUIDGenerator)
+        uuid = generator()
+
         for user in usersList:
             if user not in self.annotations:
-                self.annotations.append(user)
+                self.annotations.append({
+                    'email': user,
+                    'is_active': True,
+                    'token': uuid,
+                    'creation_date': datetime.today().strftime('%d/%m/%Y %H:%M:%S'),
+                })
 
         # catch exception
         return OK
@@ -82,7 +100,9 @@ class BaseHandler(object):
         for user in self.annotations:
             element = {}
             element['id'] = c
-            element['Emails'] = user
+            element['email'] = user['email']
+            element['is_active'] = user['is_active']
+            element['creation_date'] = user['creation_date']
             response.append(element)
             c += 1
 
@@ -95,7 +115,17 @@ class BaseHandler(object):
             return INVALID_NEWSLETTER
 
         try:
-            self.annotations.remove(mail)
+            element_id = None
+            for user in self.annotations:
+                if user['email'] == mail:
+                    element_id = user['id']
+                    break
+
+            # elimino persona dalla newsletter
+            if element_id:
+                self.annotations.pop(element_id)
+            else:
+                raise ValueError
         except ValueError:
             return MAIL_NOT_PRESENT
 
@@ -110,7 +140,17 @@ class BaseHandler(object):
 
         for user in usersList:
             try:
-                self.annotations.remove(user)
+                element_id = None
+                for u in self.annotations:
+                    if user['email'] == user:
+                        element_id = user['id']
+                        break
+
+                if element_id:
+                    self.annotations.pop(element_id)
+                else:
+                    raise ValueError
+
             except ValueError:
                 # to handle
                 pass
@@ -134,7 +174,18 @@ class BaseHandler(object):
             return INVALID_NEWSLETTER
 
         try:
-            self.annotations.remove(mail)
+            element_id = None
+            for user in self.annotations:
+                if user['email'] == mail:
+                    element_id = user['id']
+                    break
+
+            # elimino persona dalla newsletter
+            if element_id:
+                self.annotations.pop(element_id)
+            else:
+                raise ValueError
+
         except ValueError:
             return INEXISTENT_EMAIL
 
@@ -150,8 +201,18 @@ class BaseHandler(object):
         if not mailValidation(mail):
             return INVALID_EMAIL
 
+        # calculate new uuid for email
+        generator = getUtility(IUUIDGenerator)
+        uuid = generator()
+
         if mail not in self.annotations:
-            self.annotations.append(mail)
+            self.annotations.append({
+                'email': mail,
+                'is_active': False,
+                'token': uuid,
+                'creation_date': datetime.today().strftime('%d/%m/%Y %H:%M:%S')
+            })
+
         else:
             return ALREADY_SUBSCRIBED
 

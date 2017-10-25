@@ -10,8 +10,6 @@ from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter.utility.newsletter import SUBSCRIBED
 from rer.newsletter.utility.newsletter import UNHANDLED
 
-from plone import api
-
 # messaggi standard della form di dexterity
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.dexterity.i18n import MessageFactory as dmf
@@ -32,23 +30,23 @@ def mailValidation(mail):
     return True
 
 
-class ISubscribeForm(Interface):
-    ''' define field for newsletter subscription '''
+class IAddForm(Interface):
+    ''' define field for add user to newsletter '''
 
     email = schema.TextLine(
-        title=u"subscription mail",
-        description=u"mail for subscribe to newsletter",
+        title=u"add user",
+        description=u"mail for add user to newsletter",
         required=True,
         constraint=mailValidation
     )
 
 
-class SubscribeForm(form.Form):
+class AddForm(form.Form):
 
     ignoreContext = True
-    fields = field.Fields(ISubscribeForm)
+    fields = field.Fields(IAddForm)
 
-    @button.buttonAndHandler(u"subscribe")
+    @button.buttonAndHandler(u"add")
     def handleSave(self, action):
         status = UNHANDLED
         data, errors = self.extractData()
@@ -58,27 +56,23 @@ class SubscribeForm(form.Form):
 
         try:
 
-            if self.context.portal_type == 'Newsletter':
-                newsletter = self.context.id_newsletter
-            email = data['email']
-
-            # controllo se la newsletter è attiva
-            # se la newsletter non è attiva non faccio nemmeno vedere la form
-            if not api.content.get_state(obj=self.context) == 'activated':
-                raise Exception('Newsletter not activated')
+            # TODO
+            # questo valore va preso dal contesto in cui mi trovo....
+            newsletter = self.context.id_newsletter
+            mail = data['email']
 
             api_newsletter = getUtility(INewsletterUtility)
-            status = api_newsletter.subscribe(newsletter, email)
+            status = api_newsletter.subscribe(newsletter, mail)
         except:
             logger.exception(
-                'unhandled error subscribing %s %s',
+                'unhandled error adding %s %s',
                 newsletter,
-                email
+                mail
             )
-            self.errors = u"Problem with subscribe"
+            self.errors = u"Problem with add user"
 
         if status == SUBSCRIBED:
-            self.status = u"Thank you very much!"
+            self.status = u"user added!"
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.status), "info")
             return

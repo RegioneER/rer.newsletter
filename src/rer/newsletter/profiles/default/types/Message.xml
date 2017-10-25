@@ -50,4 +50,12 @@
     url_expr="string:${object_url}/edit" visible="True">
   <permission value="Modify portal content"/>
  </action>
+ <action title="Message Preview" action_id="messagepreview_view" category="object" condition_expr=""
+    url_expr="string:${object_url}/messagepreview_view" visible="True">
+    <permission value="Message Preview" />
+  </action>
+  <action title="Message Sending Proof" action_id="sendingproof_view" category="object" condition_expr=""
+     url_expr="string:${object_url}/sendingproof_view" visible="True">
+     <permission value="Message Sending Proof" />
+   </action>
 </object>

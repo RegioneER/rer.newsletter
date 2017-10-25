@@ -84,10 +84,13 @@ class ManageUsers(BrowserView):
         if status == OK:
             # predisporre download del file
             data = StringIO.StringIO()
-            fieldnames = ['id', 'Emails']
+            fieldnames = ['id', 'email', 'is_active', 'creation_date']
             writer = csv.DictWriter(data, fieldnames=fieldnames)
 
             writer.writeheader()
+            # TODO
+            # controllare literal...
+            import pdb; pdb.set_trace()
             userList = ast.literal_eval(userList)
             for user in userList:
                 writer.writerow(user)

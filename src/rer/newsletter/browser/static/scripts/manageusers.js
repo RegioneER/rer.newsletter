@@ -40,7 +40,7 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
       url: "deleteUserFromNewsletter",
       type: "post",
       data: {
-        email: table.row('.selected').data().Emails
+        email: table.row('.selected').data().email
       }
     })
     .done(function(data){
@@ -61,7 +61,7 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
             "dataSrc": ""
         },
       "columns": [
-            { "data": "Emails" },
+            { "data": "email" },
         ]
     });
 
