@@ -111,4 +111,21 @@
     permission="zope2.View"
     />
 
+  <!-- default view for newsletter -->
+  <browser:page
+    for="rer.newsletter.interfaces.INewsletter"
+    name="newsletter_view"
+    class=".newsletter.newsletterview.NewsletterView"
+    template="newsletter/templates/newsletterview.pt"
+    permission="zope2.View"
+    />
+
+  <!-- default view for message -->
+  <browser:page
+    for="rer.newsletter.interfaces.IMessage"
+    name="message_view"
+    class=".message.messageview.MessageView"
+    template="message/templates/messageview.pt"
+    permission="zope2.View"
+    />
 </configure>

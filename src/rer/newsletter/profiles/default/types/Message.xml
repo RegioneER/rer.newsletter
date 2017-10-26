@@ -12,8 +12,9 @@
  <property name="allowed_content_types">
  </property>
  <property name="allow_discussion">False</property>
- <property name="default_view">view</property>
+ <property name="default_view">message_view</property>
  <property name="view_methods">
+  <element value="message_view" />
   <element value="view" />
  </property>
  <property name="default_view_fallback">False</property>
