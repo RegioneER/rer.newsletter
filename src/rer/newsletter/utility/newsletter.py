@@ -22,9 +22,30 @@ FILE_FORMAT = 7
 # delete user
 MAIL_NOT_PRESENT = 8
 
+# user's activation
+ALREADY_ACTIVE = 9
+INVALID_SECRET = 10
+
 
 class INewsletterUtility(Interface):
     """ """
+
+    def activeUser(newsletter, secret):
+        """
+        Active user
+
+        Args:
+            newsletter (str): newsletter id,
+            secret (str): token for activation
+
+        Returns:
+            int: OK (1) if succesful,
+                 ALREADY_ACTIVE (9),
+                 INVALID_NEWSLETTER (5) newsletter not found,
+                 INVALID_SECRET (10) problem with secret.
+
+        Raises:
+        """
 
     def addUser(newsletter, mail):
         """
@@ -39,6 +60,7 @@ class INewsletterUtility(Interface):
                  ALREADY_SUBSCRIBED (2),
                  INVALID_NEWSLETTER (5) newsletter not found,
                  INVALID_EMAIL (3) problem with mail.
+            str: secret for autenticate user.
 
         Raises:
         """

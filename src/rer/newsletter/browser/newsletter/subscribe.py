@@ -10,7 +10,12 @@ from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter.utility.newsletter import SUBSCRIBED
 from rer.newsletter.utility.newsletter import UNHANDLED
 
+from plone.protect.authenticator import createToken
+
 from plone import api
+
+# eccezioni per mail
+from smtplib import SMTPRecipientsRefused
 
 # messaggi standard della form di dexterity
 from Products.statusmessages.interfaces import IStatusMessage
@@ -56,6 +61,7 @@ class SubscribeForm(form.Form):
             self.status = self.formErrorsMessage
             return
 
+        email = None
         try:
 
             if self.context.portal_type == 'Newsletter':
@@ -68,7 +74,7 @@ class SubscribeForm(form.Form):
                 raise Exception('Newsletter not activated')
 
             api_newsletter = getUtility(INewsletterUtility)
-            status = api_newsletter.subscribe(newsletter, email)
+            status, secret = api_newsletter.subscribe(newsletter, email)
         except:
             logger.exception(
                 'unhandled error subscribing %s %s',
@@ -77,15 +83,39 @@ class SubscribeForm(form.Form):
             )
             self.errors = u"Problem with subscribe"
 
-        if status == SUBSCRIBED:
-            self.status = u"Thank you very much!"
+        try:
+            if status == SUBSCRIBED:
+
+                # creo il token CSRF
+                token = createToken()
+
+                # mando mail di conferma
+                message = "clicca per attivazione: " + self.context.absolute_url() + '/confirmsubscription_view?secret=' + secret + '&_authenticator=' + token
+
+                mailHost = api.portal.get_tool(name='MailHost')
+                mailHost.send(
+                    message,
+                    mto=email,
+                    mfrom='noreply@rer.it',
+                    subject='Email di attivazione',
+                    charset='utf-8',
+                    msg_type='text/plain',
+                    immediate=True
+                    )
+
+                self.status = u"Thank you very much!"
+                IStatusMessage(self.request).addStatusMessage(
+                    dmf(self.status), "info")
+                return
+            else:
+                raise Exception
+
+        except SMTPRecipientsRefused:
             IStatusMessage(self.request).addStatusMessage(
-                dmf(self.status), "info")
-            return
-        else:
+                dmf("Problem with sendind of email"), "error")
+        except:
             if 'errors' not in self.__dict__.keys():
                 self.errors = u"Ouch .... {}".format(status)
 
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.errors), "error")
-            return

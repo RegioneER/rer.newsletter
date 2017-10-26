@@ -154,5 +154,3 @@ class UsersImport(form.Form):
                 self.errors = u"Ouch .... {}".format(status)
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.errors), "error")
-
-        return

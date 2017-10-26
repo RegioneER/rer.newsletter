@@ -102,4 +102,13 @@
     permission="zope2.View"
     />
 
+  <!-- view for active user -->
+  <browser:page
+    for="rer.newsletter.interfaces.INewsletter"
+    name="confirmsubscription_view"
+    class=".newsletter.users.confirmsubscription.ConfirmSubscription"
+    template="newsletter/templates/confirmsubscription.pt"
+    permission="zope2.View"
+    />
+
 </configure>

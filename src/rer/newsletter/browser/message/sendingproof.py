@@ -113,11 +113,9 @@ class MessageSendingProof(form.Form):
         if 'errors' in self.__dict__.keys():
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.errors), "error")
-            return
         else:
             IStatusMessage(self.request).addStatusMessage(
                 dmf("Messaggio inviato correttamente!"), "info")
-            return
 
 
 message_sending_proof = wrap_form(

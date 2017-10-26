@@ -1,7 +1,7 @@
 from zope.interface import implements
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import OK, ALREADY_SUBSCRIBED, INVALID_NEWSLETTER, INVALID_EMAIL, INEXISTENT_EMAIL, MAIL_NOT_PRESENT
+from rer.newsletter.utility.newsletter import OK, ALREADY_SUBSCRIBED, INVALID_NEWSLETTER, INVALID_EMAIL, INEXISTENT_EMAIL, MAIL_NOT_PRESENT, INVALID_SECRET, ALREADY_ACTIVE
 import json
 import re
 
@@ -29,6 +29,13 @@ def mailValidation(mail):
         '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
         mail
     )
+    if match is None:
+        return False
+    return True
+
+
+def uuidValidation(uuid):
+    match = re.match('[0-9a-f]{32}\Z', uuid)
     if match is None:
         return False
     return True
@@ -63,10 +70,38 @@ class BaseHandler(object):
         annotations = IAnnotations(nl[0].getObject())
         if KEY not in annotations.keys():
             # inizializzo l'annotations
-            annotations[KEY] = PersistentList([PersistentDict()])
+            annotations[KEY] = PersistentList([])
         self.annotations = annotations[KEY]
 
         return nl[0].getObject()
+
+    def activeUser(self, newsletter, secret):
+        logger.info("DEBUG: active user in %s", newsletter)
+        nl = self._api(newsletter)
+        if not nl:
+            return INVALID_NEWSLETTER
+
+        # valido il secret
+        if not uuidValidation(secret):
+            return INVALID_SECRET
+
+        # attivo l'utente
+        count = 0
+        element_id = None
+        for user in self.annotations:
+            if user['token'] == secret:
+                if user['is_active']:
+                    return ALREADY_ACTIVE
+                else:
+                    element_id = count
+                    break
+            count += 1
+
+        if element_id is not None:
+            self.annotations[element_id]['is_active'] = True
+            return OK
+        else:
+            return INVALID_SECRET
 
     def importUsersList(self, usersList, newsletter):
         logger.info("DEBUG: import userslist %s in %s", usersList, newsletter)
@@ -86,12 +121,12 @@ class BaseHandler(object):
 
         for user in usersList:
             if user not in self.annotations:
-                self.annotations.append({
+                self.annotations.append(PersistentDict({
                     'email': user,
                     'is_active': True,
                     'token': uuid,
                     'creation_date': datetime.today().strftime('%d/%m/%Y %H:%M:%S'),
-                })
+                }))
 
         # catch exception
         return OK
@@ -221,12 +256,12 @@ class BaseHandler(object):
             if (mail == user['email'] and user['is_active']) or (mail == user['email'] and not user['is_active'] and isCreationDateExpired(user['creation_date'])):
                 return ALREADY_SUBSCRIBED
         else:
-            self.annotations.append({
+            self.annotations.append(PersistentDict({
                 'email': mail,
                 'is_active': True,
                 'token': uuid,
                 'creation_date': datetime.today().strftime('%d/%m/%Y %H:%M:%S')
-            })
+            }))
 
         return OK
 
@@ -235,10 +270,10 @@ class BaseHandler(object):
         nl = self._api(newsletter)
 
         if not nl:
-            return INVALID_NEWSLETTER
+            return INVALID_NEWSLETTER, None
 
         if not mailValidation(mail):
-            return INVALID_EMAIL
+            return INVALID_EMAIL, None
 
         # calculate new uuid for email
         generator = getUtility(IUUIDGenerator)
@@ -246,16 +281,16 @@ class BaseHandler(object):
 
         for user in self.annotations:
             if (mail == user['email'] and user['is_active']) or (mail == user['email'] and not user['is_active'] and isCreationDateExpired(user['creation_date'])):
-                return ALREADY_SUBSCRIBED
+                return ALREADY_SUBSCRIBED, None
         else:
-            self.annotations.append({
+            self.annotations.append(PersistentDict({
                 'email': mail,
                 'is_active': False,
                 'token': uuid,
                 'creation_date': datetime.today().strftime('%d/%m/%Y %H:%M:%S')
-            })
+            }))
 
-        return OK
+        return OK, uuid
 
     def sendMessage(self, newsletter, message):
         logger.info("DEBUG: sendMessage %s %s", newsletter, message)

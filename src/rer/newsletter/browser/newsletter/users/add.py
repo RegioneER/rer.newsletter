@@ -75,11 +75,9 @@ class AddForm(form.Form):
             self.status = u"user added!"
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.status), "info")
-            return
         else:
             if 'errors' not in self.__dict__.keys():
                 self.errors = u"Ouch .... {}".format(status)
 
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.errors), "error")
-            return

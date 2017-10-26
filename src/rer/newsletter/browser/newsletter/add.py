@@ -55,12 +55,9 @@ class AddForm(add.DefaultAddForm):
             self.errors = u"Problem with adding"
             self.status = UNHANDLED
 
-        if self.status == OK:
-            return
-        elif self.status == UNHANDLED:
+        if self.status == UNHANDLED:
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.errors + '. status: ' + str(status)), "error")
-            return
 
 
 class AddView(add.DefaultAddView):
