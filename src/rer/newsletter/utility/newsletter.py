@@ -26,6 +26,23 @@ MAIL_NOT_PRESENT = 8
 class INewsletterUtility(Interface):
     """ """
 
+    def addUser(newsletter, mail):
+        """
+        Add user to newsletter from Admin side
+
+        Args:
+            newsletter (str): newsletter id,
+            mail (str): email address
+
+        Returns:
+            int: OK (1) if succesful,
+                 ALREADY_SUBSCRIBED (2),
+                 INVALID_NEWSLETTER (5) newsletter not found,
+                 INVALID_EMAIL (3) problem with mail.
+
+        Raises:
+        """
+
     def subscribe(newsletter, mail):
         """
         Subscribe to newsletter

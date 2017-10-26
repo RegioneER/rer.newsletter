@@ -18,8 +18,8 @@ from Products.CMFPlone.resources import add_bundle_on_request
 import csv
 import StringIO
 
+# json
 import json
-import ast
 
 
 class IManageUsers(Interface):
@@ -88,11 +88,9 @@ class ManageUsers(BrowserView):
             writer = csv.DictWriter(data, fieldnames=fieldnames)
 
             writer.writeheader()
-            # TODO
-            # controllare literal...
-            import pdb; pdb.set_trace()
-            userList = ast.literal_eval(userList)
-            for user in userList:
+
+            userListJson = json.loads(userList)
+            for user in userListJson:
                 writer.writerow(user)
 
             filename = "%s-user-list.csv" % self.context.title

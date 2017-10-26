@@ -61,7 +61,9 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
             "dataSrc": ""
         },
       "columns": [
-            { "data": "email" },
+            { "data": "email"},
+            { "data": "creation_date"},
+            { "data": "is_active"}
         ]
     });
 

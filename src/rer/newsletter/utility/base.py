@@ -18,13 +18,12 @@ from zope.component import getUtility
 from plone.uuid.interfaces import IUUIDGenerator
 
 # datetime
-from datetime import datetime
+from datetime import datetime, timedelta
 
 KEY = "rer.newsletter.subscribers"
 
 
 def mailValidation(mail):
-
     # valido la mail
     match = re.match(
         '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
@@ -33,6 +32,13 @@ def mailValidation(mail):
     if match is None:
         return False
     return True
+
+
+def isCreationDateExpired(creation_date):
+    # settare una data di scadenza di configurazione
+    if (datetime.today() - datetime.strptime(creation_date, '%d/%m/%Y %H:%M:%S')) < timedelta(days=2):
+        return True
+    return False
 
 
 class BaseHandler(object):
@@ -69,6 +75,7 @@ class BaseHandler(object):
             return INVALID_NEWSLETTER
 
         # controllo che tutte le mail siano valide
+        # come mi devo comportare se ci sono mail che non sono valide ?
         for user in usersList:
             if not mailValidation(user):
                 return INVALID_EMAIL
@@ -116,13 +123,15 @@ class BaseHandler(object):
 
         try:
             element_id = None
+            count = 0
             for user in self.annotations:
                 if user['email'] == mail:
-                    element_id = user['id']
+                    element_id = count
                     break
+                count += 1
 
             # elimino persona dalla newsletter
-            if element_id:
+            if element_id is not None:
                 self.annotations.pop(element_id)
             else:
                 raise ValueError
@@ -141,15 +150,15 @@ class BaseHandler(object):
         for user in usersList:
             try:
                 element_id = None
+                count = 0
                 for u in self.annotations:
-                    if user['email'] == user:
-                        element_id = user['id']
+                    if u['email'] == user:
+                        element_id = count
                         break
+                    count += 1
 
-                if element_id:
+                if element_id is not None:
                     self.annotations.pop(element_id)
-                else:
-                    raise ValueError
 
             except ValueError:
                 # to handle
@@ -175,19 +184,49 @@ class BaseHandler(object):
 
         try:
             element_id = None
+            count = 0
             for user in self.annotations:
                 if user['email'] == mail:
-                    element_id = user['id']
+                    element_id = count
                     break
+                count += 1
 
             # elimino persona dalla newsletter
-            if element_id:
+            if element_id is not None:
                 self.annotations.pop(element_id)
             else:
                 raise ValueError
 
         except ValueError:
             return INEXISTENT_EMAIL
+
+        return OK
+
+    def addUser(self, newsletter, mail):
+        logger.info("DEBUG: add user: %s %s", newsletter, mail)
+        nl = self._api(newsletter)
+
+        if not nl:
+            return INVALID_NEWSLETTER
+
+        if not mailValidation(mail):
+            return INVALID_EMAIL
+
+        # calculate new uuid for email
+        generator = getUtility(IUUIDGenerator)
+        uuid = generator()
+
+        # controllo che la mail non sia gia presente e attiva nel db
+        for user in self.annotations:
+            if (mail == user['email'] and user['is_active']) or (mail == user['email'] and not user['is_active'] and isCreationDateExpired(user['creation_date'])):
+                return ALREADY_SUBSCRIBED
+        else:
+            self.annotations.append({
+                'email': mail,
+                'is_active': True,
+                'token': uuid,
+                'creation_date': datetime.today().strftime('%d/%m/%Y %H:%M:%S')
+            })
 
         return OK
 
@@ -205,16 +244,16 @@ class BaseHandler(object):
         generator = getUtility(IUUIDGenerator)
         uuid = generator()
 
-        if mail not in self.annotations:
+        for user in self.annotations:
+            if (mail == user['email'] and user['is_active']) or (mail == user['email'] and not user['is_active'] and isCreationDateExpired(user['creation_date'])):
+                return ALREADY_SUBSCRIBED
+        else:
             self.annotations.append({
                 'email': mail,
                 'is_active': False,
                 'token': uuid,
                 'creation_date': datetime.today().strftime('%d/%m/%Y %H:%M:%S')
             })
-
-        else:
-            return ALREADY_SUBSCRIBED
 
         return OK
 

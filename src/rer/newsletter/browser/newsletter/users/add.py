@@ -62,7 +62,7 @@ class AddForm(form.Form):
             mail = data['email']
 
             api_newsletter = getUtility(INewsletterUtility)
-            status = api_newsletter.subscribe(newsletter, mail)
+            status = api_newsletter.addUser(newsletter, mail)
         except:
             logger.exception(
                 'unhandled error adding %s %s',
