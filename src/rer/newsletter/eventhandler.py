@@ -19,7 +19,6 @@ def changeMessageState(message, event):
             utility = getUtility(INewsletterUtility)
             utility.sendMessage(message.aq_parent.id_newsletter, message)
 
-        # queste eccezioni devono tornare come status message, non bloccare il programma
         except SMTPRecipientsRefused:
             raise SMTPRecipientsRefused(u"Problemi con l'invio del messaggio")
         except Exception:
