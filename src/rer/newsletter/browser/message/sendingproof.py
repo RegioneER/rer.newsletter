@@ -71,6 +71,7 @@ class MessageSendingProof(form.Form):
             messagePreview = ''
 
             messagePreview = nl.header.raw
+            messagePreview += '<style> ' + nl.css_style + '</style>'
             messagePreview += self.context.text.raw
             messagePreview += nl.footer.raw
 

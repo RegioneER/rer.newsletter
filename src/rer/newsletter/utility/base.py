@@ -20,6 +20,12 @@ from plone.uuid.interfaces import IUUIDGenerator
 # datetime
 from datetime import datetime, timedelta
 
+# premailer
+from premailer import transform
+
+# eccezioni per mail
+from smtplib import SMTPRecipientsRefused
+
 KEY = "rer.newsletter.subscribers"
 
 
@@ -293,9 +299,46 @@ class BaseHandler(object):
         return OK, uuid
 
     def sendMessage(self, newsletter, message):
-        logger.info("DEBUG: sendMessage %s %s", newsletter, message)
+        logger.info("DEBUG: sendMessage %s %s", newsletter, message.title)
+
         nl = self._api(newsletter)
         if not nl:
             return INVALID_NEWSLETTER
+
+        # costruisco il messaggio
+        email = ''
+
+        email = nl.header.raw
+        email += '<style> ' + nl.css_style + '</style>'
+        email += message.text.raw
+        email += nl.footer.raw
+
+        email = transform(email)
+
+        # risolvo tutti gli uuid
+        resolveuid = re.findall('(?<=resolveuid\/)(.*?)(?=\/)', email)
+        catalog = api.portal.get_tool(name='portal_catalog')
+        # controllare se in questo modo viene perfetta sempre
+        for uuid in resolveuid:
+            res = catalog.unrestrictedSearchResults(UID=uuid)
+            if res:
+                email = email.replace(
+                    '../resolveuid/' + uuid, res[0].getURL()
+                )
+
+        try:
+            # invio la mail ad ogni utente
+            for user in self.annotations:
+                mailHost = api.portal.get_tool(name='MailHost')
+                mailHost.send(
+                    email,
+                    mto=user['email'],
+                    mfrom='noreply@rer.it',
+                    subject=nl.title,
+                    charset='utf-8',
+                    msg_type='text/html'
+                    )
+        except SMTPRecipientsRefused:
+            raise SMTPRecipientsRefused
 
         return OK

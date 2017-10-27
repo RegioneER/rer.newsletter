@@ -19,7 +19,9 @@
       <body>
         <metal:main fill-slot="main">
           <metal:main-macro define-macro="main">
-            <div id="content-core">
+            <div id="content-core" tal:define="text view/getMessageText">
+              <p tal:replace="structure text">
+              </p>
             </div>
           </metal:main-macro>
         </metal:main>
