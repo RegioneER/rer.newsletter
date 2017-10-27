@@ -12,19 +12,18 @@
       </metal:block>
 
       <!-- disattivo le portlet in questa view -->
-      <metal:override fill-slot="top_slot"
+      <!-- <metal:override fill-slot="top_slot"
           tal:define="disable_column_one python:request.set('disable_plone.leftcolumn',1);
-                      disable_column_two python:request.set('disable_plone.rightcolumn',1);"/>
+                      disable_column_two python:request.set('disable_plone.rightcolumn',1);"/> -->
 
-      <body>
-        <metal:main fill-slot="main">
-          <metal:main-macro define-macro="main">
-            <div id="content-core" tal:define="text view/getMessageText">
-              <p tal:replace="structure text">
-              </p>
-            </div>
-          </metal:main-macro>
-        </metal:main>
-      </body>
+      <metal:content-core fill-slot="content-core">
+      <metal:content-core define-macro="content-core"
+                          tal:define="toc context/table_of_contents|nothing;">
+        <div id="parent-fieldname-text"
+            tal:condition="context/text"
+            tal:content="structure python:context.text.output_relative_to(view.context)"
+            tal:attributes="class python: toc and 'pat-autotoc' or ''" />
+      </metal:content-core>
+      </metal:content-core>
 
 </html>
