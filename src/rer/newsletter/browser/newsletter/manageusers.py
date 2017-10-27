@@ -122,7 +122,6 @@ class ManageUsers(BrowserView):
             status = UNHANDLED
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.errors + '. status: ' + str(status)), "error")
-            return
 
         if status == OK:
             return userList

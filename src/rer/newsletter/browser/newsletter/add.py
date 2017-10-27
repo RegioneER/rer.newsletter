@@ -14,7 +14,6 @@ from plone.uuid.interfaces import IUUIDGenerator
 
 # messaggi standard della form di dexterity
 from Products.statusmessages.interfaces import IStatusMessage
-from plone.dexterity.i18n import MessageFactory as dmf
 
 # messageFactory
 from rer.newsletter import newsletterMessageFactory as _
@@ -37,6 +36,7 @@ class AddForm(add.DefaultAddForm):
         # validazione dei campi della form
         # calcolo id della newsletter che viene creata
         # chiamo l'utility per la creazione della newsletter
+        response = IStatusMessage(self.request)
         try:
             # TODO
             # devo tenere comunque la chiamata ?
@@ -49,11 +49,12 @@ class AddForm(add.DefaultAddForm):
             if obj:
                 self._finishedAdd = True
                 self.status = OK
+
                 # setto il messaggio di inserimento andato a buon fine
-                IStatusMessage(self.request).addStatusMessage(
-                    dmf(_(u"add_newsletter", default="Newsletter Created")), "info")
+                response.add(_(u"add_newsletter", default="Newsletter Created"), type=u'info')
             else:
                 self.status = u"Ouch .... {}".format(status)
+                response.add(self.status, type=u'error')
 
         except:
             logger.exception('unhandled error adding newsletter %s', newsletter)
@@ -61,8 +62,7 @@ class AddForm(add.DefaultAddForm):
             self.status = UNHANDLED
 
         if self.status == UNHANDLED:
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors + '. status: ' + str(status)), "error")
+            response.add(self.errors + '. status: ' + str(status), type=u'error')
 
 
 class AddView(add.DefaultAddView):

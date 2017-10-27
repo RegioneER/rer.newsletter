@@ -21,6 +21,9 @@ from premailer import transform
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.dexterity.i18n import MessageFactory as dmf
 
+# Invalid
+from zope.interface import Invalid
+
 # constraint
 import re
 
@@ -32,8 +35,7 @@ def mailValidation(mail):
         mail
     )
     if match is None:
-        return False
-
+        raise Invalid(_(u"generic_problem_email_validation", default=u"Una o piu delle mail inserite non sono valide"))
     return True
 
 

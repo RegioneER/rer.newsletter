@@ -23,8 +23,7 @@ def mailValidation(mail):
         mail
     )
     if match is None:
-        raise Invalid(u"Una o piu delle mail inserite non sono valide")
-
+        raise Invalid(_(u"generic_problem_email_validation", default=u"Una o piu delle mail inserite non sono valide"))
     return True
 
 

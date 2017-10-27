@@ -19,7 +19,9 @@ from smtplib import SMTPRecipientsRefused
 
 # messaggi standard della form di dexterity
 from Products.statusmessages.interfaces import IStatusMessage
-from plone.dexterity.i18n import MessageFactory as dmf
+
+# Invalid
+from zope.interface import Invalid
 
 # constraint
 import re
@@ -32,8 +34,7 @@ def mailValidation(mail):
         mail
     )
     if match is None:
-        return False
-
+        raise Invalid(_(u"generic_problem_email_validation", default=u"Una o piu delle mail inserite non sono valide"))
     return True
 
 
@@ -83,6 +84,7 @@ class SubscribeForm(form.Form):
             )
             self.errors = _(u"generic_probleme_subscribe_user", default=u"Problem with subscribe user")
 
+        response = IStatusMessage(self.request)
         try:
             if status == SUBSCRIBED:
 
@@ -103,18 +105,15 @@ class SubscribeForm(form.Form):
                     immediate=True
                     )
 
-                self.status = _(u"status_user_subscribed", default=u"User Subscribed")
-                IStatusMessage(self.request).addStatusMessage(
-                    dmf(self.status), "info")
+                response.add(_(u"status_user_subscribed", default=u"User Subscribed"), type=u'info')
+
             else:
                 raise Exception
 
         except SMTPRecipientsRefused:
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(_(u"generic_problem_send_email", default=u"Problem with sendind of email")), "error")
+            response.add(_(u"generic_problem_send_email", default=u"Problem with sendind of email"), type=u'error')
         except:
             if 'errors' not in self.__dict__.keys():
                 self.errors = u"Ouch .... {}".format(status)
 
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors), "error")
+            response.add(self.errors, type=u'error')

@@ -26,6 +26,9 @@ from premailer import transform
 # eccezioni per mail
 from smtplib import SMTPRecipientsRefused
 
+# Invalid
+from zope.interface import Invalid
+
 KEY = "rer.newsletter.subscribers"
 
 
@@ -36,7 +39,7 @@ def mailValidation(mail):
         mail
     )
     if match is None:
-        return False
+        raise Invalid(_(u"generic_problem_email_validation", default=u"Una o piu delle mail inserite non sono valide"))
     return True
 
 

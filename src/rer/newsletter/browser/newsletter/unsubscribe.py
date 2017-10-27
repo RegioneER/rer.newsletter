@@ -10,7 +10,9 @@ from rer.newsletter import newsletterMessageFactory as _
 
 # messaggi standard della form di dexterity
 from Products.statusmessages.interfaces import IStatusMessage
-from plone.dexterity.i18n import MessageFactory as dmf
+
+# Invalid
+from zope.interface import Invalid
 
 import re
 
@@ -22,8 +24,7 @@ def mailValidation(mail):
         mail
     )
     if match is None:
-        return False
-
+        raise Invalid(_(u"generic_problem_email_validation", default=u"Una o piu delle mail inserite non sono valide"))
     return True
 
 
@@ -52,6 +53,7 @@ class UnsubscribeForm(form.Form):
             return
 
         email = None
+        response = IStatusMessage(self.request)
         try:
             if self.context.portal_type == 'Newsletter':
                 newsletter = self.context.id_newsletter
@@ -67,15 +69,11 @@ class UnsubscribeForm(form.Form):
                 newsletter,
                 email
             )
-            self.errors = _(u"generic_problem_unsubscribe", default=u"Problem with unsubscribe user")
+            response.add(_(u"generic_problem_unsubscribe", default=u"Problem with unsubscribe user"), type=u'error')
 
         if status == OK:
-            self.status = _("user_unsubscribe_success", default=u"User unsubscribed")
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(self.status), "info")
+            response.add(_("user_unsubscribe_success", default=u"User unsubscribed"), type=u'info')
         else:
             if 'errors' not in self.__dict__.keys():
                 self.errors = u"Ouch .... {}".format(status)
-
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors), "error")
+            response.add(self.errors, type=u'error')
