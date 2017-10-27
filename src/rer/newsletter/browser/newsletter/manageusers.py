@@ -21,6 +21,9 @@ import StringIO
 # json
 import json
 
+# messageFactory
+from rer.newsletter import newsletterMessageFactory as _
+
 
 class IManageUsers(Interface):
     pass
@@ -49,7 +52,7 @@ class ManageUsers(BrowserView):
                 newsletter,
                 email
             )
-            self.errors = u"Problem with subscribe"
+            self.errors = _(u"generic_problem_delete_user", default=u"Problem with delete of user from newsletter")
             status = UNHANDLED
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.errors + '. status: ' + str(status)), "error")
@@ -75,7 +78,7 @@ class ManageUsers(BrowserView):
                 'unhandled error on export of user %s',
                 newsletter
             )
-            self.errors = u"Problem with export"
+            self.errors = _(u"generic_problem_export_file", default=u"Problem with export of user to file")
             status = UNHANDLED
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.errors + '. status: ' + str(status)), "error")

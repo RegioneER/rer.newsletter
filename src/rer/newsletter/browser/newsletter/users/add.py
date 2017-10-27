@@ -34,8 +34,8 @@ class IAddForm(Interface):
     ''' define field for add user to newsletter '''
 
     email = schema.TextLine(
-        title=u"add user",
-        description=u"mail for add user to newsletter",
+        title=_(u"add_user_admin", default=u"Add User"),
+        description=_(u"add_user_admin_description", default=u"Insert email for add user to Newsletter"),
         required=True,
         constraint=mailValidation
     )
@@ -46,7 +46,7 @@ class AddForm(form.Form):
     ignoreContext = True
     fields = field.Fields(IAddForm)
 
-    @button.buttonAndHandler(u"add")
+    @button.buttonAndHandler(_(u"add_user_admin_button", default=u"Add"))
     def handleSave(self, action):
         status = UNHANDLED
         data, errors = self.extractData()
@@ -69,10 +69,10 @@ class AddForm(form.Form):
                 newsletter,
                 mail
             )
-            self.errors = u"Problem with add user"
+            self.errors = _(u"generic_problem_add_user", default=u"Problem with add user")
 
         if status == SUBSCRIBED:
-            self.status = u"user added!"
+            self.status = _(u"status_user_added", default=u"User Added")
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.status), "info")
         else:

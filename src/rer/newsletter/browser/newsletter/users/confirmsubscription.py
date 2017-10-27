@@ -7,6 +7,9 @@ from rer.newsletter.utility.newsletter import OK
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.dexterity.i18n import MessageFactory as dmf
 
+# messageFactory
+from rer.newsletter import newsletterMessageFactory as _
+
 # disable CSRF
 # from plone.protect.interfaces import IDisableCSRFProtection
 # from zope.interface import alsoProvides
@@ -31,7 +34,7 @@ class ConfirmSubscription(BrowserView):
 
         status = IStatusMessage(self.request)
         if response == OK:
-            status.add(u'User activated', type=u'info')
+            status.add(_(u"user_activated", default=u"User Activated"), type=u'info')
         else:
             status.add(u"Ouch .... {}".format(response), type=u'error')
 

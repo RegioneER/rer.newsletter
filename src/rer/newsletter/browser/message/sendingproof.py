@@ -41,8 +41,8 @@ class IMessageSendingProof(Interface):
     ''' define field for sending proof of newsletter '''
 
     email = schema.TextLine(
-        title=u"email",
-        description=u"email to send the test message",
+        title=_(u"Email", default="Email"),
+        description=_(u"email_sendingproof_description", default=u"Email to send the test message"),
         required=True,
         constraint=mailValidation
     )
@@ -53,7 +53,7 @@ class MessageSendingProof(form.Form):
     ignoreContext = True
     fields = field.Fields(IMessageSendingProof)
 
-    @button.buttonAndHandler(u"send")
+    @button.buttonAndHandler(_("send_sendingproof", default="Send"))
     def handleSave(self, action):
         data, errors = self.extractData()
         if errors:

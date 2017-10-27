@@ -6,23 +6,33 @@ from rer.newsletter.utility.newsletter import OK, UNHANDLED
 from zope.component import getUtility
 from rer.newsletter import logger
 
+from rer.newsletter import newsletterMessageFactory as _
+
 # messaggi standard della form di dexterity
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.dexterity.i18n import MessageFactory as dmf
 
+import re
+
 
 def mailValidation(mail):
-    # TODO
-    # check if mail was valid
+    # valido la mail
+    match = re.match(
+        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+        mail
+    )
+    if match is None:
+        return False
+
     return True
 
 
 class IUnsubscribeForm(Interface):
     ''' define field for newsletter unsubscription '''
 
-    mail = schema.TextLine(
-        title=u"unsubscription mail",
-        description=u"mail for unsubscribe from newsletter",
+    email = schema.TextLine(
+        title=_(u"unsubscribe_email_title", default=u"Unsubscription Email"),
+        description=_(u"unsubscribe_email_description", default=u"Mail for unsubscribe from newsletter"),
         required=True,
         constraint=mailValidation
     )
@@ -33,7 +43,7 @@ class UnsubscribeForm(form.Form):
     ignoreContext = True
     fields = field.Fields(IUnsubscribeForm)
 
-    @button.buttonAndHandler(u"unsubscribe")
+    @button.buttonAndHandler(_(u"unsubscribe_button", default="Unsubscribe"))
     def handleSave(self, action):
         status = UNHANDLED
         data, errors = self.extractData()
@@ -41,24 +51,26 @@ class UnsubscribeForm(form.Form):
             self.status = self.formErrorsMessage
             return
 
-        # Do something with valid data here
+        email = None
         try:
-            # TODO
-            mail = ''
-            newsletter = ''
+            if self.context.portal_type == 'Newsletter':
+                newsletter = self.context.id_newsletter
+            email = data['email']
+
+            # controllo se e possibile disinscriversi
 
             utility = getUtility(INewsletterUtility)
-            status = utility.unsubscribe(self.request['form.widgets.mail'])
+            status = utility.unsubscribe(newsletter, email)
         except Exception:
             logger.exception(
                 'unhandled error subscribing %s %s',
                 newsletter,
-                mail
+                email
             )
-            self.errors = "Problem with subscribe"
+            self.errors = _(u"generic_problem_unsubscribe", default=u"Problem with unsubscribe user")
 
         if status == OK:
-            self.status = "Thank you very much!"
+            self.status = _("user_unsubscribe_success", default=u"User unsubscribed")
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.status), "info")
         else:

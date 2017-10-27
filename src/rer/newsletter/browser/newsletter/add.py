@@ -16,6 +16,9 @@ from plone.uuid.interfaces import IUUIDGenerator
 from Products.statusmessages.interfaces import IStatusMessage
 from plone.dexterity.i18n import MessageFactory as dmf
 
+# messageFactory
+from rer.newsletter import newsletterMessageFactory as _
+
 
 class AddForm(add.DefaultAddForm):
 
@@ -35,6 +38,8 @@ class AddForm(add.DefaultAddForm):
         # calcolo id della newsletter che viene creata
         # chiamo l'utility per la creazione della newsletter
         try:
+            # TODO
+            # devo tenere comunque la chiamata ?
             # se non uso mailman questo non serve
             # api = getUtility(INewsletterUtility)
             # status = api.addNewsletter(data['INewsletter.idNewsletter'])
@@ -46,13 +51,13 @@ class AddForm(add.DefaultAddForm):
                 self.status = OK
                 # setto il messaggio di inserimento andato a buon fine
                 IStatusMessage(self.request).addStatusMessage(
-                    dmf(u"Item created"), "info")
+                    dmf(_(u"add_newsletter", default="Newsletter Created")), "info")
             else:
                 self.status = u"Ouch .... {}".format(status)
 
         except:
             logger.exception('unhandled error adding newsletter %s', newsletter)
-            self.errors = u"Problem with adding"
+            self.errors = _(u"generic_problem_add_newsletter", default=u"Problem with add of newsletter")
             self.status = UNHANDLED
 
         if self.status == UNHANDLED:

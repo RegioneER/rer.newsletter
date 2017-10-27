@@ -41,8 +41,8 @@ class ISubscribeForm(Interface):
     ''' define field for newsletter subscription '''
 
     email = schema.TextLine(
-        title=u"subscription mail",
-        description=u"mail for subscribe to newsletter",
+        title=_(u"subscribe_user", default=u"Subscription Mail"),
+        description=_(u"subscribe_user_description", default=u"Mail for subscribe to newsletter"),
         required=True,
         constraint=mailValidation
     )
@@ -71,7 +71,7 @@ class SubscribeForm(form.Form):
             # controllo se la newsletter è attiva
             # se la newsletter non è attiva non faccio nemmeno vedere la form
             if not api.content.get_state(obj=self.context) == 'activated':
-                raise Exception('Newsletter not activated')
+                raise Exception(_("newsletter_not_actived", default=u"Newsletter not actived"))
 
             api_newsletter = getUtility(INewsletterUtility)
             status, secret = api_newsletter.subscribe(newsletter, email)
@@ -81,7 +81,7 @@ class SubscribeForm(form.Form):
                 newsletter,
                 email
             )
-            self.errors = u"Problem with subscribe"
+            self.errors = _(u"generic_probleme_subscribe_user", default=u"Problem with subscribe user")
 
         try:
             if status == SUBSCRIBED:
@@ -103,16 +103,15 @@ class SubscribeForm(form.Form):
                     immediate=True
                     )
 
-                self.status = u"Thank you very much!"
+                self.status = _(u"status_user_subscribed", default=u"User Subscribed")
                 IStatusMessage(self.request).addStatusMessage(
                     dmf(self.status), "info")
-                return
             else:
                 raise Exception
 
         except SMTPRecipientsRefused:
             IStatusMessage(self.request).addStatusMessage(
-                dmf("Problem with sendind of email"), "error")
+                dmf(_(u"generic_problem_send_email", default=u"Problem with sendind of email")), "error")
         except:
             if 'errors' not in self.__dict__.keys():
                 self.errors = u"Ouch .... {}".format(status)

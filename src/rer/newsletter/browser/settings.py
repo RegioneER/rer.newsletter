@@ -17,4 +17,3 @@ class NewsletterSettings(controlpanel.RegistryEditForm):
     def getLists(self):
         api = getUtility(INewsletterUtility)
         return api.lists()
-

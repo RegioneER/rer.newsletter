@@ -94,7 +94,7 @@ class UsersImport(form.Form):
 
         return usersList
 
-    @button.buttonAndHandler(u"charge")
+    @button.buttonAndHandler(_(u"charge_userimport", default=u"Charge"))
     def handleSave(self, action):
         status = UNHANDLED
         data, errors = self.extractData()
@@ -143,10 +143,10 @@ class UsersImport(form.Form):
             logger.exception(
                 'unhandled error users import'
             )
-            self.errors = u"Problem with subscribe"
+            self.errors = _(u"generic_subscribe_problem", default=u"Problem with subscribe")
 
         if status == OK:
-            status = u"Thank you very much!"
+            status = _(u"generic_subscribe_message_success", default=u"User Subscribed")
             IStatusMessage(self.request).addStatusMessage(
                 dmf(status), "info")
         else:
