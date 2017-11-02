@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from plone.dexterity.browser import add
 from Products.statusmessages.interfaces import IStatusMessage
-from z3c.form import button
-
-from rer.newsletter import  _
+from rer.newsletter import _
 from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import UNHANDLED
 from rer.newsletter.utility.newsletter import OK
+from rer.newsletter.utility.newsletter import UNHANDLED
+from z3c.form import button
 
 
 class AddForm(add.DefaultAddForm):
@@ -32,12 +31,12 @@ class AddForm(add.DefaultAddForm):
                 self._finishedAdd = True
                 status = OK
                 response.add(
-                    _(u"add_newsletter", default="Newsletter Created"),
+                    _(u'add_newsletter', default='Newsletter Created'),
                     type=u'info'
                 )
             else:
                 # TODO: gestire messaggi personalizzati per ogni status
-                status = u"Ouch .... {}".format(status)
+                status = u'Ouch .... {}'.format(status)
                 response.add(status, type=u'error')
         except:
             logger.exception(
@@ -45,8 +44,8 @@ class AddForm(add.DefaultAddForm):
                 data
             )
             errors = _(
-                u"generic_problem_add_newsletter",
-                default=u"Problem with add of newsletter"
+                u'generic_problem_add_newsletter',
+                default=u'Problem with add of newsletter'
             )
             status = UNHANDLED
 

@@ -1,32 +1,33 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime, timedelta
-import json
-import re
-from plone import api
-from persistent.list import PersistentList
+from datetime import datetime
+from datetime import timedelta
 from persistent.dict import PersistentDict
+from persistent.list import PersistentList
+from plone import api
 from plone.uuid.interfaces import IUUIDGenerator
-import premailer
+from rer.newsletter import _
+from rer.newsletter import logger
+from rer.newsletter.utility.newsletter import ALREADY_ACTIVE
+from rer.newsletter.utility.newsletter import ALREADY_SUBSCRIBED
+from rer.newsletter.utility.newsletter import INewsletterUtility
+from rer.newsletter.utility.newsletter import INEXISTENT_EMAIL
+from rer.newsletter.utility.newsletter import INVALID_EMAIL
+from rer.newsletter.utility.newsletter import INVALID_NEWSLETTER
+from rer.newsletter.utility.newsletter import INVALID_SECRET
+from rer.newsletter.utility.newsletter import MAIL_NOT_PRESENT
+from rer.newsletter.utility.newsletter import OK
 from smtplib import SMTPRecipientsRefused
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
-from zope.interface import implements
+from zope.interface import implementer
 from zope.interface import Invalid
 
-from rer.newsletter import _
-from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import OK
-from rer.newsletter.utility.newsletter import ALREADY_SUBSCRIBED
-from rer.newsletter.utility.newsletter import INVALID_NEWSLETTER
-from rer.newsletter.utility.newsletter import INVALID_EMAIL
-from rer.newsletter.utility.newsletter import INEXISTENT_EMAIL
-from rer.newsletter.utility.newsletter import MAIL_NOT_PRESENT
-from rer.newsletter.utility.newsletter import INVALID_SECRET
-from rer.newsletter.utility.newsletter import ALREADY_ACTIVE
+import json
+import premailer
+import re
 
 
-KEY = "rer.newsletter.subscribers"
+KEY = 'rer.newsletter.subscribers'
 
 
 def mailValidation(mail):
@@ -39,8 +40,8 @@ def mailValidation(mail):
     if match is None:
         raise Invalid(
             _(
-                u"generic_problem_email_validation",
-                default=u"Una o piu delle mail inserite non sono valide"
+                u'generic_problem_email_validation',
+                default=u'Una o piu delle mail inserite non sono valide'
             )
         )
     return True
@@ -62,9 +63,9 @@ def isCreationDateExpired(creation_date):
     return False
 
 
+@implementer(INewsletterUtility)
 class BaseHandler(object):
-    implements(INewsletterUtility)
-    """ utility class to send newsletter email with mailer of plone """
+    ''' utility class to send newsletter email with mailer of plone '''
 
     def _storage(self, newsletter):
         obj = self._api(newsletter)
@@ -75,7 +76,7 @@ class BaseHandler(object):
             return annotations[KEY]
 
     def _api(self, newsletter):
-        """ return Newsletter and initialize annotations """
+        ''' return Newsletter and initialize annotations '''
         nl = api.content.find(
             portal_type='Newsletter',
             id_newsletter=newsletter
@@ -86,7 +87,7 @@ class BaseHandler(object):
         return obj
 
     def activeUser(self, newsletter, secret):
-        logger.info("DEBUG: active user in %s", newsletter)
+        logger.info('DEBUG: active user in %s', newsletter)
         annotations = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
@@ -114,7 +115,7 @@ class BaseHandler(object):
             return INVALID_SECRET
 
     def importUsersList(self, usersList, newsletter):
-        logger.info("DEBUG: import userslist %s in %s", usersList, newsletter)
+        logger.info('DEBUG: import userslist %s in %s', usersList, newsletter)
         annotations = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
@@ -143,7 +144,7 @@ class BaseHandler(object):
         return OK
 
     def exportUsersList(self, newsletter):
-        logger.info("DEBUG: export users of newsletter: %s", newsletter)
+        logger.info('DEBUG: export users of newsletter: %s', newsletter)
         response = []
         annotations = self._storage(newsletter)
         if annotations is None:
@@ -162,7 +163,7 @@ class BaseHandler(object):
         return json.dumps(response), OK
 
     def deleteUser(self, newsletter, mail):
-        logger.info("delete user %s from newsletter %s",
+        logger.info('delete user %s from newsletter %s',
                     mail, newsletter)
         annotations = self._storage(newsletter)
         if annotations is None:
@@ -189,7 +190,7 @@ class BaseHandler(object):
 
     def deleteUserList(self, usersList, newsletter):
         # manca il modo di far capire se una mail non e presente nella lista
-        logger.info("delete userslist %s from %s",
+        logger.info('delete userslist %s from %s',
                     usersList, newsletter)
         annotations = self._storage(newsletter)
         if annotations is None:
@@ -216,7 +217,7 @@ class BaseHandler(object):
         return OK
 
     def emptyNewsletterUsersList(self, newsletter):
-        logger.info("DEBUG: emptyNewsletterUsersList %s", newsletter)
+        logger.info('DEBUG: emptyNewsletterUsersList %s', newsletter)
         annotations = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
@@ -226,7 +227,7 @@ class BaseHandler(object):
         return OK
 
     def unsubscribe(self, newsletter, mail):
-        logger.info("DEBUG: unsubscribe %s %s", newsletter, mail)
+        logger.info('DEBUG: unsubscribe %s %s', newsletter, mail)
         annotations = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
@@ -252,7 +253,7 @@ class BaseHandler(object):
         return OK
 
     def addUser(self, newsletter, mail):
-        logger.info("DEBUG: add user: %s %s", newsletter, mail)
+        logger.info('DEBUG: add user: %s %s', newsletter, mail)
         annotations = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
@@ -285,7 +286,7 @@ class BaseHandler(object):
         return OK
 
     def subscribe(self, newsletter, mail, name=None):
-        logger.info("DEBUG: subscribe %s %s", newsletter, mail)
+        logger.info('DEBUG: subscribe %s %s', newsletter, mail)
         annotations = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER, None
@@ -317,7 +318,7 @@ class BaseHandler(object):
         return OK, uuid
 
     def sendMessage(self, newsletter, message):
-        logger.debug("sendMessage %s %s", newsletter, message.title)
+        logger.debug('sendMessage %s %s', newsletter, message.title)
         nl = self._api(newsletter)
         annotations = self._storage(newsletter)
         if annotations is None:

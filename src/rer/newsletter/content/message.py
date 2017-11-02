@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from zope.interface import implements
-from rer.newsletter.interfaces import IMessage
 from plone.app.contenttypes.content import Folder
+from rer.newsletter.interfaces import IMessage
+from zope.interface import implementer
 
 
+@implementer(IMessage)
 class Message(Folder):
-    implements(IMessage)
+    pass

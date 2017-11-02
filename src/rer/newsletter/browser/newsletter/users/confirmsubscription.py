@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 from Products.Five.browser import BrowserView
-from zope.component import getUtility
-from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import OK
-
 # messaggi standard della form di dexterity
 from Products.statusmessages.interfaces import IStatusMessage
-
 # messageFactory
 from rer.newsletter import _
+from rer.newsletter.utility.newsletter import INewsletterUtility
+from rer.newsletter.utility.newsletter import OK
+from zope.component import getUtility
+
 
 # disable CSRF
 # from plone.protect.interfaces import IDisableCSRFProtection
@@ -36,12 +35,12 @@ class ConfirmSubscription(BrowserView):
         if response == OK:
             status.add(
                 _(
-                    u"user_activated",
-                    default=u"User Activated"
+                    u'user_activated',
+                    default=u'User Activated'
                 ),
                 type=u'info'
             )
         else:
-            status.add(u"Ouch .... {}".format(response), type=u'error')
+            status.add(u'Ouch .... {msg}'.format(msg=response), type=u'error')
 
         return self.render()

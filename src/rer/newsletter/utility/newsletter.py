@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from zope.interface import Interface
 
+
 # general
 UNHANDLED = 0
 SUBSCRIBED = OK = 1

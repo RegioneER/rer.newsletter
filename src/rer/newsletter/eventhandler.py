@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+from rer.newsletter.utility.newsletter import INewsletterUtility
 from smtplib import SMTPRecipientsRefused
 from zope.component import getUtility
 
-from rer.newsletter.utility.newsletter import INewsletterUtility
 
 # messaggi standard della form di dexterity
 # from Products.statusmessages.interfaces import IStatusMessage

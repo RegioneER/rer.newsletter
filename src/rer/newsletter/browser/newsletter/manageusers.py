@@ -1,37 +1,28 @@
 # -*- coding: utf-8 -*-
-# call utility
-from zope.component import getUtility
-from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import UNHANDLED, OK
-from rer.newsletter import logger
-
-from zope.interface import Interface, implements
-from Products.Five import BrowserView
-
-# eccezioni
-from Products.statusmessages.interfaces import IStatusMessage
 from plone.dexterity.i18n import MessageFactory as dmf
-
-# template manage
 from Products.CMFPlone.resources import add_bundle_on_request
-
-# file
-import csv
-import StringIO
-
-# json
-import json
-
-# messageFactory
+from Products.Five import BrowserView
+from Products.statusmessages.interfaces import IStatusMessage
 from rer.newsletter import _
+from rer.newsletter import logger
+from rer.newsletter.utility.newsletter import INewsletterUtility
+from rer.newsletter.utility.newsletter import OK
+from rer.newsletter.utility.newsletter import UNHANDLED
+from zope.component import getUtility
+from zope.interface import implementer
+from zope.interface import Interface
+
+import csv
+import json
+import StringIO
 
 
 class IManageUsers(Interface):
     pass
 
 
+@implementer(IManageUsers)
 class ManageUsers(BrowserView):
-    implements(IManageUsers)
 
     def __init__(self, context, request):
         self.context = context
@@ -54,12 +45,12 @@ class ManageUsers(BrowserView):
                 email
             )
             self.errors = _(
-                u"generic_problem_delete_user",
-                default=u"Problem with delete of user from newsletter"
+                u'generic_problem_delete_user',
+                default=u'Problem with delete of user from newsletter'
             )
             status = UNHANDLED
             IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors + '. status: ' + str(status)), "error")
+                dmf(self.errors + '. status: ' + str(status)), 'error')
             return
 
         response = {}
@@ -83,12 +74,12 @@ class ManageUsers(BrowserView):
                 newsletter
             )
             self.errors = _(
-                u"generic_problem_export_file",
-                default=u"Problem with export of user to file"
+                u'generic_problem_export_file',
+                default=u'Problem with export of user to file'
             )
             status = UNHANDLED
             IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors + '. status: ' + str(status)), "error")
+                dmf(self.errors + '. status: ' + str(status)), 'error')
             return
 
         if status == OK:
@@ -103,12 +94,12 @@ class ManageUsers(BrowserView):
             for user in userListJson:
                 writer.writerow(user)
 
-            filename = "%s-user-list.csv" % self.context.title
+            filename = '{title}-user-list.csv'.format(title=self.context.title)
 
             self.request.response.setHeader('Content-Type', 'text/csv')
             self.request.response.setHeader(
                 'Content-Disposition',
-                'attachment; filename="%s"' % filename
+                'attachment; filename="{filename}"'.format(filename=filename)
             )
 
             return data.getvalue()
@@ -125,10 +116,10 @@ class ManageUsers(BrowserView):
                 'unhandled error on export of user %s',
                 newsletter
             )
-            self.errors = u"Problem with export"
+            self.errors = u'Problem with export'
             status = UNHANDLED
             IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors + '. status: ' + str(status)), "error")
+                dmf(self.errors + '. status: ' + str(status)), 'error')
 
         if status == OK:
             return userList
