@@ -6,7 +6,7 @@
 rer.newsletter
 ==============
 
-Tell me what your product does
+Tell me what your product does.
 
 Features
 --------

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from zope.component import getUtility
 from zope.interface import Interface
 from zope import schema
@@ -6,7 +7,7 @@ from plone.namedfile.field import NamedFile
 
 from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import OK, UNHANDLED, INVALID_NEWSLETTER
+from rer.newsletter.utility.newsletter import OK, UNHANDLED
 
 # messaggi standard della form di dexterity
 from Products.statusmessages.interfaces import IStatusMessage
@@ -35,12 +36,15 @@ class IUsersImport(Interface):
         required=False
     )
 
-    # se e ceccato sia questo dato che 'emptyList' allora do precedenza a emptyList
+    # se e ceccato sia questo dato che 'emptyList'
+    # allora do precedenza a emptyList
     removeSubscribers = schema.Bool(
         title=_(u"title_remove_subscribers",
                 default=u"Remove subscribers of the list"),
-        description=_(u"description_remove_subscribers",
-                      default=u"Remove users of CSV from newsletter's subscribers"),
+        description=_(
+            u"description_remove_subscribers",
+            default=u"Remove users of CSV from newsletter's subscribers"
+        ),
         required=False
     )
 
@@ -139,14 +143,20 @@ class UsersImport(form.Form):
                     self.context.id_newsletter
                 )
 
-        except:
+        except Exception:
             logger.exception(
                 'unhandled error users import'
             )
-            self.errors = _(u"generic_subscribe_problem", default=u"Problem with subscribe")
+            self.errors = _(
+                u"generic_subscribe_problem",
+                default=u"Problem with subscribe"
+            )
 
         if status == OK:
-            status = _(u"generic_subscribe_message_success", default=u"User Subscribed")
+            status = _(
+                u"generic_subscribe_message_success",
+                default=u"User Subscribed"
+            )
             IStatusMessage(self.request).addStatusMessage(
                 dmf(status), "info")
         else:

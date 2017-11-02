@@ -19,11 +19,15 @@ def mailValidation(mail):
 
     # valido la mail
     match = re.match(
-        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]' +
+        '+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
         mail
     )
     if match is None:
-        raise Invalid(_(u"generic_problem_email_validation", default=u"Una o piu delle mail inserite non sono valide"))
+        raise Invalid(
+            _(u"generic_problem_email_validation",
+                default=u"Una o piu delle mail inserite non sono valide")
+        )
     return True
 
 
@@ -59,7 +63,7 @@ class INewsletter(model.Schema):
         description=_("description_sender_email",
                       default="Email of sender"),
         required=False,
-        # constraint=mailValidation
+        constraint=mailValidation
     )
 
     subject_email = schema.TextLine(
@@ -74,7 +78,7 @@ class INewsletter(model.Schema):
         description=_("description_response_email",
                       default="Response email of newsletter"),
         required=False,
-        # constraint=mailValidation
+        constraint=mailValidation
     )
 
     header = RichTextField(

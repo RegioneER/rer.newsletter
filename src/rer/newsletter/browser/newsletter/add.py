@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.dexterity.browser import add
 from z3c.form import button
 from zope.component import getUtility
@@ -5,7 +6,6 @@ from zope.component import getUtility
 from rer.newsletter import logger
 
 # utility
-from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter.utility.newsletter import UNHANDLED
 from rer.newsletter.utility.newsletter import OK
 
@@ -51,14 +51,23 @@ class AddForm(add.DefaultAddForm):
                 status = OK
 
                 # setto il messaggio di inserimento andato a buon fine
-                response.add(_(u"add_newsletter", default="Newsletter Created"), type=u'info')
+                response.add(
+                    _(u"add_newsletter", default="Newsletter Created"),
+                    type=u'info'
+                )
             else:
                 status = u"Ouch .... {}".format(status)
                 response.add(status, type=u'error')
 
-        except:
-            logger.exception('unhandled error adding newsletter %s', newsletter)
-            errors = _(u"generic_problem_add_newsletter", default=u"Problem with add of newsletter")
+        except Exception:
+            logger.exception(
+                'unhandled error adding newsletter %s',
+                newsletter
+            )
+            errors = _(
+                u"generic_problem_add_newsletter",
+                default=u"Problem with add of newsletter"
+            )
             status = UNHANDLED
 
         if status == UNHANDLED:

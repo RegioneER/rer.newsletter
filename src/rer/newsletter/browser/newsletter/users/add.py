@@ -24,11 +24,17 @@ import re
 def mailValidation(mail):
     # valido la mail
     match = re.match(
-        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]' +
+        '+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
         mail
     )
     if match is None:
-        raise Invalid(_(u"generic_problem_email_validation", default=u"Una o piu delle mail inserite non sono valide"))
+        raise Invalid(
+            _(
+                u"generic_problem_email_validation",
+                default=u"Una o piu delle mail inserite non sono valide"
+            )
+        )
     return True
 
 
@@ -37,7 +43,10 @@ class IAddForm(Interface):
 
     email = schema.TextLine(
         title=_(u"add_user_admin", default=u"Add User"),
-        description=_(u"add_user_admin_description", default=u"Insert email for add user to Newsletter"),
+        description=_(
+            u"add_user_admin_description",
+            default=u"Insert email for add user to Newsletter"
+        ),
         required=True,
         constraint=mailValidation
     )
@@ -65,13 +74,16 @@ class AddForm(form.Form):
 
             api_newsletter = getUtility(INewsletterUtility)
             status = api_newsletter.addUser(newsletter, mail)
-        except:
+        except Exception:
             logger.exception(
                 'unhandled error adding %s %s',
                 newsletter,
                 mail
             )
-            self.errors = _(u"generic_problem_add_user", default=u"Problem with add user")
+            self.errors = _(
+                u"generic_problem_add_user",
+                default=u"Problem with add user"
+            )
 
         if status == SUBSCRIBED:
             self.status = _(u"status_user_added", default=u"User Added")

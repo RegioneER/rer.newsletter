@@ -8,9 +8,9 @@
  </bindings>
 
  <object name="newsletter_workflow" meta_type="Workflow" />
- <!-- <bindings>
+ <bindings>
    <type type_id="Newsletter">
      <bound-workflow workflow_id="newsletter_workflow" />
    </type>
- </bindings> -->
+ </bindings>
 </object>

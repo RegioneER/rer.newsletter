@@ -1,7 +1,19 @@
+# -*- coding: utf-8 -*-
 from zope.interface import implements
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import OK, ALREADY_SUBSCRIBED, INVALID_NEWSLETTER, INVALID_EMAIL, INEXISTENT_EMAIL, MAIL_NOT_PRESENT, INVALID_SECRET, ALREADY_ACTIVE
+from rer.newsletter import newsletterMessageFactory as _
+
+# constant
+from rer.newsletter.utility.newsletter import OK
+from rer.newsletter.utility.newsletter import ALREADY_SUBSCRIBED
+from rer.newsletter.utility.newsletter import INVALID_NEWSLETTER
+from rer.newsletter.utility.newsletter import INVALID_EMAIL
+from rer.newsletter.utility.newsletter import INEXISTENT_EMAIL
+from rer.newsletter.utility.newsletter import MAIL_NOT_PRESENT
+from rer.newsletter.utility.newsletter import INVALID_SECRET
+from rer.newsletter.utility.newsletter import ALREADY_ACTIVE
+
 import json
 import re
 
@@ -35,11 +47,17 @@ KEY = "rer.newsletter.subscribers"
 def mailValidation(mail):
     # valido la mail
     match = re.match(
-        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]' +
+        '+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
         mail
     )
     if match is None:
-        raise Invalid(_(u"generic_problem_email_validation", default=u"Una o piu delle mail inserite non sono valide"))
+        raise Invalid(
+            _(
+                u"generic_problem_email_validation",
+                default=u"Una o piu delle mail inserite non sono valide"
+            )
+        )
     return True
 
 
@@ -52,7 +70,9 @@ def uuidValidation(uuid):
 
 def isCreationDateExpired(creation_date):
     # settare una data di scadenza di configurazione
-    if (datetime.today() - datetime.strptime(creation_date, '%d/%m/%Y %H:%M:%S')) < timedelta(days=2):
+    cd_datetime = datetime.strptime(creation_date, '%d/%m/%Y %H:%M:%S')
+    t = datetime.today() - cd_datetime
+    if t < timedelta(days=2):
         return True
     return False
 
@@ -134,7 +154,9 @@ class BaseHandler(object):
                     'email': user,
                     'is_active': True,
                     'token': uuid,
-                    'creation_date': datetime.today().strftime('%d/%m/%Y %H:%M:%S'),
+                    'creation_date': datetime.today().strftime(
+                        '%d/%m/%Y %H:%M:%S'
+                    ),
                 }))
 
         # catch exception
@@ -160,7 +182,11 @@ class BaseHandler(object):
         return json.dumps(response), OK
 
     def deleteUser(self, newsletter, mail):
-        logger.info("DEBUG: delete user %s from newsletter %s", mail, newsletter)
+        logger.info(
+            "DEBUG: delete user %s from newsletter %s",
+            mail,
+            newsletter
+        )
         nl = self._api(newsletter)
         if not nl:
             return INVALID_NEWSLETTER
@@ -186,7 +212,11 @@ class BaseHandler(object):
 
     def deleteUserList(self, usersList, newsletter):
         # manca il modo di far capire se una mail non e presente nella lista
-        logger.info("DEBUG: delete userslist %s from %s", usersList, newsletter)
+        logger.info(
+            "DEBUG: delete userslist %s from %s",
+            usersList,
+            newsletter
+        )
         nl = self._api(newsletter)
         if not nl:
             return INVALID_NEWSLETTER
@@ -262,7 +292,14 @@ class BaseHandler(object):
 
         # controllo che la mail non sia gia presente e attiva nel db
         for user in self.annotations:
-            if (mail == user['email'] and user['is_active']) or (mail == user['email'] and not user['is_active'] and isCreationDateExpired(user['creation_date'])):
+            if (
+                (mail == user['email'] and user['is_active']) or
+                (
+                    mail == user['email'] and
+                    not user['is_active'] and
+                    isCreationDateExpired(user['creation_date'])
+                )
+            ):
                 return ALREADY_SUBSCRIBED
         else:
             self.annotations.append(PersistentDict({
@@ -289,7 +326,14 @@ class BaseHandler(object):
         uuid = generator()
 
         for user in self.annotations:
-            if (mail == user['email'] and user['is_active']) or (mail == user['email'] and not user['is_active'] and isCreationDateExpired(user['creation_date'])):
+            if (
+                (mail == user['email'] and user['is_active']) or
+                (
+                    mail == user['email'] and
+                    not user['is_active'] and
+                    isCreationDateExpired(user['creation_date'])
+                )
+            ):
                 return ALREADY_SUBSCRIBED, None
         else:
             self.annotations.append(PersistentDict({
