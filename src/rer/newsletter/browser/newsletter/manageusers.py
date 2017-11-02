@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # call utility
 from zope.component import getUtility
 from rer.newsletter.utility.newsletter import INewsletterUtility
@@ -46,13 +47,16 @@ class ManageUsers(BrowserView):
 
             api_newsletter = getUtility(INewsletterUtility)
             status = api_newsletter.deleteUser(newsletter, email)
-        except:
+        except Exception:
             logger.exception(
                 'unhandled error subscribing %s %s',
                 newsletter,
                 email
             )
-            self.errors = _(u"generic_problem_delete_user", default=u"Problem with delete of user from newsletter")
+            self.errors = _(
+                u"generic_problem_delete_user",
+                default=u"Problem with delete of user from newsletter"
+            )
             status = UNHANDLED
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.errors + '. status: ' + str(status)), "error")
@@ -73,12 +77,15 @@ class ManageUsers(BrowserView):
 
             api_newsletter = getUtility(INewsletterUtility)
             userList, status = api_newsletter.exportUsersList(newsletter)
-        except:
+        except Exception:
             logger.exception(
                 'unhandled error on export of user %s',
                 newsletter
             )
-            self.errors = _(u"generic_problem_export_file", default=u"Problem with export of user to file")
+            self.errors = _(
+                u"generic_problem_export_file",
+                default=u"Problem with export of user to file"
+            )
             status = UNHANDLED
             IStatusMessage(self.request).addStatusMessage(
                 dmf(self.errors + '. status: ' + str(status)), "error")
@@ -113,7 +120,7 @@ class ManageUsers(BrowserView):
 
             api_newsletter = getUtility(INewsletterUtility)
             userList, status = api_newsletter.exportUsersList(newsletter)
-        except:
+        except Exception:
             logger.exception(
                 'unhandled error on export of user %s',
                 newsletter

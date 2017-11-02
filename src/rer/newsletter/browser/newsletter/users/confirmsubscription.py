@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Products.Five.browser import BrowserView
 from zope.component import getUtility
 from rer.newsletter.utility.newsletter import INewsletterUtility
@@ -33,7 +34,13 @@ class ConfirmSubscription(BrowserView):
 
         status = IStatusMessage(self.request)
         if response == OK:
-            status.add(_(u"user_activated", default=u"User Activated"), type=u'info')
+            status.add(
+                _(
+                    u"user_activated",
+                    default=u"User Activated"
+                ),
+                type=u'info'
+            )
         else:
             status.add(u"Ouch .... {}".format(response), type=u'error')
 

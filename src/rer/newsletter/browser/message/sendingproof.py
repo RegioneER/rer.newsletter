@@ -31,11 +31,15 @@ import re
 def mailValidation(mail):
     # valido la mail
     match = re.match(
-        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]' +
+        '+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
         mail
     )
     if match is None:
-        raise Invalid(_(u"generic_problem_email_validation", default=u"Una o piu delle mail inserite non sono valide"))
+        raise Invalid(
+            _(u"generic_problem_email_validation",
+                default=u"Una o piu delle mail inserite non sono valide")
+        )
     return True
 
 
@@ -44,7 +48,10 @@ class IMessageSendingProof(Interface):
 
     email = schema.TextLine(
         title=_(u"Email", default="Email"),
-        description=_(u"email_sendingproof_description", default=u"Email to send the test message"),
+        description=_(
+            u"email_sendingproof_description",
+            default=u"Email to send the test message"
+        ),
         required=True,
         constraint=mailValidation
     )
@@ -105,7 +112,7 @@ class MessageSendingProof(form.Form):
 
         except SMTPRecipientsRefused:
             self.errors = u"problemi con l'invio del messaggio"
-        except:
+        except Exception:
             logger.exception(
                 'unhandled error for send proof of newsletter %s',
                 email

@@ -1,21 +1,30 @@
-from zope.interface import implements
+# -*- coding: utf-8 -*-
+from datetime import datetime, timedelta
 import json
 import re
 from plone import api
 from persistent.list import PersistentList
 from persistent.dict import PersistentDict
-from zope.annotation.interfaces import IAnnotations
-from zope.component import getUtility
 from plone.uuid.interfaces import IUUIDGenerator
-from datetime import datetime, timedelta
 import premailer
 from smtplib import SMTPRecipientsRefused
+from zope.annotation.interfaces import IAnnotations
+from zope.component import getUtility
+from zope.interface import implements
 from zope.interface import Invalid
 
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import OK, ALREADY_SUBSCRIBED, INVALID_NEWSLETTER, INVALID_EMAIL, INEXISTENT_EMAIL, MAIL_NOT_PRESENT, INVALID_SECRET, ALREADY_ACTIVE
+from rer.newsletter.utility.newsletter import OK
+from rer.newsletter.utility.newsletter import ALREADY_SUBSCRIBED
+from rer.newsletter.utility.newsletter import INVALID_NEWSLETTER
+from rer.newsletter.utility.newsletter import INVALID_EMAIL
+from rer.newsletter.utility.newsletter import INEXISTENT_EMAIL
+from rer.newsletter.utility.newsletter import MAIL_NOT_PRESENT
+from rer.newsletter.utility.newsletter import INVALID_SECRET
+from rer.newsletter.utility.newsletter import ALREADY_ACTIVE
+
 
 KEY = "rer.newsletter.subscribers"
 
@@ -23,11 +32,17 @@ KEY = "rer.newsletter.subscribers"
 def mailValidation(mail):
     # valido la mail
     match = re.match(
-        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]' +
+        '+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
         mail
     )
     if match is None:
-        raise Invalid(_(u"generic_problem_email_validation", default=u"Una o piu delle mail inserite non sono valide"))
+        raise Invalid(
+            _(
+                u"generic_problem_email_validation",
+                default=u"Una o piu delle mail inserite non sono valide"
+            )
+        )
     return True
 
 
@@ -40,7 +55,9 @@ def uuidValidation(uuid):
 
 def isCreationDateExpired(creation_date):
     # settare una data di scadenza di configurazione
-    if (datetime.today() - datetime.strptime(creation_date, '%d/%m/%Y %H:%M:%S')) < timedelta(days=2):
+    cd_datetime = datetime.strptime(creation_date, '%d/%m/%Y %H:%M:%S')
+    t = datetime.today() - cd_datetime
+    if t < timedelta(days=2):
         return True
     return False
 
@@ -117,7 +134,9 @@ class BaseHandler(object):
                     'email': user,
                     'is_active': True,
                     'token': uuid,
-                    'creation_date': datetime.today().strftime('%d/%m/%Y %H:%M:%S'),
+                    'creation_date': datetime.today().strftime(
+                        '%d/%m/%Y %H:%M:%S'
+                    ),
                 }))
 
         # catch exception
@@ -143,7 +162,8 @@ class BaseHandler(object):
         return json.dumps(response), OK
 
     def deleteUser(self, newsletter, mail):
-        logger.info("DEBUG: delete user %s from newsletter %s", mail, newsletter)
+        logger.info("delete user %s from newsletter %s",
+                    mail, newsletter)
         annotations = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
@@ -169,7 +189,8 @@ class BaseHandler(object):
 
     def deleteUserList(self, usersList, newsletter):
         # manca il modo di far capire se una mail non e presente nella lista
-        logger.info("DEBUG: delete userslist %s from %s", usersList, newsletter)
+        logger.info("delete userslist %s from %s",
+                    usersList, newsletter)
         annotations = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
@@ -244,7 +265,14 @@ class BaseHandler(object):
         uuid = generator()
         # controllo che la mail non sia gia presente e attiva nel db
         for user in annotations:
-            if (mail == user['email'] and user['is_active']) or (mail == user['email'] and not user['is_active'] and isCreationDateExpired(user['creation_date'])):
+            if (
+                (mail == user['email'] and user['is_active']) or
+                (
+                    mail == user['email'] and
+                    not user['is_active'] and
+                    isCreationDateExpired(user['creation_date'])
+                )
+            ):
                 return ALREADY_SUBSCRIBED
         else:
             annotations.append(PersistentDict({
@@ -269,7 +297,14 @@ class BaseHandler(object):
         generator = getUtility(IUUIDGenerator)
         uuid = generator()
         for user in annotations:
-            if (mail == user['email'] and user['is_active']) or (mail == user['email'] and not user['is_active'] and isCreationDateExpired(user['creation_date'])):
+            if (
+                (mail == user['email'] and user['is_active']) or
+                (
+                    mail == user['email'] and
+                    not user['is_active'] and
+                    isCreationDateExpired(user['creation_date'])
+                )
+            ):
                 return ALREADY_SUBSCRIBED, None
         else:
             annotations.append(PersistentDict({
@@ -292,7 +327,7 @@ class BaseHandler(object):
         body = u''
         body += nl.header.output if nl.header else u''
         body += u'<style>{css}</style>'.format(css=nl.css_style or u'')
-        body += message.text.output
+        body += message.text.output if message.text else u''
         body += nl.footer.output if nl.footer else u''
         body = premailer.transform(body)
         try:

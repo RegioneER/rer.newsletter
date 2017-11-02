@@ -6,7 +6,11 @@ from zope.interface import implements
 
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import ALREADY_SUBSCRIBED, SUBSCRIBED, OK
+
+# constant
+from rer.newsletter.utility.newsletter import ALREADY_SUBSCRIBED
+from rer.newsletter.utility.newsletter import SUBSCRIBED
+from rer.newsletter.utility.newsletter import OK
 
 import json
 
@@ -82,7 +86,11 @@ class MailmanHandler(object):
         return True
 
     def deleteUser(self, mail, newsletter):
-        logger.info("DEBUG: delete user %s from newsletter %s", mail, newsletter)
+        logger.info(
+            "DEBUG: delete user %s from newsletter %s",
+            mail,
+            newsletter
+        )
         return True
 
     def exportUsersList(self, newsletter):
@@ -102,5 +110,9 @@ class MailmanHandler(object):
         return json.dumps(response), OK
 
     def deleteUserList(self, usersList, newsletter):
-        logger.info("DEBUG: delete userslist %s from %s", usersList, newsletter)
+        logger.info(
+            "DEBUG: delete userslist %s from %s",
+            usersList,
+            newsletter
+        )
         return True

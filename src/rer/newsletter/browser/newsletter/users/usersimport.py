@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 import csv
 from plone.namedfile.field import NamedFile
 from plone.dexterity.i18n import MessageFactory as dmf
@@ -11,8 +11,8 @@ from zope import schema
 
 from rer.newsletter import _
 from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import OK, UNHANDLED
 from rer.newsletter.utility.newsletter import INewsletterUtility
+from rer.newsletter.utility.newsletter import OK, UNHANDLED
 
 
 class IUsersImport(Interface):
@@ -31,12 +31,15 @@ class IUsersImport(Interface):
         required=False
     )
 
-    # se e ceccato sia questo dato che 'emptyList' allora do precedenza a emptyList
+    # se e ceccato sia questo dato che 'emptyList'
+    # allora do precedenza a emptyList
     removeSubscribers = schema.Bool(
         title=_(u"title_remove_subscribers",
                 default=u"Remove subscribers of the list"),
-        description=_(u"description_remove_subscribers",
-                      default=u"Remove users of CSV from newsletter's subscribers"),
+        description=_(
+            u"description_remove_subscribers",
+            default=u"Remove users of CSV from newsletter's subscribers"
+        ),
         required=False
     )
 
@@ -135,14 +138,20 @@ class UsersImport(form.Form):
                     self.context.id_newsletter
                 )
 
-        except:
+        except Exception:
             logger.exception(
                 'unhandled error users import'
             )
-            self.errors = _(u"generic_subscribe_problem", default=u"Problem with subscribe")
+            self.errors = _(
+                u"generic_subscribe_problem",
+                default=u"Problem with subscribe"
+            )
 
         if status == OK:
-            status = _(u"generic_subscribe_message_success", default=u"User Subscribed")
+            status = _(
+                u"generic_subscribe_message_success",
+                default=u"User Subscribed"
+            )
             IStatusMessage(self.request).addStatusMessage(
                 dmf(status), "info")
         else:

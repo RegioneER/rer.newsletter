@@ -5,7 +5,6 @@ from z3c.form import button
 
 from rer.newsletter import  _
 from rer.newsletter import logger
-# from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter.utility.newsletter import UNHANDLED
 from rer.newsletter.utility.newsletter import OK
 
@@ -32,15 +31,24 @@ class AddForm(add.DefaultAddForm):
             if obj:
                 self._finishedAdd = True
                 status = OK
-                response.add(_(u"add_newsletter", default="Newsletter Created"), type=u'info')
+                response.add(
+                    _(u"add_newsletter", default="Newsletter Created"),
+                    type=u'info'
+                )
             else:
                 # TODO: gestire messaggi personalizzati per ogni status
                 status = u"Ouch .... {}".format(status)
                 response.add(status, type=u'error')
         except:
-            logger.exception('unhandled error adding newsletter %s', data)
-            self.errors = _(u"generic_problem_add_newsletter", default=u"Problem with add of newsletter")
-            self.status = UNHANDLED
+            logger.exception(
+                'unhandled error adding newsletter %s',
+                data
+            )
+            errors = _(
+                u"generic_problem_add_newsletter",
+                default=u"Problem with add of newsletter"
+            )
+            status = UNHANDLED
 
         if status == UNHANDLED:
             response.add(errors + '. status: ' + str(status), type=u'error')
