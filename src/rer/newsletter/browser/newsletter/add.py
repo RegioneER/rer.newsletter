@@ -57,7 +57,7 @@ class AddForm(add.DefaultAddForm):
                 response.add(self.status, type=u'error')
 
         except:
-            logger.exception('unhandled error adding newsletter %s', newsletter)
+            logger.exception('unhandled error adding newsletter %s', data)
             self.errors = _(u"generic_problem_add_newsletter", default=u"Problem with add of newsletter")
             self.status = UNHANDLED
 
