@@ -48,21 +48,21 @@ class AddForm(add.DefaultAddForm):
 
             if obj:
                 self._finishedAdd = True
-                self.status = OK
+                status = OK
 
                 # setto il messaggio di inserimento andato a buon fine
                 response.add(_(u"add_newsletter", default="Newsletter Created"), type=u'info')
             else:
-                self.status = u"Ouch .... {}".format(status)
-                response.add(self.status, type=u'error')
+                status = u"Ouch .... {}".format(status)
+                response.add(status, type=u'error')
 
         except:
             logger.exception('unhandled error adding newsletter %s', data)
             self.errors = _(u"generic_problem_add_newsletter", default=u"Problem with add of newsletter")
             self.status = UNHANDLED
 
-        if self.status == UNHANDLED:
-            response.add(self.errors + '. status: ' + str(status), type=u'error')
+        if status == UNHANDLED:
+            response.add(errors + '. status: ' + str(status), type=u'error')
 
 
 class AddView(add.DefaultAddView):
