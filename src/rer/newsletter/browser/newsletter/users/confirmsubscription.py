@@ -5,7 +5,6 @@ from rer.newsletter.utility.newsletter import OK
 
 # messaggi standard della form di dexterity
 from Products.statusmessages.interfaces import IStatusMessage
-from plone.dexterity.i18n import MessageFactory as dmf
 
 # messageFactory
 from rer.newsletter import newsletterMessageFactory as _
