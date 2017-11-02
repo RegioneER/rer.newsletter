@@ -6,7 +6,7 @@ from rer.newsletter.utility.newsletter import OK, UNHANDLED
 from zope.component import getUtility
 from rer.newsletter import logger
 
-from rer.newsletter import newsletterMessageFactory as _
+from rer.newsletter import _
 
 # messaggi standard della form di dexterity
 from Products.statusmessages.interfaces import IStatusMessage

@@ -5,7 +5,7 @@ from z3c.form import button, form, field
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.z3cform.layout import wrap_form
 
-from rer.newsletter import newsletterMessageFactory as _
+from rer.newsletter import _
 from rer.newsletter import logger
 
 # eccezioni per mail

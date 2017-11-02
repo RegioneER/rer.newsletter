@@ -7,7 +7,7 @@ from rer.newsletter.utility.newsletter import OK
 from Products.statusmessages.interfaces import IStatusMessage
 
 # messageFactory
-from rer.newsletter import newsletterMessageFactory as _
+from rer.newsletter import _
 
 # disable CSRF
 # from plone.protect.interfaces import IDisableCSRFProtection

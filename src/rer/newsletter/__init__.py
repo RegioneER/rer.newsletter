@@ -3,6 +3,5 @@
 import logging
 from zope.i18nmessageid import MessageFactory
 
-
-newsletterMessageFactory = MessageFactory('rer.newsletter')
+_ = MessageFactory('rer.newsletter')
 logger = logging.getLogger(__name__)

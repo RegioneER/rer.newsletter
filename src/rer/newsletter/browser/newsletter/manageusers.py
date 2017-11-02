@@ -22,7 +22,7 @@ import StringIO
 import json
 
 # messageFactory
-from rer.newsletter import newsletterMessageFactory as _
+from rer.newsletter import _
 
 
 class IManageUsers(Interface):

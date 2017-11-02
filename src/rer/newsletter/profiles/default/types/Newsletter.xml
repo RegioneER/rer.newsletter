@@ -8,7 +8,7 @@
  <property name="link_target"></property>
  <property name="immediate_view">view</property>
  <property name="global_allow">True</property>
- <property name="filter_content_types">False</property>
+ <property name="filter_content_types">True</property>
  <property name="allowed_content_types">
    <element value="Message" />
  </property>
@@ -24,7 +24,6 @@
  <property name="behaviors">
   <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
   <element value="plone.app.content.interfaces.INameFromTitle"/>
-  <element value="rer.newsletter.behaviors.newsletter.INewsletter" />
  </property>
  <property name="schema">rer.newsletter.interfaces.INewsletterSchema</property>
  <property name="model_source"></property>

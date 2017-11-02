@@ -1,22 +1,18 @@
+
+import csv
+from plone.namedfile.field import NamedFile
+from plone.dexterity.i18n import MessageFactory as dmf
+from Products.statusmessages.interfaces import IStatusMessage
+import StringIO
+from z3c.form import button, form, field
 from zope.component import getUtility
 from zope.interface import Interface
 from zope import schema
-from z3c.form import button, form, field
-from plone.namedfile.field import NamedFile
 
-from rer.newsletter.utility.newsletter import INewsletterUtility
+from rer.newsletter import _
 from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import OK, UNHANDLED, INVALID_NEWSLETTER
-
-# messaggi standard della form di dexterity
-from Products.statusmessages.interfaces import IStatusMessage
-from plone.dexterity.i18n import MessageFactory as dmf
-
-import StringIO
-import csv
-
-# messageFactory
-from rer.newsletter import newsletterMessageFactory as _
+from rer.newsletter.utility.newsletter import OK, UNHANDLED
+from rer.newsletter.utility.newsletter import INewsletterUtility
 
 
 class IUsersImport(Interface):
