@@ -201,3 +201,17 @@ class INewsletterUtility(Interface):
 
         Raised:
         """
+
+    def getMessage(newsletter, message):
+        """
+        return a string with the entire email ready for send
+
+        Args:
+            newsletter (object): newsletter object
+            message (object): message object
+
+        Returns:
+            string that is entire message if succesful.
+
+        Raised:
+        """

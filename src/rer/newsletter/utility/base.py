@@ -317,6 +317,18 @@ class BaseHandler(object):
 
         return OK, uuid
 
+    def getMessage(self, newsletter, message):
+        logger.debug('getMessage %s %s', newsletter, message.title)
+
+        body = u''
+        body += newsletter.header.output if newsletter.header else u''
+        body += u'<style>{css}</style>'.format(css=newsletter.css_style or u'')
+        body += message.text.output if message.text else u''
+        body += newsletter.footer.output if newsletter.footer else u''
+        body = premailer.transform(body)
+
+        return body
+
     def sendMessage(self, newsletter, message):
         logger.debug('sendMessage %s %s', newsletter, message.title)
         nl = self._api(newsletter)
@@ -325,12 +337,8 @@ class BaseHandler(object):
             return INVALID_NEWSLETTER
 
         # costruisco il messaggio
-        body = u''
-        body += nl.header.output if nl.header else u''
-        body += u'<style>{css}</style>'.format(css=nl.css_style or u'')
-        body += message.text.output if message.text else u''
-        body += nl.footer.output if nl.footer else u''
-        body = premailer.transform(body)
+        body = self.getMessage(nl, message)
+
         try:
             # invio la mail ad ogni utente
             mail_host = api.portal.get_tool(name='MailHost')

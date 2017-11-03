@@ -3,15 +3,16 @@ from plone import api
 from plone import schema
 from plone.dexterity.i18n import MessageFactory as dmf
 from plone.z3cform.layout import wrap_form
-from premailer import transform
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
 from rer.newsletter import _
+from rer.newsletter.utility.newsletter import INewsletterUtility
 # from rer.newsletter import logger
 from smtplib import SMTPRecipientsRefused
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
+from zope.component import getUtility
 from zope.interface import Interface
 
 
@@ -28,7 +29,6 @@ class IMessageSendingProof(Interface):
     )
 
 
-# FIXME: qui c'è del codice completamente ripetuto rispetto a utility/base
 class MessageSendingProof(form.Form):
 
     ignoreContext = True
@@ -43,18 +43,12 @@ class MessageSendingProof(form.Form):
 
         try:
 
-            if self.context.portal_type == 'Newsletter':
-                nl = self.context.id_newsletter
+            # prendo l'email dai parametri
             email = data['email']
 
             # monto la newsletter da mandare
-            nl = self.context.aq_parent
-            body = u''
-            body += nl.header.raw if nl.header else u''
-            body += '<style>{css}</style>'.format(css=nl.css_style or u'')
-            body += self.context.text.output if self.context.text else u''
-            body += nl.footer.output if nl.footer else u''
-            body = transform(body)
+            utility = getUtility(INewsletterUtility)
+            body = utility.getMessage(self.context.aq_parent, self.context)
 
             # per mandare la mail non passo per l'utility
             # in ogni caso questa mail viene mandata da plone
