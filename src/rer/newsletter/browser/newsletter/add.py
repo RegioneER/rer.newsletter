@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from plone.dexterity.browser import add
 from plone import api
+from plone.dexterity.browser import add
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import OK
@@ -33,13 +33,13 @@ class AddForm(add.DefaultAddForm):
                     type=u'info'
                 )
             else:
-                status = u'Ouch .... {}'.format(status)
+                status = u'Ouch .... {status}'.format(status=status)
                 api.portal.show_message(
                     message=status,
                     request=self.request,
                     type=u'error'
                 )
-        except:
+        except Exception:
             logger.exception(
                 'unhandled error adding newsletter %s',
                 data

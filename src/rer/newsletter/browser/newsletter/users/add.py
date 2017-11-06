@@ -67,7 +67,7 @@ class AddForm(form.Form):
 
         else:
             if 'errors' not in self.__dict__.keys():
-                self.errors = u'Ouch .... {}'.format(status)
+                self.errors = u'Ouch .... {status}'.format(status=status)
 
             api.portal.show_message(
                 message=self.errors,

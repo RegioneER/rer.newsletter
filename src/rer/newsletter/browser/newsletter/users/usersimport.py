@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from plone import api
-from plone.dexterity.i18n import MessageFactory as dmf
 from plone.namedfile.field import NamedFile
 from rer.newsletter import _
 from rer.newsletter import logger
