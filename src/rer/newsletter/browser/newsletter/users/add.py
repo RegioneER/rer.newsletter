@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
+from plone import api
 from plone import schema
-from plone.dexterity.i18n import MessageFactory as dmf
-# messaggi standard della form di dexterity
-from Products.statusmessages.interfaces import IStatusMessage
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
@@ -43,8 +41,6 @@ class AddForm(form.Form):
 
         try:
 
-            # TODO
-            # questo valore va preso dal contesto in cui mi trovo....
             newsletter = self.context.id_newsletter
             mail = data['email']
 
@@ -62,12 +58,19 @@ class AddForm(form.Form):
             )
 
         if status == SUBSCRIBED:
-            self.status = _(u'status_user_added', default=u'User Added')
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(self.status), 'info')
+            status = _(u'status_user_added', default=u'User Added')
+            api.portal.show_message(
+                message=status,
+                request=self.request,
+                type=u'info'
+            )
+
         else:
             if 'errors' not in self.__dict__.keys():
                 self.errors = u'Ouch .... {}'.format(status)
 
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors), 'error')
+            api.portal.show_message(
+                message=self.errors,
+                request=self.request,
+                type=u'error'
+            )

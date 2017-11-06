@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from plone.dexterity.i18n import MessageFactory as dmf
+from plone import api
 from Products.CMFPlone.resources import add_bundle_on_request
 from Products.Five import BrowserView
-from Products.statusmessages.interfaces import IStatusMessage
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
@@ -49,8 +48,11 @@ class ManageUsers(BrowserView):
                 default=u'Problem with delete of user from newsletter'
             )
             status = UNHANDLED
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors + '. status: ' + str(status)), 'error')
+            api.portal.show_message(
+                message=self.errors + '. status: ' + str(status),
+                request=self.request,
+                type=u'error'
+            )
             return
 
         response = {}
@@ -78,8 +80,11 @@ class ManageUsers(BrowserView):
                 default=u'Problem with export of user to file'
             )
             status = UNHANDLED
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors + '. status: ' + str(status)), 'error')
+            api.portal.show_message(
+                message=self.errors + '. status: ' + str(status),
+                request=self.request,
+                type=u'error'
+            )
             return
 
         if status == OK:
@@ -118,8 +123,11 @@ class ManageUsers(BrowserView):
             )
             self.errors = u'Problem with export'
             status = UNHANDLED
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors + '. status: ' + str(status)), 'error')
+            api.portal.show_message(
+                message=self.errors + '. status: ' + str(status),
+                request=self.request,
+                type=u'error'
+            )
 
         if status == OK:
             return userList

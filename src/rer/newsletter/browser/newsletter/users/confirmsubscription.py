@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
+from plone import api
 from Products.Five.browser import BrowserView
-# messaggi standard della form di dexterity
-from Products.statusmessages.interfaces import IStatusMessage
 # messageFactory
 from rer.newsletter import _
 from rer.newsletter.utility.newsletter import INewsletterUtility
@@ -31,16 +30,20 @@ class ConfirmSubscription(BrowserView):
                 secret
             )
 
-        status = IStatusMessage(self.request)
         if response == OK:
-            status.add(
-                _(
+            api.portal.show_message(
+                message=_(
                     u'user_activated',
                     default=u'User Activated'
                 ),
+                request=self.request,
                 type=u'info'
             )
         else:
-            status.add(u'Ouch .... {msg}'.format(msg=response), type=u'error')
+            api.portal.show_message(
+                message=u'Ouch .... {msg}'.format(msg=response),
+                request=self.request,
+                type=u'error'
+            )
 
         return self.render()

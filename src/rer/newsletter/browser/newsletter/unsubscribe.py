@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+from plone import api
 from plone import schema
-from Products.statusmessages.interfaces import IStatusMessage
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
@@ -40,7 +40,6 @@ class UnsubscribeForm(form.Form):
             return
 
         email = None
-        response = IStatusMessage(self.request)
         try:
             if self.context.portal_type == 'Newsletter':
                 newsletter = self.context.id_newsletter
@@ -56,23 +55,29 @@ class UnsubscribeForm(form.Form):
                 newsletter,
                 email
             )
-            response.add(
-                _(
+            api.portal.show_message(
+                message=_(
                     u'generic_problem_unsubscribe',
                     default=u'Problem with unsubscribe user'
                 ),
+                request=self.request,
                 type=u'error'
             )
 
         if status == OK:
-            response.add(
-                _(
-                    'user_unsubscribe_success',
+            api.portal.show_message(
+                message=_(
+                    u'user_unsubscribe_success',
                     default=u'User unsubscribed'
                 ),
+                request=self.request,
                 type=u'info'
             )
         else:
             if 'errors' not in self.__dict__.keys():
                 self.errors = u'Ouch .... {status}'.format(status=status)
-            response.add(self.errors, type=u'error')
+            api.portal.show_message(
+                message=self.errors,
+                request=self.request,
+                type=u'error'
+            )

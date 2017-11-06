@@ -2,8 +2,6 @@
 from plone import api
 from plone import schema
 from plone.protect.authenticator import createToken
-# messaggi standard della form di dexterity
-from Products.statusmessages.interfaces import IStatusMessage
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
@@ -74,7 +72,6 @@ class SubscribeForm(form.Form):
                 default=u'Problem with subscribe user'
             )
 
-        response = IStatusMessage(self.request)
         try:
             if status == SUBSCRIBED:
 
@@ -98,11 +95,12 @@ class SubscribeForm(form.Form):
                     immediate=True
                     )
 
-                response.add(
-                    _(
+                api.portal.show_message(
+                    message=_(
                         u'status_user_subscribed',
                         default=u'User Subscribed'
                     ),
+                    request=self.request,
                     type=u'info'
                 )
 
@@ -110,15 +108,20 @@ class SubscribeForm(form.Form):
                 raise Exception
 
         except SMTPRecipientsRefused:
-            response.add(
-                _(
+            api.portal.show_message(
+                message=_(
                     u'generic_problem_send_email',
                     default=u'Problem with sendind of email'
                 ),
+                request=self.request,
                 type=u'error'
             )
         except Exception:
             if 'errors' not in self.__dict__.keys():
                 self.errors = u'Ouch .... {status}'.format(status=status)
 
-            response.add(self.errors, type=u'error')
+            api.portal.show_message(
+                message=self.errors,
+                request=self.request,
+                type=u'error'
+            )

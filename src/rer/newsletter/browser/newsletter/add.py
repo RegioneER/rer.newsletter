@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone.dexterity.browser import add
-from Products.statusmessages.interfaces import IStatusMessage
+from plone import api
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import OK
@@ -13,44 +13,49 @@ class AddForm(add.DefaultAddForm):
     # button handler
     @button.buttonAndHandler(u'Salva', name='save')
     def handleAdd(self, action):
-        status = UNHANDLED
         data, errors = self.extractData()
+        if errors:
+            self.status = self.formErrorsMessage
+            return
 
         # validazione dei campi della form
         # calcolo id della newsletter che viene creata
         # chiamo l'utility per la creazione della newsletter
-        response = IStatusMessage(self.request)
+        status = UNHANDLED
         try:
-            # TODO
-            # devo tenere comunque la chiamata ?
-            # se non uso mailman questo non serve
-            # api = getUtility(INewsletterUtility)
-            # status = api.addNewsletter(data['INewsletter.idNewsletter'])
             obj = self.createAndAdd(data)
             if obj:
                 self._finishedAdd = True
                 status = OK
-                response.add(
-                    _(u'add_newsletter', default='Newsletter Created'),
+                api.portal.show_message(
+                    message=_(u'add_newsletter', default='Newsletter Created'),
+                    request=self.request,
                     type=u'info'
                 )
             else:
-                # TODO: gestire messaggi personalizzati per ogni status
                 status = u'Ouch .... {}'.format(status)
-                response.add(status, type=u'error')
+                api.portal.show_message(
+                    message=status,
+                    request=self.request,
+                    type=u'error'
+                )
         except:
             logger.exception(
                 'unhandled error adding newsletter %s',
                 data
             )
-            errors = _(
+            self.errors = _(
                 u'generic_problem_add_newsletter',
                 default=u'Problem with add of newsletter'
             )
             status = UNHANDLED
 
         if status == UNHANDLED:
-            response.add(errors + '. status: ' + str(status), type=u'error')
+            api.portal.show_message(
+                message=errors + '. status: ' + str(status),
+                request=self.request,
+                type=u'error'
+            )
 
 
 class AddView(add.DefaultAddView):

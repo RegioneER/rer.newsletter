@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+from plone import api
 from plone.dexterity.i18n import MessageFactory as dmf
 from plone.namedfile.field import NamedFile
-from Products.statusmessages.interfaces import IStatusMessage
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
@@ -105,8 +105,6 @@ class UsersImport(form.Form):
             return
 
         try:
-            # TODO sistemare la gestione delle eccezioni
-            # devo uscire al primo status fallito
 
             # prendo la connessione con il server mailman
             api_newsletter = getUtility(INewsletterUtility)
@@ -155,10 +153,16 @@ class UsersImport(form.Form):
                 u'generic_subscribe_message_success',
                 default=u'User Subscribed'
             )
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(status), 'info')
+            api.portal.show_message(
+                message=status,
+                request=self.request,
+                type=u'info'
+            )
         else:
             if 'errors' not in self.__dict__.keys():
                 self.errors = u'Ouch .... {}'.format(status)
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors), 'error')
+            api.portal.show_message(
+                message=self.errors,
+                request=self.request,
+                type=u'error'
+            )

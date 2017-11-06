@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 from plone import api
 from plone import schema
-from plone.dexterity.i18n import MessageFactory as dmf
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.statusmessages.interfaces import IStatusMessage
 from rer.newsletter import _
 from rer.newsletter.utility.newsletter import INewsletterUtility
 # from rer.newsletter import logger
@@ -72,13 +70,19 @@ class MessageSendingProof(form.Form):
         #     )
         #     self.errors = u'Problem with sending proof'
 
-        # TODO: da sistemare la gestione degli errori
+        # da sistemare la gestione degli errori
         if 'errors' in self.__dict__.keys():
-            IStatusMessage(self.request).addStatusMessage(
-                dmf(self.errors), 'error')
+            api.portal.show_message(
+                message=self.errors,
+                request=self.request,
+                type=u'error'
+            )
         else:
-            IStatusMessage(self.request).addStatusMessage(
-                dmf('Messaggio inviato correttamente!'), 'info')
+            api.portal.show_message(
+                message=u'Messaggio inviato correttamente!',
+                request=self.request,
+                type=u'info'
+            )
 
 
 message_sending_proof = wrap_form(
