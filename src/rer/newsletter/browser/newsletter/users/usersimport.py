@@ -95,7 +95,7 @@ class UsersImport(form.Form):
 
         return usersList
 
-    @button.buttonAndHandler(_(u'charge_userimport', default=u'Charge'))
+    @button.buttonAndHandler(_(u'charge_userimport', default=u'Import'))
     def handleSave(self, action):
         status = UNHANDLED
         data, errors = self.extractData()
@@ -159,7 +159,8 @@ class UsersImport(form.Form):
             )
         else:
             if 'errors' not in self.__dict__.keys():
-                self.errors = u'Ouch .... {}'.format(status)
+                self.errors = u'Ouch .... {status}'.format(status=status)
+
             api.portal.show_message(
                 message=self.errors,
                 request=self.request,

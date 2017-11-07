@@ -128,4 +128,21 @@
     template="message/templates/messageview.pt"
     permission="zope2.View"
     />
+
+  <!-- View for newsletter's history -->
+  <browser:page
+    for="rer.newsletter.interfaces.INewsletter"
+    name="newsletterhistory_view"
+    class=".newsletter.newsletterhistory.NewsletterHistory"
+    template="newsletter/templates/newsletterhistoryview.pt"
+    permission="zope2.View"
+    />
+
+  <browser:pages
+    for="rer.newsletter.interfaces.INewsletter"
+    permission="zope2.View"
+    class=".newsletter.newsletterhistory.NewsletterHistory">
+       <browser:page name="getMessageSentDetails" attribute="getMessageSentDetails" />
+  </browser:pages>
+
 </configure>

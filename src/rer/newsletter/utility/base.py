@@ -2,9 +2,7 @@
 from datetime import datetime
 from datetime import timedelta
 from persistent.dict import PersistentDict
-from persistent.list import PersistentList
 from plone import api
-from plone.uuid.interfaces import IUUIDGenerator
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import ALREADY_ACTIVE
@@ -18,13 +16,13 @@ from rer.newsletter.utility.newsletter import MAIL_NOT_PRESENT
 from rer.newsletter.utility.newsletter import OK
 from smtplib import SMTPRecipientsRefused
 from zope.annotation.interfaces import IAnnotations
-from zope.component import getUtility
 from zope.interface import implementer
 from zope.interface import Invalid
 
 import json
 import premailer
 import re
+import uuid
 
 
 KEY = 'rer.newsletter.subscribers'
@@ -46,12 +44,12 @@ def mailValidation(mail):
         )
     return True
 
-
-def uuidValidation(uuid):
-    match = re.match('[0-9a-f]{32}\Z', uuid)
-    if match is None:
-        return False
-    return True
+# da fixare la validazione
+# def uuidValidation(uuid):
+#     match = re.match('[0-9a-f]{32}\Z', uuid)
+#     if match is None:
+#         return False
+#     return True
 
 
 def isCreationDateExpired(creation_date):
@@ -72,7 +70,8 @@ class BaseHandler(object):
         if obj:
             annotations = IAnnotations(obj)
             if KEY not in annotations.keys():
-                annotations[KEY] = PersistentList([])
+                # annotations[KEY] = PersistentList([])
+                annotations[KEY] = PersistentDict({})
             return annotations[KEY]
 
     def _api(self, newsletter):
@@ -92,19 +91,19 @@ class BaseHandler(object):
         if annotations is None:
             return INVALID_NEWSLETTER
 
+        # da fixare validaizone uuid
         # valido il secret
-        if not uuidValidation(secret):
-            return INVALID_SECRET
+        # if not uuidValidation(secret):
+        #     return INVALID_SECRET
 
         # attivo l'utente
         count = 0
-        element_id = None
         for user in annotations:
-            if user['token'] == secret:
-                if user['is_active']:
+            if annotations[user]['token'] == secret:
+                if annotations[user]['is_active']:
                     return ALREADY_ACTIVE
                 else:
-                    element_id = count
+                    element_id = user
                     break
             count += 1
 
@@ -115,32 +114,27 @@ class BaseHandler(object):
             return INVALID_SECRET
 
     def importUsersList(self, usersList, newsletter):
-        logger.info('DEBUG: import userslist %s in %s', usersList, newsletter)
+        logger.info('DEBUG: import userslist in %s', newsletter)
         annotations = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
 
-        # controllo che tutte le mail siano valide
-        # come mi devo comportare se ci sono mail che non sono valide ?
         for user in usersList:
-            if not mailValidation(user):
-                return INVALID_EMAIL
-
-        # calculate new uuid for email
-        generator = getUtility(IUUIDGenerator)
-        uuid = generator()
-        for user in usersList:
-            if user not in annotations:
-                annotations.append(PersistentDict({
+            match = re.match(
+                '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]' +
+                '+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+                user
+            )
+            if match is not None:
+                annotations[user] = {
                     'email': user,
                     'is_active': True,
-                    'token': uuid,
+                    'token': unicode(uuid.uuid4()),
                     'creation_date': datetime.today().strftime(
                         '%d/%m/%Y %H:%M:%S'
                     ),
-                }))
+                }
 
-        # catch exception
         return OK
 
     def exportUsersList(self, newsletter):
@@ -151,12 +145,12 @@ class BaseHandler(object):
             return INVALID_NEWSLETTER
 
         c = 0
-        for user in annotations:
+        for user in annotations.keys():
             element = {}
             element['id'] = c
-            element['email'] = user['email']
-            element['is_active'] = user['is_active']
-            element['creation_date'] = user['creation_date']
+            element['email'] = annotations[user]['email']
+            element['is_active'] = annotations[user]['is_active']
+            element['creation_date'] = annotations[user]['creation_date']
             response.append(element)
             c += 1
 
@@ -170,19 +164,12 @@ class BaseHandler(object):
             return INVALID_NEWSLETTER
 
         try:
-            element_id = None
-            count = 0
-            for user in annotations:
-                if user['email'] == mail:
-                    element_id = count
-                    break
-                count += 1
 
-            # elimino persona dalla newsletter
-            if element_id is not None:
-                annotations.pop(element_id)
+            if mail in annotations.keys():
+                del annotations[mail]
             else:
                 raise ValueError
+
         except ValueError:
             return MAIL_NOT_PRESENT
 
@@ -198,17 +185,9 @@ class BaseHandler(object):
 
         for user in usersList:
             try:
-                element_id = None
-                count = 0
 
-                for u in annotations:
-                    if u['email'] == user:
-                        element_id = count
-                        break
-                    count += 1
-
-                if element_id is not None:
-                    annotations.pop(element_id)
+                if user in annotations.keys():
+                    del annotations[user]
 
             except ValueError:
                 # to handle
@@ -222,7 +201,7 @@ class BaseHandler(object):
         if annotations is None:
             return INVALID_NEWSLETTER
 
-        del annotations[:]
+        annotations.clear()
 
         return OK
 
@@ -233,17 +212,9 @@ class BaseHandler(object):
             return INVALID_NEWSLETTER
 
         try:
-            element_id = None
-            count = 0
-            for user in annotations:
-                if user['email'] == mail:
-                    element_id = count
-                    break
-                count += 1
 
-            # elimino persona dalla newsletter
-            if element_id is not None:
-                annotations.pop(element_id)
+            if mail in annotations.keys():
+                del annotations[mail]
             else:
                 raise ValueError
 
@@ -261,27 +232,29 @@ class BaseHandler(object):
         if not mailValidation(mail):
             return INVALID_EMAIL
 
-        # calculate new uuid for email
-        generator = getUtility(IUUIDGenerator)
-        uuid = generator()
         # controllo che la mail non sia gia presente e attiva nel db
-        for user in annotations:
+        for user in annotations.keys():
             if (
-                (mail == user['email'] and user['is_active']) or
                 (
-                    mail == user['email'] and
-                    not user['is_active'] and
-                    isCreationDateExpired(user['creation_date'])
+                    mail == annotations[user]['email'] and
+                    annotations[user]['is_active']
+                ) or
+                (
+                    mail == annotations[user]['email'] and
+                    not annotations[user]['is_active'] and
+                    isCreationDateExpired(annotations[user]['creation_date'])
                 )
             ):
                 return ALREADY_SUBSCRIBED
         else:
-            annotations.append(PersistentDict({
+            annotations[mail] = {
                 'email': mail,
                 'is_active': True,
-                'token': uuid,
-                'creation_date': datetime.today().strftime('%d/%m/%Y %H:%M:%S')
-            }))
+                'token': unicode(uuid.uuid4()),
+                'creation_date': datetime.today().strftime(
+                    '%d/%m/%Y %H:%M:%S'
+                ),
+            }
 
         return OK
 
@@ -294,28 +267,31 @@ class BaseHandler(object):
         if not mailValidation(mail):
             return INVALID_EMAIL, None
 
-        # calculate new uuid for email
-        generator = getUtility(IUUIDGenerator)
-        uuid = generator()
-        for user in annotations:
+        uuid_activation = unicode(uuid.uuid4())
+        for user in annotations.keys():
             if (
-                (mail == user['email'] and user['is_active']) or
                 (
-                    mail == user['email'] and
-                    not user['is_active'] and
-                    isCreationDateExpired(user['creation_date'])
+                    mail == annotations[user]['email'] and
+                    annotations[user]['is_active']
+                ) or
+                (
+                    mail == annotations[user]['email'] and
+                    not annotations[user]['is_active'] and
+                    isCreationDateExpired(annotations[user]['creation_date'])
                 )
             ):
                 return ALREADY_SUBSCRIBED, None
         else:
-            annotations.append(PersistentDict({
+            annotations[mail] = {
                 'email': mail,
                 'is_active': False,
-                'token': uuid,
-                'creation_date': datetime.today().strftime('%d/%m/%Y %H:%M:%S')
-            }))
+                'token': uuid_activation,
+                'creation_date': datetime.today().strftime(
+                    '%d/%m/%Y %H:%M:%S'
+                ),
+            }
 
-        return OK, uuid
+        return OK, uuid_activation
 
     def getMessage(self, newsletter, message):
         logger.debug('getMessage %s %s', newsletter, message.title)
@@ -342,10 +318,10 @@ class BaseHandler(object):
         try:
             # invio la mail ad ogni utente
             mail_host = api.portal.get_tool(name='MailHost')
-            for user in annotations:
+            for user in annotations.keys():
                 mail_host.send(
                     body,
-                    mto=user['email'],
+                    mto=annotations[user]['email'],
                     mfrom=nl.sender_email,
                     subject=message.Title(),
                     charset='utf-8',
@@ -355,3 +331,16 @@ class BaseHandler(object):
             raise SMTPRecipientsRefused
 
         return OK
+
+    def getNumActiveSucscribers(self, newsletter):
+        logger.debug('Get number of active subscribers from %s', newsletter)
+        annotations = self._storage(newsletter)
+        if annotations is None:
+            return None, INVALID_NEWSLETTER
+
+        count = 0
+        for user in annotations.keys():
+            if annotations[user]['is_active']:
+                count += 1
+
+        return count, OK

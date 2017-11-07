@@ -46,4 +46,18 @@
  </object>
 </object>
 
+<object name="object" meta_type="CMF Action Category">
+<object name="newsletterhistory_view" meta_type="CMF Action" i18n:domain="rer.newsletter">
+ <property name="title" i18n:translate="title_newsletter_history">Newsletter History</property>
+ <property name="description" i18n:translate="description_newsletter_history">Newsletter history description</property>
+ <property name="url_expr">string:${object_url}/@@newsletterhistory_view</property>
+ <property name="icon_expr"></property>
+ <property name="available_expr">python: context.portal_type == 'Newsletter'</property>
+ <property name="permissions">
+   <permission value="newsletterhistory_view" />
+ </property>
+ <property name="visible">True</property>
+</object>
+</object>
+
 </object>

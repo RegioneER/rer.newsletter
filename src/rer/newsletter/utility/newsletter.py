@@ -114,6 +114,21 @@ class INewsletterUtility(Interface):
         Raises:
         """
 
+    def getNumActiveSucscribers(newsletter):
+        """
+        Return number of subscribers for newsletter
+
+        Args:
+            newsletter (str): newsletter id
+
+        Returns:
+            (number of subscribers and status together)
+            int: number of active subscribers and OK (1) if succesful,
+                 INVALID_NEWSLETTER (5) newsletter not found.
+
+        Raises:
+        """
+
     def addNewsletter(newsletter):
         """
         add new newsletter to mailman server
