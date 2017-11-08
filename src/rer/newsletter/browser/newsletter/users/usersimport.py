@@ -159,7 +159,7 @@ class UsersImport(form.Form):
             )
         else:
             if 'errors' not in self.__dict__.keys():
-                self.errors = u'Ouch .... {status}'.format(status=status)
+                self.errors = api_newsletter.getErrorMessage(status)
 
             api.portal.show_message(
                 message=self.errors,

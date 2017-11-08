@@ -63,12 +63,6 @@ class MessageSendingProof(form.Form):
 
         except SMTPRecipientsRefused:
             self.errors = u'problemi con l\'invio del messaggio'
-        # except Exception:
-        #     logger.exception(
-        #         'unhandled error for send proof of newsletter %s',
-        #         email
-        #     )
-        #     self.errors = u'Problem with sending proof'
 
         # da sistemare la gestione degli errori
         if 'errors' in self.__dict__.keys():

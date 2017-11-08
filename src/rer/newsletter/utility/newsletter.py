@@ -114,7 +114,7 @@ class INewsletterUtility(Interface):
         Raises:
         """
 
-    def getNumActiveSucscribers(newsletter):
+    def getNumActiveSubscribers(newsletter):
         """
         Return number of subscribers for newsletter
 
@@ -229,4 +229,9 @@ class INewsletterUtility(Interface):
             string that is entire message if succesful.
 
         Raised:
+        """
+
+    def getErrorMessage(code_error):
+        """
+        da scrivere
         """

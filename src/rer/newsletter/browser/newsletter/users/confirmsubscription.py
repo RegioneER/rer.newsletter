@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone import api
 from Products.Five.browser import BrowserView
-# messageFactory
-from rer.newsletter import _
 from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter.utility.newsletter import OK
 from zope.component import getUtility
@@ -32,16 +30,13 @@ class ConfirmSubscription(BrowserView):
 
         if response == OK:
             api.portal.show_message(
-                message=_(
-                    u'user_activated',
-                    default=u'User Activated'
-                ),
+                message=api_newsletter.getErrorMessage(response),
                 request=self.request,
                 type=u'info'
             )
         else:
             api.portal.show_message(
-                message=u'Ouch .... {msg}'.format(msg=response),
+                message=api_newsletter.getErrorMessage(response),
                 request=self.request,
                 type=u'error'
             )

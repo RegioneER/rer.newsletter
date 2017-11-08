@@ -17,19 +17,21 @@ KEY = 'rer.newsletter.message.details'
 def changeMessageState(message, event):
     if event.action == 'send':
         try:
-            utility = getUtility(INewsletterUtility)
-            utility.sendMessage(message.aq_parent.id_newsletter, message)
+            api_newsletter = getUtility(INewsletterUtility)
+            api_newsletter.sendMessage(
+                message.aq_parent.id_newsletter, message
+            )
 
             # i dettagli sull'invio del messaggio per lo storico
             annotations = IAnnotations(message)
             if KEY not in annotations.keys():
 
-                active_users, status = utility.getNumActiveSucscribers(
+                active_users, status = api_newsletter.getNumActiveSubscribers(
                     message.aq_parent.id_newsletter
                 )
 
                 if status != OK:
-                    raise Exception(u"Problemi con l'invio del messaggio")
+                    raise Exception(status)
 
                 annotations[KEY] = PersistentDict({
                     'num_active_subscribers': active_users,
@@ -40,5 +42,6 @@ def changeMessageState(message, event):
 
         except SMTPRecipientsRefused:
             raise SMTPRecipientsRefused(u"Problemi con l'invio del messaggio")
-        except Exception:
-            raise Exception(u"Problemi con l'invio del messaggio")
+        except Exception as inst:
+            message = api_newsletter.getErrorMessage(inst.args[0])
+            raise Exception(message)

@@ -2,6 +2,8 @@
 from plone import api
 from plone import schema
 from plone.protect.authenticator import createToken
+from plone.z3cform.layout import wrap_form
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
@@ -33,6 +35,12 @@ class SubscribeForm(form.Form):
 
     ignoreContext = True
     fields = field.Fields(ISubscribeForm)
+
+    def isVisible(self):
+        if api.content.get_state(obj=self.context) == 'activated':
+            return True
+        else:
+            return False
 
     @button.buttonAndHandler(u'subscribe')
     def handleSave(self, action):
@@ -117,11 +125,19 @@ class SubscribeForm(form.Form):
                 type=u'error'
             )
         except Exception:
+            # solo nel caso in cui non sia entrato nelle eccezioni precedenti
+            # altrimenti vengono stampati gli errori precedenti
             if 'errors' not in self.__dict__.keys():
-                self.errors = u'Ouch .... {status}'.format(status=status)
+                self.errors = api_newsletter.getErrorMessage(status)
 
             api.portal.show_message(
                 message=self.errors,
                 request=self.request,
                 type=u'error'
             )
+
+
+subscribe_view = wrap_form(
+    SubscribeForm,
+    index=ViewPageTemplateFile('templates/subscribenewsletter.pt')
+)

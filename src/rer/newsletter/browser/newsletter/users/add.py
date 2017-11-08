@@ -58,7 +58,7 @@ class AddForm(form.Form):
             )
 
         if status == SUBSCRIBED:
-            status = _(u'status_user_added', default=u'User Added')
+            status = api_newsletter.getErrorMessage(status)
             api.portal.show_message(
                 message=status,
                 request=self.request,
@@ -67,7 +67,7 @@ class AddForm(form.Form):
 
         else:
             if 'errors' not in self.__dict__.keys():
-                self.errors = u'Ouch .... {status}'.format(status=status)
+                self.errors = api_newsletter.getErrorMessage(status)
 
             api.portal.show_message(
                 message=self.errors,

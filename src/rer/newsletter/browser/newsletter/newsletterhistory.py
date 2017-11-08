@@ -5,6 +5,8 @@ from Products.Five.browser import BrowserView
 from zope.annotation.interfaces import IAnnotations
 
 import json
+
+
 KEY = 'rer.newsletter.message.details'
 
 

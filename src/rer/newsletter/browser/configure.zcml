@@ -31,7 +31,7 @@
       for="rer.newsletter.interfaces.INewsletter"
       name="subscribe_newsletter"
       permission="zope2.View"
-      class=".newsletter.subscribe.SubscribeForm"
+      class=".newsletter.subscribe.subscribe_view"
       />
 
   <!-- vista form per disiscrizione newsletter -->
@@ -39,7 +39,7 @@
       for="rer.newsletter.interfaces.INewsletter"
       name="unsubscribe_newsletter"
       permission="zope2.View"
-      class=".newsletter.unsubscribe.UnsubscribeForm"
+      class=".newsletter.unsubscribe.unsubscribe_view"
       />
 
   <!-- customize addForm for newsletter -->

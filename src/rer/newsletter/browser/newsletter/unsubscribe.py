@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from plone import api
 from plone import schema
+from plone.z3cform.layout import wrap_form
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
@@ -31,6 +33,12 @@ class UnsubscribeForm(form.Form):
     ignoreContext = True
     fields = field.Fields(IUnsubscribeForm)
 
+    def isVisible(self):
+        if api.content.get_state(obj=self.context) == 'activated':
+            return True
+        else:
+            return False
+
     @button.buttonAndHandler(_(u'unsubscribe_button', default='Unsubscribe'))
     def handleSave(self, action):
         status = UNHANDLED
@@ -47,8 +55,8 @@ class UnsubscribeForm(form.Form):
 
             # controllo se e possibile disinscriversi
 
-            utility = getUtility(INewsletterUtility)
-            status = utility.unsubscribe(newsletter, email)
+            api_newsletter = getUtility(INewsletterUtility)
+            status = api_newsletter.unsubscribe(newsletter, email)
         except Exception:
             logger.exception(
                 'unhandled error subscribing %s %s',
@@ -75,9 +83,15 @@ class UnsubscribeForm(form.Form):
             )
         else:
             if 'errors' not in self.__dict__.keys():
-                self.errors = u'Ouch .... {status}'.format(status=status)
+                self.errors = api_newsletter.getErrorMessage(status)
             api.portal.show_message(
                 message=self.errors,
                 request=self.request,
                 type=u'error'
             )
+
+
+unsubscribe_view = wrap_form(
+    UnsubscribeForm,
+    index=ViewPageTemplateFile('templates/subscribenewsletter.pt')
+)

@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
-from plone import api
 from Products.CMFPlone.resources import add_bundle_on_request
 from Products.Five import BrowserView
-from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter.utility.newsletter import OK
-from rer.newsletter.utility.newsletter import UNHANDLED
 from zope.component import getUtility
 from zope.interface import implementer
 from zope.interface import Interface
@@ -38,22 +35,13 @@ class ManageUsers(BrowserView):
             api_newsletter = getUtility(INewsletterUtility)
             status = api_newsletter.deleteUser(newsletter, email)
         except Exception:
+            self.errors = api_newsletter.getMessageError(status)
             logger.exception(
-                'unhandled error subscribing %s %s',
+                '{error}'.format(error=self.errors) +
+                ' : newsletter: %s, email: %s',
                 newsletter,
                 email
             )
-            self.errors = _(
-                u'generic_problem_delete_user',
-                default=u'Problem with delete of user from newsletter'
-            )
-            status = UNHANDLED
-            api.portal.show_message(
-                message=self.errors + '. status: ' + str(status),
-                request=self.request,
-                type=u'error'
-            )
-            return
 
         response = {}
         if status == OK:
@@ -71,21 +59,11 @@ class ManageUsers(BrowserView):
             api_newsletter = getUtility(INewsletterUtility)
             userList, status = api_newsletter.exportUsersList(newsletter)
         except Exception:
+            self.errors = api_newsletter.getErrorMessage(status)
             logger.exception(
-                'unhandled error on export of user %s',
+                '{error}'.format(error=self.errors) + ' : newsletter: %s',
                 newsletter
             )
-            self.errors = _(
-                u'generic_problem_export_file',
-                default=u'Problem with export of user to file'
-            )
-            status = UNHANDLED
-            api.portal.show_message(
-                message=self.errors + '. status: ' + str(status),
-                request=self.request,
-                type=u'error'
-            )
-            return
 
         if status == OK:
             # predisporre download del file
@@ -117,16 +95,10 @@ class ManageUsers(BrowserView):
             api_newsletter = getUtility(INewsletterUtility)
             userList, status = api_newsletter.exportUsersList(newsletter)
         except Exception:
+            self.errors = api_newsletter.getErrorMessage(status)
             logger.exception(
-                'unhandled error on export of user %s',
+                '{error}'.format(error=self.errors) + ' : newsletter: %s',
                 newsletter
-            )
-            self.errors = u'Problem with export'
-            status = UNHANDLED
-            api.portal.show_message(
-                message=self.errors + '. status: ' + str(status),
-                request=self.request,
-                type=u'error'
             )
 
         if status == OK:

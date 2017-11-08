@@ -7,12 +7,14 @@ from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.newsletter import ALREADY_ACTIVE
 from rer.newsletter.utility.newsletter import ALREADY_SUBSCRIBED
+from rer.newsletter.utility.newsletter import FILE_FORMAT
 from rer.newsletter.utility.newsletter import INewsletterUtility
 from rer.newsletter.utility.newsletter import INEXISTENT_EMAIL
 from rer.newsletter.utility.newsletter import INVALID_EMAIL
 from rer.newsletter.utility.newsletter import INVALID_NEWSLETTER
 from rer.newsletter.utility.newsletter import INVALID_SECRET
 from rer.newsletter.utility.newsletter import MAIL_NOT_PRESENT
+from rer.newsletter.utility.newsletter import NEWSLETTER_USED
 from rer.newsletter.utility.newsletter import OK
 from smtplib import SMTPRecipientsRefused
 from zope.annotation.interfaces import IAnnotations
@@ -44,12 +46,14 @@ def mailValidation(mail):
         )
     return True
 
+
 # da fixare la validazione
-# def uuidValidation(uuid):
-#     match = re.match('[0-9a-f]{32}\Z', uuid)
-#     if match is None:
-#         return False
-#     return True
+def uuidValidation(uuid_string):
+    try:
+        uuid.UUID(uuid_string, version=4)
+    except ValueError:
+        return False
+    return True
 
 
 def isCreationDateExpired(creation_date):
@@ -93,8 +97,8 @@ class BaseHandler(object):
 
         # da fixare validaizone uuid
         # valido il secret
-        # if not uuidValidation(secret):
-        #     return INVALID_SECRET
+        if not uuidValidation(secret):
+            return INVALID_SECRET
 
         # attivo l'utente
         count = 0
@@ -134,6 +138,8 @@ class BaseHandler(object):
                         '%d/%m/%Y %H:%M:%S'
                     ),
                 }
+            else:
+                logger.info('INVALID_EMAIL: %s', user)
 
         return OK
 
@@ -177,8 +183,7 @@ class BaseHandler(object):
 
     def deleteUserList(self, usersList, newsletter):
         # manca il modo di far capire se una mail non e presente nella lista
-        logger.info('delete userslist %s from %s',
-                    usersList, newsletter)
+        logger.info('delete userslist from %s', newsletter)
         annotations = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
@@ -319,20 +324,21 @@ class BaseHandler(object):
             # invio la mail ad ogni utente
             mail_host = api.portal.get_tool(name='MailHost')
             for user in annotations.keys():
-                mail_host.send(
-                    body,
-                    mto=annotations[user]['email'],
-                    mfrom=nl.sender_email,
-                    subject=message.Title(),
-                    charset='utf-8',
-                    msg_type='text/html'
-                )
+                if annotations[user]['is_active']:
+                    mail_host.send(
+                        body,
+                        mto=annotations[user]['email'],
+                        mfrom=nl.sender_email,
+                        subject=message.Title(),
+                        charset='utf-8',
+                        msg_type='text/html'
+                    )
         except SMTPRecipientsRefused:
             raise SMTPRecipientsRefused
 
         return OK
 
-    def getNumActiveSucscribers(self, newsletter):
+    def getNumActiveSubscribers(self, newsletter):
         logger.debug('Get number of active subscribers from %s', newsletter)
         annotations = self._storage(newsletter)
         if annotations is None:
@@ -344,3 +350,43 @@ class BaseHandler(object):
                 count += 1
 
         return count, OK
+
+    def getErrorMessage(self, code_error):
+
+        if code_error == OK:
+            return _(u'generic_success_message', defualt=u'everything ok.')
+        elif code_error == INVALID_EMAIL:
+            return _(u'invalid_email_message', default=u'Invalid Email.')
+        elif code_error == ALREADY_SUBSCRIBED:
+            return _(
+                u'already_subscribed_message',
+                default=u'Email already subscribed.'
+            )
+        elif code_error == INEXISTENT_EMAIL:
+            return _(u'inexistent_email_message', default=u'Inexistent email.')
+        elif code_error == ALREADY_ACTIVE:
+            return _(
+                u'already_active_message',
+                default=u'Email already activated.'
+            )
+        elif code_error == INVALID_NEWSLETTER:
+            return _(
+                u'invalid_newsletter_message',
+                default=u'Invalid newsletter.'
+            )
+        elif code_error == INVALID_SECRET:
+            return _(u'invalid_secret_message', default=u'Invalid secret.')
+        elif code_error == MAIL_NOT_PRESENT:
+            return _(u'mail_not_present_message', default=u'Mail not present.')
+        elif code_error == NEWSLETTER_USED:
+            return _(
+                u'newsletter_used_message',
+                default=u'Newsletter already used.'
+            )
+        elif code_error == FILE_FORMAT:
+            return _(
+                u'file_format_message',
+                default=u'Wrong file format.'
+            )
+        else:
+            return _(u'unhandled_error_message', default=u'Unhandled error.')
