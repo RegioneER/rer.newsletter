@@ -1,31 +1,36 @@
 # -*- coding: utf-8 -*-
+from rer.newsletter.utility.newsletter import OK, INewsletterUtility
+
 from plone import api
 from Products.Five.browser import BrowserView
-from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import OK
 from zope.component import getUtility
-
 
 # disable CSRF
 # from plone.protect.interfaces import IDisableCSRFProtection
 # from zope.interface import alsoProvides
 
 
-class ConfirmSubscription(BrowserView):
+class ConfirmAction(BrowserView):
 
     def render(self):
         return self.index()
 
     def __call__(self):
-        # alsoProvides(self.request, IDisableCSRFProtection)
         secret = self.request.get('secret')
+        action = self.request.get('action')
 
         response = None
-        if self.context.portal_type == 'Newsletter':
-            api_newsletter = getUtility(INewsletterUtility)
+        api_newsletter = getUtility(INewsletterUtility)
+
+        if action == u'subscribe':
             response = api_newsletter.activeUser(
                 self.context.id_newsletter,
-                secret
+                secret=secret
+            )
+        elif action == u'unsubscribe':
+            response = api_newsletter.deleteUser(
+                self.context.id_newsletter,
+                secret=secret
             )
 
         if response == OK:

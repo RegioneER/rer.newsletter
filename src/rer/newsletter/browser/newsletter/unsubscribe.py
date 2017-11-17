@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
-from plone import api
-from plone import schema
+from rer.newsletter import _, logger
+from rer.newsletter.utility.newsletter import OK, UNHANDLED, INewsletterUtility
+
+from plone import api, schema
+from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from rer.newsletter import _
-from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import OK
-from rer.newsletter.utility.newsletter import UNHANDLED
-from z3c.form import button
-from z3c.form import field
-from z3c.form import form
+from z3c.form import button, field, form
 from zope.component import getUtility
 from zope.interface import Interface
 
@@ -53,10 +49,9 @@ class UnsubscribeForm(form.Form):
                 newsletter = self.context.id_newsletter
             email = data['email']
 
-            # controllo se e possibile disinscriversi
-
             api_newsletter = getUtility(INewsletterUtility)
-            status = api_newsletter.unsubscribe(newsletter, email)
+            status, secret = api_newsletter.unsubscribe(newsletter, email)
+
         except Exception:
             logger.exception(
                 'unhandled error subscribing %s %s',
@@ -73,6 +68,27 @@ class UnsubscribeForm(form.Form):
             )
 
         if status == OK:
+
+            # creo il token CSRF
+            token = createToken()
+
+            # mando mail di conferma
+            message = 'clicca per disattivazione: '
+            message += self.context.absolute_url()
+            message += '/confirmaction?secret=' + secret
+            message += '&_authenticator=' + token
+            message += '&action=unsubscribe'
+
+            mailHost = api.portal.get_tool(name='MailHost')
+            mailHost.send(
+                message,
+                mto=email,
+                mfrom='noreply@rer.it',
+                subject='Email di disattivazione',
+                charset='utf-8',
+                msg_type='text/plain'
+            )
+
             api.portal.show_message(
                 message=_(
                     u'user_unsubscribe_success',

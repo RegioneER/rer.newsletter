@@ -59,7 +59,7 @@ class MessageSendingProof(form.Form):
                 charset='utf-8',
                 msg_type='text/html',
                 immediate=True
-                )
+            )
 
         except SMTPRecipientsRefused:
             self.errors = u'problemi con l\'invio del messaggio'

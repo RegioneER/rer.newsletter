@@ -29,7 +29,7 @@
   <!-- vista form per iscrizione newsletter -->
   <browser:page
       for="rer.newsletter.interfaces.INewsletter"
-      name="subscribe_newsletter"
+      name="subscribe"
       permission="zope2.View"
       class=".newsletter.subscribe.subscribe_view"
       />
@@ -37,7 +37,7 @@
   <!-- vista form per disiscrizione newsletter -->
   <browser:page
       for="rer.newsletter.interfaces.INewsletter"
-      name="unsubscribe_newsletter"
+      name="unsubscribe"
       permission="zope2.View"
       class=".newsletter.unsubscribe.unsubscribe_view"
       />
@@ -70,7 +70,7 @@
   <!-- view for manage users of newsletter -->
   <browser:page
     for="rer.newsletter.interfaces.INewsletter"
-    name="manageusers_view"
+    name="manageusers"
     class=".newsletter.manageusers.ManageUsers"
     template="newsletter/templates/manageusers.pt"
     permission="zope2.View"
@@ -102,12 +102,12 @@
     permission="zope2.View"
     />
 
-  <!-- view for active user -->
+  <!-- view for confirm user action-->
   <browser:page
     for="rer.newsletter.interfaces.INewsletter"
-    name="confirmsubscription_view"
-    class=".newsletter.users.confirmsubscription.ConfirmSubscription"
-    template="newsletter/templates/confirmsubscription.pt"
+    name="confirmaction"
+    class=".newsletter.users.confirmaction.ConfirmAction"
+    template="newsletter/templates/confirmaction.pt"
     permission="zope2.View"
     />
 
@@ -132,7 +132,7 @@
   <!-- View for newsletter's history -->
   <browser:page
     for="rer.newsletter.interfaces.INewsletter"
-    name="newsletterhistory_view"
+    name="newsletterhistory"
     class=".newsletter.newsletterhistory.NewsletterHistory"
     template="newsletter/templates/newsletterhistoryview.pt"
     permission="zope2.View"

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from zope.interface import Interface
 
-
 # general
 UNHANDLED = 0
 SUBSCRIBED = OK = 1
@@ -172,7 +171,7 @@ class INewsletterUtility(Interface):
         Raised:
         """
 
-    def deleteUser(mail, newsletter):
+    def deleteUser(newsletter, email, secret):
         """
         delete a user from newsletter
 
@@ -199,7 +198,8 @@ class INewsletterUtility(Interface):
         Returns:
             int OK (1) if succesful,
                 INVALID_NEWSLETTER (5) newsletter not found,
-                MAIL_NOT_PRESENT (8 user's email not found.
+                MAIL_NOT_PRESENT (8) user's email not found,
+                INVALID_SECRET (10) user's secret not found.
         """
 
     def exportUsersList(newsletter):

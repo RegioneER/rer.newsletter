@@ -1,31 +1,25 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-from datetime import timedelta
-from persistent.dict import PersistentDict
-from plone import api
-from rer.newsletter import _
-from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import ALREADY_ACTIVE
-from rer.newsletter.utility.newsletter import ALREADY_SUBSCRIBED
-from rer.newsletter.utility.newsletter import FILE_FORMAT
-from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import INEXISTENT_EMAIL
-from rer.newsletter.utility.newsletter import INVALID_EMAIL
-from rer.newsletter.utility.newsletter import INVALID_NEWSLETTER
-from rer.newsletter.utility.newsletter import INVALID_SECRET
-from rer.newsletter.utility.newsletter import MAIL_NOT_PRESENT
-from rer.newsletter.utility.newsletter import NEWSLETTER_USED
-from rer.newsletter.utility.newsletter import OK
-from smtplib import SMTPRecipientsRefused
-from zope.annotation.interfaces import IAnnotations
-from zope.interface import implementer
-from zope.interface import Invalid
-
 import json
-import premailer
 import re
 import uuid
+from datetime import datetime, timedelta
+from smtplib import SMTPRecipientsRefused
 
+from rer.newsletter import _, logger
+from rer.newsletter.utility.newsletter import (ALREADY_ACTIVE,
+                                               ALREADY_SUBSCRIBED, FILE_FORMAT,
+                                               INEXISTENT_EMAIL, INVALID_EMAIL,
+                                               INVALID_NEWSLETTER,
+                                               INVALID_SECRET,
+                                               MAIL_NOT_PRESENT,
+                                               NEWSLETTER_USED, OK,
+                                               INewsletterUtility)
+
+import premailer
+from persistent.dict import PersistentDict
+from plone import api
+from zope.annotation.interfaces import IAnnotations
+from zope.interface import Invalid, implementer
 
 KEY = 'rer.newsletter.subscribers'
 
@@ -95,7 +89,6 @@ class BaseHandler(object):
         if annotations is None:
             return INVALID_NEWSLETTER
 
-        # da fixare validaizone uuid
         # valido il secret
         if not uuidValidation(secret):
             return INVALID_SECRET
@@ -162,24 +155,40 @@ class BaseHandler(object):
 
         return json.dumps(response), OK
 
-    def deleteUser(self, newsletter, mail):
+    def deleteUser(self, newsletter, mail=None, secret=None):
         logger.info('delete user %s from newsletter %s',
                     mail, newsletter)
         annotations = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
 
-        try:
+        if secret is not None:
+            # cancello l'utente con il secret
 
-            if mail in annotations.keys():
-                del annotations[mail]
-            else:
-                raise ValueError
+            # valido il secret
+            if not uuidValidation(secret):
+                return INVALID_SECRET
 
-        except ValueError:
+            for user in annotations:
+                if annotations[user]['token'] == secret:
+                    cd = annotations[user]['creation_date']
+                    if isCreationDateExpired(cd):
+                        del annotations[user]
+                        return OK
+                    else:
+                        return INVALID_SECRET
+
             return MAIL_NOT_PRESENT
 
-        return OK
+        else:
+            # cancello l'utente con la mail
+            try:
+                if mail in annotations.keys():
+                    del annotations[mail]
+                else:
+                    raise ValueError
+            except ValueError:
+                return MAIL_NOT_PRESENT
 
     def deleteUserList(self, usersList, newsletter):
         # manca il modo di far capire se una mail non e presente nella lista
@@ -210,23 +219,27 @@ class BaseHandler(object):
 
         return OK
 
-    def unsubscribe(self, newsletter, mail):
-        logger.info('DEBUG: unsubscribe %s %s', newsletter, mail)
+    def unsubscribe(self, newsletter, user):
+        logger.info('DEBUG: unsubscribe %s %s', newsletter, user)
         annotations = self._storage(newsletter)
         if annotations is None:
-            return INVALID_NEWSLETTER
+            return INVALID_NEWSLETTER, None
 
         try:
+            secret = unicode(uuid.uuid4())
 
-            if mail in annotations.keys():
-                del annotations[mail]
+            if user in annotations.keys():
+                annotations[user]['token'] = secret
+                annotations[user]['creation_date'] = datetime.today().strftime(
+                    '%d/%m/%Y %H:%M:%S'
+                )
             else:
                 raise ValueError
 
         except ValueError:
-            return INEXISTENT_EMAIL
+            return INEXISTENT_EMAIL, None
 
-        return OK
+        return OK, secret
 
     def addUser(self, newsletter, mail):
         logger.info('DEBUG: add user: %s %s', newsletter, mail)
@@ -354,7 +367,7 @@ class BaseHandler(object):
     def getErrorMessage(self, code_error):
 
         if code_error == OK:
-            return _(u'generic_success_message', defualt=u'everything ok.')
+            return _(u'generic_success_message', default=u'everything ok.')
         elif code_error == INVALID_EMAIL:
             return _(u'invalid_email_message', default=u'Invalid Email.')
         elif code_error == ALREADY_SUBSCRIBED:

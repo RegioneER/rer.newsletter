@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
-from Products.CMFPlone.resources import add_bundle_on_request
-from Products.Five import BrowserView
-from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import OK
-from zope.component import getUtility
-from zope.interface import implementer
-from zope.interface import Interface
-
 import csv
 import json
 import StringIO
+
+from rer.newsletter import logger
+from rer.newsletter.utility.newsletter import OK, UNHANDLED, INewsletterUtility
+
+from Products.CMFPlone.resources import add_bundle_on_request
+from Products.Five import BrowserView
+from zope.component import getUtility
+from zope.interface import Interface, implementer
 
 
 class IManageUsers(Interface):
@@ -28,6 +27,7 @@ class ManageUsers(BrowserView):
 
     def deleteUserFromNewsletter(self):
 
+        status = UNHANDLED
         try:
             email = self.request['email']
             newsletter = self.context.id_newsletter
@@ -53,6 +53,7 @@ class ManageUsers(BrowserView):
 
     def exportUsersListAsFile(self):
 
+        status = UNHANDLED
         try:
             newsletter = self.context.id_newsletter
 
@@ -89,6 +90,7 @@ class ManageUsers(BrowserView):
 
     def exportUsersListAsJson(self):
 
+        status = UNHANDLED
         try:
             newsletter = self.context.id_newsletter
 

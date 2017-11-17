@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
-from plone import api
-from plone import schema
+# eccezioni per mail
+from smtplib import SMTPRecipientsRefused
+
+from rer.newsletter import _, logger
+from rer.newsletter.utility.newsletter import (SUBSCRIBED, UNHANDLED,
+                                               INewsletterUtility)
+
+from plone import api, schema
 from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from rer.newsletter import _
-from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import SUBSCRIBED
-from rer.newsletter.utility.newsletter import UNHANDLED
-# eccezioni per mail
-from smtplib import SMTPRecipientsRefused
-from z3c.form import button
-from z3c.form import field
-from z3c.form import form
+from z3c.form import button, field, form
 from zope.component import getUtility
 from zope.interface import Interface
 
@@ -89,8 +86,9 @@ class SubscribeForm(form.Form):
                 # mando mail di conferma
                 message = 'clicca per attivazione: '
                 message += self.context.absolute_url()
-                message += '/confirmsubscription_view?secret=' + secret
+                message += '/confirmaction?secret=' + secret
                 message += '&_authenticator=' + token
+                message += '&action=subscribe'
 
                 mailHost = api.portal.get_tool(name='MailHost')
                 mailHost.send(
@@ -99,9 +97,8 @@ class SubscribeForm(form.Form):
                     mfrom='noreply@rer.it',
                     subject='Email di attivazione',
                     charset='utf-8',
-                    msg_type='text/plain',
-                    immediate=True
-                    )
+                    msg_type='text/plain'
+                )
 
                 api.portal.show_message(
                     message=_(

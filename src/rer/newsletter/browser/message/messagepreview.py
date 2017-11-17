@@ -11,10 +11,10 @@ class MessagePreview(BrowserView):
 
     def getMessagePreview(self):
         newsletter = self.context.aq_parent
-        messagePreview = ''
+        body = ''
 
-        messagePreview = newsletter.header.raw
-        messagePreview += self.context.text.raw
-        messagePreview += newsletter.footer.raw
+        body = newsletter.header.output if newsletter.header else u''
+        body += self.context.text.output if self.context.text else u''
+        body += newsletter.footer.output if newsletter.footer else u''
 
-        return messagePreview
+        return body

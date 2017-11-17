@@ -21,6 +21,15 @@
           <metal:main-macro define-macro="main">
             <div id="content-core">
 
+              <ul>
+                <li><a href="" tal:attributes="href string:${context/absolute_url}/@@subscribe">Subscribe</a></li>
+                <li><a href="" tal:attributes="href string:${context/absolute_url}/@@unsubscribe">Unsubscribe</a></li>
+                <li><a href="" tal:attributes="href string:${context/absolute_url}/@@manageusers">Users Manage</a></li>
+                <li><a href="" tal:attributes="href string:${context/absolute_url}/@@newsletterhistory">Newsletter History</a></li>
+              </ul>
+
+
+
               <h1>Lista di Messaggi</h1>
               <ul tal:define="messages view/getMessageList" tal:condition="messages">
                 <li tal:repeat="message messages">
