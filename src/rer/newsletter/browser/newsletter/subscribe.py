@@ -2,12 +2,14 @@
 # eccezioni per mail
 from smtplib import SMTPRecipientsRefused
 
-from rer.newsletter import _, logger
+from rer.newsletter import _
 from rer.newsletter.utility.newsletter import (SUBSCRIBED, UNHANDLED,
                                                INewsletterUtility)
 
+import premailer
 from plone import api, schema
 from plone.protect.authenticator import createToken
+from plone.registry.interfaces import IRegistry
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from z3c.form import button, field, form
@@ -57,53 +59,51 @@ class SubscribeForm(form.Form):
             # controllo se la newsletter è attiva
             # se la newsletter non è attiva non faccio nemmeno vedere la form
             if not api.content.get_state(obj=self.context) == 'activated':
-                raise Exception(
-                    _(
-                        'newsletter_not_actived',
-                        default=u'Newsletter not actived'
-                    )
-                )
+                raise Exception
 
             api_newsletter = getUtility(INewsletterUtility)
             status, secret = api_newsletter.subscribe(newsletter, email)
-        except Exception:
-            logger.exception(
-                'unhandled error subscribing %s %s',
-                newsletter,
-                email
-            )
-            self.errors = _(
-                u'generic_probleme_subscribe_user',
-                default=u'Problem with subscribe user'
-            )
 
-        try:
             if status == SUBSCRIBED:
 
                 # creo il token CSRF
                 token = createToken()
 
                 # mando mail di conferma
-                message = 'clicca per attivazione: '
-                message += self.context.absolute_url()
-                message += '/confirmaction?secret=' + secret
-                message += '&_authenticator=' + token
-                message += '&action=subscribe'
+                url = self.context.absolute_url()
+                url += '/confirmaction?secret=' + secret
+                url += '&_authenticator=' + token
+                url += '&action=subscribe'
+
+                mail_template = self.context.restrictedTraverse(
+                    '@@activeuser_template'
+                )
+
+                parameters = {
+                    'header': self.context.header,
+                    'footer': self.context.footer,
+                    'style': self.context.css_style,
+                    'activationUrl': url
+                }
+
+                mail_text = mail_template(**parameters)
+                mail_text = premailer.transform(mail_text)
 
                 mailHost = api.portal.get_tool(name='MailHost')
                 mailHost.send(
-                    message,
+                    mail_text,
                     mto=email,
                     mfrom='noreply@rer.it',
                     subject='Email di attivazione',
                     charset='utf-8',
-                    msg_type='text/plain'
+                    msg_type='text/html',
+                    immediate=True
                 )
 
                 api.portal.show_message(
                     message=_(
                         u'status_user_subscribed',
-                        default=u'User Subscribed'
+                        default=u'Utente iscritto. Mail di conferma inviata.'
                     ),
                     request=self.request,
                     type=u'info'

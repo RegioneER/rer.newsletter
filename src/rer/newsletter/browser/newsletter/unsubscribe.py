@@ -2,6 +2,7 @@
 from rer.newsletter import _, logger
 from rer.newsletter.utility.newsletter import OK, UNHANDLED, INewsletterUtility
 
+import premailer
 from plone import api, schema
 from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
@@ -73,26 +74,40 @@ class UnsubscribeForm(form.Form):
             token = createToken()
 
             # mando mail di conferma
-            message = 'clicca per disattivazione: '
-            message += self.context.absolute_url()
-            message += '/confirmaction?secret=' + secret
-            message += '&_authenticator=' + token
-            message += '&action=unsubscribe'
+            url = self.context.absolute_url()
+            url += '/confirmaction?secret=' + secret
+            url += '&_authenticator=' + token
+            url += '&action=unsubscribe'
+
+            mail_template = self.context.restrictedTraverse(
+                '@@deleteuser_template'
+            )
+
+            parameters = {
+                'header': self.context.header,
+                'footer': self.context.footer,
+                'style': self.context.css_style,
+                'activationUrl': url
+            }
+
+            mail_text = mail_template(**parameters)
+            mail_text = premailer.transform(mail_text)
 
             mailHost = api.portal.get_tool(name='MailHost')
             mailHost.send(
-                message,
+                mail_text,
                 mto=email,
                 mfrom='noreply@rer.it',
                 subject='Email di disattivazione',
                 charset='utf-8',
-                msg_type='text/plain'
+                msg_type='text/html',
+                immediate=True
             )
 
             api.portal.show_message(
                 message=_(
                     u'user_unsubscribe_success',
-                    default=u'User unsubscribed'
+                    default=u'Mail di conferma cancellazione inviata.'
                 ),
                 request=self.request,
                 type=u'info'

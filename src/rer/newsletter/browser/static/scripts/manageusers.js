@@ -36,21 +36,28 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
   });
 
   $('#delete-user > button').on('click', function(){
-    $.ajax({
-      url: "deleteUserFromNewsletter",
-      type: "post",
-      data: {
-        email: table.row('.selected').data().email
-      }
-    })
-    .done(function(data){
-      if (JSON.parse(data).ok){
-        table.row('.selected').remove().draw( false );
-      }
-      else{
-        alert("problem with user's delete");
-      }
-    });
+
+    // aggiungere controllo se ce un elemento selezionato
+    if (!(table.row('.selected').data())){
+      alert("prima va selezionato un utente!")
+    }
+    else{
+      $.ajax({
+        url: "deleteUserFromNewsletter",
+        type: "post",
+        data: {
+          email: table.row('.selected').data().email
+        }
+      })
+      .done(function(data){
+        if (JSON.parse(data).ok){
+          table.row('.selected').remove().draw( false );
+        }
+        else{
+          alert("problem with user's delete");
+        }
+      });
+    }
   });
 
   $(document).ready(function() {

@@ -15,7 +15,10 @@ class HiddenProfiles(object):
 
 def post_install(context):
     """Post install script"""
-    # Do something at the end of the installation of this package.
+    import pdb
+    pdb.set_trace()
+
+    pass
 
 
 def uninstall(context):

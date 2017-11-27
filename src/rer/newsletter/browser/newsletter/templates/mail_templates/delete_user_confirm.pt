@@ -1,0 +1,11 @@
+<tal:root define="header python:options['header'].output;
+                  footer python:options['footer'].output;
+                  style python:options['style']"
+>
+<span tal:replace="structure header" />
+<style tal:content="style" ></style>
+<p>
+  Cancellazione avvenuta con successo.
+</p>
+<span tal:replace="structure footer" />
+</tal:root>

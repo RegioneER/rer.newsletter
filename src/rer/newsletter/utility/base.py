@@ -13,6 +13,7 @@ from rer.newsletter.utility.newsletter import (ALREADY_ACTIVE,
                                                INVALID_SECRET,
                                                MAIL_NOT_PRESENT,
                                                NEWSLETTER_USED, OK,
+                                               PROBLEM_WITH_MAIL,
                                                INewsletterUtility)
 
 import premailer
@@ -70,7 +71,7 @@ class BaseHandler(object):
             if KEY not in annotations.keys():
                 # annotations[KEY] = PersistentList([])
                 annotations[KEY] = PersistentDict({})
-            return annotations[KEY]
+            return annotations[KEY], obj
 
     def _api(self, newsletter):
         ''' return Newsletter and initialize annotations '''
@@ -85,34 +86,41 @@ class BaseHandler(object):
 
     def activeUser(self, newsletter, secret):
         logger.info('DEBUG: active user in %s', newsletter)
-        annotations = self._storage(newsletter)
+        annotations, newsletter_obj = self._storage(newsletter)
         if annotations is None:
-            return INVALID_NEWSLETTER
+            return INVALID_NEWSLETTER, None
 
         # valido il secret
         if not uuidValidation(secret):
-            return INVALID_SECRET
+            return INVALID_SECRET, None
 
         # attivo l'utente
         count = 0
         for user in annotations:
             if annotations[user]['token'] == secret:
                 if annotations[user]['is_active']:
-                    return ALREADY_ACTIVE
+                    return ALREADY_ACTIVE, user
                 else:
                     element_id = user
                     break
             count += 1
 
         if element_id is not None:
-            annotations[element_id]['is_active'] = True
-            return OK
+            # riscrivo l'utente mettendolo a attivo
+            annotations[element_id] = {
+                'email': element_id,
+                'is_active': True,
+                'token': annotations[element_id]['token'],
+                'creation_date': annotations[element_id]['creation_date'],
+            }
+
+            return OK, element_id
         else:
-            return INVALID_SECRET
+            return INVALID_SECRET, element_id
 
     def importUsersList(self, usersList, newsletter):
         logger.info('DEBUG: import userslist in %s', newsletter)
-        annotations = self._storage(newsletter)
+        annotations, newsletter_obj = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
 
@@ -139,7 +147,7 @@ class BaseHandler(object):
     def exportUsersList(self, newsletter):
         logger.info('DEBUG: export users of newsletter: %s', newsletter)
         response = []
-        annotations = self._storage(newsletter)
+        annotations, newsletter_obj = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
 
@@ -158,33 +166,34 @@ class BaseHandler(object):
     def deleteUser(self, newsletter, mail=None, secret=None):
         logger.info('delete user %s from newsletter %s',
                     mail, newsletter)
-        annotations = self._storage(newsletter)
+        annotations, newsletter_obj = self._storage(newsletter)
         if annotations is None:
-            return INVALID_NEWSLETTER
+            return INVALID_NEWSLETTER, None
 
         if secret is not None:
-            # cancello l'utente con il secret
+            # cancello l'utente con il secret (AnonimousUser)
 
             # valido il secret
             if not uuidValidation(secret):
-                return INVALID_SECRET
+                return INVALID_SECRET, None
 
             for user in annotations:
-                if annotations[user]['token'] == secret:
+                if annotations[user]['token'] == unicode(secret):
                     cd = annotations[user]['creation_date']
                     if isCreationDateExpired(cd):
                         del annotations[user]
-                        return OK
+                        return OK, user
                     else:
-                        return INVALID_SECRET
+                        return INVALID_SECRET, user
 
-            return MAIL_NOT_PRESENT
+            return MAIL_NOT_PRESENT, None
 
         else:
-            # cancello l'utente con la mail
+            # cancello l'utente con la mail (Admin)
             try:
                 if mail in annotations.keys():
                     del annotations[mail]
+                    return OK
                 else:
                     raise ValueError
             except ValueError:
@@ -193,7 +202,7 @@ class BaseHandler(object):
     def deleteUserList(self, usersList, newsletter):
         # manca il modo di far capire se una mail non e presente nella lista
         logger.info('delete userslist from %s', newsletter)
-        annotations = self._storage(newsletter)
+        annotations, newsletter_obj = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
 
@@ -211,7 +220,7 @@ class BaseHandler(object):
 
     def emptyNewsletterUsersList(self, newsletter):
         logger.info('DEBUG: emptyNewsletterUsersList %s', newsletter)
-        annotations = self._storage(newsletter)
+        annotations, newsletter_obj = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
 
@@ -221,7 +230,7 @@ class BaseHandler(object):
 
     def unsubscribe(self, newsletter, user):
         logger.info('DEBUG: unsubscribe %s %s', newsletter, user)
-        annotations = self._storage(newsletter)
+        annotations, newsletter_obj = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER, None
 
@@ -229,10 +238,14 @@ class BaseHandler(object):
             secret = unicode(uuid.uuid4())
 
             if user in annotations.keys():
-                annotations[user]['token'] = secret
-                annotations[user]['creation_date'] = datetime.today().strftime(
-                    '%d/%m/%Y %H:%M:%S'
-                )
+                annotations[user] = {
+                    'email': user,
+                    'is_active': True,
+                    'token': secret,
+                    'creation_date': datetime.today().strftime(
+                        '%d/%m/%Y %H:%M:%S'
+                    ),
+                }
             else:
                 raise ValueError
 
@@ -243,7 +256,7 @@ class BaseHandler(object):
 
     def addUser(self, newsletter, mail):
         logger.info('DEBUG: add user: %s %s', newsletter, mail)
-        annotations = self._storage(newsletter)
+        annotations, newsletter_obj = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
 
@@ -278,7 +291,7 @@ class BaseHandler(object):
 
     def subscribe(self, newsletter, mail, name=None):
         logger.info('DEBUG: subscribe %s %s', newsletter, mail)
-        annotations = self._storage(newsletter)
+        annotations, newsletter_obj = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER, None
 
@@ -326,7 +339,7 @@ class BaseHandler(object):
     def sendMessage(self, newsletter, message):
         logger.debug('sendMessage %s %s', newsletter, message.title)
         nl = self._api(newsletter)
-        annotations = self._storage(newsletter)
+        annotations, newsletter_obj = self._storage(newsletter)
         if annotations is None:
             return INVALID_NEWSLETTER
 
@@ -353,7 +366,7 @@ class BaseHandler(object):
 
     def getNumActiveSubscribers(self, newsletter):
         logger.debug('Get number of active subscribers from %s', newsletter)
-        annotations = self._storage(newsletter)
+        annotations, newsletter_obj = self._storage(newsletter)
         if annotations is None:
             return None, INVALID_NEWSLETTER
 
@@ -400,6 +413,11 @@ class BaseHandler(object):
             return _(
                 u'file_format_message',
                 default=u'Wrong file format.'
+            )
+        elif code_error == PROBLEM_WITH_MAIL:
+            return _(
+                u'problem_with_email',
+                default=u'Problema with email.'
             )
         else:
             return _(u'unhandled_error_message', default=u'Unhandled error.')

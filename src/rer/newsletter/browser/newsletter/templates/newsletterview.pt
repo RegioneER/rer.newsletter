@@ -33,7 +33,12 @@
               <h1>Lista di Messaggi</h1>
               <ul tal:define="messages view/getMessageList" tal:condition="messages">
                 <li tal:repeat="message messages">
-                  <a href='link' tal:attributes='href message/absolute_url;' tal:content="message/title">Title</a>
+                  <div>
+                    <a href='link' tal:attributes='href message/absolute_url' tal:content="message/title">Title</a>
+                  </div>
+                  <div>
+                    <span tal:content="message/state" />
+                  </div>
                 </li>
               </ul>
 
