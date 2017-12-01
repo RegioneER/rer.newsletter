@@ -1,6 +1,8 @@
 <registry xmlns:i18n="http://xml.zope.org/namespaces/i18n"
           i18n:domain="rer.newsletter">
 
+          <records interface="rer.newsletter.browser.settings.ISettingsSchema" />
+
           <records prefix="plone.resources/datatables"
                   interface='Products.CMFPlone.interfaces.IResourceRegistry'>
             <value key="js">++plone++rer.newsletter/scripts/manageusers.js</value>

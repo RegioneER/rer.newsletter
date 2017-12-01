@@ -1,18 +1,28 @@
 # -*- coding: utf-8 -*-
 from Products.PortalTransforms.interfaces import ITransform
 from zope.interface import implementer
+import premailer
 
 
 # capire come usare questa classe
 @implementer(ITransform)
-class Link_Transform(object):
+class link_transform(object):
+    """
+    apply style to newsletter mail and tranforms link from internal to esternal
+    """
+    __name__ = "link_transform"
+    inputs = ('text/html', )
+    output = "text/mail"
 
-    def __init__(self):
-        import pdb
-        pdb.set_trace()
+    def name(self):
+        return self.__name__
 
-        pass
+    def convert(self, orig, data, **kwargs):
+
+        orig = premailer.transform(orig)
+
+        return orig
 
 
 def register():
-    return Link_Transform()
+    return link_transform()

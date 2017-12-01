@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime, timedelta
+from rer.newsletter import _, logger
+from smtplib import SMTPRecipientsRefused
 import json
 import re
 import uuid
-from datetime import datetime, timedelta
-from smtplib import SMTPRecipientsRefused
-
-from rer.newsletter import _, logger
 from rer.newsletter.utility.newsletter import (ALREADY_ACTIVE,
                                                ALREADY_SUBSCRIBED, FILE_FORMAT,
                                                INEXISTENT_EMAIL, INVALID_EMAIL,
@@ -16,7 +15,6 @@ from rer.newsletter.utility.newsletter import (ALREADY_ACTIVE,
                                                PROBLEM_WITH_MAIL,
                                                INewsletterUtility)
 
-import premailer
 from persistent.dict import PersistentDict
 from plone import api
 from zope.annotation.interfaces import IAnnotations
@@ -324,7 +322,7 @@ class BaseHandler(object):
 
         return OK, uuid_activation
 
-    def getMessage(self, newsletter, message):
+    def _getMessage(self, newsletter, message):
         logger.debug('getMessage %s %s', newsletter, message.title)
 
         body = u''
@@ -332,7 +330,10 @@ class BaseHandler(object):
         body += u'<style>{css}</style>'.format(css=newsletter.css_style or u'')
         body += message.text.output if message.text else u''
         body += newsletter.footer.output if newsletter.footer else u''
-        body = premailer.transform(body)
+
+        # passo la mail per il transform
+        portal = api.portal.get()
+        body = portal.portal_transforms.convertTo('text/mail', body)
 
         return body
 
@@ -344,7 +345,7 @@ class BaseHandler(object):
             return INVALID_NEWSLETTER
 
         # costruisco il messaggio
-        body = self.getMessage(nl, message)
+        body = self._getMessage(nl, message)
 
         try:
             # invio la mail ad ogni utente
