@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 # eccezioni per mail
 from smtplib import SMTPRecipientsRefused
-
 from rer.newsletter import _
 from rer.newsletter.utility.newsletter import (SUBSCRIBED, UNHANDLED,
                                                INewsletterUtility)
-
-import premailer
 from plone import api, schema
 from plone.protect.authenticator import createToken
-from plone.registry.interfaces import IRegistry
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from z3c.form import button, field, form
@@ -87,11 +83,14 @@ class SubscribeForm(form.Form):
                 }
 
                 mail_text = mail_template(**parameters)
-                mail_text = premailer.transform(mail_text)
+
+                portal = api.portal.get()
+                mail_text = portal.portal_transforms.convertTo(
+                    'text/mail', mail_text)
 
                 mailHost = api.portal.get_tool(name='MailHost')
                 mailHost.send(
-                    mail_text,
+                    mail_text.getData(),
                     mto=email,
                     mfrom='noreply@rer.it',
                     subject='Email di attivazione',

@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-from rer.newsletter import _, logger
-from rer.newsletter.utility.newsletter import OK, UNHANDLED, INewsletterUtility
 
-import premailer
 from plone import api, schema
 from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from rer.newsletter import _, logger
+from rer.newsletter.utility.newsletter import OK, UNHANDLED, INewsletterUtility
 from z3c.form import button, field, form
 from zope.component import getUtility
 from zope.interface import Interface
@@ -91,11 +90,14 @@ class UnsubscribeForm(form.Form):
             }
 
             mail_text = mail_template(**parameters)
-            mail_text = premailer.transform(mail_text)
+
+            portal = api.portal.get()
+            mail_text = portal.portal_transforms.convertTo(
+                'text/mail', mail_text)
 
             mailHost = api.portal.get_tool(name='MailHost')
             mailHost.send(
-                mail_text,
+                mail_text.getData(),
                 mto=email,
                 mfrom='noreply@rer.it',
                 subject='Email di disattivazione',

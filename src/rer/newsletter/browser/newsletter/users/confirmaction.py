@@ -4,7 +4,6 @@ from smtplib import SMTPRecipientsRefused
 from rer.newsletter.utility.newsletter import (OK, PROBLEM_WITH_MAIL,
                                                INewsletterUtility)
 
-import premailer
 from plone import api
 from Products.Five.browser import BrowserView
 from zope.component import getUtility
@@ -32,12 +31,15 @@ class ConfirmAction(BrowserView):
             }
 
             mail_text = mail_template(**parameters)
-            mail_text = premailer.transform(mail_text)
+
+            portal = api.portal.get()
+            mail_text = portal.portal_transforms.convertTo(
+                'text/mail', mail_text)
 
             # invio la mail ad ogni utente
             mail_host = api.portal.get_tool(name='MailHost')
             mail_host.send(
-                mail_text,
+                mail_text.getData(),
                 mto=receiver,
                 mfrom="noreply@rer.it",
                 subject=message_title,

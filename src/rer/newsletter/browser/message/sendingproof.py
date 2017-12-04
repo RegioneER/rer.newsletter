@@ -62,7 +62,7 @@ class MessageSendingProof(form.Form):
             # in ogni caso questa mail viene mandata da plone
             mailHost = api.portal.get_tool(name='MailHost')
             mailHost.send(
-                body,
+                body.getData(),
                 mto=email,
                 mfrom='noreply@rer.it',
                 subject='Newsletter di prova',
