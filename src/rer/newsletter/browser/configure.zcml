@@ -145,4 +145,33 @@
        <browser:page name="getMessageSentDetails" attribute="getMessageSentDetails" />
   </browser:pages>
 
+  <!-- Views for mail template -->
+  <browser:page
+    for="*"
+    name="activeuser_template"
+    template="newsletter/templates/mail_templates/active_user.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    for="*"
+    name="deleteuser_template"
+    template="newsletter/templates/mail_templates/delete_user.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    for="*"
+    name="activeuserconfirm_template"
+    template="newsletter/templates/mail_templates/active_user_confirm.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    for="*"
+    name="deleteuserconfirm_template"
+    template="newsletter/templates/mail_templates/delete_user_confirm.pt"
+    permission="zope2.View"
+    />
+
 </configure>

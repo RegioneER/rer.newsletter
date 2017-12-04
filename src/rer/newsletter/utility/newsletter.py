@@ -10,6 +10,9 @@ INVALID_NEWSLETTER = 5
 ALREADY_SUBSCRIBED = 2
 INVALID_EMAIL = 3
 
+# Email
+PROBLEM_WITH_MAIL = 11
+
 # unsubscribe
 INEXISTENT_EMAIL = 4
 
@@ -42,7 +45,9 @@ class INewsletterUtility(Interface):
             int: OK (1) if succesful,
                  ALREADY_ACTIVE (9),
                  INVALID_NEWSLETTER (5) newsletter not found,
-                 INVALID_SECRET (10) problem with secret.
+                 INVALID_SECRET (10) problem with secret,
+                 PROBLEM_WITH_MAIL (11) if errors are
+                 present when email is sent.
 
         Raises:
         """
@@ -182,7 +187,9 @@ class INewsletterUtility(Interface):
         Returns:
             int OK (1) if succesful,
                 INVALID_NEWSLETTER (5) newsletter not found,
-                MAIL_NOT_PRESENT (8) mail not present.
+                MAIL_NOT_PRESENT (8) mail not present,
+                PROBLEM_WITH_MAIL (11) if errors are
+                present when email is sent.
 
         Raised:
         """
@@ -213,20 +220,6 @@ class INewsletterUtility(Interface):
             (List and Status together)
             list of string List of email if succesful,
             Int INVALID_NEWSLETTER (5) newsletter not found.
-
-        Raised:
-        """
-
-    def getMessage(newsletter, message):
-        """
-        return a string with the entire email ready for send
-
-        Args:
-            newsletter (object): newsletter object
-            message (object): message object
-
-        Returns:
-            string that is entire message if succesful.
 
         Raised:
         """

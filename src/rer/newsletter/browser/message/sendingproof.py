@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
+# from rer.newsletter import logger
 from plone import api
 from plone import schema
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
-from rer.newsletter.utility.newsletter import INewsletterUtility
-# from rer.newsletter import logger
 from smtplib import SMTPRecipientsRefused
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
-from zope.component import getUtility
 from zope.interface import Interface
 
 
@@ -45,14 +43,26 @@ class MessageSendingProof(form.Form):
             email = data['email']
 
             # monto la newsletter da mandare
-            utility = getUtility(INewsletterUtility)
-            body = utility.getMessage(self.context.aq_parent, self.context)
+            ns_obj = self.context.aq_parent
+            message_obj = self.context
+
+            body = u''
+            body += ns_obj.header.output if ns_obj.header else u''
+            body += u'<style>{css}</style>'.format(
+                css=ns_obj.css_style or u''
+            )
+            body += message_obj.text.output if message_obj.text else u''
+            body += ns_obj.footer.output if ns_obj.footer else u''
+
+            # passo la mail per il transform
+            portal = api.portal.get()
+            body = portal.portal_transforms.convertTo('text/mail', body)
 
             # per mandare la mail non passo per l'utility
             # in ogni caso questa mail viene mandata da plone
             mailHost = api.portal.get_tool(name='MailHost')
             mailHost.send(
-                body,
+                body.getData(),
                 mto=email,
                 mfrom='noreply@rer.it',
                 subject='Newsletter di prova',

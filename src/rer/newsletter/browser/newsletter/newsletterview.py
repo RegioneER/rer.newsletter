@@ -5,6 +5,15 @@ from Products.Five.browser import BrowserView
 
 class NewsletterView(BrowserView):
 
+    def getState(self, state):
+        stateDict = {
+            "draft": "bozza",
+            "review": "in attesa di invio",
+            "sent": "inviato"
+        }
+
+        return stateDict[state]
+
     def getMessageList(self):
 
         if self.context.portal_type == 'Newsletter':
@@ -15,6 +24,12 @@ class NewsletterView(BrowserView):
 
             ml = []
             for message in messageList:
-                ml.append(message.getObject())
+                message_obj = message.getObject()
+
+                setattr(message_obj, 'state', self.getState(
+                    api.content.get_state(obj=message_obj)
+                ))
+
+                ml.append(message_obj)
 
             return ml
