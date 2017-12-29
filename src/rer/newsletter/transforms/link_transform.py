@@ -33,6 +33,7 @@ class link_transform(object):
         return self.__name__
 
     def convert(self, orig, data, **kwargs):
+        import pdb; pdb.set_trace()
 
         orig = premailer.transform(orig)
 
@@ -41,11 +42,13 @@ class link_transform(object):
             'source_link', ISettingsSchema)
         destination_link = api.portal.get_registry_record(
             'destination_link', ISettingsSchema)
-
-        orig = re.sub(source_link, destination_link, orig)
+        # TODO: non è questo il modo migliore per fare il replace...
+        # 1. non serve usare re.sub ma basta il replace di string
+        # 2. forse sarebbe più corretto usare un metodo di lxml
+        if source_link and destination_link:
+            orig = re.sub(source_link, destination_link, orig)
 
         data.setData(orig)
-
         return data
 
 
