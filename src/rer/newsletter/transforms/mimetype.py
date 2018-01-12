@@ -4,6 +4,6 @@ from Products.MimetypesRegistry.MimeTypeItem import MimeTypeItem
 
 class mail(MimeTypeItem):
 
-    __name__ = "Mimetype for mail newsletter"
+    __name__ = 'Mimetype for mail channel'
     mimetypes = ('text/mail',)
     binary = 0

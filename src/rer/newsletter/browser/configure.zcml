@@ -18,71 +18,71 @@
       directory="static"
       />
 
-  <!-- vista form per aggiungere singoli utenti alla newsletter, lato admin -->
+  <!-- vista form per aggiungere singoli utenti al channel, lato admin -->
   <browser:page
-      for="rer.newsletter.interfaces.INewsletter"
-      name="adduser_newsletter"
+      for="rer.newsletter.interfaces.IChannel"
+      name="adduser_channel"
       permission="zope2.View"
-      class=".newsletter.users.add.AddForm"
+      class=".channel.users.add.AddForm"
       />
 
-  <!-- vista form per iscrizione newsletter -->
+  <!-- vista form per iscrizione al channel -->
   <browser:page
-      for="rer.newsletter.interfaces.INewsletter"
+      for="rer.newsletter.interfaces.IChannel"
       name="subscribe"
       permission="zope2.View"
-      class=".newsletter.subscribe.subscribe_view"
+      class=".channel.subscribe.subscribe_view"
       />
 
-  <!-- vista form per disiscrizione newsletter -->
+  <!-- vista form per disiscrizione dal channel -->
   <browser:page
-      for="rer.newsletter.interfaces.INewsletter"
+      for="rer.newsletter.interfaces.IChannel"
       name="unsubscribe"
       permission="zope2.View"
-      class=".newsletter.unsubscribe.unsubscribe_view"
+      class=".channel.unsubscribe.unsubscribe_view"
       />
 
-  <!-- customize addForm for newsletter -->
+  <!-- customize addForm for channel -->
   <adapter
     for="Products.CMFCore.interfaces.IFolderish
          rer.newsletter.interfaces.IRerNewsletterLayer
          plone.dexterity.interfaces.IDexterityFTI"
     provides="zope.publisher.interfaces.browser.IBrowserPage"
-    factory=".newsletter.add.AddView"
-    name="Newsletter"
+    factory=".channel.add.AddView"
+    name="Channel"
     />
 
   <browser:page
       for="Products.CMFCore.interfaces.ISiteRoot"
-      name="newsletter-settings"
+      name="channel-settings"
       permission="cmf.ManagePortal"
-      class=".settings.NewsletterSettings"
+      class=".settings.ChannelSettings"
       />
 
   <!-- view for users import -->
   <browser:page
-      for="rer.newsletter.interfaces.INewsletter"
+      for="rer.newsletter.interfaces.IChannel"
       name="users_import"
       permission="zope2.View"
-      class=".newsletter.users.usersimport.UsersImport"
+      class=".channel.users.usersimport.UsersImport"
       />
 
-  <!-- view for manage users of newsletter -->
+  <!-- view for manage users of a channel -->
   <browser:page
-    for="rer.newsletter.interfaces.INewsletter"
+    for="rer.newsletter.interfaces.IChannel"
     name="manageusers"
-    class=".newsletter.manageusers.ManageUsers"
-    template="newsletter/templates/manageusers.pt"
+    class=".channel.manageusers.ManageUsers"
+    template="channel/templates/manageusers.pt"
     permission="zope2.View"
     />
 
   <browser:pages
-    for="rer.newsletter.interfaces.INewsletter"
+    for="rer.newsletter.interfaces.IChannel"
     permission="zope2.View"
-    class=".newsletter.manageusers.ManageUsers">
+    class=".channel.manageusers.ManageUsers">
        <browser:page name="exportUsersListAsFile" attribute="exportUsersListAsFile" />
        <browser:page name="exportUsersListAsJson" attribute="exportUsersListAsJson" />
-       <browser:page name="deleteUserFromNewsletter" attribute="deleteUserFromNewsletter" />
+       <browser:page name="deleteUser" attribute="deleteUser" />
   </browser:pages>
 
   <!-- view for message preview -->
@@ -104,19 +104,19 @@
 
   <!-- view for confirm user action-->
   <browser:page
-    for="rer.newsletter.interfaces.INewsletter"
+    for="rer.newsletter.interfaces.IChannel"
     name="confirmaction"
-    class=".newsletter.users.confirmaction.ConfirmAction"
-    template="newsletter/templates/confirmaction.pt"
+    class=".channel.users.confirmaction.ConfirmAction"
+    template="channel/templates/confirmaction.pt"
     permission="zope2.View"
     />
 
-  <!-- default view for newsletter -->
+  <!-- default view for channel -->
   <browser:page
-    for="rer.newsletter.interfaces.INewsletter"
-    name="newsletter_view"
-    class=".newsletter.newsletterview.NewsletterView"
-    template="newsletter/templates/newsletterview.pt"
+    for="rer.newsletter.interfaces.IChannel"
+    name="channel_view"
+    class=".channel.channelview.ChannelView"
+    template="channel/templates/channelview.pt"
     permission="zope2.View"
     />
 
@@ -129,19 +129,19 @@
     permission="zope2.View"
     />
 
-  <!-- View for newsletter's history -->
+  <!-- View for channel's history -->
   <browser:page
-    for="rer.newsletter.interfaces.INewsletter"
-    name="newsletterhistory"
-    class=".newsletter.newsletterhistory.NewsletterHistory"
-    template="newsletter/templates/newsletterhistoryview.pt"
+    for="rer.newsletter.interfaces.IChannel"
+    name="channelhistory"
+    class=".channel.channelhistory.ChannelHistory"
+    template="channel/templates/channelhistoryview.pt"
     permission="zope2.View"
     />
 
   <browser:pages
-    for="rer.newsletter.interfaces.INewsletter"
+    for="rer.newsletter.interfaces.IChannel"
     permission="zope2.View"
-    class=".newsletter.newsletterhistory.NewsletterHistory">
+    class=".channel.channelhistory.ChannelHistory">
        <browser:page name="getMessageSentDetails" attribute="getMessageSentDetails" />
   </browser:pages>
 
@@ -149,28 +149,28 @@
   <browser:page
     for="*"
     name="activeuser_template"
-    template="newsletter/templates/mail_templates/active_user.pt"
+    template="channel/templates/mail_templates/active_user.pt"
     permission="zope2.View"
     />
 
   <browser:page
     for="*"
     name="deleteuser_template"
-    template="newsletter/templates/mail_templates/delete_user.pt"
+    template="channel/templates/mail_templates/delete_user.pt"
     permission="zope2.View"
     />
 
   <browser:page
     for="*"
     name="activeuserconfirm_template"
-    template="newsletter/templates/mail_templates/active_user_confirm.pt"
+    template="channel/templates/mail_templates/active_user_confirm.pt"
     permission="zope2.View"
     />
 
   <browser:page
     for="*"
     name="deleteuserconfirm_template"
-    template="newsletter/templates/mail_templates/delete_user_confirm.pt"
+    template="channel/templates/mail_templates/delete_user_confirm.pt"
     permission="zope2.View"
     />
 

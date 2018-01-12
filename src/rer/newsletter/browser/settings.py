@@ -4,45 +4,45 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.interface import Interface
 from plone import schema
 from zope.component import getUtility
-from rer.newsletter.utility.newsletter import INewsletterUtility
+from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter import _
 
 
 class ISettingsSchema(Interface):
-    """ Schema for newsletter settings"""
+    """ Schema for channel settings"""
 
     source_link = schema.TextLine(
-        title=_(u"source_link", default=u"Link sorgente"),
+        title=_(u'source_link', default=u'Link sorgente'),
         description=_(
-            u"description_source_link",
-            default=u"Indirizzo da sostituire"
+            u'description_source_link',
+            default=u'Indirizzo da sostituire'
         ),
-        default=u"applicazioni.regione.emilia-romagna.it",
+        default=u'applicazioni.regione.emilia-romagna.it',
         required=False
     )
 
     destination_link = schema.TextLine(
-        title=_(u"destination_link", default=u"Link di destinazione"),
+        title=_(u'destination_link', default=u'Link di destinazione'),
         description=_(
-            u"description_destination_link",
-            default=u"Indirizzo da sostituire"
+            u'description_destination_link',
+            default=u'Indirizzo da sostituire'
         ),
         required=False
     )
 
 
-class NewsletterSettings(controlpanel.RegistryEditForm):
+class ChannelSettings(controlpanel.RegistryEditForm):
     # template = ViewPageTemplateFile('settings.pt')
     schema = ISettingsSchema
-    id = 'NewsletterSettings'
-    label = _(u'newsletter_setting', default=u"Newsletters Settings")
+    id = 'ChannelSettings'
+    label = _(u'channel_setting', default=u'Channel Settings')
 
     # def getLists(self):
     #
-    #     api = getUtility(INewsletterUtility)
+    #     api = getUtility(IChannelUtility)
     #     return dir(api)
 
 
-class NewsletterSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
+class ChannelSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
 
-    form = NewsletterSettings
+    form = ChannelSettings

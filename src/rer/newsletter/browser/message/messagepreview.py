@@ -6,15 +6,15 @@ class MessagePreview(BrowserView):
     """ view for message preview """
 
     def getMessageStyle(self):
-        newsletter = self.context.aq_parent
-        return newsletter.css_style
+        channel = self.context.aq_parent
+        return channel.css_style
 
     def getMessagePreview(self):
-        newsletter = self.context.aq_parent
+        channel = self.context.aq_parent
         body = ''
 
-        body = newsletter.header.output if newsletter.header else u''
+        body = channel.header.output if channel.header else u''
         body += self.context.text.output if self.context.text else u''
-        body += newsletter.footer.output if newsletter.footer else u''
+        body += channel.footer.output if channel.footer else u''
 
         return body

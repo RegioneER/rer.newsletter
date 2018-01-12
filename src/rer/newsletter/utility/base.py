@@ -5,15 +5,15 @@ from smtplib import SMTPRecipientsRefused
 import json
 import re
 import uuid
-from rer.newsletter.utility.newsletter import (ALREADY_ACTIVE,
-                                               ALREADY_SUBSCRIBED, FILE_FORMAT,
-                                               INEXISTENT_EMAIL, INVALID_EMAIL,
-                                               INVALID_NEWSLETTER,
-                                               INVALID_SECRET,
-                                               MAIL_NOT_PRESENT,
-                                               NEWSLETTER_USED, OK,
-                                               PROBLEM_WITH_MAIL,
-                                               INewsletterUtility)
+from rer.newsletter.utility.channel import (ALREADY_ACTIVE,
+                                            ALREADY_SUBSCRIBED, FILE_FORMAT,
+                                            INEXISTENT_EMAIL, INVALID_EMAIL,
+                                            INVALID_CHANNEL,
+                                            INVALID_SECRET,
+                                            MAIL_NOT_PRESENT,
+                                            CHANNEL_USED, OK,
+                                            PROBLEM_WITH_MAIL,
+                                            IChannelUtility)
 
 from persistent.dict import PersistentDict
 from plone import api
@@ -58,35 +58,34 @@ def isCreationDateExpired(creation_date):
     return False
 
 
-@implementer(INewsletterUtility)
+@implementer(IChannelUtility)
 class BaseHandler(object):
-    ''' utility class to send newsletter email with mailer of plone '''
+    ''' utility class to send channel email with mailer of plone '''
 
-    def _storage(self, newsletter):
-        obj = self._api(newsletter)
+    def _storage(self, channel):
+        obj = self._api(channel)
         if obj:
             annotations = IAnnotations(obj)
             if KEY not in annotations.keys():
-                # annotations[KEY] = PersistentList([])
                 annotations[KEY] = PersistentDict({})
             return annotations[KEY], obj
 
-    def _api(self, newsletter):
-        ''' return Newsletter and initialize annotations '''
+    def _api(self, channel):
+        ''' return Channel and initialize annotations '''
         nl = api.content.find(
-            portal_type='Newsletter',
-            id_newsletter=newsletter
+            portal_type='Channel',
+            id_channel=channel
         )
         if not nl:
             return None
         obj = nl[0].getObject()
         return obj
 
-    def activeUser(self, newsletter, secret):
-        logger.info('DEBUG: active user in %s', newsletter)
-        annotations, newsletter_obj = self._storage(newsletter)
+    def activeUser(self, channel, secret):
+        logger.info('DEBUG: active user in %s', channel)
+        annotations, channel_obj = self._storage(channel)
         if annotations is None:
-            return INVALID_NEWSLETTER, None
+            return INVALID_CHANNEL, None
 
         # valido il secret
         if not uuidValidation(secret):
@@ -116,11 +115,11 @@ class BaseHandler(object):
         else:
             return INVALID_SECRET, element_id
 
-    def importUsersList(self, usersList, newsletter):
-        logger.info('DEBUG: import userslist in %s', newsletter)
-        annotations, newsletter_obj = self._storage(newsletter)
+    def importUsersList(self, usersList, channel):
+        logger.info('DEBUG: import userslist in %s', channel)
+        annotations, channel_obj = self._storage(channel)
         if annotations is None:
-            return INVALID_NEWSLETTER
+            return INVALID_CHANNEL
 
         for user in usersList:
             match = re.match(
@@ -142,12 +141,12 @@ class BaseHandler(object):
 
         return OK
 
-    def exportUsersList(self, newsletter):
-        logger.info('DEBUG: export users of newsletter: %s', newsletter)
+    def exportUsersList(self, channel):
+        logger.info('DEBUG: export users of a channel: %s', channel)
         response = []
-        annotations, newsletter_obj = self._storage(newsletter)
+        annotations, channel_obj = self._storage(channel)
         if annotations is None:
-            return INVALID_NEWSLETTER
+            return INVALID_CHANNEL
 
         c = 0
         for user in annotations.keys():
@@ -161,12 +160,12 @@ class BaseHandler(object):
 
         return json.dumps(response), OK
 
-    def deleteUser(self, newsletter, mail=None, secret=None):
-        logger.info('delete user %s from newsletter %s',
-                    mail, newsletter)
-        annotations, newsletter_obj = self._storage(newsletter)
+    def deleteUser(self, channel, mail=None, secret=None):
+        logger.info('delete user %s from channel %s',
+                    mail, channel)
+        annotations, channel_obj = self._storage(channel)
         if annotations is None:
-            return INVALID_NEWSLETTER, None
+            return INVALID_CHANNEL, None
 
         if secret is not None:
             # cancello l'utente con il secret (AnonimousUser)
@@ -197,12 +196,12 @@ class BaseHandler(object):
             except ValueError:
                 return MAIL_NOT_PRESENT
 
-    def deleteUserList(self, usersList, newsletter):
+    def deleteUserList(self, usersList, channel):
         # manca il modo di far capire se una mail non e presente nella lista
-        logger.info('delete userslist from %s', newsletter)
-        annotations, newsletter_obj = self._storage(newsletter)
+        logger.info('delete userslist from %s', channel)
+        annotations, channel_obj = self._storage(channel)
         if annotations is None:
-            return INVALID_NEWSLETTER
+            return INVALID_CHANNEL
 
         for user in usersList:
             try:
@@ -216,21 +215,21 @@ class BaseHandler(object):
 
         return OK
 
-    def emptyNewsletterUsersList(self, newsletter):
-        logger.info('DEBUG: emptyNewsletterUsersList %s', newsletter)
-        annotations, newsletter_obj = self._storage(newsletter)
+    def emptyChannelUsersList(self, channel):
+        logger.info('DEBUG: emptyChannelUsersList %s', channel)
+        annotations, channel_obj = self._storage(channel)
         if annotations is None:
-            return INVALID_NEWSLETTER
+            return INVALID_CHANNEL
 
         annotations.clear()
 
         return OK
 
-    def unsubscribe(self, newsletter, user):
-        logger.info('DEBUG: unsubscribe %s %s', newsletter, user)
-        annotations, newsletter_obj = self._storage(newsletter)
+    def unsubscribe(self, channel, user):
+        logger.info('DEBUG: unsubscribe %s %s', channel, user)
+        annotations, channel_obj = self._storage(channel)
         if annotations is None:
-            return INVALID_NEWSLETTER, None
+            return INVALID_CHANNEL, None
 
         try:
             secret = unicode(uuid.uuid4())
@@ -252,11 +251,11 @@ class BaseHandler(object):
 
         return OK, secret
 
-    def addUser(self, newsletter, mail):
-        logger.info('DEBUG: add user: %s %s', newsletter, mail)
-        annotations, newsletter_obj = self._storage(newsletter)
+    def addUser(self, channel, mail):
+        logger.info('DEBUG: add user: %s %s', channel, mail)
+        annotations, channel_obj = self._storage(channel)
         if annotations is None:
-            return INVALID_NEWSLETTER
+            return INVALID_CHANNEL
 
         if not mailValidation(mail):
             return INVALID_EMAIL
@@ -287,11 +286,11 @@ class BaseHandler(object):
 
         return OK
 
-    def subscribe(self, newsletter, mail, name=None):
-        logger.info('DEBUG: subscribe %s %s', newsletter, mail)
-        annotations, newsletter_obj = self._storage(newsletter)
+    def subscribe(self, channel, mail, name=None):
+        logger.info('DEBUG: subscribe %s %s', channel, mail)
+        annotations, channel_obj = self._storage(channel)
         if annotations is None:
-            return INVALID_NEWSLETTER, None
+            return INVALID_CHANNEL, None
 
         if not mailValidation(mail):
             return INVALID_EMAIL, None
@@ -322,14 +321,14 @@ class BaseHandler(object):
 
         return OK, uuid_activation
 
-    def _getMessage(self, newsletter, message):
-        logger.debug('getMessage %s %s', newsletter, message.title)
+    def _getMessage(self, channel, message):
+        logger.debug('getMessage %s %s', channel, message.title)
 
         body = u''
-        body += newsletter.header.output if newsletter.header else u''
-        body += u'<style>{css}</style>'.format(css=newsletter.css_style or u'')
+        body += channel.header.output if channel.header else u''
+        body += u'<style>{css}</style>'.format(css=channel.css_style or u'')
         body += message.text.output if message.text else u''
-        body += newsletter.footer.output if newsletter.footer else u''
+        body += channel.footer.output if channel.footer else u''
 
         # passo la mail per il transform
         portal = api.portal.get()
@@ -337,12 +336,12 @@ class BaseHandler(object):
 
         return body
 
-    def sendMessage(self, newsletter, message):
-        logger.debug('sendMessage %s %s', newsletter, message.title)
-        nl = self._api(newsletter)
-        annotations, newsletter_obj = self._storage(newsletter)
+    def sendMessage(self, channel, message):
+        logger.debug('sendMessage %s %s', channel, message.title)
+        nl = self._api(channel)
+        annotations, channel_obj = self._storage(channel)
         if annotations is None:
-            return INVALID_NEWSLETTER
+            return INVALID_CHANNEL
 
         # costruisco il messaggio
         body = self._getMessage(nl, message)
@@ -365,11 +364,11 @@ class BaseHandler(object):
 
         return OK
 
-    def getNumActiveSubscribers(self, newsletter):
-        logger.debug('Get number of active subscribers from %s', newsletter)
-        annotations, newsletter_obj = self._storage(newsletter)
+    def getNumActiveSubscribers(self, channel):
+        logger.debug('Get number of active subscribers from %s', channel)
+        annotations, channel_obj = self._storage(channel)
         if annotations is None:
-            return None, INVALID_NEWSLETTER
+            return None, INVALID_CHANNEL
 
         count = 0
         for user in annotations.keys():
@@ -396,19 +395,19 @@ class BaseHandler(object):
                 u'already_active_message',
                 default=u'Email already activated.'
             )
-        elif code_error == INVALID_NEWSLETTER:
+        elif code_error == INVALID_CHANNEL:
             return _(
-                u'invalid_newsletter_message',
-                default=u'Invalid newsletter.'
+                u'invalid_channel_message',
+                default=u'Invalid channel.'
             )
         elif code_error == INVALID_SECRET:
             return _(u'invalid_secret_message', default=u'Invalid secret.')
         elif code_error == MAIL_NOT_PRESENT:
             return _(u'mail_not_present_message', default=u'Mail not present.')
-        elif code_error == NEWSLETTER_USED:
+        elif code_error == CHANNEL_USED:
             return _(
-                u'newsletter_used_message',
-                default=u'Newsletter already used.'
+                u'channel_used_message',
+                default=u'Channel already used.'
             )
         elif code_error == FILE_FORMAT:
             return _(

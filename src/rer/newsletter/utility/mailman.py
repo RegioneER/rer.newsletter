@@ -3,10 +3,10 @@ from mailmanclient import Client
 from mailmanclient import MailmanConnectionError
 from mailmanclient._client import HTTPError
 from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import ALREADY_SUBSCRIBED
-from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import OK
-from rer.newsletter.utility.newsletter import SUBSCRIBED
+from rer.newsletter.utility.channel import ALREADY_SUBSCRIBED
+from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.utility.channel import OK
+from rer.newsletter.utility.channel import SUBSCRIBED
 from zope.interface import implementer
 
 import json
@@ -21,7 +21,7 @@ API_USERNAME = 'restadmin'
 API_PASSWORD = 'restpass'
 
 
-@implementer(INewsletterUtility)
+@implementer(IChannelUtility)
 class MailmanHandler(object):
     '''utility class to comunicate with mailman server'''
 
@@ -38,13 +38,13 @@ class MailmanHandler(object):
         client = self._api()
         return client.lists
 
-    def subscribe(self, newsletter, mail, name=None):
+    def subscribe(self, channel, mail, name=None):
         client = self._api()
         if not client:
             logger.warning('TODO: raise exception')
-            logger.warning('fake %s %s subscription', newsletter, mail)
+            logger.warning('fake %s %s subscription', channel, mail)
             return SUBSCRIBED
-        _list = client.get_list(newsletter)
+        _list = client.get_list(channel)
         try:
             _data = _list.subscribe(
                 mail,
@@ -62,37 +62,37 @@ class MailmanHandler(object):
                 return ALREADY_SUBSCRIBED
         return SUBSCRIBED
 
-    def unsubscribe(self, newsletter, mail):
-        logger.info('DEBUG: unsubscribe %s %s', newsletter, mail)
+    def unsubscribe(self, channel, mail):
+        logger.info('DEBUG: unsubscribe %s %s', channel, mail)
         return True
 
-    def sendMessage(self, newsletter, message):
-        logger.info('DEBUG: sendMessage %s %s', newsletter, message)
+    def sendMessage(self, channel, message):
+        logger.info('DEBUG: sendMessage %s %s', channel, message)
         return True
 
-    def addNewsletter(self, newsletter):
-        logger.info('DEBUG: addNewsletter %s', newsletter)
+    def addChannel(self, channel):
+        logger.info('DEBUG: addChannel %s', channel)
         return True
 
-    def importUsersList(self, usersList, newsletter):
-        logger.info('DEBUG: import userslist %s in %s', usersList, newsletter)
+    def importUsersList(self, usersList, channel):
+        logger.info('DEBUG: import userslist %s in %s', usersList, channel)
         return True
 
-    def emptyNewsletterUsersList(self, newsletter):
+    def emptyChannelUsersList(self, channel):
         # vedere logica per eliminazione dell'intera lista di utenti di una nl
-        logger.info('DEBUG: emptyNewsletterUsersList %s', newsletter)
+        logger.info('DEBUG: emptyChannelUsersList %s', channel)
         return True
 
-    def deleteUser(self, mail, newsletter):
+    def deleteUser(self, mail, channel):
         logger.info(
-            'DEBUG: delete user %s from newsletter %s',
+            'DEBUG: delete user %s from channel %s',
             mail,
-            newsletter
+            channel
         )
         return True
 
-    def exportUsersList(self, newsletter):
-        logger.info('DEBUG: export users of newsletter: %s', newsletter)
+    def exportUsersList(self, channel):
+        logger.info('DEBUG: export users of channel: %s', channel)
         response = []
 
         element = {}
@@ -107,7 +107,7 @@ class MailmanHandler(object):
 
         return json.dumps(response), OK
 
-    def deleteUserList(self, usersList, newsletter):
+    def deleteUserList(self, usersList, channel):
         logger.info('delete userslist %s from %s',
-                    usersList, newsletter)
+                    usersList, channel)
         return True

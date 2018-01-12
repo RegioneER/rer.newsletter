@@ -37,7 +37,7 @@
 
             <span id="add-user">
               <button type='button'>Add User</button>
-              <a href="adduser_newsletter" class="plone-btn plone-btn-large plone-btn-primary pat-plone-modal"
+              <a href="adduser_channel" class="plone-btn plone-btn-large plone-btn-primary pat-plone-modal"
                       data-pat-plone-modal="width: '770px',height: '430px'," style="display: none;">
               </a>
             </span>

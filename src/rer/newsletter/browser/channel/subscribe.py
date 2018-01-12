@@ -1,26 +1,25 @@
 # -*- coding: utf-8 -*-
-# eccezioni per mail
-from smtplib import SMTPRecipientsRefused
-from rer.newsletter import _
-from rer.newsletter.utility.newsletter import (SUBSCRIBED, UNHANDLED,
-                                               INewsletterUtility)
 from plone import api, schema
 from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from rer.newsletter import _
+from rer.newsletter.utility.channel import (
+    SUBSCRIBED, UNHANDLED, IChannelUtility)
+from smtplib import SMTPRecipientsRefused
 from z3c.form import button, field, form
 from zope.component import getUtility
 from zope.interface import Interface
 
 
 class ISubscribeForm(Interface):
-    ''' define field for newsletter subscription '''
+    ''' define field for channel subscription '''
 
     email = schema.Email(
         title=_(u'subscribe_user', default=u'Subscription Mail'),
         description=_(
             u'subscribe_user_description',
-            default=u'Mail for subscribe to newsletter'
+            default=u'Mail for subscribe to a channel'
         ),
         required=True,
     )
@@ -48,17 +47,17 @@ class SubscribeForm(form.Form):
         email = None
         try:
 
-            if self.context.portal_type == 'Newsletter':
-                newsletter = self.context.id_newsletter
+            if self.context.portal_type == 'Channel':
+                channel = self.context.id_channel
             email = data['email']
 
-            # controllo se la newsletter è attiva
-            # se la newsletter non è attiva non faccio nemmeno vedere la form
+            # controllo se il channel è attiva
+            # se il channel non è attiva non faccio nemmeno vedere la form
             if not api.content.get_state(obj=self.context) == 'activated':
                 raise Exception
 
-            api_newsletter = getUtility(INewsletterUtility)
-            status, secret = api_newsletter.subscribe(newsletter, email)
+            api_channel = getUtility(IChannelUtility)
+            status, secret = api_channel.subscribe(channel, email)
 
             if status == SUBSCRIBED:
 
@@ -124,7 +123,7 @@ class SubscribeForm(form.Form):
             # solo nel caso in cui non sia entrato nelle eccezioni precedenti
             # altrimenti vengono stampati gli errori precedenti
             if 'errors' not in self.__dict__.keys():
-                self.errors = api_newsletter.getErrorMessage(status)
+                self.errors = api_channel.getErrorMessage(status)
 
             api.portal.show_message(
                 message=self.errors,
@@ -135,5 +134,5 @@ class SubscribeForm(form.Form):
 
 subscribe_view = wrap_form(
     SubscribeForm,
-    index=ViewPageTemplateFile('templates/subscribenewsletter.pt')
+    index=ViewPageTemplateFile('templates/subscribechannel.pt')
 )

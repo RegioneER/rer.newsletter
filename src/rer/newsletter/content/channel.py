@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from plone.app.contenttypes.content import Folder
-from rer.newsletter.interfaces import INewsletter
+from rer.newsletter.interfaces import IChannel
 from zope.interface import implementer
 
 
-@implementer(INewsletter)
-class Newsletter(Folder):
+@implementer(IChannel)
+class Channel(Folder):
     pass

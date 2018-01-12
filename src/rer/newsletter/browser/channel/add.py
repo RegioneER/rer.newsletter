@@ -3,8 +3,8 @@ from plone import api
 from plone.dexterity.browser import add
 from rer.newsletter import _
 from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import OK
-from rer.newsletter.utility.newsletter import UNHANDLED
+from rer.newsletter.utility.channel import OK
+from rer.newsletter.utility.channel import UNHANDLED
 from z3c.form import button
 
 
@@ -19,8 +19,8 @@ class AddForm(add.DefaultAddForm):
             return
 
         # validazione dei campi della form
-        # calcolo id della newsletter che viene creata
-        # chiamo l'utility per la creazione della newsletter
+        # calcolo l'id del channel che viene creato
+        # chiamo l'utility per la creazione del channel
         status = UNHANDLED
         try:
             obj = self.createAndAdd(data)
@@ -28,7 +28,7 @@ class AddForm(add.DefaultAddForm):
                 self._finishedAdd = True
                 status = OK
                 api.portal.show_message(
-                    message=_(u'add_newsletter', default='Newsletter Created'),
+                    message=_(u'add_channel', default='Channel Created'),
                     request=self.request,
                     type=u'info'
                 )
@@ -41,17 +41,18 @@ class AddForm(add.DefaultAddForm):
                 )
         except Exception:
             logger.exception(
-                'unhandled error adding newsletter %s',
+                'unhandled error adding channel %s',
                 data
             )
             self.errors = _(
-                u'generic_problem_add_newsletter',
-                default=u'Problem with add of newsletter'
+                u'generic_problem_add_channel',
+                default=u'Problem with add of channel'
             )
             status = UNHANDLED
 
         if status == UNHANDLED:
             api.portal.show_message(
+                # controllare che errors sia una stringa
                 message=errors + '. status: ' + str(status),
                 request=self.request,
                 type=u'error'

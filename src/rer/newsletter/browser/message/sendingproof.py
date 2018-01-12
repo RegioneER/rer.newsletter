@@ -13,7 +13,7 @@ from zope.interface import Interface
 
 
 class IMessageSendingProof(Interface):
-    ''' define field for sending proof of newsletter '''
+    ''' define field for sending proof of message '''
 
     email = schema.Email(
         title=_(u'Email', default='Email'),
@@ -42,7 +42,7 @@ class MessageSendingProof(form.Form):
             # prendo l'email dai parametri
             email = data['email']
 
-            # monto la newsletter da mandare
+            # monto il messaggio da mandare
             ns_obj = self.context.aq_parent
             message_obj = self.context
 
@@ -65,7 +65,7 @@ class MessageSendingProof(form.Form):
                 body.getData(),
                 mto=email,
                 mfrom='noreply@rer.it',
-                subject='Newsletter di prova',
+                subject='Messaggio di prova',
                 charset='utf-8',
                 msg_type='text/html',
                 immediate=True

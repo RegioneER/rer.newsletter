@@ -10,7 +10,7 @@ import json
 KEY = 'rer.newsletter.message.details'
 
 
-class NewsletterHistory(BrowserView):
+class ChannelHistory(BrowserView):
 
     def __init__(self, context, request):
         self.context = context
@@ -20,7 +20,7 @@ class NewsletterHistory(BrowserView):
 
     def getMessageSentDetails(self):
 
-        if self.context.portal_type == 'Newsletter':
+        if self.context.portal_type == 'Channel':
             messageList = api.content.find(
                 context=self.context,
                 portal_type='Message'

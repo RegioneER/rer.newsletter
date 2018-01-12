@@ -18,7 +18,7 @@
    </object>
 
    <object name="object" meta_type="CMF Action Category">
-     <object name="newsletterhistory_view" remove="true">
+     <object name="channelhistory_view" remove="true">
      </object>
    </object>
 

@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
+from Products.CMFPlone.resources import add_bundle_on_request
+from Products.Five import BrowserView
+from rer.newsletter import logger
+from rer.newsletter.utility.channel import IChannelUtility, OK, UNHANDLED
+from zope.component import getUtility
+from zope.interface import Interface, implementer
+
 import csv
 import json
 import StringIO
-
-from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import OK, UNHANDLED, INewsletterUtility
-
-from Products.CMFPlone.resources import add_bundle_on_request
-from Products.Five import BrowserView
-from zope.component import getUtility
-from zope.interface import Interface, implementer
 
 
 class IManageUsers(Interface):
@@ -25,21 +24,21 @@ class ManageUsers(BrowserView):
 
         add_bundle_on_request(self.request, 'datatables')
 
-    def deleteUserFromNewsletter(self):
+    def deleteUser(self):
 
         status = UNHANDLED
         try:
             email = self.request['email']
-            newsletter = self.context.id_newsletter
+            channel = self.context.id_channel
 
-            api_newsletter = getUtility(INewsletterUtility)
-            status = api_newsletter.deleteUser(newsletter, email)
+            api_channel = getUtility(IChannelUtility)
+            status = api_channel.deleteUser(channel, email)
         except Exception:
-            self.errors = api_newsletter.getMessageError(status)
+            self.errors = api_channel.getMessageError(status)
             logger.exception(
                 '{error}'.format(error=self.errors) +
-                ' : newsletter: %s, email: %s',
-                newsletter,
+                ' : channel: %s, email: %s',
+                channel,
                 email
             )
 
@@ -55,15 +54,15 @@ class ManageUsers(BrowserView):
 
         status = UNHANDLED
         try:
-            newsletter = self.context.id_newsletter
+            channel = self.context.id_channel
 
-            api_newsletter = getUtility(INewsletterUtility)
-            userList, status = api_newsletter.exportUsersList(newsletter)
+            api_channel = getUtility(IChannelUtility)
+            userList, status = api_channel.exportUsersList(channel)
         except Exception:
-            self.errors = api_newsletter.getErrorMessage(status)
+            self.errors = api_channel.getErrorMessage(status)
             logger.exception(
-                '{error}'.format(error=self.errors) + ' : newsletter: %s',
-                newsletter
+                '{error}'.format(error=self.errors) + ' : channel: %s',
+                channel
             )
 
         if status == OK:
@@ -92,15 +91,15 @@ class ManageUsers(BrowserView):
 
         status = UNHANDLED
         try:
-            newsletter = self.context.id_newsletter
+            channel = self.context.id_channel
 
-            api_newsletter = getUtility(INewsletterUtility)
-            userList, status = api_newsletter.exportUsersList(newsletter)
+            api_channel = getUtility(IChannelUtility)
+            userList, status = api_channel.exportUsersList(channel)
         except Exception:
-            self.errors = api_newsletter.getErrorMessage(status)
+            self.errors = api_channel.getErrorMessage(status)
             logger.exception(
-                '{error}'.format(error=self.errors) + ' : newsletter: %s',
-                newsletter
+                '{error}'.format(error=self.errors) + ' : channel: %s',
+                channel
             )
 
         if status == OK:

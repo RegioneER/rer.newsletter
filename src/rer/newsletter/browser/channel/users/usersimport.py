@@ -3,9 +3,9 @@ from plone import api
 from plone.namedfile.field import NamedFile
 from rer.newsletter import _
 from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import OK
-from rer.newsletter.utility.newsletter import UNHANDLED
+from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.utility.channel import OK
+from rer.newsletter.utility.channel import UNHANDLED
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
@@ -29,7 +29,7 @@ class IUsersImport(Interface):
     emptyList = schema.Bool(
         title=_(u'title_empty_list', default=u'Empties users list'),
         description=_(u'description_empty_list',
-                      default=u'Empties newsletter users list'),
+                      default=u'Empties channel users list'),
         required=False
     )
 
@@ -40,7 +40,7 @@ class IUsersImport(Interface):
                 default=u'Remove subscribers of the list'),
         description=_(
             u'description_remove_subscribers',
-            default=u'Remove users of CSV from newsletter'
+            default=u'Remove users of CSV from channel'
         ),
         required=False
     )
@@ -106,12 +106,12 @@ class UsersImport(form.Form):
         try:
 
             # prendo la connessione con il server mailman
-            api_newsletter = getUtility(INewsletterUtility)
+            api_channel = getUtility(IChannelUtility)
 
-            # devo svuotare la lista di utenti della newsletter
+            # devo svuotare la lista di utenti del channel
             if data['emptyList']:
-                status = api_newsletter.emptyNewsletterUsersList(
-                    self.context.id_newsletter
+                status = api_channel.emptyChannelUsersList(
+                    self.context.id_channel
                 )
 
             csv_file = data['userListFile'].data
@@ -126,16 +126,16 @@ class UsersImport(form.Form):
             # invece di importarla
             if data['removeSubscribers'] and not data['emptyList']:
                 # chiamo l'api per rimuovere l'intera lista di utenti
-                status = api_newsletter.deleteUserList(
+                status = api_channel.deleteUserList(
                     usersList,
-                    self.context.id_newsletter
+                    self.context.id_channel
                 )
 
             else:
                 # mi connetto con le api di mailman
-                status = api_newsletter.importUsersList(
+                status = api_channel.importUsersList(
                     usersList,
-                    self.context.id_newsletter
+                    self.context.id_channel
                 )
 
         except Exception:
@@ -159,7 +159,7 @@ class UsersImport(form.Form):
             )
         else:
             if 'errors' not in self.__dict__.keys():
-                self.errors = api_newsletter.getErrorMessage(status)
+                self.errors = api_channel.getErrorMessage(status)
 
             api.portal.show_message(
                 message=self.errors,

@@ -6,10 +6,9 @@
         purge="False">
 
         <configlet
-            action_id="rer_newsletter"
+            action_id="rer_channel"
             appId="rer.newsletter"
 	    remove="True">
         </configlet>
 
 </object>
-

@@ -4,7 +4,7 @@ from zope.interface import Interface
 # general
 UNHANDLED = 0
 SUBSCRIBED = OK = 1
-INVALID_NEWSLETTER = 5
+INVALID_CHANNEL = 5
 
 # subscribe
 ALREADY_SUBSCRIBED = 2
@@ -16,8 +16,8 @@ PROBLEM_WITH_MAIL = 11
 # unsubscribe
 INEXISTENT_EMAIL = 4
 
-# add newsletter
-NEWSLETTER_USED = 6
+# add channel
+CHANNEL_USED = 6
 
 # import usersList
 FILE_FORMAT = 7
@@ -30,21 +30,21 @@ ALREADY_ACTIVE = 9
 INVALID_SECRET = 10
 
 
-class INewsletterUtility(Interface):
+class IChannelUtility(Interface):
     """ """
 
-    def activeUser(newsletter, secret):
+    def activeUser(channel, secret):
         """
         Active user
 
         Args:
-            newsletter (str): newsletter id,
+            channel (str): channel id,
             secret (str): token for activation
 
         Returns:
             int: OK (1) if succesful,
                  ALREADY_ACTIVE (9),
-                 INVALID_NEWSLETTER (5) newsletter not found,
+                 INVALID_CHANNEL (5) channel not found,
                  INVALID_SECRET (10) problem with secret,
                  PROBLEM_WITH_MAIL (11) if errors are
                  present when email is sent.
@@ -52,97 +52,97 @@ class INewsletterUtility(Interface):
         Raises:
         """
 
-    def addUser(newsletter, mail):
+    def addUser(channel, mail):
         """
-        Add user to newsletter from Admin side
+        Add user to channel from Admin side
 
         Args:
-            newsletter (str): newsletter id,
+            channel (str): channel id,
             mail (str): email address
 
         Returns:
             int: OK (1) if succesful,
                  ALREADY_SUBSCRIBED (2),
-                 INVALID_NEWSLETTER (5) newsletter not found,
+                 INVALID_CHANNEL (5) channel not found,
                  INVALID_EMAIL (3) problem with mail.
             str: secret for autenticate user.
 
         Raises:
         """
 
-    def subscribe(newsletter, mail):
+    def subscribe(channel, mail):
         """
-        Subscribe to newsletter
+        Subscribe to channel
 
         Args:
-            newsletter (str): newsletter id
+            channel (str): channel id
             mail (str): email address
 
         Returns:
             int: OK (1) if succesful,
                  ALREADY_SUBSCRIBED (2),
-                 INVALID_NEWSLETTER (5) newsletter not found,
+                 INVALID_CHANNEL (5) channel not found,
                  INVALID_EMAIL (3) problem with mail.
 
         Raises:
         """
 
-    def unsubscribe(newsletter, mail):
+    def unsubscribe(channel, mail):
         """
-        Unsubscribe from newsletter
+        Unsubscribe from channel
 
         Args:
-            newsletter (str): newsletter id
+            channel (str): channel id
             mail (str): email address
 
         Returns:
             int: OK (1) if succesful,
-                 INVALID_NEWSLETTER (5) newsletter not found,
+                 INVALID_CHANNEL (5) channel not found,
                  INEXISTENT_MAIL (4) mail not found.
 
         Raises:
         """
 
-    def sendMessage(newsletter, message):
+    def sendMessage(channel, message):
         """
         Send message to mailman server
 
         Args:
-            newsletter (str): newsletter id
+            channel (str): channel id
             message (str): message
 
         Returns:
             int: OK (1) if succesful,
-                 INVALID_NEWSLETTER (5) newsletter not found.
+                 INVALID_CHANNEL (5) channel not found.
 
         Raises:
         """
 
-    def getNumActiveSubscribers(newsletter):
+    def getNumActiveSubscribers(channel):
         """
-        Return number of subscribers for newsletter
+        Return number of subscribers for channel
 
         Args:
-            newsletter (str): newsletter id
+            channel (str): channel id
 
         Returns:
             (number of subscribers and status together)
             int: number of active subscribers and OK (1) if succesful,
-                 INVALID_NEWSLETTER (5) newsletter not found.
+                 INVALID_CHANNEL (5) channel not found.
 
         Raises:
         """
 
-    def addNewsletter(newsletter):
+    def addChannel(channel):
         """
-        add new newsletter to mailman server
+        add new channel to mailman server
 
         Args:
-            newsletter (str): newsletter id
+            channel (str): channel id
 
         Returns:
             int: OK (1) if succesful,
-                 NEWSLETTER_USED (6) newsletter already used.
+                 CHANNEL_USED (6) channel already used.
 
         Raised:
         """
@@ -156,37 +156,37 @@ class INewsletterUtility(Interface):
 
         Returns:
             int: OK (1) if succesful,
-                 INVALID_NEWSLETTER (5) newsletter not found,
+                 INVALID_CHANNEL (5) channel not found,
                  INVALID_EMAIL (3) user's email not found.
 
         Raised:
         """
 
-    def emptyNewsletterUsersList(newsletter):
+    def emptyChannelUsersList(channel):
         """
-        empties newsletter users list
+        empties channel users list
 
         Args:
-            newsletter (str): newsletter id
+            channel (str): channel id
 
         Returns:
             int: OK (1) if succesful,
-                 INVALID_NEWSLETTER (5) newsletter not found.
+                 INVALID_CHANNEL (5) channel not found.
 
         Raised:
         """
 
-    def deleteUser(newsletter, email, secret):
+    def deleteUser(channel, email, secret):
         """
-        delete a user from newsletter
+        delete a user from channel
 
         Args:
             mail (str): email
-            newsletter (str): newsletter id
+            channel (str): channel id
 
         Returns:
             int OK (1) if succesful,
-                INVALID_NEWSLETTER (5) newsletter not found,
+                INVALID_CHANNEL (5) channel not found,
                 MAIL_NOT_PRESENT (8) mail not present,
                 PROBLEM_WITH_MAIL (11) if errors are
                 present when email is sent.
@@ -194,32 +194,32 @@ class INewsletterUtility(Interface):
         Raised:
         """
 
-    def deleteUserList(usersList, newsletter):
+    def deleteUserList(usersList, channel):
         """
-        delete a usersList from newsletter
+        delete a usersList from channel
 
         Args:
             usersList (list): email
-            newsletter (str): newsletter id
+            channel (str): channel id
 
         Returns:
             int OK (1) if succesful,
-                INVALID_NEWSLETTER (5) newsletter not found,
+                INVALID_CHANNEL (5) channel not found,
                 MAIL_NOT_PRESENT (8) user's email not found,
                 INVALID_SECRET (10) user's secret not found.
         """
 
-    def exportUsersList(newsletter):
+    def exportUsersList(channel):
         """
-        export all user of newsletter
+        export all user of channel
 
         Args:
-            newsletter (str): newsletter id
+            channel (str): channel id
 
         Returns:
             (List and Status together)
             list of string List of email if succesful,
-            Int INVALID_NEWSLETTER (5) newsletter not found.
+            Int INVALID_CHANNEL (5) channel not found.
 
         Raised:
         """

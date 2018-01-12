@@ -20,7 +20,7 @@
     </a>
 
     <h1 class="documentFirstHeading"
-        i18n:translate="">Newsletter</h1>
+        i18n:translate="">Channel</h1>
 
     <div metal:use-macro="context/global_statusmessage/macros/portal_message">
         Portal status message

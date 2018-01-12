@@ -3,9 +3,9 @@ from plone import api
 from plone import schema
 from rer.newsletter import _
 from rer.newsletter import logger
-from rer.newsletter.utility.newsletter import INewsletterUtility
-from rer.newsletter.utility.newsletter import SUBSCRIBED
-from rer.newsletter.utility.newsletter import UNHANDLED
+from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.utility.channel import SUBSCRIBED
+from rer.newsletter.utility.channel import UNHANDLED
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
@@ -14,13 +14,13 @@ from zope.interface import Interface
 
 
 class IAddForm(Interface):
-    ''' define field for add user to newsletter '''
+    ''' define field for add user to a channel '''
 
     email = schema.Email(
         title=_(u'add_user_admin', default=u'Add User'),
         description=_(
             u'add_user_admin_description',
-            default=u'Insert email for add user to Newsletter'
+            default=u'Insert email for add user to a Channel'
         ),
         required=True,
     )
@@ -41,15 +41,15 @@ class AddForm(form.Form):
 
         try:
 
-            newsletter = self.context.id_newsletter
+            channel = self.context.id_channel
             mail = data['email']
 
-            api_newsletter = getUtility(INewsletterUtility)
-            status = api_newsletter.addUser(newsletter, mail)
+            api_channel = getUtility(IChannelUtility)
+            status = api_channel.addUser(channel, mail)
         except Exception:
             logger.exception(
                 'unhandled error adding %s %s',
-                newsletter,
+                channel,
                 mail
             )
             self.errors = _(
@@ -58,7 +58,7 @@ class AddForm(form.Form):
             )
 
         if status == SUBSCRIBED:
-            status = api_newsletter.getErrorMessage(status)
+            status = api_channel.getErrorMessage(status)
             api.portal.show_message(
                 message=status,
                 request=self.request,
@@ -67,7 +67,7 @@ class AddForm(form.Form):
 
         else:
             if 'errors' not in self.__dict__.keys():
-                self.errors = api_newsletter.getErrorMessage(status)
+                self.errors = api_channel.getErrorMessage(status)
 
             api.portal.show_message(
                 message=self.errors,

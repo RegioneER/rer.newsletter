@@ -43,7 +43,7 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
     }
     else{
       $.ajax({
-        url: "deleteUserFromNewsletter",
+        url: "deleteUser",
         type: "post",
         data: {
           email: table.row('.selected').data().email

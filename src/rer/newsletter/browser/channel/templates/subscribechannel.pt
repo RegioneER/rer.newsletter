@@ -13,7 +13,7 @@
               <div class="filter">
                 <div class="portalMessage error" tal:condition="not: view/form_instance/isVisible">
                   <strong>Error</strong>
-                  <span>Newsletter non attiva.</span>
+                  <span>Channel non attivo.</span>
                 </div>
               </div>
             </metal:main-macro>

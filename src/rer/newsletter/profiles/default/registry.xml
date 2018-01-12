@@ -25,7 +25,7 @@
 
           <records prefix="plone.resources/message_datatables"
                   interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-            <value key="js">++plone++rer.newsletter/scripts/newsletterhistory.js</value>
+            <value key="js">++plone++rer.newsletter/scripts/channelhistory.js</value>
             <value key="css">
               <element>++plone++rer.newsletter/datatables.css</element>
             </value>
@@ -37,7 +37,7 @@
               <element>message_datatables</element>
             </value>
             <value key="enabled">False</value>
-            <value key="jscompilation">++plone++rer.newsletter/scripts/newsletterhistory.js</value>
+            <value key="jscompilation">++plone++rer.newsletter/scripts/channelhistory.js</value>
             <value key="csscompilation">++plone++rer.newsletter/datatables.css</value>
             <value key="last_compilation">2017-10-03 15:00:00</value>
           </records>

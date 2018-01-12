@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from smtplib import SMTPRecipientsRefused
 
-from rer.newsletter.utility.newsletter import (OK, PROBLEM_WITH_MAIL,
-                                               INewsletterUtility)
+from rer.newsletter.utility.channel import (OK, PROBLEM_WITH_MAIL,
+                                            IChannelUtility)
 
 from plone import api
 from Products.Five.browser import BrowserView
@@ -59,51 +59,51 @@ class ConfirmAction(BrowserView):
         action = self.request.get('action')
 
         response = None
-        api_newsletter = getUtility(INewsletterUtility)
+        api_channel = getUtility(IChannelUtility)
 
         if action == u'subscribe':
-            response, user = api_newsletter.activeUser(
-                self.context.id_newsletter,
+            response, user = api_channel.activeUser(
+                self.context.id_channel,
                 secret=secret
             )
             # mandare mail di avvenuta conferma
             if response == OK:
                 try:
                     self._sendGenericMessage(
-                        template="activeuserconfirm_template",
+                        template='activeuserconfirm_template',
                         receiver=user,
-                        message="Messaggio di avvenuta iscrizione",
-                        message_title="Iscrizione confermata"
+                        message='Messaggio di avvenuta iscrizione',
+                        message_title='Iscrizione confermata'
                     )
                 except SMTPRecipientsRefused:
                     response = PROBLEM_WITH_MAIL
 
         elif action == u'unsubscribe':
-            response, user = api_newsletter.deleteUser(
-                self.context.id_newsletter,
+            response, user = api_channel.deleteUser(
+                self.context.id_channel,
                 secret=secret
             )
             # mandare mail di avvenuta cancellazione
             if response == OK:
                 try:
                     self._sendGenericMessage(
-                        template="deleteuserconfirm_template",
+                        template='deleteuserconfirm_template',
                         receiver=user,
-                        message="L'utente è stato eliminato dalla newsletter",
-                        message_title="Cancellazione avvenuta"
+                        message='L\'utente è stato eliminato dalla channel',
+                        message_title='Cancellazione avvenuta'
                     )
                 except SMTPRecipientsRefused:
                     response = PROBLEM_WITH_MAIL
 
         if response == OK:
             api.portal.show_message(
-                message=api_newsletter.getErrorMessage(response),
+                message=api_channel.getErrorMessage(response),
                 request=self.request,
                 type=u'info'
             )
         else:
             api.portal.show_message(
-                message=api_newsletter.getErrorMessage(response),
+                message=api_channel.getErrorMessage(response),
                 request=self.request,
                 type=u'error'
             )

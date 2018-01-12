@@ -5,11 +5,11 @@
     i18n_domain="rer.newsletter">
 
     <!-- <utility
-      provides=".newsletter.INewsletterUtility"
+      provides=".channel.IChannelUtility"
       factory=".mailman.MailmanHandler" /> -->
 
       <utility
-        provides=".newsletter.INewsletterUtility"
+        provides=".channel.IChannelUtility"
         factory=".base.BaseHandler" />
 
 </configure>

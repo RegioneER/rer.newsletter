@@ -6,12 +6,12 @@
         purge="False">
 
         <configlet
-            title="Newsletter settings"
-            action_id="rer_newsletter"
+            title="Channel settings"
+            action_id="rer_channel"
             appId="rer.newsletter"
             category="Products"
             condition_expr=""
-            url_expr="string:${portal_url}/@@newsletter-settings"
+            url_expr="string:${portal_url}/@@channel-settings"
             visible="True"
             i18n:attributes="title">
                 <permission>Manage portal</permission>
