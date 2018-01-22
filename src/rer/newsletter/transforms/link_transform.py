@@ -44,14 +44,21 @@ class link_transform(object):
         destination_link = api.portal.get_registry_record(
             'destination_link', ISettingsSchema)
 
-        tree = etree.HTML(orig)
-        tagList = tree.xpath('//a')
-        for tag in tagList:
-            href = tag.get('href')
-            href = href.replace(source_link, destination_link)
-            tag.set('href', href)
+        # TODO: non è questo il modo migliore per fare il replace...
+        # 1. non serve usare re.sub ma basta il replace di string
+        # 2. forse sarebbe più corretto usare un metodo di lxml
+        if source_link and destination_link:
+            orig = re.sub(source_link, destination_link, orig)
+             
+        # tree = etree.HTML(orig)
+        # tagList = tree.xpath('//a')
+        # for tag in tagList:
+        #     href = tag.get('href')
+        #     href = href.replace(source_link, destination_link)
+        #      tag.set('href', href)
+        # data.setData(etree.tostring(tree))
+        data.setData(orig)
 
-        data.setData(etree.tostring(tree))
         return data
 
 
