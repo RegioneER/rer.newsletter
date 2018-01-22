@@ -30,7 +30,7 @@ class UnsubscribeForm(form.Form):
     fields = field.Fields(IUnsubscribeForm)
 
     def isVisible(self):
-        if api.content.get_state(obj=self.context) == 'activated':
+        if self.context.is_subscribable:
             return True
         else:
             return False

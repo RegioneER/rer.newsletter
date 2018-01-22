@@ -1,6 +1,18 @@
 # -*- coding: utf-8 -*-
 from plone import api
 from Products.Five.browser import BrowserView
+from plone.app.contenttypes.browser.folder import FolderView
+
+
+class ChannelFolderView(FolderView):
+
+    def getState(self, message):
+        stateDict = {
+            'draft': 'bozza',
+            'review': 'in attesa di invio',
+            'sent': 'inviato'
+        }
+        return stateDict[api.content.get_state(obj=message.getObject())]
 
 
 class ChannelView(BrowserView):

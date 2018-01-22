@@ -2,33 +2,4 @@
 <object name="portal_actions" meta_type="Plone Actions Tool"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
-   <!-- Message -->
-   <object name="object" meta_type="CMF Action Category">
-   <object name="message_preview" meta_type="CMF Action" i18n:domain="rer.newsletter">
-    <property name="title" i18n:translate="title_message_preview">Message Preview</property>
-    <property name="description" i18n:translate="description_message_preview">View to see message preview.</property>
-    <property name="url_expr">string:${object_url}/@@messagepreview_view</property>
-    <property name="icon_expr"></property>
-    <property name="available_expr">python: context.portal_type == 'Message'</property>
-    <property name="permissions">
-      <permission value="message_preview" />
-    </property>
-    <property name="visible">True</property>
-   </object>
-  </object>
-
-  <object name="object" meta_type="CMF Action Category">
-  <object name="message_sending_proof" meta_type="CMF Action" i18n:domain="rer.newsletter">
-   <property name="title" i18n:translate="title_message_sending_proof">Message Sending Proof</property>
-   <property name="description" i18n:translate="description_message_sending_proof">Message Sending Proof</property>
-   <property name="url_expr">string:${object_url}/@@sendingproof_view</property>
-   <property name="icon_expr"></property>
-   <property name="available_expr">python: context.portal_type == 'Message'</property>
-   <property name="permissions">
-     <permission value="message_sending_proof" />
-   </property>
-   <property name="visible">True</property>
-  </object>
- </object>
-
 </object>

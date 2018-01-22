@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from plone import api, schema
+from plone import api
+from plone import schema
 from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -31,7 +32,7 @@ class SubscribeForm(form.Form):
     fields = field.Fields(ISubscribeForm)
 
     def isVisible(self):
-        if api.content.get_state(obj=self.context) == 'activated':
+        if self.context.is_subscribable:
             return True
         else:
             return False
@@ -51,9 +52,7 @@ class SubscribeForm(form.Form):
                 channel = self.context.id_channel
             email = data['email']
 
-            # controllo se il channel è attiva
-            # se il channel non è attiva non faccio nemmeno vedere la form
-            if not api.content.get_state(obj=self.context) == 'activated':
+            if not self.context.is_subscribable:
                 raise Exception
 
             api_channel = getUtility(IChannelUtility)

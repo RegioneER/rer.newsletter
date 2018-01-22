@@ -7,15 +7,8 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
 
   var table = null;
 
-  $('#users-import > button').on('click', function(){
-    $('#users-import > a').click();
-  });
-
-  $('#add-user > button').on('click', function(){
-    $('#add-user > a').click();
-  });
-
-  $('#users-export > button').on('click', function(){
+  // triggero l'apertura delle modal
+  $('#users-export > a').on('click', function(){
     $.ajax({
       url: "exportUsersListAsFile"
     })
@@ -35,9 +28,8 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
     });
   });
 
-  $('#delete-user > button').on('click', function(){
+  $('#delete-user > a').on('click', function(){
 
-    // aggiungere controllo se ce un elemento selezionato
     if (!(table.row('.selected').data())){
       alert("prima va selezionato un utente!")
     }

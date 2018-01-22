@@ -13,13 +13,13 @@
    <element value="Message" />
  </property>
  <property name="allow_discussion">False</property>
- <property name="default_view">channel_view</property>
+ <property name="default_view">folder_listing</property>
  <property name="view_methods">
-  <element value="channel_view" />
   <element value="view" />
+  <element value="folder_listing" />
  </property>
  <property name="default_view_fallback">False</property>
- <property name="add_permission">cmf.AddPortalContent</property>
+ <property name="add_permission">rer.newsletter.AddChannel</property>
  <property name="klass">rer.newsletter.content.channel.Channel</property>
  <property name="behaviors">
    <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>

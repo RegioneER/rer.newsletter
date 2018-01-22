@@ -1,0 +1,10 @@
+<div id="manage-message" i18n:domain="rer.newsletter">
+  <div style="margin-bottom: 2%;">
+    <span id="message-preview">
+      <a class="plone-btn plone-btn-primary" href="" tal:attributes="href string:${context/absolute_url}/@@messagepreview_view" i18n:translate="message_preview">Message Preview</a>
+    </span>
+    <span id="message-proof">
+      <a class="plone-btn plone-btn-primary" href="" tal:attributes="href string:${context/absolute_url}/@@sendingproof_view" i18n:translate="message_proof">Message Proof</a>
+    </span>
+  </div>
+</div>

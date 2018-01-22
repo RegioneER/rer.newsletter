@@ -7,10 +7,10 @@
    </type>
  </bindings>
 
- <object name="channel_workflow" meta_type="Workflow" />
+ <object name="folder_workflow" meta_type="Workflow" />
  <bindings>
    <type type_id="Channel">
-     <bound-workflow workflow_id="channel_workflow" />
+     <bound-workflow workflow_id="folder_workflow" />
    </type>
  </bindings>
 </object>

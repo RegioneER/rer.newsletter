@@ -8,9 +8,25 @@
 
   <includeDependencies package="." />
 
+
+  <permission
+      id="rer.newsletter.ManageNewsletter"
+      title="rer.newsletter: Manage Newsletter"
+      />
+  <permission
+      id="rer.newsletter.AddChannel"
+      title="rer.newsletter: Add Channel"
+      />
+  <permission
+      id="rer.newsletter.AddMessage"
+      title="rer.newsletter: Add Message"
+      />
+
   <include package=".browser" />
   <include package=".behaviors" />
   <include package=".utility" />
+  <include package=".portlets" />
+  <include package=".tiles" />
 
   <genericsetup:registerProfile
       name="default"
@@ -38,6 +54,7 @@
 
   <utility
       factory=".setuphandlers.HiddenProfiles"
-      name="rer.newsletter-hiddenprofiles" />
+      name="rer.newsletter-hiddenprofiles"
+      />
 
 </configure>

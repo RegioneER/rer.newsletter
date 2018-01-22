@@ -87,6 +87,11 @@ class IChannelSchema(model.Schema):
         defaultFactory=default_id_channel,
     )
 
+    is_subscribable = schema.Bool(
+        title=_('is_subscribable', default='Is Subscribable'),
+        default=False
+    )
+
 
 class IMessage(Interface):
     ''' Marker interface that define a message '''

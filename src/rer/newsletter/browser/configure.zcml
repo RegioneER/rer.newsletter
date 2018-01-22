@@ -174,4 +174,35 @@
     permission="zope2.View"
     />
 
+  <browser:page
+      for="rer.newsletter.interfaces.IChannel"
+      class=".channel.channelview.ChannelFolderView"
+      layer="rer.newsletter.interfaces.IRerNewsletterLayer"
+      template="channel/templates/listing.pt"
+      permission="zope2.View"
+      name="folder_listing"
+    />
+
+  <!-- viewlet -->
+  <browser:viewlet
+    name="manage_channel_viewlet"
+    for="rer.newsletter.interfaces.IChannel"
+    manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+    class=".channel.channelviewlet.ChannelManagerViewlet"
+    layer="rer.newsletter.interfaces.IRerNewsletterLayer"
+    permission="rer.newsletter.ManageNewsletter"
+    template="channel/templates/channelviewlet.pt"
+    />
+
+    <browser:viewlet
+      name="manage_message_viewlet"
+      for="rer.newsletter.interfaces.IMessage"
+      manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+      class=".message.messageviewlet.MessageManagerViewlet"
+      layer="rer.newsletter.interfaces.IRerNewsletterLayer"
+      permission="rer.newsletter.ManageNewsletter"
+      template="message/templates/messageviewlet.pt"
+      />
+
+
 </configure>

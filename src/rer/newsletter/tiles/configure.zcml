@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="rer.newsletter">
+
+    <!-- <plone:tile
+      name="rer.newsletter.tile"
+      title="Subscribe"
+      class=".SubscribeNewsletterTile.SubscribeNewsletter"
+      for="plone.dexterity.interfaces.IDexterityContent"
+      add_permission="cmf.ModifyPortalContent"
+      permission="zope2.View"
+      template="SubscribeNewsletterTile.pt"
+      /> -->
+
+</configure>
