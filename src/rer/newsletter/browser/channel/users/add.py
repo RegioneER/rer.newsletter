@@ -14,8 +14,7 @@ from zope.interface import Interface
 
 
 class IAddForm(Interface):
-    ''' define field for add user to a channel '''
-
+    """ define field for add user to a channel """
     email = schema.Email(
         title=_(u'add_user_admin', default=u'Add User'),
         description=_(
@@ -39,38 +38,28 @@ class AddForm(form.Form):
             self.status = self.formErrorsMessage
             return
 
-        try:
+        channel = self.context.id_channel
+        mail = data['email']
 
-            channel = self.context.id_channel
-            mail = data['email']
-
-            api_channel = getUtility(IChannelUtility)
-            status = api_channel.addUser(channel, mail)
-        except Exception:
-            logger.exception(
-                'unhandled error adding %s %s',
-                channel,
-                mail
-            )
-            self.errors = _(
-                u'generic_problem_add_user',
-                default=u'Problem with add user'
-            )
+        api_channel = getUtility(IChannelUtility)
+        status = api_channel.addUser(channel, mail)
 
         if status == SUBSCRIBED:
-            status = api_channel.getErrorMessage(status)
+            status = _(
+                u'generic_add_message_success',
+                default=u'User Added.'
+            )
             api.portal.show_message(
                 message=status,
                 request=self.request,
                 type=u'info'
             )
-
         else:
-            if 'errors' not in self.__dict__.keys():
-                self.errors = api_channel.getErrorMessage(status)
-
+            logger.exception(
+                'unhandled error add user'
+            )
             api.portal.show_message(
-                message=self.errors,
+                message=u'Problems...{0}'.format(status),
                 request=self.request,
                 type=u'error'
             )

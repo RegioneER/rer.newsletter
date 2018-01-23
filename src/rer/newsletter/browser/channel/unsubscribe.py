@@ -12,8 +12,7 @@ from zope.interface import Interface
 
 
 class IUnsubscribeForm(Interface):
-    ''' define field for channel unsubscription '''
-
+    """ define field for channel unsubscription """
     email = schema.Email(
         title=_(u'unsubscribe_email_title', default=u'Unsubscription Email'),
         description=_(
@@ -43,29 +42,12 @@ class UnsubscribeForm(form.Form):
             self.status = self.formErrorsMessage
             return
 
-        email = None
-        try:
-            if self.context.portal_type == 'Channel':
-                channel = self.context.id_channel
-            email = data['email']
+        if self.context.portal_type == 'Channel':
+            channel = self.context.id_channel
+        email = data.get('email', None)
 
-            api_channel = getUtility(IChannelUtility)
-            status, secret = api_channel.unsubscribe(channel, email)
-
-        except Exception:
-            logger.exception(
-                'unhandled error subscribing %s %s',
-                channel,
-                email
-            )
-            api.portal.show_message(
-                message=_(
-                    u'generic_problem_unsubscribe',
-                    default=u'Problem with unsubscribe user'
-                ),
-                request=self.request,
-                type=u'error'
-            )
+        api_channel = getUtility(IChannelUtility)
+        status, secret = api_channel.unsubscribe(channel, email)
 
         if status == OK:
 
@@ -115,10 +97,11 @@ class UnsubscribeForm(form.Form):
                 type=u'info'
             )
         else:
-            if 'errors' not in self.__dict__.keys():
-                self.errors = api_channel.getErrorMessage(status)
+            logger.exception(
+                'unhandled error unsubscribe user'
+            )
             api.portal.show_message(
-                message=self.errors,
+                message=u'Problems...{0}'.format(status),
                 request=self.request,
                 type=u'error'
             )

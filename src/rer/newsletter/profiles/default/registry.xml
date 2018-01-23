@@ -42,4 +42,12 @@
             <value key="last_compilation">2017-10-03 15:00:00</value>
           </records>
 
+
+          <record name="plone.app.tiles">
+            <value purge="false">
+              <element>rer.newsletter.tile</element>
+            </value>
+          </record>
+
+
 </registry>

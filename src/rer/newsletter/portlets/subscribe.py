@@ -1,48 +1,20 @@
 # -*- coding: utf-8 -*-
+from plone import api
 from plone.app.portlets.portlets import base
-from plone.portlets.interfaces import IPortletDataProvider
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from rer.newsletter import _
-from zope import schema
+from rer.newsletter.interfaces import IPortletTileSchema
 from zope.interface import implements
-
-import re
-
-
-class INewsletterSubscribePortlet(IPortletDataProvider):
-    """
-    aggiungere i campi allo schema della portlet
-    """
-    header = schema.TextLine(
-        title=_(u'title_portlet_header', default=u'Portlet header'),
-        description=_(u'description_portlet_header',
-                      default=u'Title of the rendered portlet'),
-        constraint=re.compile('[^\s]').match,
-        required=False)
-
-    link_to_archive = schema.ASCIILine(
-        title=_(u'title_portlet_link', default=u'Details link'),
-        description=_(
-            u'description_portlet_link',
-            default=u'If given, the header and footer will link to this URL.'
-        ),
-        required=False)
-
-    css_class = schema.TextLine(
-        title=_(u'title_css_portlet_class', default=u'Portlet class'),
-        description=_(u'description_css_portlet_class',
-                      default=u'CSS class to add at the portlet'),
-        required=False
-    )
 
 
 class Assignment(base.Assignment):
-    implements(INewsletterSubscribePortlet)
+    implements(IPortletTileSchema)
 
-    def __init__(self, header=u'', link_to_archive='', css_class=''):
+    def __init__(self, header=u'',
+                 link_to_archive='', css_class='', newsletter=None):
         self.header = header
         self.link_to_archive = link_to_archive
         self.css_class = css_class
+        self.newsletter = newsletter
 
     @property
     def title(self):
@@ -61,8 +33,23 @@ class Renderer(base.Renderer):
             classes += ' {0}'.format(self.data.css_class)
         return classes
 
+    def getNewsletterUrl(self):
+        if self.data.newsletter:
+            newsletter_obj = api.content.get(UID=self.data.newsletter)
+            if newsletter_obj.is_subscribable:
+                return newsletter_obj.absolute_url()
+
+        elif self.context.portal_type == u'Channel':
+            return self.context.absolute_url()
+        else:
+            return None
+
     def is_subscribable(self):
-        if self.context.portal_type == 'Channel'\
+        if self.data.newsletter:
+            if api.content.get(UID=self.data.newsletter).is_subscribable:
+                return True
+
+        elif self.context.portal_type == 'Channel' \
                 and self.context.is_subscribable:
             return True
         else:
@@ -70,11 +57,11 @@ class Renderer(base.Renderer):
 
 
 class AddForm(base.AddForm):
-    schema = INewsletterSubscribePortlet
+    schema = IPortletTileSchema
 
     def create(self, data):
         return Assignment(**data)
 
 
 class EditForm(base.EditForm):
-    schema = INewsletterSubscribePortlet
+    schema = IPortletTileSchema

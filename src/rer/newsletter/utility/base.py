@@ -1,24 +1,27 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime, timedelta
-from rer.newsletter import _, logger
-from smtplib import SMTPRecipientsRefused
+from datetime import datetime
+from datetime import timedelta
+from persistent.dict import PersistentDict
+from plone import api
+from rer.newsletter import _
+from rer.newsletter import logger
+from rer.newsletter.utility.channel import ALREADY_ACTIVE
+from rer.newsletter.utility.channel import ALREADY_SUBSCRIBED
+from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.utility.channel import INEXISTENT_EMAIL
+from rer.newsletter.utility.channel import INVALID_CHANNEL
+from rer.newsletter.utility.channel import INVALID_EMAIL
+from rer.newsletter.utility.channel import INVALID_SECRET
+from rer.newsletter.utility.channel import MAIL_NOT_PRESENT
+from rer.newsletter.utility.channel import OK
+from zope.annotation.interfaces import IAnnotations
+from zope.interface import implementer
+from zope.interface import Invalid
+
 import json
 import re
 import uuid
-from rer.newsletter.utility.channel import (ALREADY_ACTIVE,
-                                            ALREADY_SUBSCRIBED, FILE_FORMAT,
-                                            INEXISTENT_EMAIL, INVALID_EMAIL,
-                                            INVALID_CHANNEL,
-                                            INVALID_SECRET,
-                                            MAIL_NOT_PRESENT,
-                                            CHANNEL_USED, OK,
-                                            PROBLEM_WITH_MAIL,
-                                            IChannelUtility)
 
-from persistent.dict import PersistentDict
-from plone import api
-from zope.annotation.interfaces import IAnnotations
-from zope.interface import Invalid, implementer
 
 KEY = 'rer.newsletter.subscribers'
 
@@ -60,7 +63,7 @@ def isCreationDateExpired(creation_date):
 
 @implementer(IChannelUtility)
 class BaseHandler(object):
-    ''' utility class to send channel email with mailer of plone '''
+    """ utility class to send channel email with mailer of plone """
 
     def _storage(self, channel):
         obj = self._api(channel)
@@ -71,7 +74,7 @@ class BaseHandler(object):
             return annotations[KEY], obj
 
     def _api(self, channel):
-        ''' return Channel and initialize annotations '''
+        """ return Channel and initialize annotations """
         nl = api.content.find(
             portal_type='Channel',
             id_channel=channel
@@ -81,7 +84,11 @@ class BaseHandler(object):
         obj = nl[0].getObject()
         return obj
 
-    def activeUser(self, channel, secret):
+    def addChannel(self, channel):
+        logger.info('DEBUG: add channel {0}'.format(channel))
+        return OK
+
+    def activateUser(self, channel, secret):
         logger.info('DEBUG: active user in %s', channel)
         annotations, channel_obj = self._storage(channel)
         if annotations is None:
@@ -115,7 +122,7 @@ class BaseHandler(object):
         else:
             return INVALID_SECRET, element_id
 
-    def importUsersList(self, usersList, channel):
+    def importUsersList(self, channel, usersList):
         logger.info('DEBUG: import userslist in %s', channel)
         annotations, channel_obj = self._storage(channel)
         if annotations is None:
@@ -146,7 +153,7 @@ class BaseHandler(object):
         response = []
         annotations, channel_obj = self._storage(channel)
         if annotations is None:
-            return INVALID_CHANNEL
+            return None, INVALID_CHANNEL
 
         c = 0
         for user in annotations.keys():
@@ -187,16 +194,13 @@ class BaseHandler(object):
 
         else:
             # cancello l'utente con la mail (Admin)
-            try:
-                if mail in annotations.keys():
-                    del annotations[mail]
-                    return OK
-                else:
-                    raise ValueError
-            except ValueError:
+            if mail in annotations.keys():
+                del annotations[mail]
+                return OK
+            else:
                 return MAIL_NOT_PRESENT
 
-    def deleteUserList(self, usersList, channel):
+    def deleteUserList(self, channel, usersList):
         # manca il modo di far capire se una mail non e presente nella lista
         logger.info('delete userslist from %s', channel)
         annotations, channel_obj = self._storage(channel)
@@ -204,14 +208,8 @@ class BaseHandler(object):
             return INVALID_CHANNEL
 
         for user in usersList:
-            try:
-
-                if user in annotations.keys():
-                    del annotations[user]
-
-            except ValueError:
-                # to handle
-                pass
+            if user in annotations.keys():
+                del annotations[user]
 
         return OK
 
@@ -231,22 +229,17 @@ class BaseHandler(object):
         if annotations is None:
             return INVALID_CHANNEL, None
 
-        try:
-            secret = unicode(uuid.uuid4())
-
-            if user in annotations.keys():
-                annotations[user] = {
-                    'email': user,
-                    'is_active': True,
-                    'token': secret,
-                    'creation_date': datetime.today().strftime(
-                        '%d/%m/%Y %H:%M:%S'
-                    ),
-                }
-            else:
-                raise ValueError
-
-        except ValueError:
+        secret = unicode(uuid.uuid4())
+        if user in annotations.keys():
+            annotations[user] = {
+                'email': user,
+                'is_active': True,
+                'token': secret,
+                'creation_date': datetime.today().strftime(
+                    '%d/%m/%Y %H:%M:%S'
+                ),
+            }
+        else:
             return INEXISTENT_EMAIL, None
 
         return OK, secret
@@ -286,7 +279,7 @@ class BaseHandler(object):
 
         return OK
 
-    def subscribe(self, channel, mail, name=None):
+    def subscribe(self, channel, mail):
         logger.info('DEBUG: subscribe %s %s', channel, mail)
         annotations, channel_obj = self._storage(channel)
         if annotations is None:
@@ -346,21 +339,18 @@ class BaseHandler(object):
         # costruisco il messaggio
         body = self._getMessage(nl, message)
 
-        try:
-            # invio la mail ad ogni utente
-            mail_host = api.portal.get_tool(name='MailHost')
-            for user in annotations.keys():
-                if annotations[user]['is_active']:
-                    mail_host.send(
-                        body,
-                        mto=annotations[user]['email'],
-                        mfrom=nl.sender_email,
-                        subject=message.Title(),
-                        charset='utf-8',
-                        msg_type='text/html'
-                    )
-        except SMTPRecipientsRefused:
-            raise SMTPRecipientsRefused
+        # invio la mail ad ogni utente
+        mail_host = api.portal.get_tool(name='MailHost')
+        for user in annotations.keys():
+            if annotations[user]['is_active']:
+                mail_host.send(
+                    body.getData(),
+                    mto=annotations[user]['email'],
+                    mfrom=nl.sender_email,
+                    subject=message.Title(),
+                    charset='utf-8',
+                    msg_type='text/html'
+                )
 
         return OK
 
@@ -376,48 +366,3 @@ class BaseHandler(object):
                 count += 1
 
         return count, OK
-
-    def getErrorMessage(self, code_error):
-
-        if code_error == OK:
-            return _(u'generic_success_message', default=u'everything ok.')
-        elif code_error == INVALID_EMAIL:
-            return _(u'invalid_email_message', default=u'Invalid Email.')
-        elif code_error == ALREADY_SUBSCRIBED:
-            return _(
-                u'already_subscribed_message',
-                default=u'Email already subscribed.'
-            )
-        elif code_error == INEXISTENT_EMAIL:
-            return _(u'inexistent_email_message', default=u'Inexistent email.')
-        elif code_error == ALREADY_ACTIVE:
-            return _(
-                u'already_active_message',
-                default=u'Email already activated.'
-            )
-        elif code_error == INVALID_CHANNEL:
-            return _(
-                u'invalid_channel_message',
-                default=u'Invalid channel.'
-            )
-        elif code_error == INVALID_SECRET:
-            return _(u'invalid_secret_message', default=u'Invalid secret.')
-        elif code_error == MAIL_NOT_PRESENT:
-            return _(u'mail_not_present_message', default=u'Mail not present.')
-        elif code_error == CHANNEL_USED:
-            return _(
-                u'channel_used_message',
-                default=u'Channel already used.'
-            )
-        elif code_error == FILE_FORMAT:
-            return _(
-                u'file_format_message',
-                default=u'Wrong file format.'
-            )
-        elif code_error == PROBLEM_WITH_MAIL:
-            return _(
-                u'problem_with_email',
-                default=u'Problema with email.'
-            )
-        else:
-            return _(u'unhandled_error_message', default=u'Unhandled error.')

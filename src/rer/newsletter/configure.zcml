@@ -46,15 +46,14 @@
       post_handler=".setuphandlers.uninstall"
       />
 
-  <subscriber
-      for=".interfaces.IMessage
-      Products.CMFCore.interfaces.IActionSucceededEvent"
-      handler=".eventhandler.changeMessageState"
-    />
-
   <utility
       factory=".setuphandlers.HiddenProfiles"
       name="rer.newsletter-hiddenprofiles"
       />
+
+  <utility
+    name="rer.newsletter.subscribablenewsletter.vocabulary"
+    component=".vocabularies.SubscribableNewsletterVocabulary"
+    />
 
 </configure>

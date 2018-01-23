@@ -1,0 +1,48 @@
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="rer.newsletter"
+>
+  <body>
+    <div class="tile tileNewsletter"
+             i18n:domain="rer.newsletter"
+             tal:attributes="class view/getPortletClass">
+
+        <header class="portletHeader"
+                tal:define="header view/data/header">
+          <h4 class="portlet-header" tal:condition="header" tal:content="header">
+            Title
+          </h4>
+        </header>
+
+        <div id="channel-subscribe">
+          <a class="plone-btn plone-btn-primary pat-plone-modal" href=""
+             data-pat-plone-modal="width: '770px',height: '430px',"
+             tal:define="is_subscribable view/is_subscribable;
+                         absUrl view/getNewsletterUrl"
+             tal:condition="python:is_subscribable and absUrl"
+             tal:attributes="href python:absUrl + '/@@subscribe';"
+             i18n:translate="subscribe"
+             style="margin: 1em">
+            Subscribe
+          </a>
+        </div>
+
+        <!-- da rivedere -->
+        <div id="channel-link">
+          <a href=""
+             tal:define="link view/data/link_to_archive"
+             tal:condition="link"
+             tal:attributes="href link"
+            >
+            <span tal:replace="link">Link to Archive</span>
+          </a>
+        </div>
+
+    </div>
+
+  </body>
+</html>

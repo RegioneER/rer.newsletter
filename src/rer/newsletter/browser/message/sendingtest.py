@@ -12,25 +12,25 @@ from z3c.form import form
 from zope.interface import Interface
 
 
-class IMessageSendingProof(Interface):
-    ''' define field for sending proof of message '''
+class IMessageSendingTest(Interface):
+    ''' define field for sending test of message '''
 
     email = schema.Email(
         title=_(u'Email', default='Email'),
         description=_(
-            u'email_sendingproof_description',
+            u'email_sendingtest_description',
             default=u'Email to send the test message'
         ),
         required=True,
     )
 
 
-class MessageSendingProof(form.Form):
+class MessageSendingTest(form.Form):
 
     ignoreContext = True
-    fields = field.Fields(IMessageSendingProof)
+    fields = field.Fields(IMessageSendingTest)
 
-    @button.buttonAndHandler(_('send_sendingproof', default='Send'))
+    @button.buttonAndHandler(_('send_sendingtest', default='Send'))
     def handleSave(self, action):
         data, errors = self.extractData()
         if errors:
@@ -89,7 +89,7 @@ class MessageSendingProof(form.Form):
             )
 
 
-message_sending_proof = wrap_form(
-    MessageSendingProof,
-    index=ViewPageTemplateFile('templates/sendingproof.pt')
+message_sending_test = wrap_form(
+    MessageSendingTest,
+    index=ViewPageTemplateFile('templates/sendingtest.pt')
 )

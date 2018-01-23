@@ -20,8 +20,18 @@
   <body>
     <metal:main fill-slot="main">
       <metal:main-macro define-macro="main">
+
+        <a class="link-parent" i18n:translate="users_manage" href=""
+           tal:attributes="href python:context.absolute_url();">
+          Come Back
+        </a>
+
         <div id="content-core">
           <h1>Gestione degli Utenti</h1>
+
+          <div class="portalMessage" style="display:none;">
+            <strong></strong>
+          </div>
 
           <div style="margin-bottom: 2%;">
             <span id="users-import">
@@ -32,7 +42,7 @@
             </span>
 
             <span id="users-export">
-              <a href="" class="plone-btn plone-btn-primary"
+              <a href="#" class="plone-btn plone-btn-primary"
                  i18n:translate="export_user_list">
                 Export Users List
               </a>
@@ -46,7 +56,7 @@
             </span>
 
             <span id="delete-user">
-              <a href="" class="plone-btn plone-btn-primary"
+              <a href="#" class="plone-btn plone-btn-primary"
                  i18n:translate="delete_user">
                 Delete User
               </a>

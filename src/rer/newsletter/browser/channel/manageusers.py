@@ -2,9 +2,12 @@
 from Products.CMFPlone.resources import add_bundle_on_request
 from Products.Five import BrowserView
 from rer.newsletter import logger
-from rer.newsletter.utility.channel import IChannelUtility, OK, UNHANDLED
+from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.utility.channel import OK
+from rer.newsletter.utility.channel import UNHANDLED
 from zope.component import getUtility
-from zope.interface import Interface, implementer
+from zope.interface import implementer
+from zope.interface import Interface
 
 import csv
 import json
@@ -25,45 +28,35 @@ class ManageUsers(BrowserView):
         add_bundle_on_request(self.request, 'datatables')
 
     def deleteUser(self):
-
         status = UNHANDLED
-        try:
-            email = self.request['email']
-            channel = self.context.id_channel
 
-            api_channel = getUtility(IChannelUtility)
-            status = api_channel.deleteUser(channel, email)
-        except Exception:
-            self.errors = api_channel.getMessageError(status)
-            logger.exception(
-                '{error}'.format(error=self.errors) +
-                ' : channel: %s, email: %s',
-                channel,
-                email
-            )
+        email = self.request['email']
+        channel = self.context.id_channel
+
+        api_channel = getUtility(IChannelUtility)
+        status = api_channel.deleteUser(channel, email)
 
         response = {}
         if status == OK:
             response['ok'] = True
         else:
             response['ok'] = False
+            logger.exception(
+                'Problems...{error}'.format(error=status) +
+                ' : channel: %s, email: %s',
+                channel,
+                email
+            )
 
         return json.dumps(response)
 
     def exportUsersListAsFile(self):
 
         status = UNHANDLED
-        try:
-            channel = self.context.id_channel
+        channel = self.context.id_channel
 
-            api_channel = getUtility(IChannelUtility)
-            userList, status = api_channel.exportUsersList(channel)
-        except Exception:
-            self.errors = api_channel.getErrorMessage(status)
-            logger.exception(
-                '{error}'.format(error=self.errors) + ' : channel: %s',
-                channel
-            )
+        api_channel = getUtility(IChannelUtility)
+        userList, status = api_channel.exportUsersList(channel)
 
         if status == OK:
             # predisporre download del file
@@ -87,20 +80,24 @@ class ManageUsers(BrowserView):
 
             return data.getvalue()
 
+        else:
+            logger.exception(
+                'Problems...{error}'.format(error=status)
+                + ' : channel: {0}'.format(channel)
+            )
+
     def exportUsersListAsJson(self):
 
         status = UNHANDLED
-        try:
-            channel = self.context.id_channel
+        channel = self.context.id_channel
 
-            api_channel = getUtility(IChannelUtility)
-            userList, status = api_channel.exportUsersList(channel)
-        except Exception:
-            self.errors = api_channel.getErrorMessage(status)
-            logger.exception(
-                '{error}'.format(error=self.errors) + ' : channel: %s',
-                channel
-            )
+        api_channel = getUtility(IChannelUtility)
+        userList, status = api_channel.exportUsersList(channel)
 
         if status == OK:
             return userList
+        else:
+            logger.exception(
+                '{error}'.format(error=self.errors)
+                + ' : channel: {0}'.format(channel)
+            )

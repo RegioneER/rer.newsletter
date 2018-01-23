@@ -94,11 +94,11 @@
     permission="zope2.View"
     />
 
-  <!-- view for sending proof of message -->
+  <!-- view for sending test of message -->
   <browser:page
     for="rer.newsletter.interfaces.IMessage"
-    name="sendingproof_view"
-    class=".message.sendingproof.message_sending_proof"
+    name="sendingtest_view"
+    class=".message.sendingtest.message_sending_test"
     permission="zope2.View"
     />
 
@@ -126,6 +126,14 @@
     name="message_view"
     class=".message.messageview.MessageView"
     template="message/templates/messageview.pt"
+    permission="zope2.View"
+    />
+
+  <!-- view for send message -->
+  <browser:page
+    for="rer.newsletter.interfaces.IMessage"
+    name="send_message_view"
+    class=".message.sendmessageview.message_sending_view"
     permission="zope2.View"
     />
 
@@ -183,7 +191,7 @@
       name="folder_listing"
     />
 
-  <!-- viewlet -->
+  <!-- channel viewlet -->
   <browser:viewlet
     name="manage_channel_viewlet"
     for="rer.newsletter.interfaces.IChannel"
@@ -193,7 +201,7 @@
     permission="rer.newsletter.ManageNewsletter"
     template="channel/templates/channelviewlet.pt"
     />
-
+    <!-- message viewlet -->
     <browser:viewlet
       name="manage_message_viewlet"
       for="rer.newsletter.interfaces.IMessage"
@@ -203,6 +211,17 @@
       permission="rer.newsletter.ManageNewsletter"
       template="message/templates/messageviewlet.pt"
       />
+    <!-- send message viewlet -->
+    <browser:viewlet
+      name="send_message_viewlet"
+      for="rer.newsletter.interfaces.IMessage"
+      manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+      class=".message.messageviewlet.MessageSendViewlet"
+      layer="rer.newsletter.interfaces.IRerNewsletterLayer"
+      permission="zope2.View"
+      template="message/templates/sendmessageviewlet.pt"
+      />
+
 
 
 </configure>

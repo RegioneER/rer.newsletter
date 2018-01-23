@@ -31,7 +31,10 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
   $('#delete-user > a').on('click', function(){
 
     if (!(table.row('.selected').data())){
-      alert("prima va selezionato un utente!")
+      // render error user deleted
+      $('.portalMessage').addClass('error')
+                         .css('display', '')
+                         .html('<strong>Error</strong>Prima va selezionato un utente.');
     }
     else{
       $.ajax({
@@ -44,9 +47,17 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
       .done(function(data){
         if (JSON.parse(data).ok){
           table.row('.selected').remove().draw( false );
+
+          // render info user deleted
+          $('.portalMessage').addClass('info')
+                             .css('display', '')
+                             .html('<strong>Info</strong>Utente eliminato con successo.');
         }
         else{
-          alert("problem with user's delete");
+          // render error user deleted
+          $('.portalMessage').addClass('error')
+                             .css('display', '')
+                             .html('<strong>Error</strong>Problemi con la cancellazione dell\'utente.');
         }
       });
     }

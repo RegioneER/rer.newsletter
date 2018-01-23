@@ -8,7 +8,7 @@
    </object>
 
    <object name="object" meta_type="CMF Action Category">
-     <object name="message_sending_proof" remove="true">
+     <object name="message_sending_test" remove="true">
      </object>
    </object>
 

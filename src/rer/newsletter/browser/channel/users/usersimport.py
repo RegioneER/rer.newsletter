@@ -58,6 +58,7 @@ class IUsersImport(Interface):
                 default=u'CSV separator'),
         description=_(u'description_separator',
                       default=_(u'Separator of CSV file')),
+        default=u';',
         required=True
     )
 
@@ -103,48 +104,37 @@ class UsersImport(form.Form):
             self.status = self.formErrorsMessage
             return
 
-        try:
+        # prendo la connessione con il server mailman
+        api_channel = getUtility(IChannelUtility)
 
-            # prendo la connessione con il server mailman
-            api_channel = getUtility(IChannelUtility)
-
-            # devo svuotare la lista di utenti del channel
-            if data['emptyList']:
-                status = api_channel.emptyChannelUsersList(
-                    self.context.id_channel
-                )
-
-            csv_file = data['userListFile'].data
-            # esporto la lista di utenti dal file
-            usersList = self.processCSV(
-                csv_file,
-                data['headerLine'],
-                data['separator']
+        # devo svuotare la lista di utenti del channel
+        if data['emptyList']:
+            status = api_channel.emptyChannelUsersList(
+                self.context.id_channel
             )
 
-            # controllo se devo eliminare l'intera lista di utenti
-            # invece di importarla
-            if data['removeSubscribers'] and not data['emptyList']:
-                # chiamo l'api per rimuovere l'intera lista di utenti
-                status = api_channel.deleteUserList(
-                    usersList,
-                    self.context.id_channel
-                )
+        csv_file = data['userListFile'].data
+        # esporto la lista di utenti dal file
+        usersList = self.processCSV(
+            csv_file,
+            data['headerLine'],
+            data['separator']
+        )
 
-            else:
-                # mi connetto con le api di mailman
-                status = api_channel.importUsersList(
-                    usersList,
-                    self.context.id_channel
-                )
-
-        except Exception:
-            logger.exception(
-                'unhandled error users import'
+        # controllo se devo eliminare l'intera lista di utenti
+        # invece di importarla
+        if data['removeSubscribers'] and not data['emptyList']:
+            # chiamo l'api per rimuovere l'intera lista di utenti
+            status = api_channel.deleteUserList(
+                usersList,
+                self.context.id_channel
             )
-            self.errors = _(
-                u'generic_subscribe_problem',
-                default=u'Problem with subscribe'
+
+        else:
+            # mi connetto con le api di mailman
+            status = api_channel.importUsersList(
+                usersList,
+                self.context.id_channel
             )
 
         if status == OK:
@@ -158,11 +148,11 @@ class UsersImport(form.Form):
                 type=u'info'
             )
         else:
-            if 'errors' not in self.__dict__.keys():
-                self.errors = api_channel.getErrorMessage(status)
-
+            logger.exception(
+                'unhandled error users import'
+            )
             api.portal.show_message(
-                message=self.errors,
+                message=u'Problems...{0}'.format(status),
                 request=self.request,
                 type=u'error'
             )

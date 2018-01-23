@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
+from plone import schema
 from plone.app.registry.browser import controlpanel
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from zope.interface import Interface
-from plone import schema
-from zope.component import getUtility
-from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter import _
+from rer.newsletter.utility.channel import IChannelUtility
+from zope.component import getUtility
+from zope.interface import Interface
 
 
 class ISettingsSchema(Interface):
@@ -36,11 +36,6 @@ class ChannelSettings(controlpanel.RegistryEditForm):
     schema = ISettingsSchema
     id = 'ChannelSettings'
     label = _(u'channel_setting', default=u'Channel Settings')
-
-    # def getLists(self):
-    #
-    #     api = getUtility(IChannelUtility)
-    #     return dir(api)
 
 
 class ChannelSettingsControlPanel(controlpanel.ControlPanelFormWrapper):

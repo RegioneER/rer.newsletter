@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-from lxml import etree
+# from lxml import etree
 from plone import api
 from Products.PortalTransforms.interfaces import ITransform
 from rer.newsletter.browser.settings import ISettingsSchema
 from zope.interface import implementer
 
 import premailer
+import re
 
 
 # capire come usare questa classe
@@ -44,12 +45,12 @@ class link_transform(object):
         destination_link = api.portal.get_registry_record(
             'destination_link', ISettingsSchema)
 
-        # TODO: non è questo il modo migliore per fare il replace...
+        # non è questo il modo migliore per fare il replace...
         # 1. non serve usare re.sub ma basta il replace di string
         # 2. forse sarebbe più corretto usare un metodo di lxml
         if source_link and destination_link:
             orig = re.sub(source_link, destination_link, orig)
-             
+
         # tree = etree.HTML(orig)
         # tagList = tree.xpath('//a')
         # for tag in tagList:

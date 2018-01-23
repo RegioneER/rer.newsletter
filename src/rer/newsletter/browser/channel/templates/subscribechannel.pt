@@ -9,12 +9,38 @@
         <body>
           <metal:main fill-slot="main">
             <metal:main-macro define-macro="main">
-              <div id="content-core" tal:content="structure view/contents" tal:condition="view/form_instance/isVisible" />
+
+              <script>
+                requirejs(["jquery"], function($){
+                  $(document).ready(function() {
+
+                    context = $('.plone-modal-body div #content-core').data('abs') + '/@@unsubscribe';
+                    var $prova = '<a class="redirect" href="#">Vuoi disinscriverti da questa newsletter ?</a>'
+
+                    portalMessage = $('.portalMessage.error');
+
+                    $('div.plone-modal-body').find( portalMessage ).each(function (){
+                      $('div.plone-modal-body').append( $prova );
+                      $('.redirect').click(function (){
+                        window.location.href = context
+                      });
+                    })
+
+                  });
+                });
+              </script>
+
+              <div id="content-core" tal:content="structure view/contents"
+                   tal:condition="view/form_instance/isVisible"
+                   data-abs=""
+                   tal:attributes="data-abs python:context.absolute_url();"/>
               <div class="filter">
+
                 <div class="portalMessage error" tal:condition="not: view/form_instance/isVisible">
                   <strong>Error</strong>
                   <span>Channel non attivo.</span>
                 </div>
+
               </div>
             </metal:main-macro>
           </metal:main>

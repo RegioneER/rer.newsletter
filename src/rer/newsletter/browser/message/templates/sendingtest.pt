@@ -14,6 +14,12 @@
         <body>
           <metal:main fill-slot="main">
             <metal:main-macro define-macro="main">
+
+              <a class="link-parent" i18n:translate="users_manage" href=""
+                 tal:attributes="href python:context.absolute_url();">
+                Come Back
+              </a>
+
               <div id="content-core" tal:content="structure view/contents" />
             </metal:main-macro>
           </metal:main>

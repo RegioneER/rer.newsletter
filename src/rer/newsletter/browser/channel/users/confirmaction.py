@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-from smtplib import SMTPRecipientsRefused
-
-from rer.newsletter.utility.channel import (OK, PROBLEM_WITH_MAIL,
-                                            IChannelUtility)
-
 from plone import api
 from Products.Five.browser import BrowserView
+from rer.newsletter import _
+from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.utility.channel import OK
 from zope.component import getUtility
+
 
 # disable CSRF
 # from plone.protect.interfaces import IDisableCSRFProtection
@@ -19,38 +18,32 @@ class ConfirmAction(BrowserView):
         return self.index()
 
     def _sendGenericMessage(self, template, receiver, message, message_title):
-        try:
-            mail_template = self.context.restrictedTraverse(
-                '@@{0}'.format(template)
-            )
+        mail_template = self.context.restrictedTraverse(
+            '@@{0}'.format(template)
+        )
 
-            parameters = {
-                'header': self.context.header,
-                'footer': self.context.footer,
-                'style': self.context.css_style
-            }
+        parameters = {
+            'header': self.context.header,
+            'footer': self.context.footer,
+            'style': self.context.css_style
+        }
 
-            mail_text = mail_template(**parameters)
+        mail_text = mail_template(**parameters)
 
-            portal = api.portal.get()
-            mail_text = portal.portal_transforms.convertTo(
-                'text/mail', mail_text)
+        portal = api.portal.get()
+        mail_text = portal.portal_transforms.convertTo(
+            'text/mail', mail_text)
 
-            # invio la mail ad ogni utente
-            mail_host = api.portal.get_tool(name='MailHost')
-            mail_host.send(
-                mail_text.getData(),
-                mto=receiver,
-                mfrom="noreply@rer.it",
-                subject=message_title,
-                charset='utf-8',
-                msg_type='text/html'
-            )
-        except SMTPRecipientsRefused:
-            raise SMTPRecipientsRefused
-        except Exception:
-            # da gestire
-            raise Exception
+        # invio la mail ad ogni utente
+        mail_host = api.portal.get_tool(name='MailHost')
+        mail_host.send(
+            mail_text.getData(),
+            mto=receiver,
+            mfrom=u'noreply@rer.it',
+            subject=message_title,
+            charset='utf-8',
+            msg_type='text/html'
+        )
 
         return OK
 
@@ -62,21 +55,22 @@ class ConfirmAction(BrowserView):
         api_channel = getUtility(IChannelUtility)
 
         if action == u'subscribe':
-            response, user = api_channel.activeUser(
+            response, user = api_channel.activateUser(
                 self.context.id_channel,
                 secret=secret
             )
             # mandare mail di avvenuta conferma
             if response == OK:
-                try:
-                    self._sendGenericMessage(
-                        template='activeuserconfirm_template',
-                        receiver=user,
-                        message='Messaggio di avvenuta iscrizione',
-                        message_title='Iscrizione confermata'
-                    )
-                except SMTPRecipientsRefused:
-                    response = PROBLEM_WITH_MAIL
+                self._sendGenericMessage(
+                    template='activeuserconfirm_template',
+                    receiver=user,
+                    message='Messaggio di avvenuta iscrizione',
+                    message_title='Iscrizione confermata'
+                )
+                status = _(
+                    u'generic_activate_message_success',
+                    default=u'User Activated.'
+                )
 
         elif action == u'unsubscribe':
             response, user = api_channel.deleteUser(
@@ -85,25 +79,26 @@ class ConfirmAction(BrowserView):
             )
             # mandare mail di avvenuta cancellazione
             if response == OK:
-                try:
-                    self._sendGenericMessage(
-                        template='deleteuserconfirm_template',
-                        receiver=user,
-                        message='L\'utente è stato eliminato dalla channel',
-                        message_title='Cancellazione avvenuta'
-                    )
-                except SMTPRecipientsRefused:
-                    response = PROBLEM_WITH_MAIL
+                self._sendGenericMessage(
+                    template='deleteuserconfirm_template',
+                    receiver=user,
+                    message='L\'utente è stato eliminato dal canale.',
+                    message_title='Cancellazione avvenuta'
+                )
+                status = _(
+                    u'generic_delete_message_success',
+                    default=u'User Deleted.'
+                )
 
         if response == OK:
             api.portal.show_message(
-                message=api_channel.getErrorMessage(response),
+                message=status,
                 request=self.request,
                 type=u'info'
             )
         else:
             api.portal.show_message(
-                message=api_channel.getErrorMessage(response),
+                message=u'Problems...{0}'.format(response),
                 request=self.request,
                 type=u'error'
             )
