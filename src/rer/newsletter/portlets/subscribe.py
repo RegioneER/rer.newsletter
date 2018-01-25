@@ -3,11 +3,11 @@ from .interface import IPortletTileSchema
 from plone import api
 from plone.app.portlets.portlets import base
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from zope.interface import implements
+from zope.interface import implementer
 
 
+@implementer(IPortletTileSchema)
 class Assignment(base.Assignment):
-    implements(IPortletTileSchema)
 
     def __init__(self, header=u'',
                  link_to_archive='', css_class='', newsletter=None):
