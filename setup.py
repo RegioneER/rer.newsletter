@@ -45,6 +45,8 @@ setup(
         'z3c.jbot',
         'mailmanclient>=3.1',
         'premailer==3.1.1',
+        'plone.directives.form',
+        'plone.app.tiles',
     ],
     extras_require={
         'test': [
