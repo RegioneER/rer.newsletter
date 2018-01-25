@@ -15,8 +15,6 @@ from rer.newsletter.utility.channel import SUBSCRIBED
 from rer.newsletter.utility.channel import UNHANDLED
 from z3c.form import button
 from z3c.form.interfaces import WidgetActionExecutionError
-# from z3c.form import field
-# from z3c.form.form import Form
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import Interface
