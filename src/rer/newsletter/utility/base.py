@@ -79,9 +79,16 @@ class BaseHandler(object):
             portal_type='Channel',
             id_channel=channel
         )
-        if not nl:
+
+        el = None
+        for n in nl:
+            if n.getObject().id_channel == channel:
+                el = n
+                break
+
+        if not el:
             return None
-        obj = nl[0].getObject()
+        obj = el.getObject()
         return obj
 
     def addChannel(self, channel):

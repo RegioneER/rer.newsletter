@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+from Acquisition import aq_inner
 from plone import api
 from plone import schema
+from plone.directives import form
+from plone.formwidget.recaptcha.widget import ReCaptchaFieldWidget
 from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
 from Products.CMFPlone.resources import add_bundle_on_request
@@ -11,10 +14,13 @@ from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import SUBSCRIBED
 from rer.newsletter.utility.channel import UNHANDLED
 from z3c.form import button
-from z3c.form import field
-from z3c.form import form
+from z3c.form.interfaces import WidgetActionExecutionError
+# from z3c.form import field
+# from z3c.form.form import Form
+from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import Interface
+from zope.interface import Invalid
 
 
 class ISubscribeForm(Interface):
@@ -28,11 +34,19 @@ class ISubscribeForm(Interface):
         required=True,
     )
 
+    form.widget(captcha=ReCaptchaFieldWidget)
+    captcha = schema.TextLine(
+        title=u'Captcha',
+        description=u'',
+        required=False
+    )
 
-class SubscribeForm(form.Form):
+
+class SubscribeForm(form.SchemaForm):
 
     ignoreContext = True
-    fields = field.Fields(ISubscribeForm)
+    # fields = field.Fields(ISubscribeForm)
+    schema = ISubscribeForm
 
     def __init__(self, context, request):
         self.context = context
@@ -46,10 +60,27 @@ class SubscribeForm(form.Form):
         else:
             return False
 
-    @button.buttonAndHandler(u'subscribe')
+    def update(self):
+        super(SubscribeForm, self).update()
+
+    @button.buttonAndHandler(
+        _(u'subscribe_submit_label', default=u'Subscribe')
+    )
     def handleSave(self, action):
         status = UNHANDLED
         data, errors = self.extractData()
+
+        # recaptcha
+        captcha = getMultiAdapter(
+            (aq_inner(self.context), self.request),
+            name='recaptcha'
+        )
+        if not captcha.verify():
+            raise WidgetActionExecutionError(
+                'captcha',
+                Invalid(_(u'Wrong captcha.'))
+            )
+
         if errors:
             self.status = self.formErrorsMessage
             return

@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from plone import api, schema
+from plone import api
+from plone import schema
 from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from rer.newsletter import _, logger
-from rer.newsletter.utility.channel import OK, UNHANDLED, IChannelUtility
-from z3c.form import button, field, form
+from rer.newsletter import _
+from rer.newsletter import logger
+from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.utility.channel import OK
+from rer.newsletter.utility.channel import UNHANDLED
+from z3c.form import button
+from z3c.form import field
+from z3c.form import form
 from zope.component import getUtility
 from zope.interface import Interface
 
@@ -33,6 +39,11 @@ class UnsubscribeForm(form.Form):
             return True
         else:
             return False
+
+    def updateWidgets(self):
+        super(UnsubscribeForm, self).updateWidgets()
+        if self.request.get('email', None):
+            self.widgets['email'].value = self.request.get('email')
 
     @button.buttonAndHandler(_(u'unsubscribe_button', default='Unsubscribe'))
     def handleSave(self, action):

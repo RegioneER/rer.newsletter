@@ -9,9 +9,24 @@
       </h4>
     </header>
 
+    <script>
+      requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
+        $('#channel-subscribe a').each(function(i, el) {
+            if (typeof modal === 'undefined'){
+              modal = new Modal($(this), {
+              backdropOptions: {
+                closeOnEsc: false,
+                closeOnClick: false
+              },
+              content: '#content',
+              loadLinksWithinModal: true,
+            });
+          }
+        });
+      });
+    </script>
     <div id="channel-subscribe">
-      <a class="plone-btn plone-btn-primary pat-plone-modal" href=""
-         data-pat-plone-modal="width: '770px',height: '430px',"
+      <a class="plone-btn plone-btn-primary" href=""
          tal:define="is_subscribable view/is_subscribable;
                      absUrl view/getNewsletterUrl"
          tal:condition="python:is_subscribable and absUrl"
@@ -21,16 +36,4 @@
         Subscribe
       </a>
     </div>
-
-    <!-- da rivedere -->
-    <div id="channel-link">
-      <a href=""
-         tal:define="link view/data/link_to_archive"
-         tal:condition="link"
-         tal:attributes="href link"
-        >
-        <span tal:replace="link">Link to Archive</span>
-      </a>
-    </div>
-
 </section>

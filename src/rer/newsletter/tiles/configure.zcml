@@ -7,7 +7,7 @@
     <plone:tile
       name="rer.newsletter.tile"
       title="Newsletter Subscribe"
-      schema="rer.newsletter.interfaces.IPortletTileSchema"
+      schema="rer.newsletter.portlets.interface.IPortletTileSchema"
       class=".subscribe.SubscribeTile"
       for="*"
       add_permission="cmf.ModifyPortalContent"

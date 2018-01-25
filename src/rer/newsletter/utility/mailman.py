@@ -12,7 +12,7 @@ from zope.interface import implementer
 import json
 
 
-# TODO: move to p.a.registry or zope.conf
+# move to p.a.registry or zope.conf
 # Please note that port ‘9001’ is used above, since mailman’s test server
 # runs on port 9001. In production Mailman’s REST API usually listens
 # on port 8001.
@@ -23,7 +23,7 @@ API_PASSWORD = 'restpass'
 
 @implementer(IChannelUtility)
 class MailmanHandler(object):
-    '''utility class to comunicate with mailman server'''
+    """utility class to comunicate with mailman server"""
 
     def _api(self):
         try:
@@ -34,14 +34,13 @@ class MailmanHandler(object):
             return None
 
     def lists(self):
-        # TODO
         client = self._api()
         return client.lists
 
     def subscribe(self, channel, mail, name=None):
         client = self._api()
         if not client:
-            logger.warning('TODO: raise exception')
+            logger.warning('raise exception')
             logger.warning('fake %s %s subscription', channel, mail)
             return SUBSCRIBED
         _list = client.get_list(channel)

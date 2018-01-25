@@ -13,7 +13,7 @@ from zope.interface import Interface
 
 
 class IMessageSendingTest(Interface):
-    ''' define field for sending test of message '''
+    """define field for sending test of message"""
 
     email = schema.Email(
         title=_(u'Email', default='Email'),

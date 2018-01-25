@@ -39,8 +39,3 @@ def uninstall(context):
 
     if mimetype_instance:
         mimetypes_registry.unregister(mimetype_instance[0])
-
-    # elimino la mia tranform
-    # transform_tool = getUtility(IPortalTransformsTool)
-    # if hasattr(transform_tool, "link_transform"):
-    #     transform_tool.unregisterTransform("link_transform")

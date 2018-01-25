@@ -8,17 +8,10 @@ class MessageManagerViewlet(ViewletBase):
     def update(self):
         pass
 
-    def render(self):
-        return self.index()
-
-
-class MessageSendViewlet(ViewletBase):
-
-    def update(self):
-        pass
-
-    def getState(self):
-        return api.content.get_state(obj=self.context)
+    def isVisible(self):
+        return api.content.get_state(obj=self.context) == 'review'\
+            and api.user.get_permissions().get(
+            'rer.newsletter: Send Newsletter')
 
     def render(self):
         return self.index()

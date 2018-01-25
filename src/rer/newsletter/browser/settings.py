@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone import schema
 from plone.app.registry.browser import controlpanel
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
-from rer.newsletter.utility.channel import IChannelUtility
-from zope.component import getUtility
 from zope.interface import Interface
 
 

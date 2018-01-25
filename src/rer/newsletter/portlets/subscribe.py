@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+from .interface import IPortletTileSchema
 from plone import api
 from plone.app.portlets.portlets import base
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from rer.newsletter.interfaces import IPortletTileSchema
 from zope.interface import implements
 
 

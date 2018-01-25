@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from plone import api
-from Products.Five.browser import BrowserView
 from plone.app.contenttypes.browser.folder import FolderView
+from Products.Five.browser import BrowserView
 
 
 class ChannelFolderView(FolderView):

@@ -4,7 +4,7 @@
 
   <portlet
      addview="rer.newsletter.portlets.subscribe.NewsletterSubscribePortlet"
-     title="Newsletter"
+     title="Newsletter Subscribe"
      />
 
 </portlets>

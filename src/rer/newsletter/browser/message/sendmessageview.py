@@ -58,6 +58,13 @@ class SendMessageView(form.Form):
         # transition
         api.content.transition(obj=self.context, transition='send')
 
+        self.request.response.redirect('view')
+        api.portal.show_message(
+            message=_(u'message_send', default='Message send'),
+            request=self.request,
+            type=u'info'
+        )
+
 
 message_sending_view = wrap_form(
     SendMessageView,

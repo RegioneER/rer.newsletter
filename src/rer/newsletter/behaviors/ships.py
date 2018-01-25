@@ -4,7 +4,7 @@ from zope.interface import Interface
 
 
 class IShippable(Interface):
-    ''' Marker interface for ships object '''
+    """Marker interface for ships object"""
 
 
 alsoProvides(IShippable)

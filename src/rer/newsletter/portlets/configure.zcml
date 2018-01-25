@@ -7,7 +7,7 @@
 
   <plone:portlet
       name="rer.newsletter.portlets.subscribe.NewsletterSubscribePortlet"
-      interface="rer.newsletter.interfaces.IPortletTileSchema"
+      interface=".interface.IPortletTileSchema"
       assignment=".subscribe.Assignment"
       view_permission="zope2.View"
       edit_permission="zope2.View"

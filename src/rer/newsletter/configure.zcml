@@ -21,6 +21,10 @@
       id="rer.newsletter.AddMessage"
       title="rer.newsletter: Add Message"
       />
+  <permission
+      id="rer.newsletter.SendMessage"
+      title="rer.newsletter: Send Newsletter"
+      />
 
   <include package=".browser" />
   <include package=".behaviors" />

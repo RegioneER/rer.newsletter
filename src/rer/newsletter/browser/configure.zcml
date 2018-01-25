@@ -183,12 +183,21 @@
     />
 
   <browser:page
-      for="rer.newsletter.interfaces.IChannel"
-      class=".channel.channelview.ChannelFolderView"
-      layer="rer.newsletter.interfaces.IRerNewsletterLayer"
-      template="channel/templates/listing.pt"
-      permission="zope2.View"
-      name="folder_listing"
+    for="rer.newsletter.interfaces.IChannel"
+    class=".channel.channelview.ChannelFolderView"
+    layer="rer.newsletter.interfaces.IRerNewsletterLayer"
+    template="channel/templates/listing.pt"
+    permission="zope2.View"
+    name="folder_listing"
+    />
+
+  <!-- vista che controlla che il messaggio sia stato inviato -->
+  <browser:page
+    for="*"
+    layer="rer.newsletter.interfaces.IRerNewsletterLayer"
+    permission="zope2.View"
+    name="is_message_sent"
+    class=".message.checkmessageview.CheckMessage"
     />
 
   <!-- channel viewlet -->
@@ -211,17 +220,5 @@
       permission="rer.newsletter.ManageNewsletter"
       template="message/templates/messageviewlet.pt"
       />
-    <!-- send message viewlet -->
-    <browser:viewlet
-      name="send_message_viewlet"
-      for="rer.newsletter.interfaces.IMessage"
-      manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
-      class=".message.messageviewlet.MessageSendViewlet"
-      layer="rer.newsletter.interfaces.IRerNewsletterLayer"
-      permission="zope2.View"
-      template="message/templates/sendmessageviewlet.pt"
-      />
-
-
 
 </configure>

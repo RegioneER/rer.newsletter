@@ -41,7 +41,7 @@
 #                 })
 #
 #         except SMTPRecipientsRefused:
-#             raise SMTPRecipientsRefused(u"Problemi con l'invio del messaggio")
+#            raise SMTPRecipientsRefused(u"Problemi con l'invio del messaggio")
 #         except Exception as inst:
 #             message = api_channel.getErrorMessage(inst.args[0])
 #             raise Exception(message)
