@@ -47,7 +47,6 @@ setup(
         'premailer==3.1.1',
         'plone.directives.form',
         'plone.app.tiles',
-        'plone.tiles',
     ],
     extras_require={
         'test': [
