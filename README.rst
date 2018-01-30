@@ -5,22 +5,56 @@ rer.newsletter
 .. image:: https://travis-ci.org/PloneGov-IT/rer.newsletter.svg?branch=master
     :target: https://travis-ci.org/PloneGov-IT/rer.newsletter
 
-This product allows the management of a newsletter.
+This product allows the complete management of a newsletter.
 
+========
 Features
---------
+========
 
-- Add two content-types:
-  - Channel
-  - Message
-- Allows complete management of user that subscribe to newsletter
-- Allows to substitute the engine that manage how newsletter works.
-  For example if you want to use a mailman server, you can rewrite the utility follow
-  methods declared in the utility interface.
+New Content-type
+----------------
+
+- Channel
+  - Totally customizable because it is possible to set a header, a footer and
+    CSS styles. This fields allows to uniform template of email that will be
+    sent from one channel.
+  - content type that inherit from folder content.
+- Message
+  - content type that inherit from folder content.
+
+Portlet and Tile
+----------------
+
+The product provide a portlet and a tile for user subscribe.
+
+Form for user subscribe have two fields: email and reCaptcha, so do not forget to
+set key for reCaptcha fields. See `plone.formwidget.recaptcha`__ for more details.
+
+__https://github.com/plone/plone.formwidget.recaptcha
+
+User Manage
+-----------
+
+Allows complete management of user.
+
+- Add user from admin setting
+- Delete user from admin setting
+- Import users directly from CSV file
+- Export users directly to CSV file
+- Delete a group of user directly from CSV file
+- Subscribe users
+- Unsubscribe users
 
 
-Example
--------------
+Advanced usage
+--------------
+
+This product normaly send email through plone mailer, but creating a product which
+implements the utility ``IChannelUtility`` it is possible use another system of
+mailing-list, like for example mailman.
+
+At the inside of ``IChannel Utility`` interface are described all methods that will be
+implemented and the way that they must responded.
 
 Utility declaration::
 
@@ -35,8 +69,23 @@ and creates a class that implement utility interface::
         """ utility class to send channel email with mailer of plone """
 
 
+Advanced security
+-----------------
+
+New permissions have been added for the management of the Newsletter:
+
+- ``rer.newsletter: Add Channel``
+- ``rer.newsletter: Add Message``
+- ``rer.newsletter: Manage Newsletter``
+- ``rer.newsletter: Send Newsletter``
+
+This permission are assigned to Manager and Site Administrator. Besides it been
+added a new role ``Manager Newsletter`` which have permissions for all possible
+operations on newsletter.
+
+============
 Installation
-------------
+============
 
 Install rer.newsletter by adding it to your buildout::
 
@@ -50,14 +99,15 @@ Install rer.newsletter by adding it to your buildout::
 
 and then running ``bin/buildout``
 
-
+============
 Dependencies
-------------
+============
 
 This product has been tested on Plone 5.1
 
+=======
 Credits
--------
+=======
 
 Developed with the support of `Regione Emilia Romagna`__;
 
@@ -66,8 +116,12 @@ Regione Emilia Romagna supports the `PloneGov initiative`__.
 __ http://www.regione.emilia-romagna.it/
 __ http://www.plonegov.it/
 
+=======
+Authors
+=======
 
-License
--------
+This product was developed by RedTurtle Technology team.
 
-The project is licensed under the GPLv2.
+.. image:: http://www.redturtle.it/redturtle_banner.png
+   :alt: RedTurtle Technology Site
+   :target: http://www.redturtle.it/
