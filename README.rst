@@ -15,10 +15,10 @@ New Content-type
 ----------------
 
 - Channel
-  - Totally customizable because it is possible to set a header, a footer and CSS styles. This fields allows to uniform template of email that will be sent from one channel.
-  - content type that inherit from folder content.
+  * Totally customizable because it is possible to set a header, a footer and CSS styles. This fields allows to uniform template of email that will be sent from one channel.
+  * content type that inherit from folder content.
 - Message
-  - content type that inherit from folder content.
+  * content type that inherit from folder content.
 
 Portlet and Tile
 ----------------
