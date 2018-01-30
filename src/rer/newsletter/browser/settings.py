@@ -29,7 +29,6 @@ class ISettingsSchema(Interface):
 
 
 class ChannelSettings(controlpanel.RegistryEditForm):
-    # template = ViewPageTemplateFile('settings.pt')
     schema = ISettingsSchema
     id = 'ChannelSettings'
     label = _(u'channel_setting', default=u'Channel Settings')

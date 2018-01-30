@@ -94,12 +94,12 @@
                           </span>
                           </tal:name>
 
-                          <tal:state define="state python: view.getState(item)" i18n:domain="rer.newsletter">
+                          <tal:state define="state python: view.getState(item)">
                             &mdash;
-                            <span i18n:translate="message_state">
+                            <span i18n:domain="rer.newsletter" i18n:translate="message_state">
                               state
-                              <span tal:replace="state"> State Value</span>
                             </span>
+                            <span tal:replace="state"> State Value</span>
                           </tal:state>
 
                           <tal:modified condition="python: item_type != 'Event'">

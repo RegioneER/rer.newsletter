@@ -15,7 +15,7 @@
         <metal:main fill-slot="main">
           <metal:main-macro define-macro="main">
 
-            <a class="link-parent" i18n:translate="users_manage" href=""
+            <a class="link-parent" i18n:translate="come_back" href=""
                tal:attributes="href python:context.absolute_url();">
               Come Back
             </a>
