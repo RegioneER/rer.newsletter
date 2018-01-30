@@ -2,7 +2,7 @@
 rer.newsletter
 ==============
 
-.. image::https://travis-ci.org/PloneGov-IT/rer.newsletter.svg?branch=master
+.. image:: https://travis-ci.org/PloneGov-IT/rer.newsletter.svg?branch=master
     :target: https://travis-ci.org/PloneGov-IT/rer.newsletter
 
 This product allows the management of a newsletter.
