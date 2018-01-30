@@ -15,8 +15,7 @@ New Content-type
 ----------------
 
 - Channel
-  - Totally customizable because it is possible to set a header, a footer and
-    CSS styles. This fields allows to uniform template of email that will be
+  - Totally customizable because it is possible to set a header, a footer and CSS styles. This fields allows to uniform template of email that will be
     sent from one channel.
   - content type that inherit from folder content.
 - Message
@@ -30,7 +29,7 @@ The product provide a portlet and a tile for user subscribe.
 Form for user subscribe have two fields: email and reCaptcha, so do not forget to
 set key for reCaptcha fields. See `plone.formwidget.recaptcha`__ for more details.
 
-__https://github.com/plone/plone.formwidget.recaptcha
+__ https://github.com/plone/plone.formwidget.recaptcha
 
 User Manage
 -----------
