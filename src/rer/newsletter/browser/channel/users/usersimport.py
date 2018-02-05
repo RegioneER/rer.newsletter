@@ -126,15 +126,15 @@ class UsersImport(form.Form):
         if data['removeSubscribers'] and not data['emptyList']:
             # chiamo l'api per rimuovere l'intera lista di utenti
             status = api_channel.deleteUserList(
+                self.context.id_channel,
                 usersList,
-                self.context.id_channel
             )
 
         else:
             # mi connetto con le api di mailman
             status = api_channel.importUsersList(
+                self.context.id_channel,
                 usersList,
-                self.context.id_channel
             )
 
         if status == OK:

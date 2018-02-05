@@ -14,11 +14,9 @@ from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import SUBSCRIBED
 from rer.newsletter.utility.channel import UNHANDLED
 from z3c.form import button
-from z3c.form.interfaces import WidgetActionExecutionError
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import Interface
-from zope.interface import Invalid
 
 
 class ISubscribeForm(Interface):
@@ -74,10 +72,17 @@ class SubscribeForm(form.SchemaForm):
             name='recaptcha'
         )
         if not captcha.verify():
-            raise WidgetActionExecutionError(
-                'captcha',
-                Invalid(_(u'Wrong captcha.'))
+            # raise WidgetActionExecutionError(
+            #     'captcha',
+            #     Invalid(_(u'Wrong captcha.'))
+            # )
+            api.portal.show_message(
+                message=_(u'message_wrong_captcha',
+                          default=u'Captcha non inserito correttamente.'),
+                request=self.request,
+                type=u'error'
             )
+            return
 
         if errors:
             self.status = self.formErrorsMessage
