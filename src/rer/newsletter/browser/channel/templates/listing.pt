@@ -97,7 +97,7 @@
                           <tal:state define="state python: view.getState(item)">
                             &mdash;
                             <span i18n:domain="rer.newsletter" i18n:translate="message_state">
-                              state
+                              state:
                             </span>
                             <span tal:replace="state"> State Value</span>
                           </tal:state>

@@ -26,7 +26,6 @@
               <element>++plone++rer.newsletter/datatables.css</element>
             </value>
           </records>
-
           <records prefix="plone.bundles/datatables"
                   interface='Products.CMFPlone.interfaces.IBundleRegistry'>
             <value key="resources">
@@ -46,7 +45,6 @@
               <element>++plone++rer.newsletter/datatables.css</element>
             </value>
           </records>
-
           <records prefix="plone.bundles/message_datatables"
                   interface='Products.CMFPlone.interfaces.IBundleRegistry'>
             <value key="resources">
