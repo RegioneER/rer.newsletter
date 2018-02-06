@@ -94,7 +94,7 @@
                           </span>
                           </tal:name>
 
-                          <tal:state condition="python: item.portal_type == 'Message'">
+                          <tal:state tal:condition="python: portal_type == 'Message'" tal:define="portal_type item/portal_type">
                             &mdash;
                             <span i18n:domain="rer.newsletter" i18n:translate="message_state">
                               state:
