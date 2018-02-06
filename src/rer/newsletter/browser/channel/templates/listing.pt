@@ -94,12 +94,12 @@
                           </span>
                           </tal:name>
 
-                          <tal:state define="state python: view.getState(item)">
+                          <tal:state condition="python: item.portal_type == 'Message'">
                             &mdash;
                             <span i18n:domain="rer.newsletter" i18n:translate="message_state">
                               state:
                             </span>
-                            <span tal:replace="state"> State Value</span>
+                            <span tal:replace="python: view.getState(item)"> State Value</span>
                           </tal:state>
 
                           <tal:modified condition="python: item_type != 'Event'">
