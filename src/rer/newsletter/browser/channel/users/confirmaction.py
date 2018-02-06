@@ -34,12 +34,18 @@ class ConfirmAction(BrowserView):
         mail_text = portal.portal_transforms.convertTo(
             'text/mail', mail_text)
 
+        response_email = None
+        if self.context.response_email:
+            response_email = self.context.response_email
+        else:
+            response_email = u'noreply@rer.it'
+
         # invio la mail ad ogni utente
         mail_host = api.portal.get_tool(name='MailHost')
         mail_host.send(
             mail_text.getData(),
             mto=receiver,
-            mfrom=u'noreply@rer.it',
+            mfrom=response_email,
             subject=message_title,
             charset='utf-8',
             msg_type='text/html'

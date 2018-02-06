@@ -88,11 +88,17 @@ class UnsubscribeForm(form.Form):
             mail_text = portal.portal_transforms.convertTo(
                 'text/mail', mail_text)
 
+            response_email = None
+            if self.context.response_email:
+                response_email = self.context.response_email
+            else:
+                response_email = u'noreply@rer.it'
+
             mailHost = api.portal.get_tool(name='MailHost')
             mailHost.send(
                 mail_text.getData(),
                 mto=email,
-                mfrom='noreply@rer.it',
+                mfrom=response_email,
                 subject='Email di disattivazione',
                 charset='utf-8',
                 msg_type='text/html',
