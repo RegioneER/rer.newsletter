@@ -1,4 +1,6 @@
-<tal:root define="activationUrl python:options['activationUrl'];
+<tal:root define="title python:options['title'];
+                  portal_name string:options['portal_name'];
+                  activationUrl python:options['activationUrl'];
                   header python:options['header'].output;
                   footer python:options['footer'].output;
                   style python:options['style']"
@@ -6,7 +8,13 @@
 <span tal:replace="structure header" />
 <style tal:content="style" ></style>
 <p>
-  Clicca per l'attivazione <a href="${activationUrl}">${activationUrl}</a>
+  Per confermare la tua richiesta di iscrizione a Newsletter ${title}, è necessario collegarsi entro 48 ore al seguente link:
+  <br />
+  <a href="${activationUrl}">${activationUrl}</a>
+  <br />
+  Cordiali saluti
+  <br />
+  Redazione del portale ${portal_name}
 </p>
 <span tal:replace="structure footer" />
 </tal:root>
