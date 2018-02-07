@@ -1,5 +1,5 @@
 <tal:root define="title python:options['title'];
-                  portal_name string:options['portal_name'];
+                  portal_name python:options['portal_name'];
                   activationUrl python:options['activationUrl'];
                   header python:options['header'].output;
                   footer python:options['footer'].output;
