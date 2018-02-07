@@ -117,7 +117,8 @@ class SubscribeForm(form.SchemaForm):
                 'header': self.context.header,
                 'footer': self.context.footer,
                 'style': self.context.css_style,
-                'activationUrl': url
+                'activationUrl': url,
+                'portal_name': api.portal.get().title,
             }
 
             mail_text = mail_template(**parameters)
