@@ -1,0 +1,9 @@
+div.informativa{
+  margin: 15px 0;
+  padding: 2%;
+  width: 95%;
+  border: 1px solid #ccc;
+  background-color: #FaFaFa;
+  height: 10em;
+  overflow: auto;
+}

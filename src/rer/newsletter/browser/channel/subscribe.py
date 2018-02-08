@@ -153,7 +153,7 @@ class SubscribeForm(form.SchemaForm):
                 message=_(
                     u'status_user_subscribed',
                     default=u'Riceverai una e-mail per confermare '
-                    'l’iscrizione alla newsletter.'
+                    'l\'iscrizione alla newsletter.'
                 ),
                 request=self.request,
                 type=u'info'
