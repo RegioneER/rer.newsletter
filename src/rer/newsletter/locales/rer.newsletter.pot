@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2018-01-30 11:32+0000\n"
+"POT-Creation-Date: 2018-02-08 10:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: rer.newsletter\n"
 
+#: ./profiles/default/workflows/message_workflow/definition.xml
+msgid "Bozza"
+msgstr ""
+
 #: ./profiles/default/types/Channel.xml
 msgid "Channel"
 msgstr ""
@@ -26,16 +30,32 @@ msgid "Channel settings"
 msgstr ""
 
 #. Default: "Email"
-#: ./browser/message/sendingtest.py:19
+#: ./browser/message/sendingtest.py:21
 msgid "Email"
+msgstr ""
+
+#: ./profiles/default/workflows/message_workflow/definition.xml
+msgid "Invia un messaggio"
+msgstr ""
+
+#: ./profiles/default/workflows/message_workflow/definition.xml
+msgid "Inviato"
 msgstr ""
 
 #: ./profiles/default/types/Message.xml
 msgid "Message"
 msgstr ""
 
-#: ./browser/channel/subscribe.py:79
-msgid "Wrong captcha."
+#: ./profiles/default/workflows/message_workflow/definition.xml
+msgid "Prepara per l'invio"
+msgstr ""
+
+#: ./profiles/default/workflows/message_workflow/definition.xml
+msgid "Revisione"
+msgstr ""
+
+#: ./profiles/default/workflows/message_workflow/definition.xml
+msgid "Ritratta"
 msgstr ""
 
 #. Default: "Channel Created"
@@ -191,7 +211,7 @@ msgid "destination_link"
 msgstr ""
 
 #. Default: "Email to send the test message"
-#: ./browser/message/sendingtest.py:20
+#: ./browser/message/sendingtest.py:22
 msgid "email_sendingtest_description"
 msgstr ""
 
@@ -206,7 +226,7 @@ msgid "footer_channel"
 msgstr ""
 
 #. Default: "User Activated."
-#: ./browser/channel/users/confirmaction.py:70
+#: ./browser/channel/users/confirmaction.py:76
 msgid "generic_activate_message_success"
 msgstr ""
 
@@ -216,7 +236,7 @@ msgid "generic_add_message_success"
 msgstr ""
 
 #. Default: "User Deleted."
-#: ./browser/channel/users/confirmaction.py:88
+#: ./browser/channel/users/confirmaction.py:94
 msgid "generic_delete_message_success"
 msgstr ""
 
@@ -265,7 +285,7 @@ msgstr ""
 msgid "message_send"
 msgstr ""
 
-#. Default: "state"
+#. Default: "state:"
 #: ./browser/channel/templates/listing.pt:99
 msgid "message_state"
 msgstr ""
@@ -273,6 +293,11 @@ msgstr ""
 #. Default: "Message test"
 #: ./browser/message/templates/messageviewlet.pt:7
 msgid "message_test"
+msgstr ""
+
+#. Default: "Captcha non inserito correttamente."
+#: ./browser/channel/subscribe.py:80
+msgid "message_wrong_captcha"
 msgstr ""
 
 #. Default: "Response email"
@@ -286,7 +311,7 @@ msgid "send_message_confirm"
 msgstr ""
 
 #. Default: "Send"
-#: ./browser/message/sendingtest.py:33
+#: ./browser/message/sendingtest.py:35
 msgid "send_sendingtest"
 msgstr ""
 
@@ -311,7 +336,7 @@ msgid "source_link"
 msgstr ""
 
 #. Default: "Utente iscritto. Mail di conferma inviata."
-#: ./browser/channel/subscribe.py:135
+#: ./browser/channel/subscribe.py:149
 msgid "status_user_subscribed"
 msgstr ""
 
@@ -321,23 +346,23 @@ msgid "subject_email"
 msgstr ""
 
 #. Default: "Subscribe"
-#: ./portlets/subscribe.pt:29
-#: ./tiles/subscribe.pt:38
+#: ./portlets/subscribe.pt:12
+#: ./tiles/subscribe.pt:21
 msgid "subscribe"
 msgstr ""
 
 #. Default: "Subscribe"
-#: ./browser/channel/subscribe.py:65
+#: ./browser/channel/subscribe.py:63
 msgid "subscribe_submit_label"
 msgstr ""
 
 #. Default: "Subscription Mail"
-#: ./browser/channel/subscribe.py:27
+#: ./browser/channel/subscribe.py:25
 msgid "subscribe_user"
 msgstr ""
 
 #. Default: "Mail for subscribe to a channel"
-#: ./browser/channel/subscribe.py:28
+#: ./browser/channel/subscribe.py:26
 msgid "subscribe_user_description"
 msgstr ""
 
@@ -397,12 +422,12 @@ msgid "unsubscribe_email_title"
 msgstr ""
 
 #. Default: "User already subscribed."
-#: ./browser/channel/subscribe.py:149
+#: ./browser/channel/subscribe.py:163
 msgid "user_already_subscribed"
 msgstr ""
 
 #. Default: "Mail di conferma cancellazione inviata."
-#: ./browser/channel/unsubscribe.py:103
+#: ./browser/channel/unsubscribe.py:109
 msgid "user_unsubscribe_success"
 msgstr ""
 
