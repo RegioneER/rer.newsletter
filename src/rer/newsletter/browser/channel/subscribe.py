@@ -6,7 +6,7 @@ from plone.directives import form
 from plone.formwidget.recaptcha.widget import ReCaptchaFieldWidget
 from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
-from Products.CMFPlone.resources import add_bundle_on_request
+# from Products.CMFPlone.resources import add_bundle_on_request
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
@@ -41,14 +41,13 @@ class ISubscribeForm(Interface):
 class SubscribeForm(form.SchemaForm):
 
     ignoreContext = True
-    # fields = field.Fields(ISubscribeForm)
     schema = ISubscribeForm
 
     def __init__(self, context, request):
         self.context = context
         self.request = request
 
-        add_bundle_on_request(self.request, 'unsubscribe')
+        # add_bundle_on_request(self.request, 'subscribemodal')
 
     def isVisible(self):
         if self.context.is_subscribable:
