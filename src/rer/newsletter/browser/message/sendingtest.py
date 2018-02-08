@@ -11,6 +11,8 @@ from z3c.form import field
 from z3c.form import form
 from zope.interface import Interface
 
+import re
+
 
 class IMessageSendingTest(Interface):
     """define field for sending test of message"""
@@ -40,7 +42,9 @@ class MessageSendingTest(form.Form):
         try:
 
             # prendo l'email dai parametri
+            emails = []
             email = data['email']
+            emails = re.compile('[,|;]').split(email)
 
             # monto il messaggio da mandare
             ns_obj = self.context.aq_parent
@@ -58,18 +62,25 @@ class MessageSendingTest(form.Form):
             portal = api.portal.get()
             body = portal.portal_transforms.convertTo('text/mail', body)
 
+            response_email = None
+            if self.context.response_email:
+                response_email = self.context.aq_parent.response_email
+            else:
+                response_email = u'noreply@rer.it'
+
             # per mandare la mail non passo per l'utility
             # in ogni caso questa mail viene mandata da plone
             mailHost = api.portal.get_tool(name='MailHost')
-            mailHost.send(
-                body.getData(),
-                mto=email,
-                mfrom='noreply@rer.it',
-                subject='Messaggio di prova',
-                charset='utf-8',
-                msg_type='text/html',
-                immediate=True
-            )
+            for email in emails:
+                mailHost.send(
+                    body.getData(),
+                    mto=email,
+                    mfrom=response_email,
+                    subject='Messaggio di prova',
+                    charset='utf-8',
+                    msg_type='text/html',
+                    immediate=True
+                )
 
         except SMTPRecipientsRefused:
             self.errors = u'problemi con l\'invio del messaggio'
