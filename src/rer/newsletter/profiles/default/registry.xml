@@ -13,6 +13,7 @@
               <element>initializedModal</element>
             </value>
             <value key="enabled">True</value>
+            <value key="compile">True</value>
             <value key="jscompilation">++plone++rer.newsletter/scripts/initializedModal.js</value>
             <value key="last_compilation">2019-10-03 15:00:00</value>
           </records>
@@ -32,6 +33,7 @@
               <element>datatables</element>
             </value>
             <value key="enabled">False</value>
+            <value key="compile">True</value>
             <value key="jscompilation">++plone++rer.newsletter/scripts/manageusers.js</value>
             <value key="csscompilation">++plone++rer.newsletter/datatables.css</value>
             <value key="last_compilation">2019-10-03 15:00:00</value>
@@ -51,6 +53,7 @@
               <element>message_datatables</element>
             </value>
             <value key="enabled">False</value>
+            <value key="compile">True</value>
             <value key="jscompilation">++plone++rer.newsletter/scripts/channelhistory.js</value>
             <value key="csscompilation">++plone++rer.newsletter/datatables.css</value>
             <value key="last_compilation">2019-10-03 15:00:00</value>
