@@ -58,7 +58,7 @@ msgstr ""
 #. Default: "Channel Created"
 #: ./browser/channel/add.py:35
 msgid "add_channel"
-msgstr "Aggiungi un canale"
+msgstr "Nuovo canale creato"
 
 #. Default: "Add User"
 #: ./browser/channel/templates/manageusers.pt:52
@@ -225,7 +225,7 @@ msgstr "Foooter del messagio"
 #. Default: "User Activated."
 #: ./browser/channel/users/confirmaction.py:76
 msgid "generic_activate_message_success"
-msgstr "Utente attivato con successo."
+msgstr "Iscrizione confermata correttamente."
 
 #. Default: "User Added."
 #: ./browser/channel/users/add.py:48
@@ -422,7 +422,7 @@ msgstr "Email di disiscrizione"
 #. Default: "User already subscribed."
 #: ./browser/channel/subscribe.py:163
 msgid "user_already_subscribed"
-msgstr "Utente già iscritto."
+msgstr ""
 
 #. Default: "Mail di conferma cancellazione inviata."
 #: ./browser/channel/unsubscribe.py:109
@@ -433,4 +433,3 @@ msgstr ""
 #: ./browser/channel/templates/channelviewlet.pt:4
 msgid "users_manage"
 msgstr "Gestione degli utenti"
-

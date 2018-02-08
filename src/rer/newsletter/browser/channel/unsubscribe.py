@@ -40,6 +40,9 @@ class UnsubscribeForm(form.Form):
         else:
             return False
 
+    def getChannelPrivacyPolicy(self):
+        return False
+
     def updateWidgets(self):
         super(UnsubscribeForm, self).updateWidgets()
         if self.request.get('email', None):

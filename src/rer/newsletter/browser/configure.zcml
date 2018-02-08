@@ -57,6 +57,7 @@
       name="channel-settings"
       permission="cmf.ManagePortal"
       class=".settings.ChannelSettings"
+      layer="rer.newsletter.interfaces.IRerNewsletterLayer"
       />
 
   <!-- view for users import -->

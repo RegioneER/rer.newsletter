@@ -33,6 +33,12 @@ class ChannelSettings(controlpanel.RegistryEditForm):
     id = 'ChannelSettings'
     label = _(u'channel_setting', default=u'Channel Settings')
 
+    def updateFields(self):
+        super(ChannelSettings, self).updateFields()
+
+    def updateWidgets(self):
+        super(ChannelSettings, self).updateWidgets()
+
 
 class ChannelSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
 

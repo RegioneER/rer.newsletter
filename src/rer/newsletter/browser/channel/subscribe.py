@@ -56,6 +56,10 @@ class SubscribeForm(form.SchemaForm):
         else:
             return False
 
+    def getChannelPrivacyPolicy(self):
+        if self.context.privacy:
+            return self.context.privacy.output
+
     def update(self):
         super(SubscribeForm, self).update()
 
@@ -148,7 +152,8 @@ class SubscribeForm(form.SchemaForm):
             api.portal.show_message(
                 message=_(
                     u'status_user_subscribed',
-                    default=u'Utente iscritto. Mail di conferma inviata.'
+                    default=u'Riceverai una e-mail per confermare '
+                    'l’iscrizione alla newsletter.'
                 ),
                 request=self.request,
                 type=u'info'
@@ -161,7 +166,9 @@ class SubscribeForm(form.SchemaForm):
                 )
                 api.portal.show_message(
                     message=_(u'user_already_subscribed',
-                              default=u'User already subscribed.'),
+                              default=u'Sei già iscritto a questa newsletter, '
+                              'oppure non hai ancora'
+                              ' confermato l\'iscrizione.'),
                     request=self.request,
                     type=u'error'
                 )

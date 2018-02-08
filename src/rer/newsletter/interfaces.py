@@ -27,68 +27,77 @@ class IChannelSchema(model.Schema):
     """a dexterity schema for channel of newsletter"""
 
     sender_name = schema.TextLine(
-        title=_('sender_name', default='Sender Fullname'),
-        description=_('description_sender_name',
-                      default='Fullname of sender'),
+        title=_(u'sender_name', default=u'Sender Fullname'),
+        description=_(u'description_sender_name',
+                      default=u'Fullname of sender'),
         required=False,
     )
 
     sender_email = schema.Email(
-        title=_('sender_email', default='Sender email'),
-        description=_('description_sender_email',
-                      default='Email of sender'),
+        title=_(u'sender_email', default=u'Sender email'),
+        description=_(u'description_sender_email',
+                      default=u'Email of sender'),
         required=True,
     )
 
     subject_email = schema.TextLine(
-        title=_('subject_email', default='Subject email'),
-        description=_('description_subject_mail',
-                      default='Subject for channel message'),
+        title=_(u'subject_email', default=u'Subject email'),
+        description=_(u'description_subject_mail',
+                      default=u'Subject for channel message'),
         required=False
     )
 
     response_email = schema.Email(
-        title=_('response_email', default='Response email'),
-        description=_('description_response_email',
-                      default='Response email of channel'),
+        title=_(u'response_email', default=u'Response email'),
+        description=_(u'description_response_email',
+                      default=u'Response email of channel'),
         required=False,
     )
 
+    privacy = RichTextField(
+        title=_(u'privacy_channel', default=u'Informativa sulla privacy'),
+        description=_(u'description_privacy_channel',
+                      default=u'Informativa sulla privacy per questo canale'),
+        required=False,
+        default=u'',
+    )
+    form.widget('privacy', RichTextFieldWidget)
+
     header = RichTextField(
-        title=_('header_channel', default='Header of message'),
-        description=_('description_header_channel',
-                      default='Header for message of this channel'),
+        title=_(u'header_channel', default=u'Header of message'),
+        description=_(u'description_header_channel',
+                      default=u'Header for message of this channel'),
         required=False,
         default=u'',
     )
     form.widget('header', RichTextFieldWidget)
 
     footer = RichTextField(
-        title=_('footer_channel', default='Footer of message'),
-        description=_('description_footer_channel',
-                      default='Footer for message of this channel'),
+        title=_(u'footer_channel', default=u'Footer of message'),
+        description=_(u'description_footer_channel',
+                      default=u'Footer for message of this channel'),
         required=False,
         default=u'',
     )
     form.widget('footer', RichTextFieldWidget)
 
     css_style = schema.Text(
-        title=_('css_style', default='CSS Style'),
-        description=_('description_css_style', default='style for mail'),
+        title=_(u'css_style', default=u'CSS Style'),
+        description=_(u'description_css_style', default=u'style for mail'),
         required=False,
         default=u'',
     )
 
     # probabilemente un campo che va nascosto
     id_channel = schema.TextLine(
-        title=_('idChannel', default='Channel ID'),
-        description=_('description_IDChannel', default='Channel ID'),
+        title=_(u'idChannel', default=u'Channel ID'),
+        description=_(u'description_IDChannel', default=u'Channel ID'),
         required=True,
         defaultFactory=default_id_channel,
     )
 
     is_subscribable = schema.Bool(
-        title=_('is_subscribable', default='Is Subscribable'),
+        title=_(u'is_subscribable', default=u'Is Subscribable'),
         default=False,
         required=False
     )

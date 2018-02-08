@@ -240,7 +240,7 @@ class BaseHandler(object):
         if user in annotations.keys():
             annotations[user] = {
                 'email': user,
-                'is_active': True,
+                'is_active': annotations[user]['is_active'],
                 'token': secret,
                 'creation_date': datetime.today().strftime(
                     '%d/%m/%Y %H:%M:%S'
