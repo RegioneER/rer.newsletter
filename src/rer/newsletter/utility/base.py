@@ -107,6 +107,7 @@ class BaseHandler(object):
 
         # attivo l'utente
         count = 0
+        element_id = None
         for user in annotations:
             if annotations[user]['token'] == secret:
                 if annotations[user]['is_active']:
