@@ -82,7 +82,7 @@ class MessageSendingTest(form.Form):
             for email in emails:
                 mailHost.send(
                     body.getData(),
-                    mto=email,
+                    mto=email.strip(),
                     mfrom=response_email,
                     subject='Messaggio di prova',
                     charset='utf-8',

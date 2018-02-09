@@ -14,6 +14,7 @@ from zope.component import getUtility
 from zope.interface import Interface
 
 import csv
+import re
 import StringIO
 
 
@@ -63,6 +64,18 @@ class IUsersImport(Interface):
     )
 
 
+def _mailValidation(mail):
+    # valido la mail
+    match = re.match(
+        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+'
+        '(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+        mail
+    )
+    if match is None:
+        return False
+    return True
+
+
 class UsersImport(form.Form):
 
     ignoreContext = True
@@ -92,7 +105,9 @@ class UsersImport(form.Form):
 
         usersList = []
         for row in reader:
-            usersList.append(row[index].decode('utf-8-sig'))
+            mail = row[index].decode('utf-8-sig')
+            if _mailValidation(mail):
+                usersList.append(row[index].decode('utf-8-sig'))
 
         return usersList
 
