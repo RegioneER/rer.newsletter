@@ -5,6 +5,7 @@ from plone import schema
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
+from rer.newsletter.content.channel import Channel
 from smtplib import SMTPRecipientsRefused
 from z3c.form import button
 from z3c.form import field
@@ -46,8 +47,15 @@ class MessageSendingTest(form.Form):
             email = data['email']
             emails = re.compile('[,|;]').split(email)
 
-            # monto il messaggio da mandare
-            ns_obj = self.context.aq_parent
+            ns_obj = None
+            for obj in self.context.aq_chain:
+                if isinstance(obj, Channel):
+                    ns_obj = obj
+                    break
+            else:
+                if not ns_obj:
+                    # non riesco a recuperare le info di un channel
+                    return
             message_obj = self.context
 
             body = u''
@@ -63,8 +71,8 @@ class MessageSendingTest(form.Form):
             body = portal.portal_transforms.convertTo('text/mail', body)
 
             response_email = None
-            if self.context.response_email:
-                response_email = self.context.aq_parent.response_email
+            if ns_obj.response_email:
+                response_email = ns_obj.response_email
             else:
                 response_email = u'noreply@rer.it'
 

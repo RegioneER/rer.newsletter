@@ -90,6 +90,9 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
 
     // inizializzazione datatables
     table = $('#users-table').DataTable({
+      "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Italian.json"
+            },
       "ajax": {
             "url": "exportUsersListAsJson",
             "dataSrc": ""

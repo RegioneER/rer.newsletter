@@ -66,8 +66,8 @@
           <thead>
             <tr>
               <th>Email</th>
-              <th>Creation Date</th>
-              <th>Activation's State</th>
+              <th>Data di creazione</th>
+              <th>Stato di attivazione</th>
             </tr>
           </thead>
         </table>

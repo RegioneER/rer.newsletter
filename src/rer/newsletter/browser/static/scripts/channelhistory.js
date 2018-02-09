@@ -7,6 +7,9 @@ requirejs(["jquery", "datatables"], function($, datatables){
   $(document).ready(function() {
     // inizializzazione datatables
     table = $('#message-table').DataTable({
+      "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Italian.json"
+            },
       "ajax": {
             "url": "getMessageSentDetails",
             "dataSrc": ""

@@ -6,6 +6,7 @@ from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
+from rer.newsletter.content.channel import Channel
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from z3c.form import button
@@ -21,10 +22,23 @@ class SendMessageView(form.Form):
 
     ignoreContext = True
 
+    def _getNewsletter(self):
+        channel = None
+        for obj in self.context.aq_chain:
+            if isinstance(obj, Channel):
+                channel = obj
+                break
+        else:
+            if not channel:
+                return
+        return channel
+
     def getUserNumber(self):
+        channel = self._getNewsletter()
+
         api_channel = getUtility(IChannelUtility)
         active_users, status = api_channel.getNumActiveSubscribers(
-            self.context.aq_parent.id_channel
+            channel.id_channel
         )
         if status == OK:
             return active_users
@@ -33,16 +47,18 @@ class SendMessageView(form.Form):
 
     @button.buttonAndHandler(_('send_sendingview', default='Send'))
     def handleSave(self, action):
+        channel = self._getNewsletter()
+
         api_channel = getUtility(IChannelUtility)
         api_channel.sendMessage(
-            self.context.aq_parent.id_channel, self.context
+            channel.id_channel, self.context
         )
 
         # i dettagli sull'invio del messaggio per lo storico
         annotations = IAnnotations(self.context)
         if KEY not in annotations.keys():
             active_users, status = api_channel.getNumActiveSubscribers(
-                self.context.aq_parent.id_channel
+                channel.id_channel
             )
 
             if status != OK:

@@ -25,9 +25,9 @@
           <table id="message-table" class="display" cellspacing="0" width="100%">
             <thead>
               <tr>
-                <th>Message</th>
-                <th>Active Users</th>
-                <th>Send Date</th>
+                <th>Messaggio</th>
+                <th>Numero di utenti attivi</th>
+                <th>Data di invio</th>
               </tr>
             </thead>
           </table>
