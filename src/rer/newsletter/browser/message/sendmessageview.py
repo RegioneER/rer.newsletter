@@ -28,6 +28,8 @@ class SendMessageView(form.Form):
         )
         if status == OK:
             return active_users
+        else:
+            return 0
 
     @button.buttonAndHandler(_('send_sendingview', default='Send'))
     def handleSave(self, action):

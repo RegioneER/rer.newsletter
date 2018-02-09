@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone import api
-from plone.namedfile.field import NamedFile
+from plone.namedfile.field import NamedBlobFile
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.channel import IChannelUtility
@@ -19,10 +19,10 @@ import StringIO
 
 class IUsersImport(Interface):
 
-    userListFile = NamedFile(
+    userListFile = NamedBlobFile(
         title=_(u'title_users_list_file', default=u'Users List File'),
         description=_(u'description_file', default=u'File must be a CSV'),
-        required=True
+        required=True,
     )
 
     # se questo e ceccato allora i dati non vengono inseriti

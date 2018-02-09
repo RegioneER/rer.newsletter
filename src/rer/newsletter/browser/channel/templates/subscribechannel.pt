@@ -11,32 +11,13 @@
             <metal:main-macro define-macro="main">
 
               <div id="content">
-                <script>
-                  requirejs(["jquery"], function($){
-                    $(document).ready(function() {
-                      context = $('.plone-modal-body div #content-core').data('abs') + '/@@unsubscribe';
-
-                      portalMessage = $('.portalMessage.error');
-
-                      $('div.plone-modal-body').find( portalMessage ).each(function (){
-                        var email = $('#form-widgets-email').val();
-                        var href = $('.redirect').attr('href')
-                        $('.redirect').attr('href', href + '?email=' + email)
-                        $('.redirect').show();
-                      });
-                      $('div.plone-modal-body').find( '.portalMessage' ).each(function (){
-                        $('.content_container').hide()
-                        $('.pattern-modal-buttons').hide()
-                      });
-                    });
-                  });
-                </script>
                 <div class="content_container">
                   <div class="informativa"
                        tal:define="privacy view/form_instance/getChannelPrivacyPolicy"
                        tal:condition="privacy"
                        tal:content="structure privacy"></div>
-                  <div id="content-core" tal:content="structure view/contents"
+                  <div id="content-core" class="subscription_form"
+                       tal:content="structure view/contents"
                        tal:condition="view/form_instance/isVisible"
                        data-abs=""
                        tal:attributes="data-abs python:context.absolute_url();" />

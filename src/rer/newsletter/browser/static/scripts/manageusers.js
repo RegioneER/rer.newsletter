@@ -7,39 +7,12 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
 
   var table = null;
 
-  new Modal($('#button-add-user'), {
-    backdropOptions: {
-      closeOnEsc: false,
-      closeOnClick: false
-    },
-    actionOptions: {
-      onSuccess: function($action, response, options){
-        table.ajax.reload();
-        $action.$modal.trigger('destroy.plone-modal.patterns');
-      }
-    },
-  });
-
-  new Modal($('#button-import-users'), {
-    backdropOptions: {
-      closeOnEsc: false,
-      closeOnClick: false
-    },
-    actionOptions: {
-      onSuccess: function($action, response, options){
-        table.ajax.reload();
-        $action.$modal.trigger('destroy.plone-modal.patterns');
-      }
-    },
-  });
-
   // triggero l'apertura delle modal
   $('#users-export > a').on('click', function(){
     $.ajax({
       url: "exportUsersListAsFile"
     })
     .done(function(data){
-
       var blob = new Blob(["\ufeff", data]);
       var url = URL.createObjectURL(blob);
 
@@ -50,7 +23,6 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
-
     });
   });
 
@@ -90,6 +62,32 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
   });
 
   $(document).ready(function() {
+
+    new Modal($('#button-add-user'), {
+      backdropOptions: {
+        closeOnEsc: false,
+        closeOnClick: false
+      },
+      actionOptions: {
+        onSuccess: function($action, response, options){
+          table.ajax.reload();
+          $action.$modal.trigger('destroy.plone-modal.patterns');
+        }
+      },
+    });
+    new Modal($('#button-import-users'), {
+      backdropOptions: {
+        closeOnEsc: false,
+        closeOnClick: false
+      },
+      actionOptions: {
+        onSuccess: function($action, response, options){
+          table.ajax.reload();
+          $action.$modal.trigger('destroy.plone-modal.patterns');
+        }
+      },
+    });
+
     // inizializzazione datatables
     table = $('#users-table').DataTable({
       "ajax": {

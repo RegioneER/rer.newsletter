@@ -11,30 +11,27 @@
       <metal:block metal:fill-slot="javascript_head_slot">
       </metal:block>
 
+      <metal:content-core fill-slot="content-title">
+        <a class="link-parent" i18n:translate="come_back" href=""
+           tal:attributes="href python:context.absolute_url();">
+          Come Back
+        </a>
+        <h1 tal:content="context/title">Title</h1>
+      </metal:content-core>
+      <metal:content-core fill-slot="content-description">
+      </metal:content-core>
       <body>
-        <metal:main fill-slot="main">
-          <metal:main-macro define-macro="main">
-
-            <a class="link-parent" i18n:translate="come_back" href=""
-               tal:attributes="href python:context.absolute_url();">
-              Come Back
-            </a>
-
-            <div id="content-core">
-
-              <table id="message-table" class="display" cellspacing="0" width="100%">
-                <thead>
-                  <tr>
-                    <th>Message</th>
-                    <th>Active Users</th>
-                    <th>Send Date</th>
-                  </tr>
-                </thead>
-              </table>
-
-            </div>
-          </metal:main-macro>
-        </metal:main>
+        <metal:content-core fill-slot="content-core">
+          <table id="message-table" class="display" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th>Message</th>
+                <th>Active Users</th>
+                <th>Send Date</th>
+              </tr>
+            </thead>
+          </table>
+        </metal:content-core>
       </body>
 
 </html>

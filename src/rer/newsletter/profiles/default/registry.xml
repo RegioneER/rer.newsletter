@@ -20,23 +20,6 @@
           </records>
 
 
-          <records prefix="plone.resources/subscribemodal"
-                  interface='Products.CMFPlone.interfaces.IResourceRegistry'>
-            <value key="js">++plone++rer.newsletter/scripts/subscribemodal.js</value>
-          </records>
-          <records prefix="plone.bundles/subscribemodal"
-                  interface='Products.CMFPlone.interfaces.IBundleRegistry'>
-            <value key="resources" purge="false">
-              <element>subscribemodal</element>
-            </value>
-            <value key="enabled">False</value>
-            <value key="jscompilation">++plone++rer.newsletter/scripts/subscribemodal.js</value>
-            <value key="last_compilation">2019-11-26 00:00:00</value>
-            <value key="compile">True</value>
-            <value key="depends">plone</value>
-          </records>
-
-
           <records prefix="plone.resources/datatables"
                   interface='Products.CMFPlone.interfaces.IResourceRegistry'>
             <value key="js">++plone++rer.newsletter/scripts/manageusers.js</value>

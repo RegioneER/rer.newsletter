@@ -17,12 +17,8 @@
                       disable_column_two python:request.set('disable_plone.rightcolumn',1);"/>
 
       <body>
-        <metal:main fill-slot="main">
-          <metal:main-macro define-macro="main">
-            <div id="content-core">
-            </div>
-          </metal:main-macro>
-        </metal:main>
+        <metal:content-core fill-slot="content-core">
+        </metal:content-core>
       </body>
 
 </html>

@@ -11,25 +11,22 @@
           tal:define="disable_column_one python:request.set('disable_plone.leftcolumn',1);
                       disable_column_two python:request.set('disable_plone.rightcolumn',1);"/>
 
-        <body>
-          <metal:main fill-slot="main">
-            <metal:main-macro define-macro="main">
-
-              <a class="link-parent" i18n:translate="come_back" href=""
-                 tal:attributes="href python:context.absolute_url();">
-                Come Back
-              </a>
-
-              <p>Stai per inviare questo messaggio a
-                <span tal:define="active_users view/form_instance/getUserNumber"
-                      tal:condition="active_users"
-                      tal:replace="active_users">
-                  n
-                </span>
-                persone, sei sicuro ?</p>
-              <div id="content-core" tal:content="structure view/contents" />
-            </metal:main-macro>
-          </metal:main>
-        </body>
-
+      <metal:content-core fill-slot="content-title">
+        <a class="link-parent" i18n:translate="come_back" href=""
+           tal:attributes="href python:context.absolute_url();">
+          Come Back
+        </a>
+        <h1 tal:content="context/title">Title</h1>
+      </metal:content-core>
+      <body>
+        <metal:content-core fill-slot="content-core">
+          <p>Stai per inviare questo messaggio a
+            <span tal:define="active_users view/form_instance/getUserNumber"
+                  tal:replace="active_users">
+              n
+            </span>
+            persone, sei sicuro ?</p>
+          <div id="content-core" tal:content="structure view/contents" />
+        </metal:content-core>
+      </body>
 </html>
