@@ -35,8 +35,9 @@
 
           <div style="margin-bottom: 2%;">
             <span id="users-import">
-              <a href="users_import" class="plone-btn plone-btn-primary pat-plone-modal"
-                      data-pat-plone-modal="width: '770px',height: '430px'," i18n:translate="import_user_list">
+              <!-- <a href="users_import" class="plone-btn plone-btn-primary pat-plone-modal"
+                      data-pat-plone-modal="width: '770px',height: '430px'," i18n:translate="import_user_list"> -->
+              <a href="users_import" class="plone-btn plone-btn-primary" id="button-import-users" i18n:translate="import_user_list">
                 Import Users List
               </a>
             </span>
@@ -49,8 +50,7 @@
             </span>
 
             <span id="add-user">
-              <a href="adduser_channel" class="plone-btn plone-btn-large plone-btn-primary pat-plone-modal"
-                      data-pat-plone-modal="width: '770px',height: '430px'," i18n:translate="add_user">
+              <a href="adduser_channel" class="plone-btn plone-btn-large plone-btn-primary" id="button-add-user" i18n:translate="add_user">
                 Add User
               </a>
             </span>
