@@ -152,6 +152,7 @@
     permission="zope2.View"
     class=".channel.channelhistory.ChannelHistory">
        <browser:page name="getMessageSentDetails" attribute="getMessageSentDetails" />
+       <browser:page name="deleteMessageFromHistory" attribute="deleteMessageFromHistory" />
   </browser:pages>
 
   <!-- Views for mail template -->
@@ -180,6 +181,13 @@
     for="*"
     name="deleteuserconfirm_template"
     template="channel/templates/mail_templates/delete_user_confirm.pt"
+    permission="zope2.View"
+    />
+
+  <browser:page
+    for="*"
+    name="unsubscribe_channel_template"
+    template="channel/templates/mail_templates/unsubscribe_channel.pt"
     permission="zope2.View"
     />
 
@@ -218,7 +226,7 @@
       manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
       class=".message.messageviewlet.MessageManagerViewlet"
       layer="rer.newsletter.interfaces.IRerNewsletterLayer"
-      permission="rer.newsletter.ManageNewsletter"
+      permission="zope2.View"
       template="message/templates/messageviewlet.pt"
       />
 

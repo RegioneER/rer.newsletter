@@ -6,10 +6,13 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
       portalMessage = $('.portalMessage.error');
 
       $('div.plone-modal-body').find( portalMessage ).each(function (){
-        var email = $('#form-widgets-email').val();
-        var href = $('.redirect').attr('href')
-        $('.redirect').attr('href', href + '?email=' + email)
-        $('.redirect').show();
+        // trovare un metodo migliore
+        if ($(portalMessage).text().search("Sei già iscritto a questa newsletter, oppure non hai ancora confermato l'iscrizione") > -1){
+          var email = $('#form-widgets-email').val();
+          var href = $('.redirect').attr('href')
+          $('.redirect').attr('href', href + '?email=' + email)
+          $('.redirect').show();
+        }
       });
       $('div.plone-modal-body').find( '.portalMessage' ).each(function (){
         $('.content_container').hide()

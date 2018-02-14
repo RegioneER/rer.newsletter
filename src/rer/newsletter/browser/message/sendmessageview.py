@@ -49,36 +49,50 @@ class SendMessageView(form.Form):
     def handleSave(self, action):
         channel = self._getNewsletter()
 
+        unsubscribe_footer_template = self.context.restrictedTraverse(
+            '@@unsubscribe_channel_template'
+        )
+        parameters = {
+            'portal_name': api.portal.get().title,
+            'unsubscribe_link': self.context.aq_parent.absolute_url()
+            + '/@@unsubscribe',
+        }
+        unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
+
         api_channel = getUtility(IChannelUtility)
         api_channel.sendMessage(
-            channel.id_channel, self.context
+            channel.id_channel, self.context, unsubscribe_footer_text
         )
 
         # i dettagli sull'invio del messaggio per lo storico
         annotations = IAnnotations(self.context)
         if KEY not in annotations.keys():
-            active_users, status = api_channel.getNumActiveSubscribers(
-                channel.id_channel
+            annotations[KEY] = PersistentDict({})
+
+        annotations = annotations[KEY]
+        now = datetime.today().strftime('%d/%m/%Y %H:%M:%S')
+        active_users, status = api_channel.getNumActiveSubscribers(
+            channel.id_channel
+        )
+
+        if status != OK:
+            logger.exception(
+                'Problems...{0}'.format(status),
             )
 
-            if status != OK:
-                logger.exception(
-                    'Problems...{0}'.format(status),
-                )
-
-            annotations[KEY] = PersistentDict({
-                'num_active_subscribers': active_users,
-                'send_date': datetime.today().strftime(
-                    '%d/%m/%Y %H:%M:%S'
-                ),
-            })
+        annotations[self.context.title + str(len(annotations.keys()))] = {
+            'num_active_subscribers': active_users,
+            'send_date': now,
+        }
 
         # transition
         api.content.transition(obj=self.context, transition='send')
 
         self.request.response.redirect('view')
         api.portal.show_message(
-            message=_(u'message_send', default='Message send'),
+            message=_(u'message_send', default=u'Il messaggio è stato '
+                      'inviato a {0} iscritti'.format(
+                          active_users)),
             request=self.request,
             type=u'info'
         )

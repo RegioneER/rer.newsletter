@@ -42,10 +42,10 @@
           </span>
 
           <span id="users-export">
-            <a href="#" class="plone-btn plone-btn-primary"
+            <span class="plone-btn plone-btn-primary"
                i18n:translate="export_user_list">
               Export Users List
-            </a>
+            </span>
           </span>
 
           <span id="add-user">
@@ -55,10 +55,10 @@
           </span>
 
           <span id="delete-user">
-            <a href="#" class="plone-btn plone-btn-primary"
+            <span class="plone-btn plone-btn-primary"
                i18n:translate="delete_user">
               Delete User
-            </a>
+            </span>
           </span>
         </div>
 

@@ -235,7 +235,7 @@ msgstr "Utente aggiunto con successo."
 #. Default: "User Deleted."
 #: ./browser/channel/users/confirmaction.py:94
 msgid "generic_delete_message_success"
-msgstr "Utente rimosso con successo."
+msgstr "Ti sei cancellato dalla newsletter"
 
 #. Default: "Unhandled problem with add of channel."
 #: ./browser/channel/add.py:42
@@ -280,7 +280,7 @@ msgstr "Anteprima del messaggio"
 #. Default: "Message send"
 #: ./browser/message/sendmessageview.py:63
 msgid "message_send"
-msgstr "Messaggio inviato con successo."
+msgstr ""
 
 #. Default: "state:"
 #: ./browser/channel/templates/listing.pt:99
@@ -407,17 +407,17 @@ msgstr "File di utenti"
 #. Default: "Unsubscribe"
 #: ./browser/channel/unsubscribe.py:48
 msgid "unsubscribe_button"
-msgstr "Disiscriviti"
+msgstr "Cancellami"
 
 #. Default: "Mail for unsubscribe from channel"
 #: ./browser/channel/unsubscribe.py:24
 msgid "unsubscribe_email_description"
-msgstr "Email per la disiscrizione dal canale."
+msgstr ""
 
 #. Default: "Unsubscription Email"
 #: ./browser/channel/unsubscribe.py:23
 msgid "unsubscribe_email_title"
-msgstr "Email di disiscrizione"
+msgstr "Inserisci la tua e-mail per cancellarti dal canale"
 
 #. Default: "User already subscribed."
 #: ./browser/channel/subscribe.py:163

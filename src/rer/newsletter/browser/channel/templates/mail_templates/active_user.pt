@@ -7,6 +7,7 @@
 >
 <span tal:replace="structure header" />
 <style tal:content="style" ></style>
+<br />
 <p>
   Per confermare la tua richiesta di iscrizione a Newsletter ${title}, è necessario collegarsi entro 48 ore al seguente link:
   <br />
@@ -16,5 +17,6 @@
   <br />
   Redazione del portale ${portal_name}
 </p>
+<br />
 <span tal:replace="structure footer" />
 </tal:root>

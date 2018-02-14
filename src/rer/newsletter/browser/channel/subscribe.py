@@ -72,10 +72,6 @@ class SubscribeForm(form.SchemaForm):
             name='recaptcha'
         )
         if not captcha.verify():
-            # raise WidgetActionExecutionError(
-            #     'captcha',
-            #     Invalid(_(u'Wrong captcha.'))
-            # )
             api.portal.show_message(
                 message=_(u'message_wrong_captcha',
                           default=u'Captcha non inserito correttamente.'),
@@ -139,7 +135,8 @@ class SubscribeForm(form.SchemaForm):
                 mto=email,
                 mfrom=response_email,
                 subject='Conferma la tua iscrizione a Newsletter '
-                + self.context.title,
+                + self.context.title + ' del portale '
+                + api.portal.get().title,
                 charset='utf-8',
                 msg_type='text/html',
                 immediate=True

@@ -46,9 +46,8 @@
    <permission-role>Site Administrator</permission-role>
   </permission-map>
   <permission-map name="rer.newsletter: Add Message" acquired="True">
-   <permission-role>Contributor</permission-role>
+   <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>Manager Newsletter</permission-role>
    <permission-role>Site Administrator</permission-role>
   </permission-map>
   

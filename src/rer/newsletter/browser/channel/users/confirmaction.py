@@ -25,7 +25,9 @@ class ConfirmAction(BrowserView):
         parameters = {
             'header': self.context.header,
             'footer': self.context.footer,
-            'style': self.context.css_style
+            'style': self.context.css_style,
+            'portal_name': api.portal.get().title,
+            'channel_name': self.context.title,
         }
 
         mail_text = mail_template(**parameters)

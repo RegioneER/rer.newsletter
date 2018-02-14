@@ -5,8 +5,10 @@
 >
 <span tal:replace="structure header" />
 <style tal:content="style" ></style>
+<br />
 <p>
   Clicca per confermare la cancellazione <a href="${activationUrl}">${activationUrl}</a>
 </p>
+<br />
 <span tal:replace="structure footer" />
 </tal:root>

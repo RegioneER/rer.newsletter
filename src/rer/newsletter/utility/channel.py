@@ -106,13 +106,15 @@ class IChannelUtility(Interface):
         Raises:
         """
 
-    def sendMessage(channel, message):
+    def sendMessage(channel, message, unsubscribe_footer=None):
         """
         Send message
 
         Args:
             channel (str): channel id
             message (datastream): message
+            unsubscribe_footer (template): template for unsubscribe link to
+                                           newsletter
 
         Returns:
             int: OK (1) if succesful,

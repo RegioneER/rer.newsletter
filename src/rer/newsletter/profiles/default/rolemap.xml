@@ -7,20 +7,18 @@
     <permission name="rer.newsletter: Add Channel" acquire="True">
       <role name="Manager" />
       <role name="Site Administrator" />
-      <role name="Manager Newsletter"/>
     </permission>
     <permission name="rer.newsletter: Add Message" acquire="False">
     </permission>
     <permission name="rer.newsletter: Manage Newsletter" acquire="True">
       <role name="Manager" />
       <role name="Site Administrator" />
-      <role name="Manager Newsletter"/>
+      <role name="Manager Newsletter" />
     </permission>
     <permission name="rer.newsletter: Send Newsletter" acquire="True">
       <role name="Manager" />
       <role name="Site Administrator" />
       <role name="Editor" />
-      <role name="Manager Newsletter"/>
     </permission>
     <permission name="Add portal content" acquire="True">
       <role name="Manager Newsletter" />

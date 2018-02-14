@@ -4,8 +4,10 @@
 >
 <span tal:replace="structure header" />
 <style tal:content="style" ></style>
+<br />
 <p>
   Attivazione avvenuta con successo.
 </p>
+<br />
 <span tal:replace="structure footer" />
 </tal:root>

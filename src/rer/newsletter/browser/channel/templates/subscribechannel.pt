@@ -27,7 +27,7 @@
                     style="display: none;"
                     class="redirect"
                     tal:attributes="href python:context.absolute_url() + '/@@unsubscribe';">
-                    Sei già iscritto ? Vuoi disinscriverti da questa newsletter ?
+                    Clicca questo link per cancellarti dalla newsletter
                  </a>
               </div>
 
