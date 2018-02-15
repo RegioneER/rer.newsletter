@@ -1,8 +1,8 @@
 <div id="manage-message" i18n:domain="rer.newsletter">
   <div class="messages_sent_details" tal:define="messages view/messageSentDetails" tal:repeat="message messages">
-    <div>
+    <!-- <div>
       <p>Il messaggio è stato inviato a ${message/num_active_subscribers} iscritti il ${message/send_date}.</p>
-    </div>
+    </div> -->
   </div>
   <div style="margin-bottom: 2%;">
     <span id="message-preview">
