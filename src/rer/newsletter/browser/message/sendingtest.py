@@ -58,6 +58,16 @@ class MessageSendingTest(form.Form):
                     return
             message_obj = self.context
 
+            unsubscribe_footer_template = self.context.restrictedTraverse(
+                '@@unsubscribe_channel_template'
+            )
+            parameters = {
+                'portal_name': api.portal.get().title,
+                'unsubscribe_link': ns_obj.absolute_url()
+                + '/@@unsubscribe',
+            }
+            unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
+
             body = u''
             body += ns_obj.header.output if ns_obj.header else u''
             body += u'<style>{css}</style>'.format(
@@ -65,6 +75,7 @@ class MessageSendingTest(form.Form):
             )
             body += message_obj.text.output if message_obj.text else u''
             body += ns_obj.footer.output if ns_obj.footer else u''
+            body += unsubscribe_footer_text if unsubscribe_footer_text else u''
 
             # passo la mail per il transform
             portal = api.portal.get()

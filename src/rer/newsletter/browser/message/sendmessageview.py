@@ -52,9 +52,16 @@ class SendMessageView(form.Form):
         unsubscribe_footer_template = self.context.restrictedTraverse(
             '@@unsubscribe_channel_template'
         )
+
+        channel = None
+        for obj in self.context.aq_chain:
+            if isinstance(obj, Channel):
+                channel = obj
+                break
+
         parameters = {
             'portal_name': api.portal.get().title,
-            'unsubscribe_link': self.context.aq_parent.absolute_url()
+            'unsubscribe_link': channel.absolute_url()
             + '/@@unsubscribe',
         }
         unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
