@@ -8,7 +8,7 @@
 <span tal:replace="structure header" />
 <style tal:content="style" ></style>
 <br />
-<p>
+<p class="message_core">
   Per confermare la tua richiesta di iscrizione a Newsletter ${title}, è necessario collegarsi entro 48 ore al seguente link:
   <br />
   <a href="${activationUrl}">${activationUrl}</a>

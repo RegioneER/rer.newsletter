@@ -5,7 +5,7 @@
 <span tal:replace="structure header" />
 <style tal:content="style" ></style>
 <br />
-<p>
+<p class="message_core">
   Attivazione avvenuta con successo.
 </p>
 <br />

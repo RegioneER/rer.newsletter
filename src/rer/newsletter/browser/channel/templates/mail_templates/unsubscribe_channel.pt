@@ -2,7 +2,9 @@
                   unsubscribe_link python:options['unsubscribe_link'];
 ">
   <br />
-  Hai ricevuto questa e-mail poiché sei registrato a ${portal_name}.
+    <p class="message_core">
+    Hai ricevuto questa e-mail poiché sei registrato a ${portal_name}.
+    </p>
   <br />
   <a href="" tal:attributes="href unsubscribe_link">Clicca questo link per cancellare l'iscrizione.</a>
 </tal:root>

@@ -6,7 +6,7 @@
 <span tal:replace="structure header" />
 <style tal:content="style" ></style>
 <br />
-<p>
+<p class="message_core">
   Clicca per confermare la cancellazione <a href="${activationUrl}">${activationUrl}</a>
 </p>
 <br />

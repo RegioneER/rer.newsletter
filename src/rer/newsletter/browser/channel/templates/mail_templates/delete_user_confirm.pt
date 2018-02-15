@@ -7,7 +7,7 @@
 <span tal:replace="structure header" />
 <style tal:content="style" ></style>
 <br />
-<p>
+<p class="message_core">
   Ti sei cancellato dalla newsletter ${channel_name} del portale ${portal_name}
 </p>
 <br />
