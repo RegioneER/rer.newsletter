@@ -3,7 +3,7 @@
          i18n:domain="rer.newsletter">
   <role
       id="Manager Newsletter"
-      title="Manager Newsletter"
+      title="Gestore newsletter"
       i18n:attributes="title"
       />
 </sharing>

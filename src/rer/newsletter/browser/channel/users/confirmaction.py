@@ -77,7 +77,9 @@ class ConfirmAction(BrowserView):
                 )
                 status = _(
                     u'generic_activate_message_success',
-                    default=u'User Activated.'
+                    default=u'Ti sei iscritto alla newsletter '
+                    + self.context.title + ' del portale ' +
+                    api.portal.get().title
                 )
 
         elif action == u'unsubscribe':

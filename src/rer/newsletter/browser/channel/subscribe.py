@@ -134,7 +134,7 @@ class SubscribeForm(form.SchemaForm):
                 mail_text.getData(),
                 mto=email,
                 mfrom=response_email,
-                subject='Conferma la tua iscrizione a Newsletter '
+                subject='Conferma la tua iscrizione alla Newsletter '
                 + self.context.title + ' del portale '
                 + api.portal.get().title,
                 charset='utf-8',

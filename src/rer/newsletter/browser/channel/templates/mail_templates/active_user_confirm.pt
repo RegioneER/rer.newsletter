@@ -1,12 +1,13 @@
 <tal:root define="header python:options['header'].output;
                   footer python:options['footer'].output;
-                  style python:options['style']"
+                  style python:options['style'];
+                  portal_name python:options['portal_name'];"
 >
 <span tal:replace="structure header" />
 <style tal:content="style" ></style>
 <br />
 <p class="message_core">
-  Attivazione avvenuta con successo.
+  La tua iscrizione alla newsletter ${portal_name} è stata effettuata con successo.
 </p>
 <br />
 <span tal:replace="structure footer" />

@@ -225,7 +225,7 @@ msgstr "Foooter del messagio"
 #. Default: "User Activated."
 #: ./browser/channel/users/confirmaction.py:76
 msgid "generic_activate_message_success"
-msgstr "Iscrizione confermata correttamente."
+msgstr ""
 
 #. Default: "User Added."
 #: ./browser/channel/users/add.py:48

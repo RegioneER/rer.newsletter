@@ -29,6 +29,10 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
       },
       content: '#content',
       loadLinksWithinModal: true,
+      templateOptions: {
+        classBodyName: 'plone-modal-body subscribe_modal',
+        classFooterName: 'plone-modal-footer subscribe_modal',
+      }
     });
     modal.on('after-render', subscribe_modal);
   }
