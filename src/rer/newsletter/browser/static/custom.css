@@ -8,10 +8,6 @@ div.informativa{
   overflow: auto;
 }
 
-.subscribe_modal #content{
-  margin-bottom: 0px;
-}
-
 .subscribe_modal input[value=Iscriviti]{
   font-size: 20px;
 }
