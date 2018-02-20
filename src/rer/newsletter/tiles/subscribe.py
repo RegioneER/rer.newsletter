@@ -6,7 +6,7 @@ from plone.tiles import Tile
 class SubscribeTile(Tile):
 
     def getPortletClass(self):
-        classes = 'portlet NewsletterSubscribePortlet'
+        classes = 'tile tileNewsletter'
         if self.data.get('css_class', None):
             classes += ' {0}'.format(self.data.get('css_class'))
         return classes
