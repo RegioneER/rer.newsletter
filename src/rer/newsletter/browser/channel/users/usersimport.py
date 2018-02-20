@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone import api
-from plone.namedfile.field import NamedFile
+from plone.namedfile.field import NamedBlobFile
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.utility.channel import IChannelUtility
@@ -14,15 +14,16 @@ from zope.component import getUtility
 from zope.interface import Interface
 
 import csv
+import re
 import StringIO
 
 
 class IUsersImport(Interface):
 
-    userListFile = NamedFile(
+    userListFile = NamedBlobFile(
         title=_(u'title_users_list_file', default=u'Users List File'),
         description=_(u'description_file', default=u'File must be a CSV'),
-        required=True
+        required=True,
     )
 
     # se questo e ceccato allora i dati non vengono inseriti
@@ -63,6 +64,18 @@ class IUsersImport(Interface):
     )
 
 
+def _mailValidation(mail):
+    # valido la mail
+    match = re.match(
+        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+'
+        '(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+        mail
+    )
+    if match is None:
+        return False
+    return True
+
+
 class UsersImport(form.Form):
 
     ignoreContext = True
@@ -92,7 +105,9 @@ class UsersImport(form.Form):
 
         usersList = []
         for row in reader:
-            usersList.append(row[index].decode('utf-8-sig'))
+            mail = row[index].decode('utf-8-sig')
+            if _mailValidation(mail):
+                usersList.append(row[index].decode('utf-8-sig'))
 
         return usersList
 

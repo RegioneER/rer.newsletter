@@ -5,8 +5,9 @@
  <permission>Delete objects</permission>
  <permission>Modify portal content</permission>
  <permission>Request review</permission>
- <permission>View</permission>
  <permission>Review portal content</permission>
+ <permission>View</permission>
+ <permission>rer.newsletter: Add Message</permission>
  <state state_id="private" title="Private" >
   <description>Can only be seen and edited by the owner.</description>
   <exit-transition transition_id="publish" />
@@ -44,6 +45,11 @@
    <permission-role>Reader</permission-role>
    <permission-role>Site Administrator</permission-role>
   </permission-map>
+  <permission-map name="rer.newsletter: Add Message" acquired="True">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+   <permission-role>Site Administrator</permission-role>
+  </permission-map>
   
   
  </state>
@@ -66,8 +72,17 @@
   <permission-map name="Request review" acquired="True">
    <permission-role>Manager Newsletter</permission-role>
   </permission-map>
+  <permission-map name="Review portal content" acquired="True">
+   
+  </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
+  </permission-map>
+  <permission-map name="rer.newsletter: Add Message" acquired="True">
+   <permission-role>Contributor</permission-role>
+   <permission-role>Manager</permission-role>
+   <permission-role>Manager Newsletter</permission-role>
+   <permission-role>Site Administrator</permission-role>
   </permission-map>
   
   

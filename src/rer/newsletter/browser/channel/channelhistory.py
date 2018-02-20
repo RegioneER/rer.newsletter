@@ -27,22 +27,45 @@ class ChannelHistory(BrowserView):
             )
 
         activeMessageList = []
-        count = 0
         if messageList:
             for message in messageList:
                 obj = message.getObject()
                 if api.content.get_state(obj=obj) == 'sent':
                     annotations = IAnnotations(obj)
                     if KEY in annotations.keys():
-                        au = annotations[KEY]['num_active_subscribers']
-                        sd = annotations[KEY]['send_date']
+                        count = 0
+                        for k, v in annotations[KEY].iteritems():
+                            au = v['num_active_subscribers']
+                            sd = v['send_date']
 
-                        element = {}
-                        element['id'] = count
-                        element['message'] = obj.title
-                        element['active_users'] = au
-                        element['send_date'] = sd
-                        count += 1
-                        activeMessageList.append(element)
+                            element = {}
+                            element['id'] = count
+                            element['uid'] = obj.title + str(count)
+                            element['message'] = obj.title
+                            element['active_users'] = au
+                            element['send_date'] = sd
+                            count += 1
+                            activeMessageList.append(element)
 
         return json.dumps(activeMessageList)
+
+    def deleteMessageFromHistory(self):
+        message_history = self.request.get('message_history')
+
+        # recupero tutti i messaggi del canale
+        messages = api.content.find(
+            context=self.context,
+            portal_type='Message',
+        )
+        for message in messages:
+            obj = message.getObject()
+            annotations = IAnnotations(obj)
+            if KEY in annotations.keys():
+                annotations = annotations[KEY]
+                for k in annotations.keys():
+                    if message_history == k:
+                        del annotations[k]
+                        break
+        response = {}
+        response['ok'] = True
+        return json.dumps(response)

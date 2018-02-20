@@ -6,7 +6,6 @@ from plone.directives import form
 from plone.formwidget.recaptcha.widget import ReCaptchaFieldWidget
 from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
-from Products.CMFPlone.resources import add_bundle_on_request
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
@@ -41,20 +40,21 @@ class ISubscribeForm(Interface):
 class SubscribeForm(form.SchemaForm):
 
     ignoreContext = True
-    # fields = field.Fields(ISubscribeForm)
     schema = ISubscribeForm
 
     def __init__(self, context, request):
         self.context = context
         self.request = request
 
-        add_bundle_on_request(self.request, 'unsubscribe')
-
     def isVisible(self):
         if self.context.is_subscribable:
             return True
         else:
             return False
+
+    def getChannelPrivacyPolicy(self):
+        if self.context.privacy:
+            return self.context.privacy.output
 
     def update(self):
         super(SubscribeForm, self).update()
@@ -72,10 +72,6 @@ class SubscribeForm(form.SchemaForm):
             name='recaptcha'
         )
         if not captcha.verify():
-            # raise WidgetActionExecutionError(
-            #     'captcha',
-            #     Invalid(_(u'Wrong captcha.'))
-            # )
             api.portal.show_message(
                 message=_(u'message_wrong_captcha',
                           default=u'Captcha non inserito correttamente.'),
@@ -138,8 +134,9 @@ class SubscribeForm(form.SchemaForm):
                 mail_text.getData(),
                 mto=email,
                 mfrom=response_email,
-                subject='Conferma la tua iscrizione a Newsletter '
-                + self.context.title,
+                subject='Conferma la tua iscrizione alla Newsletter '
+                + self.context.title + ' del portale '
+                + api.portal.get().title,
                 charset='utf-8',
                 msg_type='text/html',
                 immediate=True
@@ -148,7 +145,8 @@ class SubscribeForm(form.SchemaForm):
             api.portal.show_message(
                 message=_(
                     u'status_user_subscribed',
-                    default=u'Utente iscritto. Mail di conferma inviata.'
+                    default=u'Riceverai una e-mail per confermare '
+                    'l\'iscrizione alla newsletter.'
                 ),
                 request=self.request,
                 type=u'info'
@@ -161,7 +159,9 @@ class SubscribeForm(form.SchemaForm):
                 )
                 api.portal.show_message(
                     message=_(u'user_already_subscribed',
-                              default=u'User already subscribed.'),
+                              default=u'Sei già iscritto a questa newsletter, '
+                              'oppure non hai ancora'
+                              ' confermato l\'iscrizione.'),
                     request=self.request,
                     type=u'error'
                 )

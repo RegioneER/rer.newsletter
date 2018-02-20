@@ -23,7 +23,7 @@ class IUnsubscribeForm(Interface):
         title=_(u'unsubscribe_email_title', default=u'Unsubscription Email'),
         description=_(
             u'unsubscribe_email_description',
-            default=u'Mail for unsubscribe from channel'
+            default=u''
         ),
         required=True,
     )
@@ -39,6 +39,9 @@ class UnsubscribeForm(form.Form):
             return True
         else:
             return False
+
+    def getChannelPrivacyPolicy(self):
+        return False
 
     def updateWidgets(self):
         super(UnsubscribeForm, self).updateWidgets()
@@ -99,7 +102,8 @@ class UnsubscribeForm(form.Form):
                 mail_text.getData(),
                 mto=email,
                 mfrom=response_email,
-                subject='Email di disattivazione',
+                subject='Conferma la cancellazione dalla newsletter ' +
+                self.context.title + ' del portale ' + api.portal.get().title,
                 charset='utf-8',
                 msg_type='text/html',
                 immediate=True
@@ -108,7 +112,8 @@ class UnsubscribeForm(form.Form):
             api.portal.show_message(
                 message=_(
                     u'user_unsubscribe_success',
-                    default=u'Mail di conferma cancellazione inviata.'
+                    default=u'Info Riceverai una e-mail per confermare'
+                    ' la cancellazione dalla newsletter'
                 ),
                 request=self.request,
                 type=u'info'
@@ -126,5 +131,5 @@ class UnsubscribeForm(form.Form):
 
 unsubscribe_view = wrap_form(
     UnsubscribeForm,
-    index=ViewPageTemplateFile('templates/subscribechannel.pt')
+    index=ViewPageTemplateFile('templates/unsubscribechannel.pt')
 )

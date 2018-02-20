@@ -107,6 +107,7 @@ class BaseHandler(object):
 
         # attivo l'utente
         count = 0
+        element_id = None
         for user in annotations:
             if annotations[user]['token'] == secret:
                 if annotations[user]['is_active']:
@@ -240,7 +241,7 @@ class BaseHandler(object):
         if user in annotations.keys():
             annotations[user] = {
                 'email': user,
-                'is_active': True,
+                'is_active': annotations[user]['is_active'],
                 'token': secret,
                 'creation_date': datetime.today().strftime(
                     '%d/%m/%Y %H:%M:%S'
@@ -321,7 +322,7 @@ class BaseHandler(object):
 
         return OK, uuid_activation
 
-    def _getMessage(self, channel, message):
+    def _getMessage(self, channel, message, unsubscribe_footer):
         logger.debug('getMessage %s %s', channel, message.title)
 
         body = u''
@@ -329,6 +330,7 @@ class BaseHandler(object):
         body += u'<style>{css}</style>'.format(css=channel.css_style or u'')
         body += message.text.output if message.text else u''
         body += channel.footer.output if channel.footer else u''
+        body += unsubscribe_footer if unsubscribe_footer else u''
 
         # passo la mail per il transform
         portal = api.portal.get()
@@ -336,7 +338,7 @@ class BaseHandler(object):
 
         return body
 
-    def sendMessage(self, channel, message):
+    def sendMessage(self, channel, message, unsubscribe_footer=None):
         logger.debug('sendMessage %s %s', channel, message.title)
         nl = self._api(channel)
         annotations, channel_obj = self._storage(channel)
@@ -344,7 +346,7 @@ class BaseHandler(object):
             return INVALID_CHANNEL
 
         # costruisco il messaggio
-        body = self._getMessage(nl, message)
+        body = self._getMessage(nl, message, unsubscribe_footer)
 
         # invio la mail ad ogni utente
         mail_host = api.portal.get_tool(name='MailHost')

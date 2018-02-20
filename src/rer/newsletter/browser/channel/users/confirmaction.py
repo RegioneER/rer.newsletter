@@ -25,7 +25,9 @@ class ConfirmAction(BrowserView):
         parameters = {
             'header': self.context.header,
             'footer': self.context.footer,
-            'style': self.context.css_style
+            'style': self.context.css_style,
+            'portal_name': api.portal.get().title,
+            'channel_name': self.context.title,
         }
 
         mail_text = mail_template(**parameters)
@@ -75,7 +77,9 @@ class ConfirmAction(BrowserView):
                 )
                 status = _(
                     u'generic_activate_message_success',
-                    default=u'User Activated.'
+                    default=u'Ti sei iscritto alla newsletter '
+                    + self.context.title + ' del portale ' +
+                    api.portal.get().title
                 )
 
         elif action == u'unsubscribe':

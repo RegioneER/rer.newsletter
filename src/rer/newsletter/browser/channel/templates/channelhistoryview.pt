@@ -11,30 +11,41 @@
       <metal:block metal:fill-slot="javascript_head_slot">
       </metal:block>
 
+      <metal:content-core fill-slot="content-title">
+        <h1>Gestione dello storico dei messaggi</h1>
+        <a class="link-parent" i18n:translate="come_back" href=""
+           tal:attributes="href python:context.absolute_url();">
+          Come Back
+        </a>
+      </metal:content-core>
+      <metal:content-core fill-slot="content-description">
+      </metal:content-core>
       <body>
-        <metal:main fill-slot="main">
-          <metal:main-macro define-macro="main">
+        <metal:content-core fill-slot="content-core">
+          <div class="portalMessage" style="display:none;">
+            <strong></strong>
+          </div>
 
-            <a class="link-parent" i18n:translate="come_back" href=""
-               tal:attributes="href python:context.absolute_url();">
-              Come Back
-            </a>
+          <div style="margin-bottom: 2%;">
+            <span id="delete-message-sent">
+              <span class="plone-btn plone-btn-primary"
+                 i18n:translate="delete_message_sent">
+                Cancella messaggio inviato
+              </span>
+            </span>
+          </div>
 
-            <div id="content-core">
-
-              <table id="message-table" class="display" cellspacing="0" width="100%">
-                <thead>
-                  <tr>
-                    <th>Message</th>
-                    <th>Active Users</th>
-                    <th>Send Date</th>
-                  </tr>
-                </thead>
-              </table>
-
-            </div>
-          </metal:main-macro>
-        </metal:main>
+          <table id="message-table" class="display" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th>uid</th>
+                <th>Messaggio</th>
+                <th>Numero di utenti attivi</th>
+                <th>Data di invio</th>
+              </tr>
+            </thead>
+          </table>
+        </metal:content-core>
       </body>
 
 </html>

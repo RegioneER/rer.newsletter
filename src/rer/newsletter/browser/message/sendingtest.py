@@ -5,11 +5,14 @@ from plone import schema
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
+from rer.newsletter.content.channel import Channel
 from smtplib import SMTPRecipientsRefused
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 from zope.interface import Interface
+
+import re
 
 
 class IMessageSendingTest(Interface):
@@ -40,11 +43,30 @@ class MessageSendingTest(form.Form):
         try:
 
             # prendo l'email dai parametri
+            emails = []
             email = data['email']
+            emails = re.compile('[,|;]').split(email)
 
-            # monto il messaggio da mandare
-            ns_obj = self.context.aq_parent
+            ns_obj = None
+            for obj in self.context.aq_chain:
+                if isinstance(obj, Channel):
+                    ns_obj = obj
+                    break
+            else:
+                if not ns_obj:
+                    # non riesco a recuperare le info di un channel
+                    return
             message_obj = self.context
+
+            unsubscribe_footer_template = self.context.restrictedTraverse(
+                '@@unsubscribe_channel_template'
+            )
+            parameters = {
+                'portal_name': api.portal.get().title,
+                'unsubscribe_link': ns_obj.absolute_url()
+                + '/@@unsubscribe',
+            }
+            unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
 
             body = u''
             body += ns_obj.header.output if ns_obj.header else u''
@@ -53,23 +75,31 @@ class MessageSendingTest(form.Form):
             )
             body += message_obj.text.output if message_obj.text else u''
             body += ns_obj.footer.output if ns_obj.footer else u''
+            body += unsubscribe_footer_text if unsubscribe_footer_text else u''
 
             # passo la mail per il transform
             portal = api.portal.get()
             body = portal.portal_transforms.convertTo('text/mail', body)
 
+            response_email = None
+            if ns_obj.response_email:
+                response_email = ns_obj.response_email
+            else:
+                response_email = u'noreply@rer.it'
+
             # per mandare la mail non passo per l'utility
             # in ogni caso questa mail viene mandata da plone
             mailHost = api.portal.get_tool(name='MailHost')
-            mailHost.send(
-                body.getData(),
-                mto=email,
-                mfrom='noreply@rer.it',
-                subject='Messaggio di prova',
-                charset='utf-8',
-                msg_type='text/html',
-                immediate=True
-            )
+            for email in emails:
+                mailHost.send(
+                    body.getData(),
+                    mto=email.strip(),
+                    mfrom=response_email,
+                    subject='Messaggio di prova',
+                    charset='utf-8',
+                    msg_type='text/html',
+                    immediate=True
+                )
 
         except SMTPRecipientsRefused:
             self.errors = u'problemi con l\'invio del messaggio'

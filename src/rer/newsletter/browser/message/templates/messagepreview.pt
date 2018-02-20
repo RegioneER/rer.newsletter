@@ -5,7 +5,7 @@
       lang="en"
       i18n:domain="rer.newsletter">
 
-      <style tal:content="context/aq_parent/css_style" />
+      <style tal:content="view/getMessageStyle" />
       <body tal:content="structure view/getMessagePreview" />
 
 </html>
