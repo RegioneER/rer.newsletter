@@ -12,6 +12,7 @@ from rer.newsletter.queue.handler import QUEUE_NAME
 from rer.newsletter.queue.interfaces import IMessageQueue
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
+from urllib import urlencode
 from z3c.form import button
 from z3c.form import form
 from zope.annotation.interfaces import IAnnotations
@@ -93,6 +94,12 @@ class SendMessageView(form.Form):
                 logger.exception(
                     'Problems...{0}'.format(status),
                 )
+                api.portal.show_message(
+                    message=u'Problemi con l\'invio del messaggio. '
+                    'Contattare l\'assistenza.',
+                    request=self.request,
+                    type=u'error'
+                )
 
             annotations[self.context.title + str(len(annotations.keys()))] = {
                 'num_active_subscribers': active_users,
@@ -102,7 +109,9 @@ class SendMessageView(form.Form):
         # cambio di stato dopo l'invio
         api.content.transition(obj=self.context, transition='send')
 
-        self.request.response.redirect('view')
+        # self.request.response.redirect('view')
+        self.request.response.redirect(
+            '@@send_success_view?' + urlencode({'active_users': active_users}))
         api.portal.show_message(
             message=_(u'message_send', default=u'Il messaggio è stato '
                       'inviato a {0} iscritti'.format(
