@@ -25,12 +25,17 @@
       id="rer.newsletter.SendMessage"
       title="rer.newsletter: Send Newsletter"
       />
+  <permission
+      id="rer.newsletter.ResendMessage"
+      title="rer.newsletter: Resend Newsletter"
+      />
 
   <include package=".browser" />
   <include package=".behaviors" />
   <include package=".utility" />
   <include package=".portlets" />
   <include package=".tiles" />
+  <include package=".queue" />
 
   <genericsetup:registerProfile
       name="default"
@@ -48,6 +53,12 @@
       description="Uninstalls the rer.newsletter add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
       post_handler=".setuphandlers.uninstall"
+      />
+
+  <!-- registro l'utility per la coda dei messaggi -->
+  <utility
+      provides=".queue.interfaces.IMessageQueue"
+      factory=".queue.handler.TCMessageQueue"
       />
 
   <utility

@@ -190,7 +190,7 @@ msgstr "Nome complete del mittente."
 #. Default: "Separator of CSV file"
 #: ./browser/channel/users/usersimport.py:59
 msgid "description_separator"
-msgstr "Separatore del file CSV."
+msgstr "Separatore del file CSV, i valori possibili sono ',' o ';'"
 
 #. Default: "Indirizzo da sostituire"
 #: ./browser/settings.py:13

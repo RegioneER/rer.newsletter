@@ -13,13 +13,22 @@ class MessageManagerViewlet(ViewletBase):
         pass
 
     def canManageNewsletter(self):
-        return api.user.get_permissions().get(
-            'rer.newsletter: Manage Newsletter')
+        if 'Editor' in api.user.get_roles() \
+                or api.user.get_permissions().get(
+                'rer.newsletter: Manage Newsletter'):
+            return True
+        else:
+            return False
 
     def canSendMessage(self):
-        return api.content.get_state(obj=self.context) == 'review'\
-            and api.user.get_permissions().get(
-            'rer.newsletter: Send Newsletter')
+        if (api.content.get_state(obj=self.context) == 'review'
+                and api.user.get_permissions().get(
+                'rer.newsletter: Send Newsletter')) \
+                or (api.content.get_state(obj=self.context) == 'review'
+                    and 'Manager Newsletter' in api.user.get_roles()):
+            return True
+        else:
+            return False
 
     def messageSentDetails(self):
         annotations = IAnnotations(self.context)

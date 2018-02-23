@@ -14,9 +14,13 @@
       <role name="Manager" />
       <role name="Site Administrator" />
       <role name="Manager Newsletter" />
-      <role name="Editor" />
     </permission>
     <permission name="rer.newsletter: Send Newsletter" acquire="True">
+      <role name="Manager" />
+      <role name="Site Administrator" />
+      <role name="Editor" />
+    </permission>
+    <permission name="rer.newsletter: Resend Newsletter" acquire="True">
       <role name="Manager" />
       <role name="Site Administrator" />
       <role name="Editor" />
