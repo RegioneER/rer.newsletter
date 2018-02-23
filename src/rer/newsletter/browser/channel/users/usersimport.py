@@ -2,7 +2,6 @@
 from plone import api
 from plone.namedfile.field import NamedBlobFile
 from rer.newsletter import _
-from rer.newsletter import logger
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utility.channel import UNHANDLED
@@ -101,15 +100,21 @@ class UsersImport(form.Form):
                 if header[i].decode('utf-8-sig') == 'email':
                     index = i
             if index is None:
-                raise RuntimeError('CSV data does not have column:' + 'email')
+                api.portal.show_message(
+                    message=u'Il CSV non ha la colonna email oppure il '
+                    'separatore potrebbe non essere corretto',
+                    request=self.request,
+                    type=u'error'
+                )
 
-        usersList = []
-        for row in reader:
-            mail = row[index].decode('utf-8-sig')
-            if _mailValidation(mail):
-                usersList.append(row[index].decode('utf-8-sig'))
+        if index is not None:
+            usersList = []
+            for row in reader:
+                mail = row[index].decode('utf-8-sig')
+                if _mailValidation(mail):
+                    usersList.append(row[index].decode('utf-8-sig'))
 
-        return usersList
+            return usersList
 
     @button.buttonAndHandler(_(u'charge_userimport', default=u'Import'))
     def handleSave(self, action):
@@ -140,17 +145,19 @@ class UsersImport(form.Form):
         # invece di importarla
         if data['removeSubscribers'] and not data['emptyList']:
             # chiamo l'api per rimuovere l'intera lista di utenti
-            status = api_channel.deleteUserList(
-                self.context.id_channel,
-                usersList,
-            )
+            if usersList:
+                status = api_channel.deleteUserList(
+                    self.context.id_channel,
+                    usersList,
+                )
 
         else:
-            # mi connetto con le api di mailman
-            status = api_channel.importUsersList(
-                self.context.id_channel,
-                usersList,
-            )
+            if usersList:
+                # mi connetto con le api di mailman
+                status = api_channel.importUsersList(
+                    self.context.id_channel,
+                    usersList,
+                )
 
         if status == OK:
             status = _(
@@ -161,13 +168,4 @@ class UsersImport(form.Form):
                 message=status,
                 request=self.request,
                 type=u'info'
-            )
-        else:
-            logger.exception(
-                'unhandled error users import'
-            )
-            api.portal.show_message(
-                message=u'Problems...{0}'.format(status),
-                request=self.request,
-                type=u'error'
             )

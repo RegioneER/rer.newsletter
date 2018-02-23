@@ -30,22 +30,21 @@ class ChannelHistory(BrowserView):
         if messageList:
             for message in messageList:
                 obj = message.getObject()
-                if api.content.get_state(obj=obj) == 'sent':
-                    annotations = IAnnotations(obj)
-                    if KEY in annotations.keys():
-                        count = 0
-                        for k, v in annotations[KEY].iteritems():
-                            au = v['num_active_subscribers']
-                            sd = v['send_date']
+                annotations = IAnnotations(obj)
+                if KEY in annotations.keys():
+                    count = 0
+                    for k, v in annotations[KEY].iteritems():
+                        au = v['num_active_subscribers']
+                        sd = v['send_date']
 
-                            element = {}
-                            element['id'] = count
-                            element['uid'] = obj.title + str(count)
-                            element['message'] = obj.title
-                            element['active_users'] = au
-                            element['send_date'] = sd
-                            count += 1
-                            activeMessageList.append(element)
+                        element = {}
+                        element['id'] = count
+                        element['uid'] = obj.title + str(count)
+                        element['message'] = obj.title
+                        element['active_users'] = au
+                        element['send_date'] = sd
+                        count += 1
+                        activeMessageList.append(element)
 
         return json.dumps(activeMessageList)
 

@@ -158,32 +158,40 @@
   <!-- Views for mail template -->
   <browser:page
     for="*"
+    name="asynch_send_success"
+    template="channel/templates/mail_templates/asynch_send_success.pt"
+    permission="zope2.View"
+    />
+  <browser:page
+    for="*"
+    name="asynch_send_fail"
+    template="channel/templates/mail_templates/asynch_send_fail.pt"
+    permission="zope2.View"
+    />
+  <browser:page
+    for="*"
     name="activeuser_template"
     template="channel/templates/mail_templates/active_user.pt"
     permission="zope2.View"
     />
-
   <browser:page
     for="*"
     name="deleteuser_template"
     template="channel/templates/mail_templates/delete_user.pt"
     permission="zope2.View"
     />
-
   <browser:page
     for="*"
     name="activeuserconfirm_template"
     template="channel/templates/mail_templates/active_user_confirm.pt"
     permission="zope2.View"
     />
-
   <browser:page
     for="*"
     name="deleteuserconfirm_template"
     template="channel/templates/mail_templates/delete_user_confirm.pt"
     permission="zope2.View"
     />
-
   <browser:page
     for="*"
     name="unsubscribe_channel_template"
@@ -219,15 +227,15 @@
     permission="rer.newsletter.ManageNewsletter"
     template="channel/templates/channelviewlet.pt"
     />
-    <!-- message viewlet -->
-    <browser:viewlet
-      name="manage_message_viewlet"
-      for="rer.newsletter.interfaces.IMessage"
-      manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
-      class=".message.messageviewlet.MessageManagerViewlet"
-      layer="rer.newsletter.interfaces.IRerNewsletterLayer"
-      permission="zope2.View"
-      template="message/templates/messageviewlet.pt"
-      />
+  <!-- message viewlet -->
+  <browser:viewlet
+    name="manage_message_viewlet"
+    for="rer.newsletter.interfaces.IMessage"
+    manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+    class=".message.messageviewlet.MessageManagerViewlet"
+    layer="rer.newsletter.interfaces.IRerNewsletterLayer"
+    permission="zope2.View"
+    template="message/templates/messageviewlet.pt"
+    />
 
 </configure>

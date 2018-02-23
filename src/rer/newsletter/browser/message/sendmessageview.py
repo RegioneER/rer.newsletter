@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from collective.taskqueue.interfaces import ITaskQueue
 from datetime import datetime
 from persistent.dict import PersistentDict
 from plone import api
@@ -7,12 +8,15 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.content.channel import Channel
+from rer.newsletter.queue.handler import QUEUE_NAME
+from rer.newsletter.queue.interfaces import IMessageQueue
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from z3c.form import button
 from z3c.form import form
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
+from zope.component import queryUtility
 
 
 KEY = 'rer.newsletter.message.details'
@@ -49,16 +53,10 @@ class SendMessageView(form.Form):
     def handleSave(self, action):
         channel = self._getNewsletter()
 
+        # preparo il messaggio
         unsubscribe_footer_template = self.context.restrictedTraverse(
             '@@unsubscribe_channel_template'
         )
-
-        channel = None
-        for obj in self.context.aq_chain:
-            if isinstance(obj, Channel):
-                channel = obj
-                break
-
         parameters = {
             'portal_name': api.portal.get().title,
             'unsubscribe_link': channel.absolute_url()
@@ -67,32 +65,41 @@ class SendMessageView(form.Form):
         unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
 
         api_channel = getUtility(IChannelUtility)
-        api_channel.sendMessage(
-            channel.id_channel, self.context, unsubscribe_footer_text
-        )
-
-        # i dettagli sull'invio del messaggio per lo storico
-        annotations = IAnnotations(self.context)
-        if KEY not in annotations.keys():
-            annotations[KEY] = PersistentDict({})
-
-        annotations = annotations[KEY]
-        now = datetime.today().strftime('%d/%m/%Y %H:%M:%S')
         active_users, status = api_channel.getNumActiveSubscribers(
             channel.id_channel
         )
 
-        if status != OK:
-            logger.exception(
-                'Problems...{0}'.format(status),
+        messageQueue = queryUtility(IMessageQueue)
+        isQueuePresent = queryUtility(ITaskQueue, name=QUEUE_NAME)
+        if bool(getattr(isQueuePresent, 'queue', None)) and bool(messageQueue):
+            messageQueue.start(
+                self.context,
+            )
+        else:
+            # invio sincrono del messaggio
+            api_channel.sendMessage(
+                channel.id_channel, self.context, unsubscribe_footer_text
             )
 
-        annotations[self.context.title + str(len(annotations.keys()))] = {
-            'num_active_subscribers': active_users,
-            'send_date': now,
-        }
+            # i dettagli sull'invio del messaggio per lo storico
+            annotations = IAnnotations(self.context)
+            if KEY not in annotations.keys():
+                annotations[KEY] = PersistentDict({})
 
-        # transition
+            annotations = annotations[KEY]
+            now = datetime.today().strftime('%d/%m/%Y %H:%M:%S')
+
+            if status != OK:
+                logger.exception(
+                    'Problems...{0}'.format(status),
+                )
+
+            annotations[self.context.title + str(len(annotations.keys()))] = {
+                'num_active_subscribers': active_users,
+                'send_date': now,
+            }
+
+        # cambio di stato dopo l'invio
         api.content.transition(obj=self.context, transition='send')
 
         self.request.response.redirect('view')

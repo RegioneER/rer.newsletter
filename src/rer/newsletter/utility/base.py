@@ -348,6 +348,9 @@ class BaseHandler(object):
         # costruisco il messaggio
         body = self._getMessage(nl, message, unsubscribe_footer)
 
+        nl_subject = ' - ' + nl.subject_email if nl.subject_email else u''
+        subject = message.title + nl_subject
+
         # invio la mail ad ogni utente
         mail_host = api.portal.get_tool(name='MailHost')
         for user in annotations.keys():
@@ -356,7 +359,7 @@ class BaseHandler(object):
                     body.getData(),
                     mto=annotations[user]['email'],
                     mfrom=nl.sender_email,
-                    subject=message.Title(),
+                    subject=subject,
                     charset='utf-8',
                     msg_type='text/html'
                 )
