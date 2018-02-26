@@ -238,4 +238,13 @@
     template="message/templates/messageviewlet.pt"
     />
 
+  <!-- vista per il cron che deve eliminare gli utenti con il token scaduto che non hanno confermato l'iscrizione -->
+  <browser:page
+    for="*"
+    name="delete_expired_users"
+    layer="rer.newsletter.interfaces.IRerNewsletterLayer"
+    permission="zope2.View"
+    class=".channel.deleteexpiredusers.DeleteExpiredUsersView"
+    />
+
 </configure>
