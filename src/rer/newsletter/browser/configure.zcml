@@ -130,6 +130,15 @@
     permission="zope2.View"
     />
 
+    <!-- view for send success messagge-->
+    <browser:page
+      for="rer.newsletter.interfaces.IMessage"
+      name="send_success_view"
+      class=".message.sendmessagesuccessview.SendMessageSuccessView"
+      template="message/templates/sendmessagesuccessview.pt"
+      permission="zope2.View"
+      />
+
   <!-- view for send message -->
   <browser:page
     for="rer.newsletter.interfaces.IMessage"

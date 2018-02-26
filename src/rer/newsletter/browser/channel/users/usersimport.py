@@ -109,7 +109,9 @@ class UsersImport(form.Form):
 
         if index is not None:
             usersList = []
+            line_number = 0
             for row in reader:
+                line_number += 1
                 mail = row[index].decode('utf-8-sig')
                 if _mailValidation(mail):
                     usersList.append(row[index].decode('utf-8-sig'))
