@@ -17,6 +17,14 @@ import re
 import StringIO
 
 
+def check_separator(value):
+    match = re.match('^,|^;', value)
+    if match:
+        return True
+    else:
+        return False
+
+
 class IUsersImport(Interface):
 
     userListFile = NamedBlobFile(
@@ -59,7 +67,8 @@ class IUsersImport(Interface):
         description=_(u'description_separator',
                       default=_(u'Separator of CSV file')),
         default=u';',
-        required=True
+        required=True,
+        constraint=check_separator,
     )
 
 
