@@ -15,13 +15,13 @@
    <permission-role>Contributor</permission-role>
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>Manager Newsletter</permission-role>
+   <permission-role>Gestore Newsletter</permission-role>
    <permission-role>Owner</permission-role>
    <permission-role>Reader</permission-role>
    <permission-role>Site Administrator</permission-role>
   </permission-map>
   <permission-map name="Delete objects" acquired="True">
-   <permission-role>Manager Newsletter</permission-role>
+   <permission-role>Gestore Newsletter</permission-role>
   </permission-map>
   <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
@@ -29,16 +29,16 @@
    <permission-role>Site Administrator</permission-role>
   </permission-map>
   <permission-map name="Request review" acquired="True">
-   <permission-role>Manager Newsletter</permission-role>
+   <permission-role>Gestore Newsletter</permission-role>
   </permission-map>
   <permission-map name="Review portal content" acquired="True">
-   <permission-role>Manager Newsletter</permission-role>
+   <permission-role>Gestore Newsletter</permission-role>
   </permission-map>
   <permission-map name="View" acquired="True">
    <permission-role>Contributor</permission-role>
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>Manager Newsletter</permission-role>
+   <permission-role>Gestore Newsletter</permission-role>
    <permission-role>Owner</permission-role>
    <permission-role>Reader</permission-role>
    <permission-role>Site Administrator</permission-role>
@@ -46,7 +46,7 @@
   <permission-map name="rer.newsletter: Add Message" acquired="True">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>Manager Newsletter</permission-role>
+   <permission-role>Gestore Newsletter</permission-role>
    <permission-role>Site Administrator</permission-role>
   </permission-map>
   
@@ -59,7 +59,7 @@
    <permission-role>Anonymous</permission-role>
   </permission-map>
   <permission-map name="Delete objects" acquired="True">
-   <permission-role>Manager Newsletter</permission-role>
+   <permission-role>Gestore Newsletter</permission-role>
   </permission-map>
   <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
@@ -67,7 +67,7 @@
    <permission-role>Site Administrator</permission-role>
   </permission-map>
   <permission-map name="Request review" acquired="True">
-   <permission-role>Manager Newsletter</permission-role>
+   <permission-role>Gestore Newsletter</permission-role>
   </permission-map>
   <permission-map name="Review portal content" acquired="True">
    
@@ -78,7 +78,7 @@
   <permission-map name="rer.newsletter: Add Message" acquired="True">
    <permission-role>Contributor</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>Manager Newsletter</permission-role>
+   <permission-role>Gestore Newsletter</permission-role>
    <permission-role>Site Administrator</permission-role>
   </permission-map>
   

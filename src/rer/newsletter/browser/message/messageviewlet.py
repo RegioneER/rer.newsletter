@@ -13,8 +13,8 @@ class MessageManagerViewlet(ViewletBase):
         pass
 
     def canManageNewsletter(self):
-        if 'Editor' in api.user.get_roles() \
-                or api.user.get_permissions().get(
+        if 'Editor' in api.user.get_roles(obj=self.context) \
+                or api.user.get_permissions(obj=self.context).get(
                 'rer.newsletter: Manage Newsletter'):
             return True
         else:
@@ -22,10 +22,11 @@ class MessageManagerViewlet(ViewletBase):
 
     def canSendMessage(self):
         if (api.content.get_state(obj=self.context) == 'review'
-                and api.user.get_permissions().get(
+                and api.user.get_permissions(obj=self.context).get(
                 'rer.newsletter: Send Newsletter')) \
                 or (api.content.get_state(obj=self.context) == 'review'
-                    and 'Manager Newsletter' in api.user.get_roles()):
+                    and 'Gestore Newsletter' in api.user.get_roles(
+                    obj=self.context)):
             return True
         else:
             return False

@@ -81,7 +81,7 @@ New permissions have been added for the management of the Newsletter:
 - ``rer.newsletter: Send Newsletter``
 
 This permission are assigned to Manager and Site Administrator. Besides it been
-added a new role ``Manager Newsletter`` which have permissions for all possible
+added a new role ``Gestore Newsletter`` which have permissions for all possible
 operations on newsletter.
 
 ============

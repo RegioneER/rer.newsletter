@@ -9,7 +9,7 @@ class ChannelManagerViewlet(ViewletBase):
         pass
 
     def canManageNewsletter(self):
-        return api.user.get_permissions().get(
+        return api.user.get_permissions(obj=self.context).get(
             'rer.newsletter: Manage Newsletter')
 
     def render(self):
