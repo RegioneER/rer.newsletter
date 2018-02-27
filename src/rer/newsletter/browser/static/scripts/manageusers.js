@@ -6,6 +6,46 @@ require.config({
 requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, datatables){
 
   var table = null;
+  var table_line_numbers = 0;
+
+  function render_error(message){
+    $('.portalMessage').removeClass('info')
+                       .addClass('error')
+                       .css('display', '')
+                       .html('<strong>Error</strong> ' + message);
+  }
+
+  function render_info(message){
+    $('.portalMessage').removeClass('error')
+                       .addClass('info')
+                       .css('display', '')
+                       .html('<strong>Info</strong> ' + message);
+  }
+
+  function update_users(json){
+    debugger;
+    message = null;
+    num_utenti = json.length - table_line_numbers;
+    if( num_utenti > 0 ){
+      if( num_utenti == 1 ){
+        message = 'Aggiunto un utente';
+      }
+      else{
+        message = 'Aggiunti '+ num_utenti +' utenti';
+      }
+      render_info(message)
+      table_line_numbers = json.length;
+    }
+    else if( num_utenti < 0 ){
+      if( Math.abs(num_utenti) == 1 ){
+        render_info('Rimosso un utente.')
+      }
+      else{
+        render_info('Rimossi '+ Math.abs(num_utenti) +' utenti.')
+      }
+    }
+    table_line_numbers = json.length;
+  }
 
   $(document).ready(function() {
 
@@ -32,11 +72,7 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
     $('#delete-user > span').on('click', function(){
 
       if (!(table.row('.selected').data())){
-        // render error user deleted
-        $('.portalMessage').removeClass('info')
-                           .addClass('error')
-                           .css('display', '')
-                           .html('<strong>Error</strong>Prima va selezionato un utente.');
+        render_error('Prima va selezionato un utente.')
       }
       else{
         $.ajax({
@@ -49,19 +85,11 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
         .done(function(data){
           if (JSON.parse(data).ok){
             table.row('.selected').remove().draw( false );
-
-            // render info user deleted
-            $('.portalMessage').removeClass('error')
-                               .addClass('info')
-                               .css('display', '')
-                               .html('<strong>Info</strong>Utente eliminato con successo.');
+            render_info('Utente eliminato con successo.')
+            table_line_numbers -= 1;
           }
           else{
-            // render error user deleted
-            $('.portalMessage').removeClass('info')
-                               .addClass('error')
-                               .css('display', '')
-                               .html('<strong>Error</strong>Problemi con la cancellazione dell\'utente.');
+            render_error('Problemi con la cancellazione dell\'utente.')
           }
         });
       }
@@ -86,7 +114,9 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
       },
       actionOptions: {
         onSuccess: function($action, response, options){
-          table.ajax.reload();
+          table.ajax.reload(function( json ){
+            update_users(json)
+          });
           $action.$modal.trigger('destroy.plone-modal.patterns');
         }
       },
@@ -99,7 +129,7 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
             },
       "ajax": {
             "url": "exportUsersListAsJson",
-            "dataSrc": ""
+            "dataSrc": "",
         },
       "columns": [
             { "data": "email"},
