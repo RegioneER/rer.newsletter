@@ -21,10 +21,10 @@ class MessageManagerViewlet(ViewletBase):
             return False
 
     def canSendMessage(self):
-        if (api.content.get_state(obj=self.context) == 'review'
+        if (api.content.get_state(obj=self.context) == 'published'
                 and api.user.get_permissions(obj=self.context).get(
                 'rer.newsletter: Send Newsletter')) \
-                or (api.content.get_state(obj=self.context) == 'review'
+                or (api.content.get_state(obj=self.context) == 'published'
                     and 'Gestore Newsletter' in api.user.get_roles(
                     obj=self.context)):
             return True

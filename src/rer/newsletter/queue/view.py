@@ -128,8 +128,8 @@ class ProcessQueue(BrowserView):
                         self.request.get('HTTP_X_TASK_ID')),
                 )
                 # riporto indietro lo stato del messaggio nel caso sia 'sent'
-                if api.content.get_state(obj=message) == 'sent':
-                    api.content.transition(obj=message, transition='resend')
+                # if api.content.get_state(obj=message) == 'sent':
+                #     api.content.transition(obj=message, transition='resend')
             else:
                 annotations[message.title + str(len(annotations.keys()))] = {
                     'num_active_subscribers': active_users,
