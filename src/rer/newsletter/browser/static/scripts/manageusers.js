@@ -4,6 +4,7 @@ require.config({
     }
 });
 requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, datatables){
+
   function render_error(message){
     $('.portalMessage').removeClass('info')
                        .addClass('error')
@@ -130,11 +131,5 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
             $(this).addClass('selected');
         }
     });
-
-    // function count_users(args){
-    //   args.data.num_users_table = args.data.table.data().count();
-    // }
-    // $('#button-import-users').click({'table': table, 'num_users_table': num_users_table}, count_users);
-
   });
 });
