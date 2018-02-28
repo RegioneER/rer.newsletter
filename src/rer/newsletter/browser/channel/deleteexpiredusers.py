@@ -39,9 +39,11 @@ class DeleteExpiredUsersView(BrowserView):
 
     def __call__(self):
         alsoProvides(self.request, IDisableCSRFProtection)
-        logger.info(u'Remove expired user from channels')
+        logger.info(u'START:Remove expired user from channels')
         channels_brain = api.content.find(
             context=api.portal.get(),
             portal_type='Channel'
         )
         map(lambda x: self.update_annotations(x), channels_brain)
+        logger.info(u'DONE:Remove expired user from channels')
+        return True
