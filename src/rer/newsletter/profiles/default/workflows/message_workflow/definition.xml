@@ -99,10 +99,10 @@
    <permission-role>Anonymous</permission-role>
   </permission-map>
   <permission-map name="rer.newsletter: Resend Newsletter" acquired="True">
-   <permission-role>Gestore Newsletter</permission-role>
+   
   </permission-map>
   <permission-map name="rer.newsletter: Send Newsletter" acquired="True">
-   <permission-role>Gestore Newsletter</permission-role>
+   
   </permission-map>
   
   
