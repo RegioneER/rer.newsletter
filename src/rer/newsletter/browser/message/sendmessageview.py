@@ -107,7 +107,7 @@ class SendMessageView(form.Form):
             }
 
         # cambio di stato dopo l'invio
-        api.content.transition(obj=self.context, transition='send')
+        # api.content.transition(obj=self.context, transition='send')
 
         # self.request.response.redirect('view')
         self.request.response.redirect(
