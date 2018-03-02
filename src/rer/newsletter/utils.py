@@ -17,6 +17,7 @@ def addToHistory(message):
             comment=u'',
             time=DateTime()
         )
+
     list_history = [
         x for x in message.workflow_history.get('message_workflow')]
     list_history.append(new_history_row(message))

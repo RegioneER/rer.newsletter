@@ -95,7 +95,8 @@ class MessageSendingTest(form.Form):
                     body.getData(),
                     mto=email.strip(),
                     mfrom=response_email,
-                    subject='Messaggio di prova',
+                    subject='Messaggio di prova ' + message_obj.title
+                    + ' canale ' + ns_obj.title,
                     charset='utf-8',
                     msg_type='text/html',
                     immediate=True
