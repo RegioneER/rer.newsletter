@@ -29,9 +29,7 @@ Portlet and Tile
 The product provide a portlet and a tile for user subscribe.
 
 Form for user subscribe have two fields: email and reCaptcha, so do not forget to
-set key for reCaptcha fields. See `plone.formwidget.recaptcha`__ for more details.
-
-__ https://github.com/plone/plone.formwidget.recaptcha
+set key for reCaptcha fields. See `plone.formwidget.recaptcha <https://github.com/plone/plone.formwidget.recaptcha>`_ for more details.
 
 User Manage
 -----------
@@ -109,10 +107,7 @@ buildout this configuration::
        </taskqueue-server>
 
 This code adds a queue to which various email submissions are added.
-See `collective.taskqueue`__ for more details.
-
-
-__https://github.com/collective/collective.taskqueue
+See `collective.taskqueue <https://github.com/collective/collective.taskqueue>`_ for more details.
 
 
 Cron job
@@ -154,12 +149,10 @@ This product has been tested on Plone 5.1
 Credits
 =======
 
-Developed with the support of `Regione Emilia Romagna`__;
+Developed with the support of `Regione Emilia Romagna <http://www.regione.emilia-romagna.it/>`_;
 
-Regione Emilia Romagna supports the `PloneGov initiative`__.
+Regione Emilia Romagna supports the `PloneGov initiative <http://www.plonegov.it/>`_.
 
-__ http://www.regione.emilia-romagna.it/
-__ http://www.plonegov.it/
 
 =======
 Authors

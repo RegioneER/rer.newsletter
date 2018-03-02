@@ -1,3 +1,4 @@
+=========
 Changelog
 =========
 
@@ -5,7 +6,8 @@ Changelog
 0.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed doc.
+  [eikichi18]
 
 
 0.1.0 (2018-03-02)
