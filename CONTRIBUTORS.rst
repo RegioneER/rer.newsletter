@@ -1,4 +1,4 @@
 Contributors
 ============
 
-- Filippo Campi, filippo.campi@redturtle.it
+- RedTurtle Technology, sviluppoplone@redturtle.it
