@@ -2,3 +2,5 @@ graft src/rer
 graft docs
 include *.rst
 global-exclude *.pyc
+include requirements.txt
+include LICENSE.GPL
