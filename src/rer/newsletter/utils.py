@@ -2,8 +2,6 @@
 from DateTime import DateTime
 from plone import api
 
-import pytz
-
 
 def addToHistory(message):
     """ Add to history that message is sent """
