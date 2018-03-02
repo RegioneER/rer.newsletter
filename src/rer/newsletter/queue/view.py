@@ -138,7 +138,7 @@ class ProcessQueue(BrowserView):
                 }
 
                 # aggiungo all'history dell'oggetto messaggio il suo invio
-                addToHistory(message)
+                addToHistory(message, active_users)
 
             self._sendNotification(
                 status=status,

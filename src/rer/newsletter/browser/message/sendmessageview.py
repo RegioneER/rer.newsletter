@@ -12,6 +12,7 @@ from rer.newsletter.queue.handler import QUEUE_NAME
 from rer.newsletter.queue.interfaces import IMessageQueue
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
+from rer.newsletter.utils import addToHistory
 from urllib import urlencode
 from z3c.form import button
 from z3c.form import form
@@ -100,11 +101,13 @@ class SendMessageView(form.Form):
                     request=self.request,
                     type=u'error'
                 )
+                return
 
             annotations[self.context.title + str(len(annotations.keys()))] = {
                 'num_active_subscribers': active_users,
                 'send_date': now,
             }
+            addToHistory(self.context, active_users)
 
         # cambio di stato dopo l'invio
         # api.content.transition(obj=self.context, transition='send')
