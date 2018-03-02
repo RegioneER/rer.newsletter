@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
+from DateTime import DateTime
 from plone import api
 
 import pytz
@@ -11,17 +11,15 @@ def addToHistory(message):
     if not message:
         return []
 
-    def new_history_row():
+    def new_history_row(message):
         return dict(
             action=u'Invio',
-            review_state=u'Inviato',
+            review_state=api.content.get_state(obj=message),
             actor=api.user.get_current().get('username', None),
             comment=u'',
-            time=datetime.now(pytz.timezone('Europe/Rome')
-                              ).strftime('%Y/%m/%d %H:%M:%S.%f %z')
+            time=DateTime()
         )
-
-    tuple_history = message.workflow_history.values()[0]
-    list_history = [x for x in tuple_history]
-    list_history.append(new_history_row())
-    return tuple(list_history)
+    list_history = [
+        x for x in message.workflow_history.get('message_workflow')]
+    list_history.append(new_history_row(message))
+    message.workflow_history['message_workflow'] = tuple(list_history)
