@@ -10,6 +10,7 @@ from rer.newsletter.content.message import Message
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utility.channel import UNHANDLED
+from rer.newsletter.utils import addToHistory
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.interface import alsoProvides
@@ -135,6 +136,10 @@ class ProcessQueue(BrowserView):
                     'num_active_subscribers': active_users,
                     'send_date': now,
                 }
+
+                # aggiungo all'history dell'oggetto messaggio il suo invio
+                addToHistory(message)
+
             self._sendNotification(
                 status=status,
                 channel=channel,
