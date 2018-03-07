@@ -96,7 +96,7 @@ class MessageSendingTest(form.Form):
                     mto=email.strip(),
                     mfrom=response_email,
                     subject='Messaggio di prova ' + message_obj.title
-                    + ' canale ' + ns_obj.title,
+                    + ' del canale ' + ns_obj.title,
                     charset='utf-8',
                     msg_type='text/html',
                     immediate=True

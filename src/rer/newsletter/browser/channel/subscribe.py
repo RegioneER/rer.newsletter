@@ -71,6 +71,9 @@ class SubscribeForm(form.SchemaForm):
             (aq_inner(self.context), self.request),
             name='recaptcha'
         )
+        if errors:
+            self.status = self.formErrorsMessage
+            return
         if not captcha.verify():
             api.portal.show_message(
                 message=_(u'message_wrong_captcha',
@@ -78,10 +81,6 @@ class SubscribeForm(form.SchemaForm):
                 request=self.request,
                 type=u'error'
             )
-            return
-
-        if errors:
-            self.status = self.formErrorsMessage
             return
 
         email = None

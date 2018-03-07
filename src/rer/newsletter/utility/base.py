@@ -14,6 +14,8 @@ from rer.newsletter.utility.channel import INVALID_EMAIL
 from rer.newsletter.utility.channel import INVALID_SECRET
 from rer.newsletter.utility.channel import MAIL_NOT_PRESENT
 from rer.newsletter.utility.channel import OK
+from rer.newsletter.utility.channel import UNHANDLED
+from smtplib import SMTPRecipientsRefused
 from zope.annotation.interfaces import IAnnotations
 from zope.interface import implementer
 from zope.interface import Invalid
@@ -353,16 +355,19 @@ class BaseHandler(object):
 
         # invio la mail ad ogni utente
         mail_host = api.portal.get_tool(name='MailHost')
-        for user in annotations.keys():
-            if annotations[user]['is_active']:
-                mail_host.send(
-                    body.getData(),
-                    mto=annotations[user]['email'],
-                    mfrom=nl.sender_email,
-                    subject=subject,
-                    charset='utf-8',
-                    msg_type='text/html'
-                )
+        try:
+            for user in annotations.keys():
+                if annotations[user]['is_active']:
+                    mail_host.send(
+                        body.getData(),
+                        mto=annotations[user]['email'],
+                        mfrom=nl.sender_email,
+                        subject=subject,
+                        charset='utf-8',
+                        msg_type='text/html'
+                    )
+        except SMTPRecipientsRefused:
+            return UNHANDLED
 
         return OK
 
