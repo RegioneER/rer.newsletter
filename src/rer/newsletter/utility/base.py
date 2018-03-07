@@ -330,6 +330,8 @@ class BaseHandler(object):
         body = u''
         body += channel.header.output if channel.header else u''
         body += u'<style>{css}</style>'.format(css=channel.css_style or u'')
+        body += u'<div id="message_description"><p>{desc}</p></div>'.format(
+            desc=message.description or u'')
         body += message.text.output if message.text else u''
         body += channel.footer.output if channel.footer else u''
         body += unsubscribe_footer if unsubscribe_footer else u''

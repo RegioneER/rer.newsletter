@@ -73,6 +73,9 @@ class MessageSendingTest(form.Form):
             body += u'<style>{css}</style>'.format(
                 css=ns_obj.css_style or u''
             )
+            body += u'<div id="message_description">' + \
+                '<p>{desc}</p></div>'.format(
+                    desc=message_obj.description or u'')
             body += message_obj.text.output if message_obj.text else u''
             body += ns_obj.footer.output if ns_obj.footer else u''
             body += unsubscribe_footer_text if unsubscribe_footer_text else u''
