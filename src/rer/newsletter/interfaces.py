@@ -58,7 +58,7 @@ class IChannelSchema(model.Schema):
         title=_(u'privacy_channel', default=u'Informativa sulla privacy'),
         description=_(u'description_privacy_channel',
                       default=u'Informativa sulla privacy per questo canale'),
-        required=False,
+        required=True,
         default=u'',
     )
     form.widget('privacy', RichTextFieldWidget)
