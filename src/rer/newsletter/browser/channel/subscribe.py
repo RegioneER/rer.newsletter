@@ -31,7 +31,7 @@ class ISubscribeForm(Interface):
 
     form.widget(captcha=ReCaptchaFieldWidget)
     captcha = schema.TextLine(
-        title=u'Captcha',
+        title=_(u'Captcha', default=u'Codice di sicurezza'),
         description=u'',
         required=False
     )
@@ -73,6 +73,10 @@ class SubscribeForm(form.SchemaForm):
         )
         if errors:
             self.status = self.formErrorsMessage
+            if self.status:
+                self.status = u'Indirizzo email non inserito o non ' \
+                    + 'valido, oppure controllo di sicurezza non ' \
+                    + 'inserito.'
             return
         if not captcha.verify():
             api.portal.show_message(

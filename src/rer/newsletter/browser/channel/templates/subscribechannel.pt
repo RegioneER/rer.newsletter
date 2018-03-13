@@ -11,6 +11,8 @@
             <metal:main-macro define-macro="main">
 
               <div id="content">
+                <button class="button-plone-modal-close" type="button" title="chiudi" tabIndex="0"></button>
+
                 <div class="content_container">
                   <div class="informativa"
                        tal:define="privacy view/form_instance/getChannelPrivacyPolicy"
