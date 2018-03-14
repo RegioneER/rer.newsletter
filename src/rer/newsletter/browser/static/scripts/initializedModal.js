@@ -28,7 +28,7 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
           // modifica accessibilità
           var firstInput = $('.redirect');
           var lastInput = $('.redirect');
-          var closeInput = $('.button-plone-modal-close').first();
+          var closeInput = $('.button-plone-modal-close')
           firstInput.focus();
 
           lastInput.on('keydown', function(e) {
@@ -49,7 +49,7 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
             }
           });
 
-          closeInput.on('click', function() {
+          $('.button-plone-modal-close').on('click', function() {
             $('.plone-modal-close').click();
           });
 
@@ -81,11 +81,11 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
 
     // modifica accessibilità
     var inputs = $('.plone-modal-wrapper').find(
-      'select, input, textarea, .redirect, button:not(.button-plone-modal-close)'
+      'select, textarea, .redirect, button, input'
     );
+    var closeInput = $(inputs.splice(inputs.length - 1, 1)[0])
     var firstInput = inputs.first();
     var lastInput = inputs.last();
-    var closeInput = $('.button-plone-modal-close').first();
     firstInput.focus();
 
     lastInput.on('keydown', function(e) {
@@ -106,7 +106,7 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
       }
     });
 
-    closeInput.on('click', function() {
+    $('.button-plone-modal-close').on('click', function() {
       $('.plone-modal-close').click();
     });
 
