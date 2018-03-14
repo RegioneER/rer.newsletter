@@ -28,6 +28,7 @@
                  <a href=""
                     style="display: none;"
                     class="redirect"
+                    title="disiscrizione"
                     tal:attributes="href python:context.absolute_url() + '/@@unsubscribe';">
                     Clicca questo link per cancellarti dalla newsletter
                  </a>

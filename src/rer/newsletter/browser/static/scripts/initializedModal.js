@@ -2,7 +2,7 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
 
   function hide_element_modal(){
     $('.content_container').hide()
-    $('.pattern-modal-buttons').hide()
+    $('.pattern-modal-buttons input').hide()
   }
 
   function subscribe_modal(){
@@ -19,6 +19,47 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
           var href = $('.redirect').attr('href')
           $('.redirect').attr('href', href + '?email=' + email)
           $('.redirect').show();
+
+          // modifica accessibilità
+          var firstInput = $('.redirect');
+          var lastInput = $('.redirect');
+          var closeInput = $('.button-plone-modal-close').first();
+          firstInput.focus();
+
+          lastInput.on('keydown', function(e) {
+            if (e.which === 9) {
+              if (!e.shiftKey) {
+                e.preventDefault();
+                closeInput.focus();
+              }
+            }
+          });
+
+          firstInput.on('keydown', function(e) {
+            if (e.which === 9) {
+              if (e.shiftKey) {
+                e.preventDefault();
+                closeInput.focus();
+              }
+            }
+          });
+
+          closeInput.on('click', function() {
+            $('.plone-modal-close').click();
+          });
+
+          closeInput.on('keydown', function(e) {
+            if (e.which === 9) {
+              e.preventDefault();
+
+              if (e.shiftKey) {
+                lastInput.focus();
+              } else {
+                firstInput.focus();
+              }
+            }
+          });
+
         }
       });
       $('div.plone-modal-body').find( '.portalMessage.info' ).each(function (){
@@ -28,14 +69,14 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
   }
 
   function init(){
-
+    $('.plone-modal-close').attr('title', 'chiudi');
     $('.pattern-modal-buttons').append(
       $('.button-plone-modal-close')
     );
 
     // modifica accessibilità
     var inputs = $('.plone-modal-wrapper').find(
-      'select, input, textarea, button:not(.button-plone-modal-close)'
+      'select, input, textarea, .redirect, button:not(.button-plone-modal-close)'
     );
     var firstInput = inputs.first();
     var lastInput = inputs.last();
@@ -91,14 +132,14 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
     });
     modal.on('after-render', subscribe_modal);
     modal.on('shown', function(){
-      // modal.$modal[0].tabIndex = -1;
-      // document.getElementById('form-widgets-email').focus();
-      // $('.plone-modal-close').attr('title', 'chiudi');
       init();
     });
     modal.on('afterDraw', function(){
       init();
-    })
+    });
+    modal.on('linkActionSuccess', function(){
+      init()
+    });
   }
 
   // aspetto che le tile all'interno della pagina siano caricate
