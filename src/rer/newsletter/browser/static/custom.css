@@ -19,3 +19,11 @@ body.portaltype-channel div.plone-modal-wrapper span.formHelp{
 body.portaltype-channel div.plone-modal-wrapper dl.portalMessage.error{
   color: #ff0000;
 }
+
+body.portaltype-channel div.plone-modal-wrapper a.redirect{
+  border-bottom: 1px solid red;
+}
+
+body.portaltype-channel div.plone-modal-wrapper a.plone-modal-close{
+  visibility: hidden;
+}
