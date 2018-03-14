@@ -1,6 +1,8 @@
 .button-plone-modal-close{
   font-size: 1.2em;
   font-weight: 700;
+  margin-right: 0.5em;
+  background-color: #cccccc;
 }
 
 #form-buttons-unsubscribe_button{
@@ -8,4 +10,12 @@
   color: #FFF;
   background: #2980b9;
   border-radius: 5px;
+}
+
+body.portaltype-channel div.plone-modal-wrapper span.formHelp{
+  color: #333;
+}
+
+body.portaltype-channel div.plone-modal-wrapper dl.portalMessage.error{
+  color: #ff0000;
 }

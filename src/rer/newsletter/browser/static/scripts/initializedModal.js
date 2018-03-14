@@ -11,6 +11,11 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
       portalMessage = $('.portalMessage.error');
 
       $('div.plone-modal-body').find( portalMessage ).each(function (){
+
+        if (portalMessage.text().search("Error") > -1){
+          portalMessage.html(portalMessage.text().replace("Error", "<b>Attenzione</b>"));
+        }
+
         // trovare un metodo migliore
         if ($(portalMessage).text().search("Sei già iscritto a questa newsletter, oppure non hai ancora confermato l'iscrizione") > -1){
           hide_element_modal();
@@ -70,7 +75,7 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
 
   function init(){
     $('.plone-modal-close').attr('title', 'chiudi');
-    $('.pattern-modal-buttons').append(
+    $('.pattern-modal-buttons').prepend(
       $('.button-plone-modal-close')
     );
 
