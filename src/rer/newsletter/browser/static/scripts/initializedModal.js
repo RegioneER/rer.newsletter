@@ -28,6 +28,11 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
   }
 
   function init(){
+
+    $('.pattern-modal-buttons').append(
+      $('.button-plone-modal-close')
+    );
+
     // modifica accessibilità
     var inputs = $('.plone-modal-wrapper').find(
       'select, input, textarea, button:not(.button-plone-modal-close)'

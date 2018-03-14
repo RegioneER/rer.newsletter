@@ -11,7 +11,7 @@
             <metal:main-macro define-macro="main">
 
               <div id="content">
-                <button class="button-plone-modal-close" type="button" title="chiudi" tabIndex="0"></button>
+                <button class="button-plone-modal-close plone-btn plone-btn-primary" type="button" title="chiudi">Chiudi</button>
 
                 <div class="content_container">
                   <div class="informativa"
