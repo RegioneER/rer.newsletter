@@ -20,7 +20,7 @@ body.portaltype-channel div.plone-modal-wrapper dl.portalMessage.error{
   color: #ff0000;
 }
 
-body.portaltype-channel div.plone-modal-wrapper a.redirect{
+body.portaltype-channel div.plone-modal-wrapper div.informativa a{
   border-bottom: 1px solid red;
 }
 
