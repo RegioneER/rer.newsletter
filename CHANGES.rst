@@ -6,7 +6,8 @@ Changelog
 0.1.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed accessibility and style for subscribe/unsubscribe modal.
+  [eikichi18]
 
 
 0.1.1 (2018-03-02)
