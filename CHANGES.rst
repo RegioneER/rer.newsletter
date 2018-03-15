@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.1.2 (unreleased)
+0.1.2 (2018-03-15)
 ------------------
 
 - Fixed accessibility and style for subscribe/unsubscribe modal.
