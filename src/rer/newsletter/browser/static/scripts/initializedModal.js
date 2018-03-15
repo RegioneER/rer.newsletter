@@ -74,7 +74,6 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
   }
 
   function init(){
-    $('.plone-modal-close').addClass('subscribe_view')
     $('.plone-modal-close').attr('title', 'chiudi');
     $('.pattern-modal-buttons').prepend(
       $('.button-plone-modal-close')

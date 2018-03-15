@@ -23,7 +23,3 @@ body.portaltype-channel div.plone-modal-wrapper dl.portalMessage.error{
 body.portaltype-channel div.plone-modal-wrapper div.informativa a{
   border-bottom: 1px solid red;
 }
-
-body.portaltype-channel div.plone-modal-wrapper a.plone-modal-close.subscribe_view{
-  visibility: hidden;
-}
