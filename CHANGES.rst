@@ -3,10 +3,17 @@ Changelog
 =========
 
 
-0.1.2 (unreleased)
+0.1.3 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+0.1.2 (2018-03-15)
+------------------
+
+- Fixed accessibility and style for subscribe/unsubscribe modal.
+  [eikichi18]
 
 
 0.1.1 (2018-03-02)

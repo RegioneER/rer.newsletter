@@ -11,7 +11,7 @@
             <metal:main-macro define-macro="main">
 
               <div id="content">
-                <button class="button-plone-modal-close plone-btn plone-btn-primary" type="button" title="chiudi">Chiudi</button>
+                <button class="button-plone-modal-close plone-btn" type="button" title="chiudi">Annulla</button>
 
                 <div class="content_container">
                   <div class="informativa"
@@ -28,6 +28,7 @@
                  <a href=""
                     style="display: none;"
                     class="redirect"
+                    title="disiscrizione"
                     tal:attributes="href python:context.absolute_url() + '/@@unsubscribe';">
                     Clicca questo link per cancellarti dalla newsletter
                  </a>

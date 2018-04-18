@@ -31,7 +31,7 @@ class ISubscribeForm(Interface):
 
     form.widget(captcha=ReCaptchaFieldWidget)
     captcha = schema.TextLine(
-        title=_(u'Captcha', default=u'Codice di sicurezza'),
+        title=_(u'Captcha', default=u'Controllo di sicurezza'),
         description=u'',
         required=False
     )
