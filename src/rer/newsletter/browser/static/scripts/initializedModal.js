@@ -5,121 +5,95 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
     $('.pattern-modal-buttons input').hide()
   }
 
-  function subscribe_modal(){
-    context = $('.plone-modal-body div #content-core .subscription_form').data('abs') + '/@@unsubscribe';
-    if ( context ){
-      portalMessage = $('.portalMessage.error');
+  function init(){
+    var firstInput = null;
+    var lastInput = null;
+    var closeInput = null;
 
+    portalMessage = $('.portalMessage.error');
+    if (portalMessage.length > 0){
       $('div.plone-modal-body').find( portalMessage ).each(function (){
 
-        if (portalMessage.text().search("Error") > -1){
+        if (portalMessage.text().indexOf("Error") > -1){
           portalMessage.html(portalMessage.text().replace("Error", "<b>Attenzione</b>"));
         }
 
         // trovare un metodo migliore
-        if ($(portalMessage).text().search("Sei già iscritto a questa newsletter, oppure non hai ancora confermato l'iscrizione") > -1){
+        if ($(portalMessage).text().indexOf("Sei già iscritto a questa newsletter, oppure non hai ancora confermato l'iscrizione") > -1){
           hide_element_modal();
 
           var email = $('#form-widgets-email').val();
-          var href = $('.redirect').attr('href')
-          $('.redirect').attr('href', href + '?email=' + email)
-          $('.redirect').show();
+          var redirect = $('.redirect');
+          var href = redirect.attr('href');
+          redirect.attr('href', href + '?email=' + email);
+          redirect.show();
 
           // modifica accessibilità
-          var firstInput = $('.redirect');
-          var lastInput = $('.redirect');
-          var closeInput = $('.button-plone-modal-close')
+          firstInput = redirect;
+          lastInput = redirect;
+          closeInput = $('.button-plone-modal-close');
           firstInput.focus();
 
-          lastInput.on('keydown', function(e) {
-            if (e.which === 9) {
-              if (!e.shiftKey) {
-                e.preventDefault();
-                closeInput.focus();
-              }
-            }
-          });
-
-          firstInput.on('keydown', function(e) {
-            if (e.which === 9) {
-              if (e.shiftKey) {
-                e.preventDefault();
-                closeInput.focus();
-              }
-            }
-          });
-
-          $('.button-plone-modal-close').on('click', function() {
-            $('.plone-modal-close').click();
-          });
-
-          closeInput.on('keydown', function(e) {
-            if (e.which === 9) {
-              e.preventDefault();
-
-              if (e.shiftKey) {
-                lastInput.focus();
-              } else {
-                firstInput.focus();
-              }
-            }
-          });
-
+          closeInput.insertAfter(
+            $('.redirect')
+          );
         }
       });
-      $('div.plone-modal-body').find( '.portalMessage.info' ).each(function (){
-        hide_element_modal();
+    }else{
+      $('.plone-modal-close').attr('title', 'chiudi');
+      $('.pattern-modal-buttons').prepend(
+        $('.button-plone-modal-close')
+      );
+
+      // modifica accessibilità
+      var inputs = $('.plone-modal-wrapper').find(
+        'select, textarea, .redirect, button, input'
+      );
+
+      closeInput = $(inputs.splice(inputs.length - 1, 1)[0])
+      firstInput = inputs.first();
+      lastInput = inputs.last();
+      firstInput.focus();
+    }
+
+    if(lastInput && closeInput){
+      lastInput.on('keydown', function(e) {
+        if (e.which === 9) {
+          if (!e.shiftKey) {
+            e.preventDefault();
+            closeInput.focus();
+          }
+        }
       });
     }
-  }
-
-  function init(){
-    $('.plone-modal-close').attr('title', 'chiudi');
-    $('.pattern-modal-buttons').prepend(
-      $('.button-plone-modal-close')
-    );
-
-    // modifica accessibilità
-    var inputs = $('.plone-modal-wrapper').find(
-      'select, textarea, .redirect, button, input'
-    );
-    var closeInput = $(inputs.splice(inputs.length - 1, 1)[0])
-    var firstInput = inputs.first();
-    var lastInput = inputs.last();
-    firstInput.focus();
-
-    lastInput.on('keydown', function(e) {
-      if (e.which === 9) {
-        if (!e.shiftKey) {
-          e.preventDefault();
-          closeInput.focus();
+    if(firstInput && closeInput){
+      firstInput.on('keydown', function(e) {
+        if (e.which === 9) {
+          if (e.shiftKey) {
+            e.preventDefault();
+            closeInput.focus();
+          }
         }
-      }
-    });
-
-    firstInput.on('keydown', function(e) {
-      if (e.which === 9) {
-        if (e.shiftKey) {
-          e.preventDefault();
-          closeInput.focus();
-        }
-      }
-    });
-
+      });
+    }
     $('.button-plone-modal-close').on('click', function() {
       $('.plone-modal-close').click();
     });
+    if(closeInput && lastInput && firstInput){
+      closeInput.on('keydown', function(e) {
+        if (e.which === 9) {
+          e.preventDefault();
 
-    closeInput.on('keydown', function(e) {
-      if (e.which === 9) {
-        e.preventDefault();
-
-        if (e.shiftKey) {
-          lastInput.focus();
-        } else {
-          firstInput.focus();
+          if (e.shiftKey) {
+            lastInput.focus();
+          } else {
+            firstInput.focus();
+          }
         }
-      }
+      });
+    }
+    $('div.plone-modal-body').find( '.portalMessage.info' ).each(function (){
+      hide_element_modal();
     });
   }
 
@@ -135,11 +109,10 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
         classFooterName: 'plone-modal-footer subscribe_modal',
       }
     });
-    modal.on('after-render', subscribe_modal);
-    modal.on('shown', function(){
+    modal.on('after-render', function(){
       init();
     });
-    modal.on('afterDraw', function(){
+    modal.on('shown', function(){
       init();
     });
     modal.on('linkActionSuccess', function(){
