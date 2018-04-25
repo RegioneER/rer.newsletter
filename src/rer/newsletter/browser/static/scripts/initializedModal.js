@@ -5,7 +5,7 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
     $('.pattern-modal-buttons input').hide()
   }
 
-  function init(){
+  function init(modal){
     var firstInput = null;
     var lastInput = null;
     var closeInput = null;
@@ -33,9 +33,10 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
           lastInput = redirect;
           closeInput = $('.button-plone-modal-close');
           firstInput.focus();
+          // setTimeout(function(){ firstInput.focus(); }, 50);
 
-          closeInput.insertAfter(
-            $('.redirect')
+          $('.pattern-modal-buttons').prepend(
+            $('.button-plone-modal-close')
           );
         }
       });
@@ -109,14 +110,14 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
         classFooterName: 'plone-modal-footer subscribe_modal',
       }
     });
-    modal.on('after-render', function(){
-      init();
+    modal.on('afterDraw', function(){
+      init(modal);
     });
     modal.on('shown', function(){
-      init();
+      init(modal);
     });
     modal.on('linkActionSuccess', function(){
-      init()
+      init(modal)
     });
   }
 
