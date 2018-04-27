@@ -112,7 +112,7 @@ class UnsubscribeForm(form.Form):
             api.portal.show_message(
                 message=_(
                     u'user_unsubscribe_success',
-                    default=u'Info Riceverai una e-mail per confermare'
+                    default=u'Riceverai una e-mail per confermare'
                     ' la cancellazione dalla newsletter'
                 ),
                 request=self.request,

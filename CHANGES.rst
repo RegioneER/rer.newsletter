@@ -6,7 +6,8 @@ Changelog
 0.1.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed accessibility problem on subscribe/unsubscribe modal for IE.
+  [eikichi18]
 
 
 0.1.2 (2018-03-15)
