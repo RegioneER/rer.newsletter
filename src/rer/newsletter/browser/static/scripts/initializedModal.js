@@ -117,14 +117,13 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
   $(document).ready(function(){
     if( $('.pat-tiles-management').length > 0 ){
       $('.pat-tiles-management').on('rtTilesLoaded', function(e) {
-        $('#channel-subscribe a').each(function(i, el) {
+        $('.tileBody #channel-subscribe a').each(function(i, el) {
             render_modal(el)
         });
       });
-    }else {
-      $('#channel-subscribe a').each(function(i, el) {
-        render_modal(el)
-      });
     }
+    $('.portlet #channel-subscribe a').each(function(i, el) {
+      render_modal(el)
+    });
   });
 });
