@@ -3,7 +3,7 @@ from plone import api
 from rer.newsletter import logger
 
 
-default_profile = 'profile-orma.contenttypes:default'
+default_profile = 'profile-rer.newsletter:default'
 
 
 def migrate_to_1001(context):

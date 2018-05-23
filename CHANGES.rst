@@ -6,7 +6,8 @@ Changelog
 0.1.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- fixed default profile in upgrade step
+  [eikichi18]
 
 
 0.1.4 (2018-05-23)
