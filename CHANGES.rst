@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.1.3 (unreleased)
+0.1.3 (2018-05-23)
 ------------------
 
 - Fixed accessibility problem on subscribe/unsubscribe modal for IE.
