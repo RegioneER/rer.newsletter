@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.1.4 (unreleased)
+0.1.4 (2018-05-23)
 ------------------
 
 - upgrade step to fix bundle for initializedModal.js
