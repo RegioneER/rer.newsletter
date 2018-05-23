@@ -6,7 +6,8 @@ Changelog
 0.1.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- upgrade step to fix bundle for initializedModal.js
+  [eikichi18]
 
 
 0.1.3 (2018-05-23)

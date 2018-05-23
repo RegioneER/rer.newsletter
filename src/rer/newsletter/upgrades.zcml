@@ -1,0 +1,16 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:genericsetup="http://namespaces.zope.org/genericsetup">
+
+  <!-- -*- extra stuff goes here -*- -->
+  <genericsetup:upgradeStep
+    source="1000"
+    destination="1001"
+    title="Upgrade rer.newsletter to 1001"
+    description=""
+    profile="rer.newsletter:default"
+    handler=".upgrades.migrate_to_1001"
+    />
+
+
+</configure>
