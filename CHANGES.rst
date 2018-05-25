@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.1.5 (unreleased)
+0.1.5 (2018-05-25)
 ------------------
 
 - fixed default profile in upgrade step
