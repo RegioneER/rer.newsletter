@@ -85,8 +85,8 @@ class MessageSendingTest(form.Form):
             body = portal.portal_transforms.convertTo('text/mail', body)
 
             response_email = None
-            if ns_obj.response_email:
-                response_email = ns_obj.response_email
+            if ns_obj.sender_email:
+                response_email = ns_obj.sender_email
             else:
                 response_email = u'noreply@rer.it'
 

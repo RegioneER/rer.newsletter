@@ -117,7 +117,7 @@ class SendMessageView(form.Form):
             '@@send_success_view?' + urlencode({'active_users': active_users}))
         api.portal.show_message(
             message=_(u'message_send', default=u'Il messaggio è stato '
-                      'inviato a {0} iscritti'.format(
+                      'inviato a {0} iscritti al canale'.format(
                           active_users)),
             request=self.request,
             type=u'info'

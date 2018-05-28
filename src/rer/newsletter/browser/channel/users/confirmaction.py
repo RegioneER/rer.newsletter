@@ -37,8 +37,8 @@ class ConfirmAction(BrowserView):
             'text/mail', mail_text)
 
         response_email = None
-        if self.context.response_email:
-            response_email = self.context.response_email
+        if self.context.sender_email:
+            response_email = self.context.sender_email
         else:
             response_email = u'noreply@rer.it'
 
