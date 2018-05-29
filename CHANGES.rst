@@ -6,7 +6,8 @@ Changelog
 0.1.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed some minor label
+  [eikichi18]
 
 
 0.1.5 (2018-05-25)

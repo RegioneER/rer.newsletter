@@ -46,9 +46,9 @@ class ProcessQueue(BrowserView):
             mail_text = portal.portal_transforms.convertTo(
                 'text/mail', mail_text)
 
-            response_email = None
-            if channel.response_email:
-                response_email = channel.response_email
+            # response_email = None
+            # if channel.response_email:
+            #     response_email = channel.response_email
 
             subject = 'Risultato invio asincrono di {0} del {1} del '.format(
                 message.title, channel.title) \
@@ -58,7 +58,7 @@ class ProcessQueue(BrowserView):
             mail_host.send(
                 mail_text.getData(),
                 mto=channel.sender_email,
-                mfrom=response_email,
+                mfrom=channel.sender_email,
                 subject=subject,
                 charset='utf-8',
                 msg_type='text/html'
