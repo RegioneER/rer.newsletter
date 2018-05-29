@@ -63,6 +63,7 @@ class MessageSendingTest(form.Form):
             )
             parameters = {
                 'portal_name': api.portal.get().title,
+                'channel_name': ns_obj.title,
                 'unsubscribe_link': ns_obj.absolute_url()
                 + '/@@unsubscribe',
             }
