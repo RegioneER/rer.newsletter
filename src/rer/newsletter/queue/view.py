@@ -107,6 +107,7 @@ class ProcessQueue(BrowserView):
             )
             parameters = {
                 'portal_name': api.portal.get().title,
+                'channel_name': channel.title,
                 'unsubscribe_link': channel.absolute_url()
                 + '/@@unsubscribe',
             }
