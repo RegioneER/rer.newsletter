@@ -6,7 +6,8 @@ Changelog
 0.1.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed buildout
+  [eikichi18]
 
 
 0.1.6 (2018-06-19)
