@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.1.7 (unreleased)
+0.1.7 (2018-06-19)
 ------------------
 
 - Fixed buildout
