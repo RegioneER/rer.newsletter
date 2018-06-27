@@ -75,7 +75,7 @@ class SendMessageView(form.Form):
         messageQueue = queryUtility(IMessageQueue)
         isQueuePresent = queryUtility(ITaskQueue, name=QUEUE_NAME)
         if isQueuePresent is not None and messageQueue is not None:
-            # in questo modo se non riesce a connettersi con redis allora si spacca #noqa
+            # se non riesce a connettersi con redis allora si spacca
             messageQueue.start(self.context)
         else:
             # invio sincrono del messaggio
