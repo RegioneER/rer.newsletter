@@ -47,7 +47,7 @@ setup(
         'premailer==3.1.1',
         'plone.directives.form',
         'plone.app.tiles',
-        'collective.taskqueue',
+        'collective.taskqueue [redis]',
     ],
     extras_require={
         'test': [

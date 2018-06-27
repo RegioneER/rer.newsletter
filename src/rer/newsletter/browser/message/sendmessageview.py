@@ -74,10 +74,9 @@ class SendMessageView(form.Form):
 
         messageQueue = queryUtility(IMessageQueue)
         isQueuePresent = queryUtility(ITaskQueue, name=QUEUE_NAME)
-        if bool(getattr(isQueuePresent, 'queue', None)) and bool(messageQueue):
-            messageQueue.start(
-                self.context,
-            )
+        if isQueuePresent is not None and messageQueue is not None:
+            # in questo modo se non riesce a connettersi con redis allora si spacca #noqa
+            messageQueue.start(self.context)
         else:
             # invio sincrono del messaggio
             api_channel.sendMessage(
@@ -93,7 +92,7 @@ class SendMessageView(form.Form):
             now = datetime.today().strftime('%d/%m/%Y %H:%M:%S')
 
             if status != OK:
-                logger.exception(
+                logger.warning(
                     'Problems...{0}'.format(status),
                 )
                 api.portal.show_message(
