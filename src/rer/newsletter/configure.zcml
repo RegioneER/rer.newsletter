@@ -37,6 +37,7 @@
   <include package=".portlets" />
   <include package=".tiles" />
   <include package=".queue" />
+  <include package=".contentrules" />
 
   <genericsetup:registerProfile
       name="default"
