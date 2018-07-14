@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from rer.newsletter import _
-from zope import schema
-from zope.interface import Interface
+# from rer.newsletter import _
+# from zope import schema
+# from zope.interface import Interface
 
 
 # class INotifyOnSubscribe(Interface):
