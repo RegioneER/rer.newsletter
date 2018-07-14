@@ -3,4 +3,9 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="rer.newsletter">
 
+    <subscriber
+      for="rer.newsletter.contentrules.events.ISubscriptionEvent"
+      handler=".handlers.subscribeNotification"
+    />
+
 </configure>
