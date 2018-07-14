@@ -7,7 +7,7 @@
 # class INotifyOnSubscribe(Interface):
 #     source = schema.TextLine(
 #         title=_(u'Sender email'),
-#         description=_(u'The email address that sends the email. If no email is \
+#    description=_(u'The email address that sends the email. If no email is \
 #             provided here, it will use the portal from address.'),
 #         required=False
 #     )
@@ -23,7 +23,7 @@
 # class INotifyOnUnsubscribe(Interface):
 #     source = schema.TextLine(
 #         title=_(u'Sender email'),
-#         description=_(u'The email address that sends the email. If no email is \
+#    description=_(u'The email address that sends the email. If no email is \
 #             provided here, it will use the portal from address.'),
 #         required=False
 #     )
