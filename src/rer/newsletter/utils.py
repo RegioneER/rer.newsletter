@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
+from .utility.customtitle import ICustomTitle
 from DateTime import DateTime
 from plone import api
-from plone.registry.interfaces import IRegistry
-from rer.agidtheme.base.interfaces import IRERSiteSchema
-from rer.agidtheme.base.utility.interfaces import ICustomFields
 from zope.component import getUtility
 
 
@@ -34,13 +32,6 @@ def addToHistory(message, active_users):
 
 
 def get_site_title():
-    registry = getUtility(IRegistry)
-    try:
-        site_settings = registry.forInterface(IRERSiteSchema,  # noqa
-                                              prefix='plone',
-                                              check=False)
-        fields_value = getUtility(ICustomFields)
-        return fields_value.titleLang(
-            getattr(site_settings, 'site_title') or {})
-    except Exception:
-        return api.portal.get().title
+    fields_value = getUtility(ICustomTitle)
+    return fields_value.titleLang(
+        api.portal.get_registry_record('plone.site_title') or {})
