@@ -13,6 +13,7 @@ from rer.newsletter.queue.interfaces import IMessageQueue
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utils import addToHistory
+from rer.newsletter.utils import get_site_title
 from urllib import urlencode
 from z3c.form import button
 from z3c.form import form
@@ -60,7 +61,7 @@ class SendMessageView(form.Form):
             '@@unsubscribe_channel_template'
         )
         parameters = {
-            'portal_name': api.portal.get().title,
+            'portal_name': get_site_title(),
             'channel_name': channel.title,
             'unsubscribe_link': channel.absolute_url()
             + '/@@unsubscribe',

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# from rer.newsletter import logger
 from plone import api
 from plone import schema
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter.content.channel import Channel
+from rer.newsletter.utils import get_site_title
 from smtplib import SMTPRecipientsRefused
 from z3c.form import button
 from z3c.form import field
@@ -62,7 +62,7 @@ class MessageSendingTest(form.Form):
                 '@@unsubscribe_channel_template'
             )
             parameters = {
-                'portal_name': api.portal.get().title,
+                'portal_name': get_site_title(),
                 'channel_name': ns_obj.title,
                 'unsubscribe_link': ns_obj.absolute_url()
                 + '/@@unsubscribe',

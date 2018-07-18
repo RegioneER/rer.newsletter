@@ -12,6 +12,7 @@ from rer.newsletter import logger
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import SUBSCRIBED
 from rer.newsletter.utility.channel import UNHANDLED
+from rer.newsletter.utils import get_site_title
 from z3c.form import button
 from zope.component import getMultiAdapter
 from zope.component import getUtility
@@ -117,7 +118,7 @@ class SubscribeForm(form.SchemaForm):
                 'footer': self.context.footer,
                 'style': self.context.css_style,
                 'activationUrl': url,
-                'portal_name': api.portal.get().title,
+                'portal_name': get_site_title(),
             }
 
             mail_text = mail_template(**parameters)
@@ -139,7 +140,7 @@ class SubscribeForm(form.SchemaForm):
                 mfrom=response_email,
                 subject='Conferma la tua iscrizione alla Newsletter '
                 + self.context.title + ' del portale '
-                + api.portal.get().title,
+                + get_site_title(),
                 charset='utf-8',
                 msg_type='text/html',
                 immediate=True
