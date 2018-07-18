@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from .utility.customtitle import ICustomTitle
 from DateTime import DateTime
 from plone import api
+from zope.component import getUtility
 
 
 def addToHistory(message, active_users):
@@ -27,3 +29,9 @@ def addToHistory(message, active_users):
 
     # message.modification_date = entry.get('time', None)
     # message.reindexObject(idxs=['modified'])
+
+
+def get_site_title():
+    fields_value = getUtility(ICustomTitle)
+    return fields_value.titleLang(
+        api.portal.get_registry_record('plone.site_title') or {})

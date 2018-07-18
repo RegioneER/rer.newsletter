@@ -2,9 +2,13 @@
 from plone import api
 from Products.Five.browser import BrowserView
 from rer.newsletter import _
+from rer.newsletter.contentrules.events import SubscriptionEvent
+from rer.newsletter.contentrules.events import UnsubscriptionEvent
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
+from rer.newsletter.utils import get_site_title
 from zope.component import getUtility
+from zope.event import notify
 
 
 # disable CSRF
@@ -26,7 +30,7 @@ class ConfirmAction(BrowserView):
             'header': self.context.header,
             'footer': self.context.footer,
             'style': self.context.css_style,
-            'portal_name': api.portal.get().title,
+            'portal_name': get_site_title(),
             'channel_name': self.context.title,
         }
 
@@ -69,6 +73,7 @@ class ConfirmAction(BrowserView):
             )
             # mandare mail di avvenuta conferma
             if response == OK:
+                notify(SubscriptionEvent(self.context, user))
                 self._sendGenericMessage(
                     template='activeuserconfirm_template',
                     receiver=user,
@@ -79,7 +84,7 @@ class ConfirmAction(BrowserView):
                     u'generic_activate_message_success',
                     default=u'Ti sei iscritto alla newsletter '
                     + self.context.title + ' del portale ' +
-                    api.portal.get().title
+                    get_site_title()
                 )
 
         elif action == u'unsubscribe':
@@ -89,6 +94,7 @@ class ConfirmAction(BrowserView):
             )
             # mandare mail di avvenuta cancellazione
             if response == OK:
+                notify(UnsubscriptionEvent(self.context, user))
                 self._sendGenericMessage(
                     template='deleteuserconfirm_template',
                     receiver=user,

@@ -11,6 +11,7 @@ from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utility.channel import UNHANDLED
 from rer.newsletter.utils import addToHistory
+from rer.newsletter.utils import get_site_title
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.interface import alsoProvides
@@ -52,7 +53,7 @@ class ProcessQueue(BrowserView):
 
             subject = 'Risultato invio asincrono di {0} del {1} del '.format(
                 message.title, channel.title) \
-                + 'portale {0}'.format(api.portal.get().title)
+                + 'portale {0}'.format(get_site_title())
 
             mail_host = api.portal.get_tool(name='MailHost')
             mail_host.send(
@@ -106,7 +107,7 @@ class ProcessQueue(BrowserView):
                 '@@unsubscribe_channel_template'
             )
             parameters = {
-                'portal_name': api.portal.get().title,
+                'portal_name': get_site_title(),
                 'channel_name': channel.title,
                 'unsubscribe_link': channel.absolute_url()
                 + '/@@unsubscribe',

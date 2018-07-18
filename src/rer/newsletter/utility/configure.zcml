@@ -12,4 +12,8 @@
         provides=".channel.IChannelUtility"
         factory=".base.BaseHandler" />
 
+      <utility
+        provides=".customtitle.ICustomTitle"
+        factory=".customtitle.CustomTitleHandler" />
+
 </configure>

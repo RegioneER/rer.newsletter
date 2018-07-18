@@ -6,7 +6,12 @@ Changelog
 0.1.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Added Redis for asynchronous task
+- Fixed label of close button on subscription modal
+- Added Translatation
+- Fixed the way in which it takes the title of the site
+- Added content rules for user subscription and unsubscription
+  [eikichi18]
 
 
 0.1.7 (2018-06-19)
