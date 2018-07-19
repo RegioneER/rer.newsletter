@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.1.8 (unreleased)
+0.1.8 (2018-07-19)
 ------------------
 
 - Added Redis for asynchronous task
