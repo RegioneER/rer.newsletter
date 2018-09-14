@@ -108,6 +108,9 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
       loadLinksWithinModal: true,
       templateOptions: {
         classFooterName: 'plone-modal-footer subscribe_modal',
+      },
+      actionOptions: {
+        timeout: 15000
       }
     });
     modal.on('afterDraw', function(){

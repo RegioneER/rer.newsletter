@@ -93,7 +93,8 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
         closeOnClick: false
       },
       actionOptions: {
-        onSuccess: reload_table
+        onSuccess: reload_table,
+        timeout: 15000
       },
     });
     new Modal($('#button-import-users'), {
@@ -102,7 +103,8 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
         closeOnClick: false
       },
       actionOptions: {
-        onSuccess: reload_table
+        onSuccess: reload_table,
+        timeout: 15000
       },
     });
 
