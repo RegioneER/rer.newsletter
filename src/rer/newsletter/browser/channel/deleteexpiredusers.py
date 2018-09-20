@@ -2,13 +2,11 @@
 from ..settings import ISettingsSchema
 from datetime import datetime
 from datetime import timedelta
-from persistent.dict import PersistentDict
 from plone import api
 from plone.protect.interfaces import IDisableCSRFProtection
 from Products.Five.browser import BrowserView
 from rer.newsletter import logger
-from rer.newsletter.utility.base import KEY
-from zope.annotation.interfaces import IAnnotations
+from rer.newsletter.utils import storage
 from zope.interface import alsoProvides
 
 
@@ -24,18 +22,13 @@ class DeleteExpiredUsersView(BrowserView):
         expired_time_token = api.portal.get_registry_record(
             'expired_time_token', ISettingsSchema)
 
-        annotations = IAnnotations(channel.getObject())
-        valid_users_dict = PersistentDict({})
-        if KEY in annotations:
-            for val in annotations[KEY].keys():
-                creation_date = datetime.strptime(
-                    annotations[KEY][val]['creation_date'],
-                    '%d/%m/%Y %H:%M:%S')
-                if expired_date < creation_date \
-                        + timedelta(hours=expired_time_token) or \
-                        annotations[KEY][val]['is_active']:
-                    valid_users_dict[val] = annotations[KEY][val]
-            annotations[KEY] = valid_users_dict
+        annotations = storage(channel.getObject())
+        for val in annotations.keys():
+            creation_date = datetime.strptime(
+                annotations[val]['creation_date'],
+                '%d/%m/%Y %H:%M:%S')
+            if creation_date + timedelta(hours=expired_time_token) < expired_date and not annotations[val]['is_active']:  # noqa
+                del annotations[val]
 
     def __call__(self):
         alsoProvides(self.request, IDisableCSRFProtection)

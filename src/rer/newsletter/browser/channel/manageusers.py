@@ -70,7 +70,8 @@ class ManageUsers(BrowserView):
             for user in userListJson:
                 writer.writerow(user)
 
-            filename = '{title}-user-list.csv'.format(title=self.context.title)
+            filename = '{title}-user-list.csv'.format(
+                title=self.context.id)
 
             self.request.response.setHeader('Content-Type', 'text/csv')
             self.request.response.setHeader(

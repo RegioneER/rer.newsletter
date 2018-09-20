@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from .utility.customtitle import ICustomTitle
 from DateTime import DateTime
+from persistent.dict import PersistentDict
 from plone import api
+from rer.newsletter.utility.base import KEY
+from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 
 
@@ -35,3 +38,11 @@ def get_site_title():
     fields_value = getUtility(ICustomTitle)
     return fields_value.titleLang(
         api.portal.get_registry_record('plone.site_title') or {})
+
+
+def storage(item):
+    if item:
+        annotations = IAnnotations(item)
+        if KEY not in annotations:
+            annotations[KEY] = PersistentDict({})
+        return annotations[KEY]
