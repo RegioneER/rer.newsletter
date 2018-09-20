@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.1.9 (unreleased)
+0.1.9 (2018-09-20)
 ------------------
 
 - Fixed modal timeout
