@@ -6,7 +6,9 @@ Changelog
 0.1.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Removed layer for delete_expired_users view.
+- Fixed view for delete expired users.
+  [eikichi18]
 
 
 0.1.9 (2018-09-20)

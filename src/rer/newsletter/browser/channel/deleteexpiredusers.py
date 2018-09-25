@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-from ..settings import ISettingsSchema
 from datetime import datetime
 from datetime import timedelta
-from plone import api
 from plone.protect.interfaces import IDisableCSRFProtection
 from Products.Five.browser import BrowserView
 from rer.newsletter import logger
 from rer.newsletter.utils import storage
 from zope.interface import alsoProvides
+from Products.CMFCore.utils import getToolByName
 
 
 class DeleteExpiredUsersView(BrowserView):
@@ -19,8 +18,12 @@ class DeleteExpiredUsersView(BrowserView):
 
     def update_annotations(self, channel):
         expired_date = datetime.now()
-        expired_time_token = api.portal.get_registry_record(
-            'expired_time_token', ISettingsSchema)
+        import pdb
+        pdb.set_trace()
+        expired_time_token = self.context.portal_registry.get(
+            'rer.newsletter.browser.settings.ISettingsSchema.expired_time_token',  # noqa
+            None
+        )
 
         annotations = storage(channel.getObject())
         for val in annotations.keys():
@@ -33,10 +36,11 @@ class DeleteExpiredUsersView(BrowserView):
     def __call__(self):
         alsoProvides(self.request, IDisableCSRFProtection)
         logger.info(u'START:Remove expired user from channels')
-        channels_brain = api.content.find(
-            context=api.portal.get(),
-            portal_type='Channel'
-        )
+
+        pc = getToolByName(self.context, 'portal_catalog')
+        channels_brain = pc.unrestrictedSearchResults(
+            {'portal_type': 'Channel'})
+
         map(lambda x: self.update_annotations(x), channels_brain)
         logger.info(u'DONE:Remove expired user from channels')
         return True

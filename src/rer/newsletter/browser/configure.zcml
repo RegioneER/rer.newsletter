@@ -251,7 +251,6 @@
   <browser:page
     for="*"
     name="delete_expired_users"
-    layer="rer.newsletter.interfaces.IRerNewsletterLayer"
     permission="rer.newsletter.ManageNewsletter"
     class=".channel.deleteexpiredusers.DeleteExpiredUsersView"
     />
