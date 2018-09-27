@@ -51,9 +51,9 @@ class ProcessQueue(BrowserView):
             # if channel.response_email:
             #     response_email = channel.response_email
 
-            subject = 'Risultato invio asincrono di {0} del {1} del '.format(
+            subject = u'Risultato invio asincrono di {0} del {1} del '.format(
                 message.title, channel.title) \
-                + 'portale {0}'.format(get_site_title())
+                + u'portale {0}'.format(get_site_title())
 
             mail_host = api.portal.get_tool(name='MailHost')
             mail_host.send(

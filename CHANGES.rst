@@ -6,7 +6,8 @@ Changelog
 0.1.11 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Fix ascii encode problem on site name.
+  [eikichi18]
 
 
 0.1.10 (2018-09-27)
