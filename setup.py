@@ -14,7 +14,7 @@ long_description = '\n\n'.join([
 
 setup(
     name='rer.newsletter',
-    version='0.1.10.dev0',
+    version='0.1.10',
     description="An add-on for Plone",
     long_description=long_description,
     # Get more from https://pypi.python.org/pypi?%3Aaction=list_classifiers

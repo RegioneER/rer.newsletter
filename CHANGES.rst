@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.1.10 (unreleased)
+0.1.10 (2018-09-27)
 -------------------
 
 - Added number of removed user on delete_expired_users view.
