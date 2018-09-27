@@ -15,6 +15,7 @@ class DeleteExpiredUsersView(BrowserView):
     def __init__(self, context, request):
         self.context = context
         self.request = request
+        self.user_removed = 0
 
     def update_annotations(self, channel):
         expired_date = datetime.now()
@@ -30,6 +31,7 @@ class DeleteExpiredUsersView(BrowserView):
                 '%d/%m/%Y %H:%M:%S')
             if creation_date + timedelta(hours=expired_time_token) < expired_date and not annotations[val]['is_active']:  # noqa
                 del annotations[val]
+                self.user_removed += 1
 
     def __call__(self):
         alsoProvides(self.request, IDisableCSRFProtection)
@@ -40,5 +42,6 @@ class DeleteExpiredUsersView(BrowserView):
             {'portal_type': 'Channel'})
 
         map(lambda x: self.update_annotations(x), channels_brain)
-        logger.info(u'DONE:Remove expired user from channels')
+        logger.info(u'DONE:Remove {0} expired user from channels'.format(
+            self.user_removed))
         return True
