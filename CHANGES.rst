@@ -6,6 +6,7 @@ Changelog
 0.1.10 (unreleased)
 -------------------
 
+- Added number of removed user on delete_expired_users view.
 - Removed layer for delete_expired_users view.
 - Fixed view for delete expired users.
   [eikichi18]
