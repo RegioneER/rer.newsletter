@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.1.11 (unreleased)
+0.1.11 (2018-09-27)
 -------------------
 
 - Fix ascii encode problem on site name.
