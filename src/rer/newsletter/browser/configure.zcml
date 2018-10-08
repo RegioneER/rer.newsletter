@@ -88,7 +88,7 @@
 
   <!-- view for message preview -->
   <browser:page
-    for="rer.newsletter.interfaces.IMessage"
+    for="rer.newsletter.behaviors.ships.IShippableMarker"
     name="messagepreview_view"
     class=".message.messagepreview.MessagePreview"
     template="message/templates/messagepreview.pt"
@@ -97,7 +97,7 @@
 
   <!-- view for sending test of message -->
   <browser:page
-    for="rer.newsletter.interfaces.IMessage"
+    for="rer.newsletter.behaviors.ships.IShippableMarker"
     name="sendingtest_view"
     class=".message.sendingtest.message_sending_test"
     permission="zope2.View"
@@ -132,7 +132,7 @@
 
   <!-- view for send success messagge-->
   <browser:page
-    for="rer.newsletter.interfaces.IMessage"
+    for="rer.newsletter.behaviors.ships.IShippableMarker"
     name="send_success_view"
     class=".message.sendmessagesupportview.SendMessageSuccessView"
     template="message/templates/sendmessagesuccessview.pt"
@@ -141,7 +141,7 @@
 
   <!-- view for send message -->
   <browser:page
-    for="rer.newsletter.interfaces.IMessage"
+    for="rer.newsletter.behaviors.ships.IShippableMarker"
     name="send_message_view"
     class=".message.sendmessageview.message_sending_view"
     permission="rer.newsletter.SendMessage"
@@ -217,6 +217,16 @@
     name="folder_listing"
     />
 
+  <!-- vista da usare come template per inviare le collezioni -->
+  <browser:page
+    for="*"
+    layer="rer.newsletter.interfaces.IRerNewsletterLayer"
+    template="message/templates/collection_sending_view.pt"
+    permission="zope2.View"
+    name="collection_sending_view"
+    class=".message.collectionview.CollectionView"
+    />
+
   <!-- vista che controlla che il messaggio sia stato inviato -->
   <browser:page
     for="*"
@@ -236,10 +246,11 @@
     permission="rer.newsletter.ManageNewsletter"
     template="channel/templates/channelviewlet.pt"
     />
+
   <!-- message viewlet -->
   <browser:viewlet
     name="manage_message_viewlet"
-    for="rer.newsletter.interfaces.IMessage"
+    for="rer.newsletter.behaviors.ships.IShippableMarker"
     manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
     class=".message.messageviewlet.MessageManagerViewlet"
     layer="rer.newsletter.interfaces.IRerNewsletterLayer"

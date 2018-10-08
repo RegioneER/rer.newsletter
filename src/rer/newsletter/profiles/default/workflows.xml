@@ -5,6 +5,9 @@
    <type type_id="Message">
      <bound-workflow workflow_id="message_workflow" />
    </type>
+   <type type_id="Shippable Collection">
+     <bound-workflow workflow_id="message_workflow" />
+   </type>
  </bindings>
 
  <object name="channel_workflow" meta_type="Workflow" />

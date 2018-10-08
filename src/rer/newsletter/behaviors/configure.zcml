@@ -8,6 +8,8 @@
       title="Ships Behaviors"
       description="Adds shippable workflows to content type"
       provides=".ships.IShippable"
+      factory=".ships.Shippable"
+      marker=".ships.IShippableMarker"
       />
 
 </configure>
