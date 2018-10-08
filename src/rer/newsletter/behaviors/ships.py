@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from zope.interface import alsoProvides
-from zope.interface import Interface
-from zope.component import adapter
+from plone import api
 from plone.app.contenttypes.content import Collection
 from rer.newsletter.content.message import Message
-from plone import api
+from zope.component import adapter
+from zope.interface import alsoProvides
+from zope.interface import Interface
 
 
 class IShippableMarker(Interface):

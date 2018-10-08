@@ -5,6 +5,7 @@ from persistent.dict import PersistentDict
 from plone import api
 from rer.newsletter import _
 from rer.newsletter import logger
+from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.utility.channel import ALREADY_ACTIVE
 from rer.newsletter.utility.channel import ALREADY_SUBSCRIBED
 from rer.newsletter.utility.channel import IChannelUtility
@@ -19,7 +20,6 @@ from smtplib import SMTPRecipientsRefused
 from zope.annotation.interfaces import IAnnotations
 from zope.interface import implementer
 from zope.interface import Invalid
-from rer.newsletter.behaviors.ships import IShippable
 
 import json
 import re

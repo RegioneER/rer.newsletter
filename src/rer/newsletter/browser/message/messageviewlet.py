@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
+from Acquisition import aq_chain
 from plone import api
 from plone.app.layout.viewlets import ViewletBase
-from zope.annotation.interfaces import IAnnotations
-from Acquisition import aq_chain
 from rer.newsletter.content.channel import Channel
+from zope.annotation.interfaces import IAnnotations
 
 
 KEY = 'rer.newsletter.message.details'

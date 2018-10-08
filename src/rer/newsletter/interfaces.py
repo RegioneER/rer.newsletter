@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone import schema
+from plone.app.contenttypes.interfaces import ICollection
 from plone.app.textfield import RichText as RichTextField
 from plone.app.z3cform.widget import RichTextFieldWidget
 from plone.autoform import directives as form
@@ -7,7 +8,6 @@ from plone.supermodel import model
 from rer.newsletter import _
 from zope.interface import Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from plone.app.contenttypes.interfaces import ICollection
 
 import uuid
 
