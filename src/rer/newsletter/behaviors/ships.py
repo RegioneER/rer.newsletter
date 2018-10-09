@@ -8,11 +8,11 @@ from zope.interface import Interface
 
 
 class IShippableMarker(Interface):
-    pass
+    """ Marker interface for shippable object """
 
 
 class IShippable(Interface):
-    """Marker interface for ships object"""
+    """Interface for shippable object"""
 
 
 alsoProvides(IShippable)
