@@ -208,15 +208,6 @@
     permission="zope2.View"
     />
 
-  <browser:page
-    for="rer.newsletter.interfaces.IChannel"
-    class=".channel.channelview.ChannelFolderView"
-    layer="rer.newsletter.interfaces.IRerNewsletterLayer"
-    template="channel/templates/listing.pt"
-    permission="zope2.View"
-    name="folder_listing"
-    />
-
   <!-- vista da usare come template per inviare le collezioni -->
   <browser:page
     for="*"
