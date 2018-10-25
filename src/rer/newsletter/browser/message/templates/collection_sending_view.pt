@@ -15,7 +15,7 @@
       <metal:entry fill-slot="entry">
 
         <article class="tileItem">
-          <h2 class="tileHeadline" metal:define-macro="listitem">
+          <h2 class="tileHeadline obj-title" metal:define-macro="listitem">
             <a class="summary url"
                 tal:attributes="href item_link;
                                 title item_type"
@@ -24,7 +24,8 @@
             </a>
           </h2>
 
-          <div tal:define="thumb_url python:item_url + '/@@images/image/' + thumb_scale_summary;"
+          <div class="obj-image"
+               tal:define="thumb_url python:item_url + '/@@images/image/' + thumb_scale_summary;"
                tal:condition="python: item_has_image and thumb_scale_summary"
                tal:attributes="class python: 'tileImage' if item_description else 'tileImageNoFloat'">
             <a tal:attributes="href item_link">
