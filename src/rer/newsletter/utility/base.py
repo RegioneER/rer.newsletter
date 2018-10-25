@@ -5,6 +5,7 @@ from persistent.dict import PersistentDict
 from plone import api
 from rer.newsletter import _
 from rer.newsletter import logger
+from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.utility.channel import ALREADY_ACTIVE
 from rer.newsletter.utility.channel import ALREADY_SUBSCRIBED
 from rer.newsletter.utility.channel import IChannelUtility
@@ -327,12 +328,14 @@ class BaseHandler(object):
     def _getMessage(self, channel, message, unsubscribe_footer):
         logger.debug('getMessage %s %s', channel, message.title)
 
+        content = IShippable(message).message_content
+
         body = u''
         body += channel.header.output if channel.header else u''
         body += u'<style>{css}</style>'.format(css=channel.css_style or u'')
         body += u'<div id="message_description"><p>{desc}</p></div>'.format(
             desc=message.description or u'')
-        body += message.text.output if message.text else u''
+        body += content
         body += channel.footer.output if channel.footer else u''
         body += unsubscribe_footer if unsubscribe_footer else u''
 

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from Acquisition import aq_chain
 from plone import api
 from plone.app.layout.viewlets import ViewletBase
+from rer.newsletter.content.channel import Channel
 from zope.annotation.interfaces import IAnnotations
 
 
@@ -12,7 +14,14 @@ class MessageManagerViewlet(ViewletBase):
     def update(self):
         pass
 
+    def _getChannel(self):
+        return filter(lambda x: isinstance(x, Channel), aq_chain(self.context))
+
     def canManageNewsletter(self):
+
+        if not self._getChannel():
+            return False
+
         isEditor = 'Editor' in api.user.get_roles(obj=self.context)
         hasManageNewsletter = api.user.get_permissions(obj=self.context).get(
             'rer.newsletter: Manage Newsletter') and 'Gestore Newsletter' not \
@@ -23,12 +32,13 @@ class MessageManagerViewlet(ViewletBase):
             return False
 
     def canSendMessage(self):
+
+        if not self._getChannel():
+            return False
+
         if (api.content.get_state(obj=self.context) == 'published'
                 and api.user.get_permissions(obj=self.context).get(
                 'rer.newsletter: Send Newsletter')):
-                # or (api.content.get_state(obj=self.context) == 'published'
-                #     and 'Gestore Newsletter' in api.user.get_roles(
-                #     obj=self.context)):
             return True
         else:
             return False

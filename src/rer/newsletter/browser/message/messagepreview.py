@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.Five import BrowserView
+from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.content.channel import Channel
 
 
@@ -20,7 +21,7 @@ class MessagePreview(BrowserView):
         if channel:
             body = ''
             body = channel.header.output if channel.header else u''
-            body += self.context.text.output if self.context.text else u''
+            body += IShippable(self.context).message_content
             body += channel.footer.output if channel.footer else u''
 
         return body

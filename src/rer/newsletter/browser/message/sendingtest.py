@@ -4,6 +4,7 @@ from plone import schema
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
+from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.content.channel import Channel
 from rer.newsletter.utils import get_site_title
 from smtplib import SMTPRecipientsRefused
@@ -77,7 +78,7 @@ class MessageSendingTest(form.Form):
             body += u'<div id="message_description">' + \
                 u'<p>{desc}</p></div>'.format(
                     desc=message_obj.description or u'')
-            body += message_obj.text.output if message_obj.text else u''
+            body += IShippable(message_obj).message_content
             body += ns_obj.footer.output if ns_obj.footer else u''
             body += unsubscribe_footer_text if unsubscribe_footer_text else u''
 

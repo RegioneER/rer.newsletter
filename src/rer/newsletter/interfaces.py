@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone import schema
+from plone.app.contenttypes.interfaces import ICollection
 from plone.app.textfield import RichText as RichTextField
 from plone.app.z3cform.widget import RichTextFieldWidget
 from plone.autoform import directives as form
@@ -13,6 +14,10 @@ import uuid
 
 def default_id_channel():
     return unicode(uuid.uuid4())
+
+
+class IShippableCollection(ICollection):
+    pass
 
 
 class IRerNewsletterLayer(IDefaultBrowserLayer):
