@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2018-07-18 14:36+0000\n"
+"POT-Creation-Date: 2018-10-25 22:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Add Rule for newsletter's unsubscribe"
 msgstr ""
 
-#: ./behaviors/configure.zcml:11
+#: ./behaviors/configure.zcml:13
 msgid "Adds shippable workflows to content type"
 msgstr ""
 
@@ -46,12 +46,16 @@ msgstr ""
 msgid "Configure element"
 msgstr ""
 
+#: ./profiles/default/types/Shippable_Collection.xml
+msgid "Edit"
+msgstr ""
+
 #: ./contentrules/forms.py:30
 msgid "Edit Rule for newsletter's subscribe"
 msgstr ""
 
 #. Default: "Email"
-#: ./browser/message/sendingtest.py:22
+#: ./browser/message/sendingtest.py:23
 msgid "Email"
 msgstr ""
 
@@ -88,7 +92,11 @@ msgstr ""
 msgid "Sender email"
 msgstr ""
 
-#: ./behaviors/configure.zcml:11
+#: ./profiles/default/types/Shippable_Collection.xml
+msgid "Shippable Collection"
+msgstr ""
+
+#: ./behaviors/configure.zcml:13
 msgid "Ships Behaviors"
 msgstr ""
 
@@ -122,6 +130,10 @@ msgstr ""
 
 #: ./contentrules/configure.zcml:18
 msgid "Utente conferma la disiscrizione dal canale della newsletter"
+msgstr ""
+
+#: ./profiles/default/types/Shippable_Collection.xml
+msgid "View"
 msgstr ""
 
 #. Default: "Channel Created"
@@ -172,7 +184,7 @@ msgid "cronologia_canale"
 msgstr ""
 
 #. Default: "CSS Style"
-#: ./interfaces.py:85
+#: ./interfaces.py:90
 msgid "css_style"
 msgstr ""
 
@@ -187,7 +199,7 @@ msgid "delete_user"
 msgstr ""
 
 #. Default: "Channel ID"
-#: ./interfaces.py:94
+#: ./interfaces.py:99
 msgid "description_IDChannel"
 msgstr ""
 
@@ -197,7 +209,7 @@ msgid "description_css_portlet_class"
 msgstr ""
 
 #. Default: "style for mail"
-#: ./interfaces.py:86
+#: ./interfaces.py:91
 msgid "description_css_style"
 msgstr ""
 
@@ -217,12 +229,12 @@ msgid "description_file"
 msgstr ""
 
 #. Default: "Footer for message of this channel"
-#: ./interfaces.py:77
+#: ./interfaces.py:82
 msgid "description_footer_channel"
 msgstr ""
 
 #. Default: "Header for message of this channel"
-#: ./interfaces.py:68
+#: ./interfaces.py:73
 msgid "description_header_channel"
 msgstr ""
 
@@ -242,7 +254,7 @@ msgid "description_portlet_header"
 msgstr ""
 
 #. Default: "Informativa sulla privacy per questo canale"
-#: ./interfaces.py:59
+#: ./interfaces.py:64
 msgid "description_privacy_channel"
 msgstr ""
 
@@ -252,17 +264,17 @@ msgid "description_remove_subscribers"
 msgstr ""
 
 #. Default: "Response email of channel"
-#: ./interfaces.py:52
+#: ./interfaces.py:57
 msgid "description_response_email"
 msgstr ""
 
 #. Default: "Email of sender"
-#: ./interfaces.py:38
+#: ./interfaces.py:43
 msgid "description_sender_email"
 msgstr ""
 
 #. Default: "Fullname of sender"
-#: ./interfaces.py:31
+#: ./interfaces.py:36
 msgid "description_sender_name"
 msgstr ""
 
@@ -277,7 +289,7 @@ msgid "description_source_link"
 msgstr ""
 
 #. Default: "Subject for channel message"
-#: ./interfaces.py:45
+#: ./interfaces.py:50
 msgid "description_subject_mail"
 msgstr ""
 
@@ -287,7 +299,7 @@ msgid "destination_link"
 msgstr ""
 
 #. Default: "Email to send the test message"
-#: ./browser/message/sendingtest.py:23
+#: ./browser/message/sendingtest.py:24
 msgid "email_sendingtest_description"
 msgstr ""
 
@@ -302,7 +314,7 @@ msgid "export_user_list"
 msgstr ""
 
 #. Default: "Footer of message"
-#: ./interfaces.py:76
+#: ./interfaces.py:81
 msgid "footer_channel"
 msgstr ""
 
@@ -327,7 +339,7 @@ msgid "generic_problem_add_channel"
 msgstr ""
 
 #. Default: "Una o piu delle mail inserite non sono valide"
-#: ./utility/base.py:40
+#: ./utility/base.py:41
 msgid "generic_problem_email_validation"
 msgstr ""
 
@@ -337,12 +349,12 @@ msgid "generic_subscribe_message_success"
 msgstr ""
 
 #. Default: "Header of message"
-#: ./interfaces.py:67
+#: ./interfaces.py:72
 msgid "header_channel"
 msgstr ""
 
 #. Default: "Channel ID"
-#: ./interfaces.py:93
+#: ./interfaces.py:98
 msgid "idChannel"
 msgstr ""
 
@@ -352,7 +364,7 @@ msgid "import_user_list"
 msgstr ""
 
 #. Default: "Is Subscribable"
-#: ./interfaces.py:100
+#: ./interfaces.py:105
 msgid "is_subscribable"
 msgstr ""
 
@@ -377,7 +389,7 @@ msgid "message_wrong_captcha"
 msgstr ""
 
 #. Default: "Informativa sulla privacy"
-#: ./interfaces.py:58
+#: ./interfaces.py:63
 msgid "privacy_channel"
 msgstr ""
 
@@ -390,7 +402,7 @@ msgid "rer.newsletter (uninstall)"
 msgstr ""
 
 #. Default: "Response email"
-#: ./interfaces.py:51
+#: ./interfaces.py:56
 msgid "response_email"
 msgstr ""
 
@@ -400,7 +412,7 @@ msgid "send_message_confirm"
 msgstr ""
 
 #. Default: "Send"
-#: ./browser/message/sendingtest.py:36
+#: ./browser/message/sendingtest.py:37
 msgid "send_sendingtest"
 msgstr ""
 
@@ -410,12 +422,12 @@ msgid "send_sendingview"
 msgstr ""
 
 #. Default: "Sender email"
-#: ./interfaces.py:37
+#: ./interfaces.py:42
 msgid "sender_email"
 msgstr ""
 
 #. Default: "Sender Fullname"
-#: ./interfaces.py:30
+#: ./interfaces.py:35
 msgid "sender_name"
 msgstr ""
 
@@ -430,7 +442,7 @@ msgid "status_user_subscribed"
 msgstr ""
 
 #. Default: "Subject email"
-#: ./interfaces.py:44
+#: ./interfaces.py:49
 msgid "subject_email"
 msgstr ""
 

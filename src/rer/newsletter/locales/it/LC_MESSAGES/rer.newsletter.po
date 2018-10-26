@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2018-07-18 14:36+0000\n"
+"POT-Creation-Date: 2018-10-25 22:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Filippo Campi <filippo.campi@redturtle.it>\n"
 "Language-Team: Italian <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr "Aggiungi una regola per l'iscrizione alla newsletter"
 msgid "Add Rule for newsletter's unsubscribe"
 msgstr "Aggiungi una regola per la disiscrizione dalla newsletter"
 
-#: ./behaviors/configure.zcml:11
+#: ./behaviors/configure.zcml:13
 msgid "Adds shippable workflows to content type"
 msgstr ""
 
@@ -43,12 +43,16 @@ msgstr "Impostazioni Newsletter"
 msgid "Configure element"
 msgstr "Configura elemento"
 
+#: ./profiles/default/types/Shippable_Collection.xml
+msgid "Edit"
+msgstr "Modifica"
+
 #: ./contentrules/forms.py:30
 msgid "Edit Rule for newsletter's subscribe"
 msgstr "Modifica la regola per l'iscrizione alla newsletter"
 
 #. Default: "Email"
-#: ./browser/message/sendingtest.py:22
+#: ./browser/message/sendingtest.py:23
 msgid "Email"
 msgstr ""
 
@@ -85,7 +89,11 @@ msgstr "Destinatario"
 msgid "Sender email"
 msgstr "Mittente"
 
-#: ./behaviors/configure.zcml:11
+#: ./profiles/default/types/Shippable_Collection.xml
+msgid "Shippable Collection"
+msgstr "Collezione Inviabile"
+
+#: ./behaviors/configure.zcml:13
 msgid "Ships Behaviors"
 msgstr ""
 
@@ -119,6 +127,10 @@ msgstr ""
 
 #: ./contentrules/configure.zcml:18
 msgid "Utente conferma la disiscrizione dal canale della newsletter"
+msgstr ""
+
+#: ./profiles/default/types/Shippable_Collection.xml
+msgid "View"
 msgstr ""
 
 #. Default: "Channel Created"
@@ -169,7 +181,7 @@ msgid "cronologia_canale"
 msgstr "Cronologia del canale"
 
 #. Default: "CSS Style"
-#: ./interfaces.py:85
+#: ./interfaces.py:90
 msgid "css_style"
 msgstr "Stili CSS"
 
@@ -184,7 +196,7 @@ msgid "delete_user"
 msgstr "Elimina Utente"
 
 #. Default: "Channel ID"
-#: ./interfaces.py:94
+#: ./interfaces.py:99
 msgid "description_IDChannel"
 msgstr "ID univoco del canale."
 
@@ -194,7 +206,7 @@ msgid "description_css_portlet_class"
 msgstr "Classi CSS da aggiungere alla portlet."
 
 #. Default: "style for mail"
-#: ./interfaces.py:86
+#: ./interfaces.py:91
 msgid "description_css_style"
 msgstr "Stili per la mail."
 
@@ -214,12 +226,12 @@ msgid "description_file"
 msgstr "Il file caricato deve essere in formato CSV."
 
 #. Default: "Footer for message of this channel"
-#: ./interfaces.py:77
+#: ./interfaces.py:82
 msgid "description_footer_channel"
 msgstr "Il footer per i messaggi inviati da questo canale."
 
 #. Default: "Header for message of this channel"
-#: ./interfaces.py:68
+#: ./interfaces.py:73
 msgid "description_header_channel"
 msgstr "L'header per i messaggi inviati da questo canale."
 
@@ -239,7 +251,7 @@ msgid "description_portlet_header"
 msgstr "Titolo della portlet."
 
 #. Default: "Informativa sulla privacy per questo canale"
-#: ./interfaces.py:59
+#: ./interfaces.py:64
 msgid "description_privacy_channel"
 msgstr ""
 
@@ -249,17 +261,17 @@ msgid "description_remove_subscribers"
 msgstr "Rimuovi gli utenti del file CSV dal canale."
 
 #. Default: "Response email of channel"
-#: ./interfaces.py:52
+#: ./interfaces.py:57
 msgid "description_response_email"
 msgstr "Email di risposta del canale."
 
 #. Default: "Email of sender"
-#: ./interfaces.py:38
+#: ./interfaces.py:43
 msgid "description_sender_email"
 msgstr "Email del mittente."
 
 #. Default: "Fullname of sender"
-#: ./interfaces.py:31
+#: ./interfaces.py:36
 msgid "description_sender_name"
 msgstr "Nome complete del mittente."
 
@@ -274,7 +286,7 @@ msgid "description_source_link"
 msgstr ""
 
 #. Default: "Subject for channel message"
-#: ./interfaces.py:45
+#: ./interfaces.py:50
 msgid "description_subject_mail"
 msgstr "Oggetto dei messaggi del canale."
 
@@ -284,7 +296,7 @@ msgid "destination_link"
 msgstr ""
 
 #. Default: "Email to send the test message"
-#: ./browser/message/sendingtest.py:23
+#: ./browser/message/sendingtest.py:24
 msgid "email_sendingtest_description"
 msgstr "Indirizzo email alla quale mandare l'email di test."
 
@@ -299,7 +311,7 @@ msgid "export_user_list"
 msgstr "Esporta lista di utenti"
 
 #. Default: "Footer of message"
-#: ./interfaces.py:76
+#: ./interfaces.py:81
 msgid "footer_channel"
 msgstr "Foooter del messagio"
 
@@ -324,7 +336,7 @@ msgid "generic_problem_add_channel"
 msgstr "Problema inespattetato con l'aggiunta del canale."
 
 #. Default: "Una o piu delle mail inserite non sono valide"
-#: ./utility/base.py:40
+#: ./utility/base.py:41
 msgid "generic_problem_email_validation"
 msgstr ""
 
@@ -334,12 +346,12 @@ msgid "generic_subscribe_message_success"
 msgstr "Utente iscritto con successo. Controlla l'email..."
 
 #. Default: "Header of message"
-#: ./interfaces.py:67
+#: ./interfaces.py:72
 msgid "header_channel"
 msgstr "Intestazione del messaggio"
 
 #. Default: "Channel ID"
-#: ./interfaces.py:93
+#: ./interfaces.py:98
 msgid "idChannel"
 msgstr "Id del canale"
 
@@ -349,7 +361,7 @@ msgid "import_user_list"
 msgstr "Importa la lista di utenti"
 
 #. Default: "Is Subscribable"
-#: ./interfaces.py:100
+#: ./interfaces.py:105
 msgid "is_subscribable"
 msgstr "Sottoscrivibile"
 
@@ -374,7 +386,7 @@ msgid "message_wrong_captcha"
 msgstr ""
 
 #. Default: "Informativa sulla privacy"
-#: ./interfaces.py:58
+#: ./interfaces.py:63
 msgid "privacy_channel"
 msgstr ""
 
@@ -387,7 +399,7 @@ msgid "rer.newsletter (uninstall)"
 msgstr ""
 
 #. Default: "Response email"
-#: ./interfaces.py:51
+#: ./interfaces.py:56
 msgid "response_email"
 msgstr "Email dove rispondere"
 
@@ -397,7 +409,7 @@ msgid "send_message_confirm"
 msgstr "Invia Messaggio"
 
 #. Default: "Send"
-#: ./browser/message/sendingtest.py:36
+#: ./browser/message/sendingtest.py:37
 msgid "send_sendingtest"
 msgstr "Invia"
 
@@ -407,12 +419,12 @@ msgid "send_sendingview"
 msgstr "Invia"
 
 #. Default: "Sender email"
-#: ./interfaces.py:37
+#: ./interfaces.py:42
 msgid "sender_email"
 msgstr "Email del mittente"
 
 #. Default: "Sender Fullname"
-#: ./interfaces.py:30
+#: ./interfaces.py:35
 msgid "sender_name"
 msgstr "Nome completo del mittente"
 
@@ -427,7 +439,7 @@ msgid "status_user_subscribed"
 msgstr ""
 
 #. Default: "Subject email"
-#: ./interfaces.py:44
+#: ./interfaces.py:49
 msgid "subject_email"
 msgstr "Oggetto dell'email"
 
