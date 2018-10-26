@@ -6,7 +6,9 @@ Changelog
 0.1.12 (unreleased)
 -------------------
 
-- Added sendable collection.
+- Added shippable collection.
+- Fixed template for shippable collection.
+  [eikichi18]
 
 
 0.1.11 (2018-09-27)
