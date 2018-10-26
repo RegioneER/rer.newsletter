@@ -19,7 +19,7 @@ class ISettingsSchema(Interface):
             u'description_source_link',
             default=u'Indirizzo da sostituire'
         ),
-        default=u'applicazioni.regione.emilia-romagna.it',
+        default=u'',
         required=False,
     )
 

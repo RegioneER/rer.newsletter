@@ -257,4 +257,12 @@
     class=".channel.deleteexpiredusers.DeleteExpiredUsersView"
     />
 
+  <!-- overwrite batch view for Sendable Collection -->
+  <browser:page
+      name="batchnavigation"
+      for="rer.newsletter.interfaces.IShippableCollection"
+      class="rer.newsletter.browser.message.shippablecollection.ShippableCollectionBatchView"
+      permission="zope.Public"
+      />
+
 </configure>
