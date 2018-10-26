@@ -24,27 +24,21 @@
             </a>
           </h2>
 
-          <div class="obj-image"
-               tal:define="thumb_url python:item_url + '/@@images/image/' + thumb_scale_summary;"
-               tal:condition="python: item_has_image and thumb_scale_summary"
-               tal:attributes="class python: 'tileImage' if item_description else 'tileImageNoFloat'">
-            <a tal:attributes="href item_link">
-              <img tal:replace="structure python:image_scale.tag(item, 'image', scale=thumb_scale_summary, css_class='thumb-' + thumb_scale_summary)" />
+          <div class="content">
+            <div tal:define="thumb_url python:item_url + '/@@images/image/' + thumb_scale_summary;"
+                 tal:condition="python: item_has_image and thumb_scale_summary"
+                 tal:attributes="class python: 'tileImage' if item_description else 'tileImageNoFloat'">
+              <a tal:attributes="href item_link">
+                <img tal:replace="structure python:image_scale.tag(item, 'image', scale=thumb_scale_summary, css_class='thumb-' + thumb_scale_summary)" />
 
-            </a>
-          </div>
+              </a>
+            </div>
 
-          <div class="tileBody" tal:condition="item_description">
-            <span class="description" tal:content="item_description">
-              description
-            </span>
-          </div>
-
-          <div class="tileFooter">
-            <a tal:attributes="href item_link"
-                i18n:translate="read_more">
-              Read More&hellip;
-            </a>
+            <div class="tileBody" tal:condition="item_description">
+              <span class="description" tal:content="item_description">
+                description
+              </span>
+            </div>
           </div>
 
           <div class="visualClear"><!-- --></div>
