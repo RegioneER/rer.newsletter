@@ -6,7 +6,7 @@ Changelog
 0.1.12 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Added sendable collection.
 
 
 0.1.11 (2018-09-27)
