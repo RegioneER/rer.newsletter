@@ -23,7 +23,7 @@ class ChannelHistory(BrowserView):
         if self.context.portal_type == 'Channel':
             messageList = api.content.find(
                 context=self.context,
-                portal_type='Message'
+                portal_type=['Message', 'Shippable Collection']
             )
 
         activeMessageList = []

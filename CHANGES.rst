@@ -8,6 +8,7 @@ Changelog
 
 - Added shippable collection.
 - Fixed template for shippable collection.
+- Fixed search object for channel history view.
   [eikichi18]
 
 
