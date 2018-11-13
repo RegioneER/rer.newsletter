@@ -96,6 +96,11 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
     $('div.plone-modal-body').find( '.portalMessage.info' ).each(function (){
       hide_element_modal();
     });
+    $('div.plone-modal-body .informativa a')
+      .off()
+      .click(function() {
+        window.open($(this).attr('href'));
+      });
   }
 
   function render_modal(el){
@@ -120,7 +125,7 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal){
       init(modal);
     });
     modal.on('linkActionSuccess', function(){
-      init(modal)
+      init(modal);
     });
   }
 
