@@ -11,6 +11,7 @@ requirejs(["jquery", "datatables"], function($, datatables){
         // render error user deleted
         $('.portalMessage').removeClass('info')
                            .addClass('error')
+                           .attr('role', 'alert')
                            .css('display', '')
                            .html('<strong>Error</strong> Prima va selezionato un messaggio.');
       }
@@ -27,12 +28,14 @@ requirejs(["jquery", "datatables"], function($, datatables){
             table.row('.selected').remove().draw( false );
             $('.portalMessage').removeClass('error')
                                .addClass('info')
+                               .attr('role', 'status')
                                .css('display', '')
                                .html('<strong>Info</strong> Storico del messaggio eliminato con successo.');
           }
           else{
             $('.portalMessage').removeClass('info')
                                .addClass('error')
+                               .attr('role', 'alert')
                                .css('display', '')
                                .html('<strong>Error</strong> Problemi con la cancellazione dello storico del messaggio.');
           }

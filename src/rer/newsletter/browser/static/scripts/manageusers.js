@@ -8,6 +8,7 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
   function render_error(message){
     $('.portalMessage').removeClass('info')
                        .addClass('error')
+                       .attr('role', 'alert')
                        .css('display', '')
                        .html('<strong>Error</strong> ' + message);
   }
@@ -15,6 +16,7 @@ requirejs(["jquery", "mockup-patterns-modal", "datatables"], function($, Modal, 
   function render_info(message){
     $('.portalMessage').removeClass('error')
                        .addClass('info')
+                       .attr('role', 'status')
                        .css('display', '')
                        .html('<strong>Info</strong> ' + message);
   }

@@ -11,6 +11,9 @@ Changelog
 - Fixed search object for channel history view.
   [eikichi18]
 
+- a11y: added role attribute for portalMessage
+  [nzambello]
+
 
 0.1.11 (2018-09-27)
 -------------------
