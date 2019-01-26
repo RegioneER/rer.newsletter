@@ -14,13 +14,16 @@ from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utils import addToHistory
 from rer.newsletter.utils import get_site_title
-from urllib import urlencode
 from z3c.form import button
 from z3c.form import form
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.component import queryUtility
 
+try:
+    import urlencode
+except ImportError:
+    from urllib.parse import urlencode
 
 KEY = 'rer.newsletter.message.details'
 
@@ -63,8 +66,7 @@ class SendMessageView(form.Form):
         parameters = {
             'portal_name': get_site_title(),
             'channel_name': channel.title,
-            'unsubscribe_link': channel.absolute_url()
-            + '/@@unsubscribe',
+            'unsubscribe_link': channel.absolute_url() + '/@@unsubscribe',
         }
         unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
 
@@ -93,14 +95,12 @@ class SendMessageView(form.Form):
             now = datetime.today().strftime('%d/%m/%Y %H:%M:%S')
 
             if status != OK:
-                logger.warning(
-                    'Problems...{0}'.format(status),
-                )
+                logger.warning('Problems...{0}'.format(status))
                 api.portal.show_message(
                     message=u'Problemi con l\'invio del messaggio. '
                     'Contattare l\'assistenza.',
                     request=self.request,
-                    type=u'error'
+                    type=u'error',
                 )
                 return
 
@@ -115,17 +115,19 @@ class SendMessageView(form.Form):
 
         # self.request.response.redirect('view')
         self.request.response.redirect(
-            '@@send_success_view?' + urlencode({'active_users': active_users}))
+            '@@send_success_view?' + urlencode({'active_users': active_users})
+        )
         api.portal.show_message(
-            message=_(u'message_send', default=u'Il messaggio è stato '
-                      'inviato a {0} iscritti al canale'.format(
-                          active_users)),
+            message=_(
+                u'message_send',
+                default=u'Il messaggio è stato '
+                'inviato a {0} iscritti al canale'.format(active_users),
+            ),
             request=self.request,
-            type=u'info'
+            type=u'info',
         )
 
 
 message_sending_view = wrap_form(
-    SendMessageView,
-    index=ViewPageTemplateFile('templates/sendmessageview.pt')
+    SendMessageView, index=ViewPageTemplateFile('templates/sendmessageview.pt')
 )
