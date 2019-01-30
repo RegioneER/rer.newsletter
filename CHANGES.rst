@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.1.12 (unreleased)
+0.1.12 (2019-01-30)
 -------------------
 
 - Added shippable collection.
