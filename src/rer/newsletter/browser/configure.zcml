@@ -128,6 +128,7 @@
     class=".message.messageview.MessageView"
     template="message/templates/messageview.pt"
     permission="zope2.View"
+    layer="rer.newsletter.interfaces.IRerNewsletterLayer"
     />
 
   <!-- view for send success messagge-->
@@ -263,6 +264,21 @@
       for="rer.newsletter.interfaces.IShippableCollection"
       class="rer.newsletter.browser.message.shippablecollection.ShippableCollectionBatchView"
       permission="zope.Public"
+      />
+
+  <!-- Message version-view -->
+  <browser:page
+      for="rer.newsletter.interfaces.IMessage"
+      name="version-view"
+      permission="zope2.View"
+      class=".message.versionview.MessageVersionView"
+      />
+  <browser:page
+      for="rer.newsletter.interfaces.IMessage"
+      name="content-core"
+      class="plone.dexterity.browser.view.DefaultView"
+      template="message/templates/messagecontentcore.pt"
+      permission="zope2.View"
       />
 
 </configure>

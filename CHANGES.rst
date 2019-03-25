@@ -3,13 +3,22 @@ Changelog
 =========
 
 
-0.1.12 (unreleased)
+0.1.13 (unreleased)
+-------------------
+
+- Nothing changed yet.
+
+
+0.1.12 (2019-01-30)
 -------------------
 
 - Added shippable collection.
 - Fixed template for shippable collection.
 - Fixed search object for channel history view.
   [eikichi18]
+
+- a11y: added role attribute for portalMessage
+  [nzambello]
 
 
 0.1.11 (2018-09-27)
