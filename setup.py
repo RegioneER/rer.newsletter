@@ -43,7 +43,7 @@ setup(
         'Products.GenericSetup>=1.8.2',
         'setuptools',
         'z3c.jbot',
-        'mailmanclient>=3.1',
+        'mailmanclient==3.1',
         'premailer==3.1.1',
         'plone.directives.form',
         'plone.app.tiles',
