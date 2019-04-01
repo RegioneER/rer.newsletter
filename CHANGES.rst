@@ -3,10 +3,11 @@ Changelog
 =========
 
 
-0.1.13 (unreleased)
+0.2.0 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Fix initializedModal.js to support new functionality in tilesmanagement: anonymous always load a static version of tiles list.
+  [cekk]
 
 
 0.1.12 (2019-01-30)
