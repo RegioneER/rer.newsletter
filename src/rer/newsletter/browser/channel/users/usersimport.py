@@ -14,6 +14,7 @@ from zope.interface import Interface
 
 import csv
 import re
+from six.moves import range
 
 try:
     from StringIO import StringIO
@@ -110,7 +111,7 @@ class UsersImport(form.Form):
 
         index = 0
         if headerline:
-            header = reader.next()
+            header = next(reader)
 
             # leggo solo la colonna della email
             index = None

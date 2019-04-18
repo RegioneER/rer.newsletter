@@ -7,6 +7,7 @@ from Products.Five.browser import BrowserView
 from rer.newsletter import logger
 from rer.newsletter.utils import storage
 from zope.interface import alsoProvides
+from six.moves import map
 
 
 class DeleteExpiredUsersView(BrowserView):
@@ -41,7 +42,7 @@ class DeleteExpiredUsersView(BrowserView):
         channels_brain = pc.unrestrictedSearchResults(
             {'portal_type': 'Channel'})
 
-        map(lambda x: self.update_annotations(x), channels_brain)
+        list(map(lambda x: self.update_annotations(x), channels_brain))
         logger.info(u'DONE:Remove {0} expired user from channels'.format(
             self.user_removed))
         return True

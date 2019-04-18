@@ -30,9 +30,9 @@ class CustomTitleHandler(object):
         try:
             site_title = json.loads(json_string)
 
-            if self._current_lang() not in site_title.keys() and 'default' in site_title.keys():  # noqa
+            if self._current_lang() not in list(site_title.keys()) and 'default' in list(site_title.keys()):  # noqa
                 site_title = site_title.get('default', None)
-            elif self._current_lang() in site_title.keys():
+            elif self._current_lang() in list(site_title.keys()):
                 site_title = site_title.get(
                     self._current_lang(), None)
             else:

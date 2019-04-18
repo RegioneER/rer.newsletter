@@ -5,6 +5,7 @@ from Products.Five.browser import BrowserView
 from zope.annotation.interfaces import IAnnotations
 
 import json
+import six
 
 
 KEY = 'rer.newsletter.message.details'
@@ -31,9 +32,9 @@ class ChannelHistory(BrowserView):
             for message in messageList:
                 obj = message.getObject()
                 annotations = IAnnotations(obj)
-                if KEY in annotations.keys():
+                if KEY in list(annotations.keys()):
                     count = 0
-                    for k, v in annotations[KEY].iteritems():
+                    for k, v in six.iteritems(annotations[KEY]):
                         au = v['num_active_subscribers']
                         sd = v['send_date']
 
@@ -59,7 +60,7 @@ class ChannelHistory(BrowserView):
         for message in messages:
             obj = message.getObject()
             annotations = IAnnotations(obj)
-            if KEY in annotations.keys():
+            if KEY in list(annotations.keys()):
                 annotations = annotations[KEY]
                 for k in annotations.keys():
                     if message_history == k:

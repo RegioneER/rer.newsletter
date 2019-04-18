@@ -111,7 +111,7 @@ class MessageSendingTest(form.Form):
             self.errors = u'problemi con l\'invio del messaggio'
 
         # da sistemare la gestione degli errori
-        if 'errors' in self.__dict__.keys():
+        if 'errors' in list(self.__dict__.keys()):
             api.portal.show_message(
                 message=self.errors,
                 request=self.request,

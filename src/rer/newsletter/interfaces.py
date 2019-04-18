@@ -10,10 +10,13 @@ from zope.interface import Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
 import uuid
+import six
 
 
 def default_id_channel():
-    return unicode(uuid.uuid4())
+    if six.PY2:
+        return unicode(uuid.uuid4())
+    return uuid.uuid4()
 
 
 class IShippableCollection(ICollection):

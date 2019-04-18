@@ -88,7 +88,7 @@ class SendMessageView(form.Form):
 
             # i dettagli sull'invio del messaggio per lo storico
             annotations = IAnnotations(self.context)
-            if KEY not in annotations.keys():
+            if KEY not in list(annotations.keys()):
                 annotations[KEY] = PersistentDict({})
 
             annotations = annotations[KEY]
@@ -104,7 +104,7 @@ class SendMessageView(form.Form):
                 )
                 return
 
-            annotations[self.context.title + str(len(annotations.keys()))] = {
+            annotations[self.context.title + str(len(list(annotations.keys())))] = {
                 'num_active_subscribers': active_users,
                 'send_date': now,
             }
