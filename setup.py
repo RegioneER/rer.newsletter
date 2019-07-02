@@ -48,7 +48,7 @@ setup(
         'mailmanclient>=3.1',
         'premailer==3.1.1',
         'plone.app.tiles',
-        'collective.taskqueue [redis]',
+        'collective.taskqueue [redis]; python_version<"3"',
     ],
     extras_require={
         'test': [
