@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from email.utils import formataddr
 from plone import api
 from plone import schema
 from plone.z3cform.layout import wrap_form
@@ -92,6 +93,8 @@ class MessageSendingTest(form.Form):
             else:
                 response_email = u'noreply@rer.it'
 
+            sender = formataddr((ns_obj.sender_name, response_email))
+
             # per mandare la mail non passo per l'utility
             # in ogni caso questa mail viene mandata da plone
             mailHost = api.portal.get_tool(name='MailHost')
@@ -99,7 +102,7 @@ class MessageSendingTest(form.Form):
                 mailHost.send(
                     body.getData(),
                     mto=email.strip(),
-                    mfrom=response_email,
+                    mfrom=sender,
                     subject='Messaggio di prova ' + message_obj.title
                     + ' del canale ' + ns_obj.title,
                     charset='utf-8',
