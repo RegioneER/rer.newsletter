@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from datetime import timedelta
+from email.utils import formataddr
 from persistent.dict import PersistentDict
 from plone import api
 from rer.newsletter import _
@@ -358,6 +359,9 @@ class BaseHandler(object):
         nl_subject = ' - ' + nl.subject_email if nl.subject_email else u''
         subject = message.title + nl_subject
 
+        # costruisco l'indirizzo del mittente
+        sender = formataddr((nl.sender_name, nl.sender_name))
+
         # invio la mail ad ogni utente
         mail_host = api.portal.get_tool(name='MailHost')
         try:
@@ -366,7 +370,7 @@ class BaseHandler(object):
                     mail_host.send(
                         body.getData(),
                         mto=annotations[user]['email'],
-                        mfrom=nl.sender_email,
+                        mfrom=sender,
                         subject=subject,
                         charset='utf-8',
                         msg_type='text/html'
