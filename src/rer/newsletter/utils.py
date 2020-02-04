@@ -18,7 +18,7 @@ def addToHistory(message, active_users):
         return dict(
             action=u'Invio',
             review_state=api.content.get_state(obj=message),
-            actor=api.user.get_current().get('username', None),
+            actor=api.user.get_current().getProperty('username', None),
             comments='Inviato il messaggio a ' +
             str(active_users) + ' utenti.',
             time=DateTime()
