@@ -25,6 +25,7 @@ from zope.interface import Invalid
 import json
 import re
 import uuid
+import six
 
 
 KEY = 'rer.newsletter.subscribers'
@@ -73,7 +74,7 @@ class BaseHandler(object):
         obj = self._api(channel)
         if obj:
             annotations = IAnnotations(obj)
-            if KEY not in annotations.keys():
+            if KEY not in list(annotations.keys()):
                 annotations[KEY] = PersistentDict({})
             return annotations[KEY], obj
 
@@ -150,7 +151,7 @@ class BaseHandler(object):
                 annotations[user] = {
                     'email': user,
                     'is_active': True,
-                    'token': unicode(uuid.uuid4()),
+                    'token': six.text_type(uuid.uuid4()),
                     'creation_date': datetime.today().strftime(
                         '%d/%m/%Y %H:%M:%S'
                     ),
@@ -194,7 +195,7 @@ class BaseHandler(object):
                 return INVALID_SECRET, None
 
             for user in annotations:
-                if annotations[user]['token'] == unicode(secret):
+                if annotations[user]['token'] == six.text_type(secret):
                     cd = annotations[user]['creation_date']
                     if isCreationDateExpired(cd):
                         del annotations[user]
@@ -206,7 +207,7 @@ class BaseHandler(object):
 
         else:
             # cancello l'utente con la mail (Admin)
-            if mail in annotations.keys():
+            if mail in list(annotations.keys()):
                 del annotations[mail]
                 return OK
             else:
@@ -220,7 +221,7 @@ class BaseHandler(object):
             return INVALID_CHANNEL
 
         for user in usersList:
-            if user in annotations.keys():
+            if user in list(annotations.keys()):
                 del annotations[user]
 
         return OK
@@ -241,8 +242,8 @@ class BaseHandler(object):
         if annotations is None:
             return INVALID_CHANNEL, None
 
-        secret = unicode(uuid.uuid4())
-        if user in annotations.keys():
+        secret = six.text_type(uuid.uuid4())
+        if user in list(annotations.keys()):
             annotations[user] = {
                 'email': user,
                 'is_active': annotations[user]['is_active'],
@@ -283,7 +284,7 @@ class BaseHandler(object):
             annotations[mail] = {
                 'email': mail,
                 'is_active': True,
-                'token': unicode(uuid.uuid4()),
+                'token': six.text_type(uuid.uuid4()),
                 'creation_date': datetime.today().strftime(
                     '%d/%m/%Y %H:%M:%S'
                 ),
@@ -300,7 +301,7 @@ class BaseHandler(object):
         if not mailValidation(mail):
             return INVALID_EMAIL, None
 
-        uuid_activation = unicode(uuid.uuid4())
+        uuid_activation = six.text_type(uuid.uuid4())
         for user in annotations.keys():
             if (
                 (

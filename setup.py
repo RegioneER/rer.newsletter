@@ -5,11 +5,13 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-long_description = '\n\n'.join([
-    open('README.rst').read(),
-    open('CONTRIBUTORS.rst').read(),
-    open('CHANGES.rst').read(),
-])
+long_description = '\n\n'.join(
+    [
+        open('README.rst').read(),
+        open('CONTRIBUTORS.rst').read(),
+        open('CHANGES.rst').read(),
+    ]
+)
 
 
 setup(
@@ -45,9 +47,8 @@ setup(
         'z3c.jbot',
         'mailmanclient==3.1',
         'premailer==3.1.1',
-        'plone.directives.form',
         'plone.app.tiles',
-        'collective.taskqueue [redis]',
+        'collective.taskqueue [redis]; python_version<"3"',
     ],
     extras_require={
         'test': [
@@ -58,7 +59,7 @@ setup(
             'plone.testing>=5.0.0',
             'plone.app.contenttypes',
             'plone.app.robotframework[debug]',
-        ],
+        ]
     },
     entry_points="""
     [z3c.autoinclude.plugin]

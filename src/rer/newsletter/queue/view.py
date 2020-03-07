@@ -119,7 +119,7 @@ class ProcessQueue(BrowserView):
 
             # i dettagli sull'invio del messaggio per lo storico
             annotations = IAnnotations(message)
-            if KEY not in annotations.keys():
+            if KEY not in list(annotations.keys()):
                 annotations[KEY] = PersistentDict({})
 
             annotations = annotations[KEY]
@@ -135,7 +135,7 @@ class ProcessQueue(BrowserView):
                         self.request.get('HTTP_X_TASK_ID')),
                 )
             else:
-                annotations[message.title + str(len(annotations.keys()))] = {
+                annotations[message.title + str(len(list(annotations.keys())))] = {
                     'num_active_subscribers': active_users,
                     'send_date': now,
                 }

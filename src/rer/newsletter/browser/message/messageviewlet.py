@@ -4,6 +4,7 @@ from plone import api
 from plone.app.layout.viewlets import ViewletBase
 from rer.newsletter.content.channel import Channel
 from zope.annotation.interfaces import IAnnotations
+import six
 
 
 KEY = 'rer.newsletter.message.details'
@@ -15,7 +16,7 @@ class MessageManagerViewlet(ViewletBase):
         pass
 
     def _getChannel(self):
-        return filter(lambda x: isinstance(x, Channel), aq_chain(self.context))
+        return [x for x in aq_chain(self.context) if isinstance(x, Channel)]
 
     def canManageNewsletter(self):
 
@@ -45,10 +46,10 @@ class MessageManagerViewlet(ViewletBase):
 
     def messageSentDetails(self):
         annotations = IAnnotations(self.context)
-        if KEY in annotations.keys():
+        if KEY in list(annotations.keys()):
             annotations = annotations[KEY]
             messages_details = []
-            for k, v in annotations.iteritems():
+            for k, v in six.iteritems(annotations):
                 messages_details.append(v)
             return messages_details
         return None

@@ -14,7 +14,13 @@ from zope.interface import Interface
 
 import csv
 import re
-import StringIO
+from six.moves import range
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    # python 3
+    from io import StringIO
 
 
 def check_separator(value):
@@ -36,36 +42,40 @@ class IUsersImport(Interface):
     # se questo e ceccato allora i dati non vengono inseriti
     emptyList = schema.Bool(
         title=_(u'title_empty_list', default=u'Empties users list'),
-        description=_(u'description_empty_list',
-                      default=u'Empties channel users list'),
-        required=False
+        description=_(
+            u'description_empty_list', default=u'Empties channel users list'
+        ),
+        required=False,
     )
 
     # se e ceccato sia questo dato che 'emptyList'
     # allora do precedenza a emptyList
     removeSubscribers = schema.Bool(
-        title=_(u'title_remove_subscribers',
-                default=u'Remove subscribers of the list'),
+        title=_(
+            u'title_remove_subscribers',
+            default=u'Remove subscribers of the list',
+        ),
         description=_(
             u'description_remove_subscribers',
-            default=u'Remove users of CSV from channel'
+            default=u'Remove users of CSV from channel',
         ),
-        required=False
+        required=False,
     )
 
     headerLine = schema.Bool(
-        title=_(u'title_header_line',
-                default=u'Header Line'),
-        description=_(u'description_header_line',
-                      default=_(u'if CSV File contains a header line')),
-        required=False
+        title=_(u'title_header_line', default=u'Header Line'),
+        description=_(
+            u'description_header_line',
+            default=_(u'if CSV File contains a header line'),
+        ),
+        required=False,
     )
 
     separator = schema.TextLine(
-        title=_(u'title_separator',
-                default=u'CSV separator'),
-        description=_(u'description_separator',
-                      default=_(u'Separator of CSV file')),
+        title=_(u'title_separator', default=u'CSV separator'),
+        description=_(
+            u'description_separator', default=_(u'Separator of CSV file')
+        ),
         default=u';',
         required=True,
         constraint=check_separator,
@@ -77,7 +87,7 @@ def _mailValidation(mail):
     match = re.match(
         '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+'
         '(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
-        mail
+        mail,
     )
     if match is None:
         return False
@@ -90,18 +100,18 @@ class UsersImport(form.Form):
     fields = field.Fields(IUsersImport)
 
     def processCSV(self, data, headerline, separator):
-        io = StringIO.StringIO(data)
+        io = StringIO(data)
 
         reader = csv.reader(
             io,
             delimiter=separator.encode('ascii', 'ignore'),
             dialect='excel',
-            quotechar='\''
+            quotechar='\'',
         )
 
         index = 0
         if headerline:
-            header = reader.next()
+            header = next(reader)
 
             # leggo solo la colonna della email
             index = None
@@ -113,7 +123,7 @@ class UsersImport(form.Form):
                     message=u'Il CSV non ha la colonna email oppure il '
                     'separatore potrebbe non essere corretto',
                     request=self.request,
-                    type=u'error'
+                    type=u'error',
                 )
 
         if index is not None:
@@ -140,16 +150,12 @@ class UsersImport(form.Form):
 
         # devo svuotare la lista di utenti del channel
         if data['emptyList']:
-            status = api_channel.emptyChannelUsersList(
-                self.context.id_channel
-            )
+            status = api_channel.emptyChannelUsersList(self.context.id_channel)
 
         csv_file = data['userListFile'].data
         # esporto la lista di utenti dal file
         usersList = self.processCSV(
-            csv_file,
-            data['headerLine'],
-            data['separator']
+            csv_file, data['headerLine'], data['separator']
         )
 
         # controllo se devo eliminare l'intera lista di utenti
@@ -158,25 +164,20 @@ class UsersImport(form.Form):
             # chiamo l'api per rimuovere l'intera lista di utenti
             if usersList:
                 status = api_channel.deleteUserList(
-                    self.context.id_channel,
-                    usersList,
+                    self.context.id_channel, usersList
                 )
 
         else:
             if usersList:
                 # mi connetto con le api di mailman
                 status = api_channel.importUsersList(
-                    self.context.id_channel,
-                    usersList,
+                    self.context.id_channel, usersList
                 )
 
         if status == OK:
             status = _(
-                u'generic_subscribe_message_success',
-                default=u'User Subscribed'
+                u'generic_subscribe_message_success', default=u'User Subscribed'
             )
             api.portal.show_message(
-                message=status,
-                request=self.request,
-                type=u'info'
+                message=status, request=self.request, type=u'info'
             )

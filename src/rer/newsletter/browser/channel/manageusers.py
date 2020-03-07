@@ -11,7 +11,12 @@ from zope.interface import Interface
 
 import csv
 import json
-import StringIO
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    # python 3
+    from io import StringIO
 
 
 class IManageUsers(Interface):
@@ -20,7 +25,6 @@ class IManageUsers(Interface):
 
 @implementer(IManageUsers)
 class ManageUsers(BrowserView):
-
     def __init__(self, context, request):
         self.context = context
         self.request = request
@@ -42,10 +46,10 @@ class ManageUsers(BrowserView):
         else:
             response['ok'] = False
             logger.exception(
-                'Problems...{error}'.format(error=status) +
-                ' : channel: %s, email: %s',
+                'Problems...{error}'.format(error=status)
+                + ' : channel: %s, email: %s',
                 channel,
-                email
+                email,
             )
 
         return json.dumps(response)
@@ -60,7 +64,7 @@ class ManageUsers(BrowserView):
 
         if status == OK:
             # predisporre download del file
-            data = StringIO.StringIO()
+            data = StringIO()
             fieldnames = ['id', 'email', 'is_active', 'creation_date']
             writer = csv.DictWriter(data, fieldnames=fieldnames)
 
@@ -70,13 +74,12 @@ class ManageUsers(BrowserView):
             for user in userListJson:
                 writer.writerow(user)
 
-            filename = '{title}-user-list.csv'.format(
-                title=self.context.id)
+            filename = '{title}-user-list.csv'.format(title=self.context.id)
 
             self.request.response.setHeader('Content-Type', 'text/csv')
             self.request.response.setHeader(
                 'Content-Disposition',
-                'attachment; filename="{filename}"'.format(filename=filename)
+                'attachment; filename="{filename}"'.format(filename=filename),
             )
 
             return data.getvalue()
