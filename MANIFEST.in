@@ -4,3 +4,4 @@ include *.rst
 global-exclude *.pyc
 include requirements.txt
 include LICENSE.GPL
+exclude *.disabled
