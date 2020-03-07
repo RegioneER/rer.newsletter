@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.3.0 (unreleased)
+0.3.0 (2020-03-07)
 ------------------
 
 - Python 3 compatibility.
