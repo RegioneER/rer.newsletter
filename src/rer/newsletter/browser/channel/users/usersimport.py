@@ -15,7 +15,7 @@ from zope.interface import Interface
 import csv
 import re
 from six.moves import range
-from six import PY3
+from six import PY2
 
 try:
     from StringIO import StringIO
@@ -101,17 +101,18 @@ class UsersImport(form.Form):
     fields = field.Fields(IUsersImport)
 
     def processCSV(self, data, headerline, separator):
-        if PY3:
-            data = data.decode()
-            separator.encode('ascii', 'ignore').decode()
-        else:
-            separator = separator.encode('ascii', 'ignore')
-
-        io = StringIO(data)
+        input_data = data.decode()
+        input_separator = separator.encode('ascii', 'ignore').decode()
+        
+        if PY2:
+            input_data = data
+            input_separator = separator.encode('ascii', 'ignore')
+        
+        io = StringIO(input_data)
 
         reader = csv.reader(
             io,
-            delimiter=separator,
+            delimiter=input_separator,
             dialect='excel',
             quotechar='\'',
         )
@@ -122,10 +123,10 @@ class UsersImport(form.Form):
             # leggo solo la colonna della email
             index = None
             for i in range(0, len(header)):
-                if PY3:
-                    header_value = header[i]
-                else:
+                header_value = header[i]
+                if PY2:
                     header_value = header[i].decode('utf-8-sig')
+
                 if header_value == 'email':
                     index = i
             if index is None:
@@ -141,9 +142,8 @@ class UsersImport(form.Form):
             line_number = 0
             for row in reader:
                 line_number += 1
-                if PY3:
-                    row_value = row[index]
-                else:
+                row_value = row[index]
+                if PY2:
                     row_value = row[index].decode('utf-8-sig')
 
                 mail = row_value
