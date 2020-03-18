@@ -15,6 +15,7 @@ from zope.interface import Interface
 import csv
 import re
 from six.moves import range
+from six import PY2
 
 try:
     from StringIO import StringIO
@@ -100,15 +101,21 @@ class UsersImport(form.Form):
     fields = field.Fields(IUsersImport)
 
     def processCSV(self, data, headerline, separator):
-        io = StringIO(data)
+        input_data = data.decode()
+        input_separator = separator.encode('ascii', 'ignore').decode()
+        
+        if PY2:
+            input_data = data
+            input_separator = separator.encode('ascii', 'ignore')
+        
+        io = StringIO(input_data)
 
         reader = csv.reader(
             io,
-            delimiter=separator.encode('ascii', 'ignore'),
+            delimiter=input_separator,
             dialect='excel',
             quotechar='\'',
         )
-
         index = 0
         if headerline:
             header = next(reader)
@@ -116,7 +123,11 @@ class UsersImport(form.Form):
             # leggo solo la colonna della email
             index = None
             for i in range(0, len(header)):
-                if header[i].decode('utf-8-sig') == 'email':
+                header_value = header[i]
+                if PY2:
+                    header_value = header[i].decode('utf-8-sig')
+
+                if header_value == 'email':
                     index = i
             if index is None:
                 api.portal.show_message(
@@ -131,9 +142,13 @@ class UsersImport(form.Form):
             line_number = 0
             for row in reader:
                 line_number += 1
-                mail = row[index].decode('utf-8-sig')
+                row_value = row[index]
+                if PY2:
+                    row_value = row[index].decode('utf-8-sig')
+
+                mail = row_value
                 if _mailValidation(mail):
-                    usersList.append(row[index].decode('utf-8-sig'))
+                    usersList.append(row_value)
 
             return usersList
 

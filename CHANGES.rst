@@ -6,8 +6,9 @@ Changelog
 0.3.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Fixed subscribers import in Python3.
+- Fixed RichText behavior name in types definition.
+  [daniele] 
 
 0.3.0 (2020-03-07)
 ------------------
