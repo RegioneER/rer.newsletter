@@ -20,7 +20,7 @@ from zope.component import queryUtility
 try:
     import urlencode
 except ImportError:
-    from urllib.parse import urlencode
+    from urllib import urlencode
 
 
 try:
