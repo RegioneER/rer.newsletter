@@ -5,7 +5,7 @@ from rer.newsletter import logger
 from zope.interface import implementer
 
 
-QUEUE_NAME = 'rer.newsletter.queue'
+QUEUE_NAME = 'rer.newsletter.redis'
 VIEW_NAME = 'message_sendout'
 
 

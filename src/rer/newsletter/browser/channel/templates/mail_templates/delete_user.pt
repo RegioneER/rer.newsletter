@@ -1,6 +1,6 @@
 <tal:root define="activationUrl python:options['activationUrl'];
-                  header python:options['header'].output;
-                  footer python:options['footer'].output;
+                  header python:options['header'].output if options['header'] else '';
+                  footer python:options['footer'].output if options['footer'] else '';
                   style python:options['style']"
 >
 <span tal:replace="structure header" />

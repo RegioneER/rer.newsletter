@@ -2,7 +2,7 @@
 <sharing xmlns:i18n="http://xml.zope.org/namespaces/i18n"
          i18n:domain="rer.newsletter">
   <role
-      id="Manager Newsletter"
+      id="Gestore Newsletter"
       title="Gestore newsletter"
       i18n:attributes="title"
       />

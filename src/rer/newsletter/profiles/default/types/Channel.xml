@@ -13,11 +13,11 @@
    <element value="Message" />
    <element value="Folder" />
    <element value="Collection" />
+   <element value="Shippable Collection" />
  </property>
  <property name="allow_discussion">False</property>
  <property name="default_view">folder_listing</property>
  <property name="view_methods">
-  <element value="view" />
   <element value="folder_listing" />
  </property>
  <property name="default_view_fallback">False</property>

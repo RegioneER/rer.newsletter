@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-# from rer.newsletter import logger
+from email.utils import formataddr
 from plone import api
 from plone import schema
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
+from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.content.channel import Channel
+from rer.newsletter.utils import get_site_title
 from smtplib import SMTPRecipientsRefused
 from z3c.form import button
 from z3c.form import field
@@ -62,7 +64,8 @@ class MessageSendingTest(form.Form):
                 '@@unsubscribe_channel_template'
             )
             parameters = {
-                'portal_name': api.portal.get().title,
+                'portal_name': get_site_title(),
+                'channel_name': ns_obj.title,
                 'unsubscribe_link': ns_obj.absolute_url()
                 + '/@@unsubscribe',
             }
@@ -73,7 +76,10 @@ class MessageSendingTest(form.Form):
             body += u'<style>{css}</style>'.format(
                 css=ns_obj.css_style or u''
             )
-            body += message_obj.text.output if message_obj.text else u''
+            body += u'<div id="message_description">' + \
+                u'<p>{desc}</p></div>'.format(
+                    desc=message_obj.description or u'')
+            body += IShippable(message_obj).message_content
             body += ns_obj.footer.output if ns_obj.footer else u''
             body += unsubscribe_footer_text if unsubscribe_footer_text else u''
 
@@ -82,10 +88,12 @@ class MessageSendingTest(form.Form):
             body = portal.portal_transforms.convertTo('text/mail', body)
 
             response_email = None
-            if ns_obj.response_email:
-                response_email = ns_obj.response_email
+            if ns_obj.sender_email:
+                response_email = ns_obj.sender_email
             else:
                 response_email = u'noreply@rer.it'
+
+            sender = formataddr((ns_obj.sender_name, response_email))
 
             # per mandare la mail non passo per l'utility
             # in ogni caso questa mail viene mandata da plone
@@ -94,8 +102,9 @@ class MessageSendingTest(form.Form):
                 mailHost.send(
                     body.getData(),
                     mto=email.strip(),
-                    mfrom=response_email,
-                    subject='Messaggio di prova',
+                    mfrom=sender,
+                    subject='Messaggio di prova ' + message_obj.title
+                    + ' del canale ' + ns_obj.title,
                     charset='utf-8',
                     msg_type='text/html',
                     immediate=True
@@ -105,7 +114,7 @@ class MessageSendingTest(form.Form):
             self.errors = u'problemi con l\'invio del messaggio'
 
         # da sistemare la gestione degli errori
-        if 'errors' in self.__dict__.keys():
+        if 'errors' in list(self.__dict__.keys()):
             api.portal.show_message(
                 message=self.errors,
                 request=self.request,

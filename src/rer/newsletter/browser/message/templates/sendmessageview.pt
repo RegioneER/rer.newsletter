@@ -25,7 +25,7 @@
                   tal:replace="active_users">
               n
             </span>
-            persone, sei sicuro ?</p>
+            iscritti al canale, sei sicuro ?</p>
           <div id="content-core" tal:content="structure view/contents" />
         </metal:content-core>
       </body>

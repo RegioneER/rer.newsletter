@@ -29,9 +29,7 @@ Portlet and Tile
 The product provide a portlet and a tile for user subscribe.
 
 Form for user subscribe have two fields: email and reCaptcha, so do not forget to
-set key for reCaptcha fields. See `plone.formwidget.recaptcha`__ for more details.
-
-__ https://github.com/plone/plone.formwidget.recaptcha
+set key for reCaptcha fields. See `plone.formwidget.recaptcha <https://github.com/plone/plone.formwidget.recaptcha>`_ for more details.
 
 User Manage
 -----------
@@ -47,8 +45,13 @@ Allows complete management of user.
 - Unsubscribe users
 
 
-Advanced usage
---------------
+=================
+Advanced Features
+=================
+
+
+Utility for email sending
+-------------------------
 
 This product normaly send email through plone mailer, but creating a product which
 implements the utility ``IChannelUtility`` it is possible use another system of
@@ -81,8 +84,44 @@ New permissions have been added for the management of the Newsletter:
 - ``rer.newsletter: Send Newsletter``
 
 This permission are assigned to Manager and Site Administrator. Besides it been
-added a new role ``Manager Newsletter`` which have permissions for all possible
+added a new role ``Gestore Newsletter`` which have permissions for all possible
 operations on newsletter.
+
+
+Asynchronous sending of email
+-----------------------------
+
+rer.newsletter supports asyncronous sendout using collective.taskqueue,
+that it is already installed like a dependency of product.
+
+For support this asyncronous sendout you must add to section instance-settings of your
+buildout this configuration::
+
+    zope-conf-additional =
+       %import collective.taskqueue
+       <taskqueue>
+         queue rer.newsletter.queue
+       </taskqueue>
+       <taskqueue-server>
+         queue rer.newsletter.queue
+       </taskqueue-server>
+
+This code adds a queue to which various email submissions are added.
+See `collective.taskqueue <https://github.com/collective/collective.taskqueue>`_ for more details.
+
+
+Cron job
+--------
+
+rer.newsletter have a view that can called from a cron job. This view delete all
+users that not have confirmed subscription to a channel in time.
+
+Inside the settings of the product there is a field that allows you to set
+validity time of the channel subscription token.
+
+View is::
+
+    .../@@delete_expired_users
 
 ============
 Installation
@@ -110,12 +149,10 @@ This product has been tested on Plone 5.1
 Credits
 =======
 
-Developed with the support of `Regione Emilia Romagna`__;
+Developed with the support of `Regione Emilia Romagna <http://www.regione.emilia-romagna.it/>`_;
 
-Regione Emilia Romagna supports the `PloneGov initiative`__.
+Regione Emilia Romagna supports the `PloneGov initiative <http://www.plonegov.it/>`_.
 
-__ http://www.regione.emilia-romagna.it/
-__ http://www.plonegov.it/
 
 =======
 Authors

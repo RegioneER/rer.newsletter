@@ -1,5 +1,5 @@
-<tal:root define="header python:options['header'].output;
-                  footer python:options['footer'].output;
+<tal:root define="header python:options['header'].output if options['header'] else '';
+                  footer python:options['footer'].output if options['footer'] else '';
                   style python:options['style'];
                   channel_name python:options['channel_name'];"
 >

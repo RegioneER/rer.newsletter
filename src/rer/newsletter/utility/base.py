@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from datetime import timedelta
+from email.utils import formataddr
 from persistent.dict import PersistentDict
 from plone import api
 from rer.newsletter import _
 from rer.newsletter import logger
+from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.utility.channel import ALREADY_ACTIVE
 from rer.newsletter.utility.channel import ALREADY_SUBSCRIBED
 from rer.newsletter.utility.channel import IChannelUtility
@@ -14,6 +16,8 @@ from rer.newsletter.utility.channel import INVALID_EMAIL
 from rer.newsletter.utility.channel import INVALID_SECRET
 from rer.newsletter.utility.channel import MAIL_NOT_PRESENT
 from rer.newsletter.utility.channel import OK
+from rer.newsletter.utility.channel import UNHANDLED
+from smtplib import SMTPRecipientsRefused
 from zope.annotation.interfaces import IAnnotations
 from zope.interface import implementer
 from zope.interface import Invalid
@@ -21,6 +25,7 @@ from zope.interface import Invalid
 import json
 import re
 import uuid
+import six
 
 
 KEY = 'rer.newsletter.subscribers'
@@ -69,7 +74,7 @@ class BaseHandler(object):
         obj = self._api(channel)
         if obj:
             annotations = IAnnotations(obj)
-            if KEY not in annotations.keys():
+            if KEY not in list(annotations.keys()):
                 annotations[KEY] = PersistentDict({})
             return annotations[KEY], obj
 
@@ -146,7 +151,7 @@ class BaseHandler(object):
                 annotations[user] = {
                     'email': user,
                     'is_active': True,
-                    'token': unicode(uuid.uuid4()),
+                    'token': six.text_type(uuid.uuid4()),
                     'creation_date': datetime.today().strftime(
                         '%d/%m/%Y %H:%M:%S'
                     ),
@@ -190,7 +195,7 @@ class BaseHandler(object):
                 return INVALID_SECRET, None
 
             for user in annotations:
-                if annotations[user]['token'] == unicode(secret):
+                if annotations[user]['token'] == six.text_type(secret):
                     cd = annotations[user]['creation_date']
                     if isCreationDateExpired(cd):
                         del annotations[user]
@@ -202,7 +207,7 @@ class BaseHandler(object):
 
         else:
             # cancello l'utente con la mail (Admin)
-            if mail in annotations.keys():
+            if mail in list(annotations.keys()):
                 del annotations[mail]
                 return OK
             else:
@@ -216,7 +221,7 @@ class BaseHandler(object):
             return INVALID_CHANNEL
 
         for user in usersList:
-            if user in annotations.keys():
+            if user in list(annotations.keys()):
                 del annotations[user]
 
         return OK
@@ -237,8 +242,8 @@ class BaseHandler(object):
         if annotations is None:
             return INVALID_CHANNEL, None
 
-        secret = unicode(uuid.uuid4())
-        if user in annotations.keys():
+        secret = six.text_type(uuid.uuid4())
+        if user in list(annotations.keys()):
             annotations[user] = {
                 'email': user,
                 'is_active': annotations[user]['is_active'],
@@ -279,7 +284,7 @@ class BaseHandler(object):
             annotations[mail] = {
                 'email': mail,
                 'is_active': True,
-                'token': unicode(uuid.uuid4()),
+                'token': six.text_type(uuid.uuid4()),
                 'creation_date': datetime.today().strftime(
                     '%d/%m/%Y %H:%M:%S'
                 ),
@@ -296,7 +301,7 @@ class BaseHandler(object):
         if not mailValidation(mail):
             return INVALID_EMAIL, None
 
-        uuid_activation = unicode(uuid.uuid4())
+        uuid_activation = six.text_type(uuid.uuid4())
         for user in annotations.keys():
             if (
                 (
@@ -325,10 +330,14 @@ class BaseHandler(object):
     def _getMessage(self, channel, message, unsubscribe_footer):
         logger.debug('getMessage %s %s', channel, message.title)
 
+        content = IShippable(message).message_content
+
         body = u''
         body += channel.header.output if channel.header else u''
         body += u'<style>{css}</style>'.format(css=channel.css_style or u'')
-        body += message.text.output if message.text else u''
+        body += u'<div id="message_description"><p>{desc}</p></div>'.format(
+            desc=message.description or u'')
+        body += content
         body += channel.footer.output if channel.footer else u''
         body += unsubscribe_footer if unsubscribe_footer else u''
 
@@ -351,18 +360,24 @@ class BaseHandler(object):
         nl_subject = ' - ' + nl.subject_email if nl.subject_email else u''
         subject = message.title + nl_subject
 
+        # costruisco l'indirizzo del mittente
+        sender = formataddr((nl.sender_name, nl.sender_name))
+
         # invio la mail ad ogni utente
         mail_host = api.portal.get_tool(name='MailHost')
-        for user in annotations.keys():
-            if annotations[user]['is_active']:
-                mail_host.send(
-                    body.getData(),
-                    mto=annotations[user]['email'],
-                    mfrom=nl.sender_email,
-                    subject=subject,
-                    charset='utf-8',
-                    msg_type='text/html'
-                )
+        try:
+            for user in annotations.keys():
+                if annotations[user]['is_active']:
+                    mail_host.send(
+                        body.getData(),
+                        mto=annotations[user]['email'],
+                        mfrom=sender,
+                        subject=subject,
+                        charset='utf-8',
+                        msg_type='text/html'
+                    )
+        except SMTPRecipientsRefused:
+            return UNHANDLED
 
         return OK
 

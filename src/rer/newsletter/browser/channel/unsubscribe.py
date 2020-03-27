@@ -10,6 +10,7 @@ from rer.newsletter import logger
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utility.channel import UNHANDLED
+from rer.newsletter.utils import get_site_title
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
@@ -92,8 +93,8 @@ class UnsubscribeForm(form.Form):
                 'text/mail', mail_text)
 
             response_email = None
-            if self.context.response_email:
-                response_email = self.context.response_email
+            if self.context.sender_email:
+                response_email = self.context.sender_email
             else:
                 response_email = u'noreply@rer.it'
 
@@ -103,7 +104,7 @@ class UnsubscribeForm(form.Form):
                 mto=email,
                 mfrom=response_email,
                 subject='Conferma la cancellazione dalla newsletter ' +
-                self.context.title + ' del portale ' + api.portal.get().title,
+                self.context.title + ' del portale ' + get_site_title(),
                 charset='utf-8',
                 msg_type='text/html',
                 immediate=True
@@ -112,7 +113,7 @@ class UnsubscribeForm(form.Form):
             api.portal.show_message(
                 message=_(
                     u'user_unsubscribe_success',
-                    default=u'Info Riceverai una e-mail per confermare'
+                    default=u'Riceverai una e-mail per confermare'
                     ' la cancellazione dalla newsletter'
                 ),
                 request=self.request,

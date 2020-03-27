@@ -10,6 +10,8 @@ from rer.newsletter.content.message import Message
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utility.channel import UNHANDLED
+from rer.newsletter.utils import addToHistory
+from rer.newsletter.utils import get_site_title
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.interface import alsoProvides
@@ -45,17 +47,20 @@ class ProcessQueue(BrowserView):
             mail_text = portal.portal_transforms.convertTo(
                 'text/mail', mail_text)
 
-            response_email = None
-            if channel.response_email:
-                response_email = channel.response_email
+            # response_email = None
+            # if channel.response_email:
+            #     response_email = channel.response_email
+
+            subject = u'Risultato invio asincrono di {0} del {1} del '.format(
+                message.title, channel.title) \
+                + u'portale {0}'.format(get_site_title())
 
             mail_host = api.portal.get_tool(name='MailHost')
             mail_host.send(
                 mail_text.getData(),
                 mto=channel.sender_email,
-                mfrom=response_email,
-                subject='Risultato invio asincrono di {0}'.format(
-                    message.title),
+                mfrom=channel.sender_email,
+                subject=subject,
                 charset='utf-8',
                 msg_type='text/html'
             )
@@ -102,39 +107,41 @@ class ProcessQueue(BrowserView):
                 '@@unsubscribe_channel_template'
             )
             parameters = {
-                'portal_name': api.portal.get().title,
+                'portal_name': get_site_title(),
+                'channel_name': channel.title,
                 'unsubscribe_link': channel.absolute_url()
                 + '/@@unsubscribe',
             }
             unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
-            api_channel.sendMessage(
+            status = api_channel.sendMessage(
                 channel.id_channel, message, unsubscribe_footer_text
             )
 
             # i dettagli sull'invio del messaggio per lo storico
             annotations = IAnnotations(message)
-            if KEY not in annotations.keys():
+            if KEY not in list(annotations.keys()):
                 annotations[KEY] = PersistentDict({})
 
             annotations = annotations[KEY]
             now = datetime.today().strftime('%d/%m/%Y %H:%M:%S')
-            active_users, status = api_channel.getNumActiveSubscribers(
-                channel.id_channel
-            )
+            if status == OK:
+                active_users, status = api_channel.getNumActiveSubscribers(
+                    channel.id_channel
+                )
 
             if status != OK:
                 logger.exception(
                     'Problemi con la richiesta: {0}'.format(
                         self.request.get('HTTP_X_TASK_ID')),
                 )
-                # riporto indietro lo stato del messaggio nel caso sia 'sent'
-                if api.content.get_state(obj=message) == 'sent':
-                    api.content.transition(obj=message, transition='resend')
             else:
-                annotations[message.title + str(len(annotations.keys()))] = {
+                annotations[message.title + str(len(list(annotations.keys())))] = {
                     'num_active_subscribers': active_users,
                     'send_date': now,
                 }
+                # aggiungo all'history dell'oggetto messaggio il suo invio
+                addToHistory(message, active_users)
+
             self._sendNotification(
                 status=status,
                 channel=channel,

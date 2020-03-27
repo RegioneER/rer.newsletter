@@ -5,6 +5,11 @@ from rer.newsletter import _
 from zope.interface import Interface
 
 
+def checkExpiredTimeToken(value):
+    if value > 0:
+        return True
+
+
 class ISettingsSchema(Interface):
     """ Schema for channel settings"""
 
@@ -14,8 +19,8 @@ class ISettingsSchema(Interface):
             u'description_source_link',
             default=u'Indirizzo da sostituire'
         ),
-        default=u'applicazioni.regione.emilia-romagna.it',
-        required=False
+        default=u'',
+        required=False,
     )
 
     destination_link = schema.TextLine(
@@ -24,7 +29,14 @@ class ISettingsSchema(Interface):
             u'description_destination_link',
             default=u'Indirizzo da sostituire'
         ),
-        required=False
+        required=False,
+    )
+
+    expired_time_token = schema.Int(
+        title=_(u'expired_time_token', default=u'Validità del token in ore'),
+        required=False,
+        default=48,
+        # constraint=checkExpiredTimeToken,
     )
 
 

@@ -2,20 +2,17 @@
 from Products.CMFPlone.interfaces import INonInstallable
 from Products.MimetypesRegistry.interfaces import IMimetypesRegistryTool
 from Products.PortalTransforms.interfaces import IPortalTransformsTool
-from transforms.link_transform import link_transform
-from transforms.mimetype import mail
+from .transforms.link_transform import link_transform
+from .transforms.mimetype import mail
 from zope.component import getUtility
 from zope.interface import implementer
 
 
 @implementer(INonInstallable)
 class HiddenProfiles(object):
-
     def getNonInstallableProfiles(self):
         """Hide uninstall profile from site-creation and quickinstaller"""
-        return [
-            'rer.newsletter:uninstall',
-        ]
+        return ['rer.newsletter:uninstall']
 
 
 def post_install(context):

@@ -2,7 +2,8 @@
 from Acquisition import aq_inner
 from plone import api
 from plone import schema
-from plone.directives import form
+from plone.autoform import directives
+from plone.autoform.form import AutoExtensibleForm
 from plone.formwidget.recaptcha.widget import ReCaptchaFieldWidget
 from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
@@ -12,7 +13,9 @@ from rer.newsletter import logger
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import SUBSCRIBED
 from rer.newsletter.utility.channel import UNHANDLED
+from rer.newsletter.utils import get_site_title
 from z3c.form import button
+from z3c.form import form
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import Interface
@@ -20,24 +23,25 @@ from zope.interface import Interface
 
 class ISubscribeForm(Interface):
     """ define field for channel subscription """
+
     email = schema.Email(
         title=_(u'subscribe_user', default=u'Subscription Mail'),
         description=_(
             u'subscribe_user_description',
-            default=u'Mail for subscribe to a channel'
+            default=u'Mail for subscribe to a channel',
         ),
         required=True,
     )
 
-    form.widget(captcha=ReCaptchaFieldWidget)
+    directives.widget(captcha=ReCaptchaFieldWidget)
     captcha = schema.TextLine(
-        title=u'Captcha',
+        title=_(u'Captcha', default=u'Controllo di sicurezza'),
         description=u'',
-        required=False
+        required=False,
     )
 
 
-class SubscribeForm(form.SchemaForm):
+class SubscribeForm(AutoExtensibleForm, form.Form):
 
     ignoreContext = True
     schema = ISubscribeForm
@@ -59,29 +63,33 @@ class SubscribeForm(form.SchemaForm):
     def update(self):
         super(SubscribeForm, self).update()
 
-    @button.buttonAndHandler(
-        _(u'subscribe_submit_label', default=u'Subscribe')
-    )
+    @button.buttonAndHandler(_(u'subscribe_submit_label', default=u'Subscribe'))
     def handleSave(self, action):
         status = UNHANDLED
         data, errors = self.extractData()
 
         # recaptcha
         captcha = getMultiAdapter(
-            (aq_inner(self.context), self.request),
-            name='recaptcha'
+            (aq_inner(self.context), self.request), name='recaptcha'
         )
-        if not captcha.verify():
-            api.portal.show_message(
-                message=_(u'message_wrong_captcha',
-                          default=u'Captcha non inserito correttamente.'),
-                request=self.request,
-                type=u'error'
-            )
-            return
-
         if errors:
             self.status = self.formErrorsMessage
+            if self.status:
+                self.status = (
+                    u'Indirizzo email non inserito o non '
+                    + 'valido, oppure controllo di sicurezza non '
+                    + 'inserito.'
+                )
+            return
+        if not captcha.verify():
+            api.portal.show_message(
+                message=_(
+                    u'message_wrong_captcha',
+                    default=u'Captcha non inserito correttamente.',
+                ),
+                request=self.request,
+                type=u'error',
+            )
             return
 
         email = None
@@ -114,18 +122,19 @@ class SubscribeForm(form.SchemaForm):
                 'footer': self.context.footer,
                 'style': self.context.css_style,
                 'activationUrl': url,
-                'portal_name': api.portal.get().title,
+                'portal_name': get_site_title(),
             }
 
             mail_text = mail_template(**parameters)
 
             portal = api.portal.get()
             mail_text = portal.portal_transforms.convertTo(
-                'text/mail', mail_text)
+                'text/mail', mail_text
+            )
 
             response_email = None
-            if self.context.response_email:
-                response_email = self.context.response_email
+            if self.context.sender_email:
+                response_email = self.context.sender_email
             else:
                 response_email = u'noreply@rer.it'
 
@@ -135,48 +144,46 @@ class SubscribeForm(form.SchemaForm):
                 mto=email,
                 mfrom=response_email,
                 subject='Conferma la tua iscrizione alla Newsletter '
-                + self.context.title + ' del portale '
-                + api.portal.get().title,
+                + self.context.title
+                + ' del portale '
+                + get_site_title(),
                 charset='utf-8',
                 msg_type='text/html',
-                immediate=True
+                immediate=True,
             )
 
             api.portal.show_message(
                 message=_(
                     u'status_user_subscribed',
                     default=u'Riceverai una e-mail per confermare '
-                    'l\'iscrizione alla newsletter.'
+                    'l\'iscrizione alla newsletter.',
                 ),
                 request=self.request,
-                type=u'info'
+                type=u'info',
             )
 
         else:
             if status == 2:
-                logger.exception(
-                    'user already subscribed'
-                )
+                logger.exception('user already subscribed')
                 api.portal.show_message(
-                    message=_(u'user_already_subscribed',
-                              default=u'Sei già iscritto a questa newsletter, '
-                              'oppure non hai ancora'
-                              ' confermato l\'iscrizione.'),
+                    message=_(
+                        u'user_already_subscribed',
+                        default=u'Sei già iscritto a questa newsletter, '
+                        'oppure non hai ancora'
+                        ' confermato l\'iscrizione.',
+                    ),
                     request=self.request,
-                    type=u'error'
+                    type=u'error',
                 )
             else:
-                logger.exception(
-                    'unhandled error subscribe user'
-                )
+                logger.exception('unhandled error subscribe user')
                 api.portal.show_message(
                     message=u'Problems...{0}'.format(status),
                     request=self.request,
-                    type=u'error'
+                    type=u'error',
                 )
 
 
 subscribe_view = wrap_form(
-    SubscribeForm,
-    index=ViewPageTemplateFile('templates/subscribechannel.pt')
+    SubscribeForm, index=ViewPageTemplateFile('templates/subscribechannel.pt')
 )

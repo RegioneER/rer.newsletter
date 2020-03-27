@@ -21,11 +21,14 @@
           Message test
       </a>
     </span>
-    <span id="message-preview">
+    <span id="message-preview" tal:condition="view/canSendMessage">
       <a class="plone-btn plone-btn-primary" href=""
          tal:attributes="href string:${context/absolute_url}/@@send_message_view"
-         tal:condition="view/canSendMessage"
+         tal:condition="not: view/messageSentDetails"
          i18n:translate="send_message_confirm">Send Message</a>
+       <a class="plone-btn plone-btn-primary" href=""
+          tal:attributes="href string:${context/absolute_url}/@@send_message_view"
+          tal:condition="view/messageSentDetails">Rimanda il Messaggio</a>
     </span>
   </div>
 </div>

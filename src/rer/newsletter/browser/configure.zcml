@@ -74,7 +74,7 @@
     name="manageusers"
     class=".channel.manageusers.ManageUsers"
     template="channel/templates/manageusers.pt"
-    permission="zope2.View"
+    permission="rer.newsletter.ManageNewsletter"
     />
 
   <browser:pages
@@ -88,7 +88,7 @@
 
   <!-- view for message preview -->
   <browser:page
-    for="rer.newsletter.interfaces.IMessage"
+    for="rer.newsletter.behaviors.ships.IShippableMarker"
     name="messagepreview_view"
     class=".message.messagepreview.MessagePreview"
     template="message/templates/messagepreview.pt"
@@ -97,7 +97,7 @@
 
   <!-- view for sending test of message -->
   <browser:page
-    for="rer.newsletter.interfaces.IMessage"
+    for="rer.newsletter.behaviors.ships.IShippableMarker"
     name="sendingtest_view"
     class=".message.sendingtest.message_sending_test"
     permission="zope2.View"
@@ -128,23 +128,24 @@
     class=".message.messageview.MessageView"
     template="message/templates/messageview.pt"
     permission="zope2.View"
+    layer="rer.newsletter.interfaces.IRerNewsletterLayer"
     />
 
-    <!-- view for send success messagge-->
-    <browser:page
-      for="rer.newsletter.interfaces.IMessage"
-      name="send_success_view"
-      class=".message.sendmessagesuccessview.SendMessageSuccessView"
-      template="message/templates/sendmessagesuccessview.pt"
-      permission="zope2.View"
-      />
+  <!-- view for send success messagge-->
+  <browser:page
+    for="rer.newsletter.behaviors.ships.IShippableMarker"
+    name="send_success_view"
+    class=".message.sendmessagesupportview.SendMessageSuccessView"
+    template="message/templates/sendmessagesuccessview.pt"
+    permission="zope2.View"
+    />
 
   <!-- view for send message -->
   <browser:page
-    for="rer.newsletter.interfaces.IMessage"
+    for="rer.newsletter.behaviors.ships.IShippableMarker"
     name="send_message_view"
     class=".message.sendmessageview.message_sending_view"
-    permission="zope2.View"
+    permission="rer.newsletter.SendMessage"
     />
 
   <!-- View for channel's history -->
@@ -153,7 +154,7 @@
     name="channelhistory"
     class=".channel.channelhistory.ChannelHistory"
     template="channel/templates/channelhistoryview.pt"
-    permission="zope2.View"
+    permission="rer.newsletter.ManageNewsletter"
     />
 
   <browser:pages
@@ -208,13 +209,14 @@
     permission="zope2.View"
     />
 
+  <!-- vista da usare come template per inviare le collezioni -->
   <browser:page
-    for="rer.newsletter.interfaces.IChannel"
-    class=".channel.channelview.ChannelFolderView"
+    for="*"
     layer="rer.newsletter.interfaces.IRerNewsletterLayer"
-    template="channel/templates/listing.pt"
+    template="message/templates/collection_sending_view.pt"
     permission="zope2.View"
-    name="folder_listing"
+    name="collection_sending_view"
+    class=".message.collectionview.CollectionView"
     />
 
   <!-- vista che controlla che il messaggio sia stato inviato -->
@@ -236,15 +238,47 @@
     permission="rer.newsletter.ManageNewsletter"
     template="channel/templates/channelviewlet.pt"
     />
+
   <!-- message viewlet -->
   <browser:viewlet
     name="manage_message_viewlet"
-    for="rer.newsletter.interfaces.IMessage"
+    for="rer.newsletter.behaviors.ships.IShippableMarker"
     manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
     class=".message.messageviewlet.MessageManagerViewlet"
     layer="rer.newsletter.interfaces.IRerNewsletterLayer"
     permission="zope2.View"
     template="message/templates/messageviewlet.pt"
     />
+
+  <!-- vista per il cron che deve eliminare gli utenti con il token scaduto che non hanno confermato l'iscrizione -->
+  <browser:page
+    for="*"
+    name="delete_expired_users"
+    permission="rer.newsletter.ManageNewsletter"
+    class=".channel.deleteexpiredusers.DeleteExpiredUsersView"
+    />
+
+  <!-- overwrite batch view for Sendable Collection -->
+  <browser:page
+      name="batchnavigation"
+      for="rer.newsletter.interfaces.IShippableCollection"
+      class="rer.newsletter.browser.message.shippablecollection.ShippableCollectionBatchView"
+      permission="zope.Public"
+      />
+
+  <!-- Message version-view -->
+  <browser:page
+      for="rer.newsletter.interfaces.IMessage"
+      name="version-view"
+      permission="zope2.View"
+      class=".message.versionview.MessageVersionView"
+      />
+  <browser:page
+      for="rer.newsletter.interfaces.IMessage"
+      name="content-core"
+      class="plone.dexterity.browser.view.DefaultView"
+      template="message/templates/messagecontentcore.pt"
+      permission="zope2.View"
+      />
 
 </configure>

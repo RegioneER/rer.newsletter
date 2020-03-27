@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone import schema
+from plone.app.contenttypes.interfaces import ICollection
 from plone.app.textfield import RichText as RichTextField
 from plone.app.z3cform.widget import RichTextFieldWidget
 from plone.autoform import directives as form
@@ -9,10 +10,17 @@ from zope.interface import Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
 import uuid
+import six
 
 
 def default_id_channel():
-    return unicode(uuid.uuid4())
+    if six.PY2:
+        return unicode(uuid.uuid4())
+    return str(uuid.uuid4())
+
+
+class IShippableCollection(ICollection):
+    pass
 
 
 class IRerNewsletterLayer(IDefaultBrowserLayer):
@@ -58,7 +66,7 @@ class IChannelSchema(model.Schema):
         title=_(u'privacy_channel', default=u'Informativa sulla privacy'),
         description=_(u'description_privacy_channel',
                       default=u'Informativa sulla privacy per questo canale'),
-        required=False,
+        required=True,
         default=u'',
     )
     form.widget('privacy', RichTextFieldWidget)
