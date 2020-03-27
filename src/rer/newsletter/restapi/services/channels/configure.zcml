@@ -1,0 +1,13 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone">
+
+  <plone:service
+    method="GET"
+    for="rer.newsletter.interfaces.IChannel"
+    factory=".get.SubscribersListGet"
+    name="@subscribers-list"
+    permission="zope2.View"
+    />
+
+</configure>
