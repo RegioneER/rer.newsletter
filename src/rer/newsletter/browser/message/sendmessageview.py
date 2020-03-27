@@ -20,7 +20,7 @@ from zope.component import queryUtility
 try:
     import urlencode
 except ImportError:
-    from urllib import urlencode
+    from six.moves.urllib.parse import urlencode
 
 
 try:
