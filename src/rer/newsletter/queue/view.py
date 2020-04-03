@@ -109,8 +109,8 @@ class ProcessQueue(BrowserView):
             parameters = {
                 'portal_name': get_site_title(),
                 'channel_name': channel.title,
-                'unsubscribe_link': channel.absolute_url()
-                + '/@@unsubscribe',
+                'unsubscribe_link': channel.absolute_url() +
+                '/@@unsubscribe',
             }
             unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
             status = api_channel.sendMessage(
