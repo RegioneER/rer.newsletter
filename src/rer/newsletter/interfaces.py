@@ -14,9 +14,7 @@ import six
 
 
 def default_id_channel():
-    if six.PY2:
-        return unicode(uuid.uuid4())
-    return str(uuid.uuid4())
+    return six.text_type(uuid.uuid4())
 
 
 class IShippableCollection(ICollection):
