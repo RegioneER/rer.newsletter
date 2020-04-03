@@ -18,6 +18,8 @@ class RerNewsletterLayer(PloneSandboxLayer):
         # Load any other ZCML that is required for your tests.
         # The z3c.autoinclude feature is disabled in the Plone fixture base
         # layer.
+        import plone.restapi
+        self.loadZCML(package=plone.restapi)
         self.loadZCML(package=rer.newsletter)
 
     def setUpPloneSite(self, portal):
@@ -29,13 +31,13 @@ RER_NEWSLETTER_FIXTURE = RerNewsletterLayer()
 
 RER_NEWSLETTER_INTEGRATION_TESTING = IntegrationTesting(
     bases=(RER_NEWSLETTER_FIXTURE,),
-    name='RerNewsletterLayer:IntegrationTesting'
+    name='RerNewsletterLayer:IntegrationTesting',
 )
 
 
 RER_NEWSLETTER_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(RER_NEWSLETTER_FIXTURE,),
-    name='RerNewsletterLayer:FunctionalTesting'
+    name='RerNewsletterLayer:FunctionalTesting',
 )
 
 
@@ -43,7 +45,7 @@ RER_NEWSLETTER_ACCEPTANCE_TESTING = FunctionalTesting(
     bases=(
         RER_NEWSLETTER_FIXTURE,
         REMOTE_LIBRARY_BUNDLE_FIXTURE,
-        z2.ZSERVER_FIXTURE
+        z2.ZSERVER_FIXTURE,
     ),
-    name='RerNewsletterLayer:AcceptanceTesting'
+    name='RerNewsletterLayer:AcceptanceTesting',
 )
