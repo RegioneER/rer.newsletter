@@ -55,9 +55,9 @@ Utility for email sending
 
 This product normaly send email through plone mailer, but creating a product which
 implements the utility ``IChannelUtility`` it is possible use another system of
-mailing-list, like for example mailman.
+mailing-list, like mailman for example.
 
-At the inside of ``IChannel Utility`` interface are described all methods that will be
+Inside the ``IChannel Utility`` interface are described all methods that will be
 implemented and the way that they must responded.
 
 Utility declaration::
@@ -66,7 +66,7 @@ Utility declaration::
       provides=".channel.IChannelUtility"
       factory=".base.BaseHandler" />
 
-and creates a class that implement utility interface::
+and creates a class that implement that utility interface::
 
     @implementer(IChannelUtility)
     class BaseHandler(object):
@@ -83,8 +83,8 @@ New permissions have been added for the management of the Newsletter:
 - ``rer.newsletter: Manage Newsletter``
 - ``rer.newsletter: Send Newsletter``
 
-This permission are assigned to Manager and Site Administrator. Besides it been
-added a new role ``Gestore Newsletter`` which have permissions for all possible
+This permission are assigned to Manager and Site Administrator. There is also
+a new role, ``Gestore Newsletter``, which has permissions for all possible
 operations on newsletter.
 
 
