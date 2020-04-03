@@ -15,7 +15,7 @@ import six
 
 def default_id_channel():
     if six.PY2:
-        return unicode(uuid.uuid4())
+        return unicode(uuid.uuid4())  # noqa
     return str(uuid.uuid4())
 
 
