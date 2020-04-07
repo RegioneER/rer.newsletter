@@ -132,17 +132,18 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal) {
 
   // aspetto che le tile all'interno della pagina siano caricate
   $(document).ready(function() {
-    if ($("body.userrole-anonymous div.tiles-management")) {
+    if ($('body').hasClass('userrole-anonymous')) {
       $(".tileBody #channel-subscribe a").each(function(i, el) {
         render_modal(el);
       });
-    } else if ($(".pat-tiles-management").length > 0) {
-      $(".pat-tiles-management").on("rtTilesLoaded", function(e) {
+    } else {
+      $('.tiles-management').on('rtTilesLoaded', function() {
         $(".tileBody #channel-subscribe a").each(function(i, el) {
           render_modal(el);
         });
       });
     }
+
     $(".portlet #channel-subscribe a").each(function(i, el) {
       render_modal(el);
     });
