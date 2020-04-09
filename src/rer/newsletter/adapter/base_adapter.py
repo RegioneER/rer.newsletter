@@ -15,7 +15,7 @@ class IChannelSender(Interface):
 
 @implementer(IChannelSender)
 class BaseAdapter(object):
-    """ Adapter standard di base
+    """ Adapter standard di base, invio sincrono usando plone
     """
 
     def __init__(self, context, request):

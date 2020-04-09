@@ -17,6 +17,8 @@ from z3c.form import form
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 from zope.component import queryUtility
+from zope.component import getMultiAdapter
+from rer.newsletter.adapter.base_adapter import IChannelSender
 
 
 try:
@@ -62,10 +64,12 @@ class SendMessageView(form.Form):
     @button.buttonAndHandler(_('send_sendingview', default='Send'))
     def handleSave(self, action):
         channel = self._getNewsletter()
-        api_channel = getUtility(IChannelUtility)
+        # api_channel = getUtility(IChannelUtility)
+        api_channel = getMultiAdapter((self.context, self.request), IChannelSender)
         active_users, status = api_channel.getNumActiveSubscribers(
             channel.id_channel
         )
+
         if HAS_TASKQUEUE:
             messageQueue = queryUtility(IMessageQueue)
             isQueuePresent = queryUtility(ITaskQueue, name=QUEUE_NAME)
