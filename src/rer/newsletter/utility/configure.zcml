@@ -8,9 +8,9 @@
       provides=".channel.IChannelUtility"
       factory=".mailman.MailmanHandler" /> -->
 
-      <utility
-        provides=".channel.IChannelUtility"
-        factory=".base.BaseHandler" />
+    <utility
+      provides=".channel.IChannelUtility"
+      factory=".base.BaseHandler" />
 
       <utility
         provides=".customtitle.ICustomTitle"
