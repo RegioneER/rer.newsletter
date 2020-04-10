@@ -347,40 +347,6 @@ class BaseHandler(object):
 
         return body
 
-    def sendMessage(self, channel, message, unsubscribe_footer=None):
-        logger.debug('sendMessage %s %s', channel, message.title)
-        nl = self._api(channel)
-        annotations, channel_obj = self._storage(channel)
-        if annotations is None:
-            return INVALID_CHANNEL
-
-        # costruisco il messaggio
-        body = self._getMessage(nl, message, unsubscribe_footer)
-
-        nl_subject = ' - ' + nl.subject_email if nl.subject_email else u''
-        subject = message.title + nl_subject
-
-        # costruisco l'indirizzo del mittente
-        sender = formataddr((nl.sender_name, nl.sender_name))
-
-        # invio la mail ad ogni utente
-        mail_host = api.portal.get_tool(name='MailHost')
-        try:
-            for user in annotations.keys():
-                if annotations[user]['is_active']:
-                    mail_host.send(
-                        body.getData(),
-                        mto=annotations[user]['email'],
-                        mfrom=sender,
-                        subject=subject,
-                        charset='utf-8',
-                        msg_type='text/html'
-                    )
-        except SMTPRecipientsRefused:
-            return UNHANDLED
-
-        return OK
-
     def getNumActiveSubscribers(self, channel):
         logger.debug('Get number of active subscribers from %s', channel)
         annotations, channel_obj = self._storage(channel)
