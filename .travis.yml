@@ -1,4 +1,4 @@
-dist: bionic
+dist: stretch
 language: python
 sudo: false
 cache:
