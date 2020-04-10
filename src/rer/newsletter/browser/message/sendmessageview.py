@@ -52,7 +52,11 @@ class SendMessageView(form.Form):
     def getUserNumber(self):
         channel = self._getNewsletter()
 
-        api_channel = getUtility(IChannelUtility)
+        api_channel = getMultiAdapter(
+            (self.context, self.request),
+            IChannelSender
+        )
+
         active_users, status = api_channel.getNumActiveSubscribers(
             channel.id_channel
         )
@@ -64,8 +68,10 @@ class SendMessageView(form.Form):
     @button.buttonAndHandler(_('send_sendingview', default='Send'))
     def handleSave(self, action):
         channel = self._getNewsletter()
-        # api_channel = getUtility(IChannelUtility)
-        api_channel = getMultiAdapter((self.context, self.request), IChannelSender)
+        api_channel = getMultiAdapter(
+            (self.context, self.request),
+            IChannelSender
+        )
         active_users, status = api_channel.getNumActiveSubscribers(
             channel.id_channel
         )
