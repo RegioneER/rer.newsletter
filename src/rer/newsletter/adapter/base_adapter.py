@@ -357,6 +357,10 @@ class BaseAdapter(object):
         return body
 
     def sendMessage(self, channel, message, unsubscribe_footer=None):
+        """ This is the primary method to send emails for the channel.
+        Override this method with a new (and more specific) adapter to
+        customize the email sending.
+        """
         logger.debug('sendMessage %s %s', channel, message.title)
         nl = self._api(channel)
         annotations, channel_obj = self._storage(channel)
