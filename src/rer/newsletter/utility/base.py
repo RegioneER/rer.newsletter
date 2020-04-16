@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from datetime import timedelta
-from email.utils import formataddr
 from persistent.dict import PersistentDict
 from plone import api
 from rer.newsletter import _
@@ -16,8 +15,6 @@ from rer.newsletter.utility.channel import INVALID_EMAIL
 from rer.newsletter.utility.channel import INVALID_SECRET
 from rer.newsletter.utility.channel import MAIL_NOT_PRESENT
 from rer.newsletter.utility.channel import OK
-from rer.newsletter.utility.channel import UNHANDLED
-from smtplib import SMTPRecipientsRefused
 from zope.annotation.interfaces import IAnnotations
 from zope.interface import implementer
 from zope.interface import Invalid

@@ -7,7 +7,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.content.channel import Channel
-from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utils import addToHistory
 from rer.newsletter.utils import get_site_title
@@ -15,7 +14,6 @@ from six.moves.urllib.parse import urlencode
 from z3c.form import button
 from z3c.form import form
 from zope.annotation.interfaces import IAnnotations
-from zope.component import getUtility
 from zope.component import queryUtility
 from zope.component import getMultiAdapter
 from rer.newsletter.adapter.base_adapter import IChannelSender
