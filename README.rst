@@ -31,6 +31,7 @@ The product provide a portlet and a tile for user subscribe.
 Form for user subscribe have two fields: email and reCaptcha, so do not forget to
 set key for reCaptcha fields. See `plone.formwidget.recaptcha <https://github.com/plone/plone.formwidget.recaptcha>`_ for more details.
 
+
 User Manage
 -----------
 
@@ -50,27 +51,32 @@ Advanced Features
 =================
 
 
-Utility for email sending
--------------------------
+Customize how to send your newsletter
+-------------------------------------
 
-This product normaly send email through plone mailer, but creating a product which
-implements the utility ``IChannelUtility`` it is possible use another system of
-mailing-list, like mailman for example.
+By default, this product send all the emails through the standard plone mailer.
+The actual sending mechanism is handled by an adapter (a multi-adapter):
+
+    <adapter
+      for="rer.newsletter.behaviors.ships.IShippableMarker
+           zope.publisher.interfaces.browser.IBrowserRequest"
+      provides=".base_adapter.IChannelSender"
+      factory=".base_adapter.BaseAdapter"
+      />
+
+
+To change this default activity, you can create a new Plone add-on that
+register a new adapter with a more specific layer (e.g. use the browser layer
+of the new add-on) and override the ``sendMessage`` method as you wish.
+
+
+IChannelUtility
+---------------
+
+All the channel management is contained in the utility ``IChannelUtility``.
 
 Inside the ``IChannel Utility`` interface are described all methods that will be
-implemented and the way that they must responded.
-
-Utility declaration::
-
-    <utility
-      provides=".channel.IChannelUtility"
-      factory=".base.BaseHandler" />
-
-and creates a class that implement that utility interface::
-
-    @implementer(IChannelUtility)
-    class BaseHandler(object):
-        """ utility class to send channel email with mailer of plone """
+implemented and the way they must reply.
 
 
 Advanced security
@@ -86,6 +92,9 @@ New permissions have been added for the management of the Newsletter:
 This permission are assigned to Manager and Site Administrator. There is also
 a new role, ``Gestore Newsletter``, which has permissions for all possible
 operations on newsletter.
+
+
+> TODO: controllare il resto del readme relativo alla queue
 
 
 Asynchronous sending of email
