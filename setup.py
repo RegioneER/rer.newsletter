@@ -40,15 +40,16 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'plone.formwidget.recaptcha',
+        'collective.taskqueue [redis]; python_version<"3"',
+        'mailmanclient==3.1',
         'plone.api',
+        'plone.app.tiles',
+        'plone.formwidget.recaptcha',
+        'plone.restapi',
+        'premailer==3.1.1',
         'Products.GenericSetup>=1.8.2',
         'setuptools',
         'z3c.jbot',
-        'mailmanclient==3.1',
-        'premailer==3.1.1',
-        'plone.app.tiles',
-        'collective.taskqueue [redis]; python_version<"3"',
     ],
     extras_require={
         'test': [
