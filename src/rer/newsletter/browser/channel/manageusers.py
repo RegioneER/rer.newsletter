@@ -29,12 +29,12 @@ class ManageUsers(BrowserView):
         self.context = context
         self.request = request
 
-        add_bundle_on_request(self.request, 'datatables')
+        add_bundle_on_request(self.request, "datatables")
 
     def deleteUser(self):
         status = UNHANDLED
 
-        email = self.request['email']
+        email = self.request["email"]
         channel = self.context.id_channel
 
         api_channel = getUtility(IChannelUtility)
@@ -42,12 +42,12 @@ class ManageUsers(BrowserView):
 
         response = {}
         if status == OK:
-            response['ok'] = True
+            response["ok"] = True
         else:
-            response['ok'] = False
+            response["ok"] = False
             logger.exception(
-                'Problems...{error}'.format(error=status)
-                + ' : channel: %s, email: %s',
+                "Problems...{error}".format(error=status) +
+                " : channel: %s, email: %s",
                 channel,
                 email,
             )
@@ -65,7 +65,7 @@ class ManageUsers(BrowserView):
         if status == OK:
             # predisporre download del file
             data = StringIO()
-            fieldnames = ['id', 'email', 'is_active', 'creation_date']
+            fieldnames = ["id", "email", "is_active", "creation_date"]
             writer = csv.DictWriter(data, fieldnames=fieldnames)
 
             writer.writeheader()
@@ -74,11 +74,11 @@ class ManageUsers(BrowserView):
             for user in userListJson:
                 writer.writerow(user)
 
-            filename = '{title}-user-list.csv'.format(title=self.context.id)
+            filename = "{title}-user-list.csv".format(title=self.context.id)
 
-            self.request.response.setHeader('Content-Type', 'text/csv')
+            self.request.response.setHeader("Content-Type", "text/csv")
             self.request.response.setHeader(
-                'Content-Disposition',
+                "Content-Disposition",
                 'attachment; filename="{filename}"'.format(filename=filename),
             )
 
@@ -86,8 +86,8 @@ class ManageUsers(BrowserView):
 
         else:
             logger.exception(
-                'Problems...{error}'.format(error=status)
-                + ' : channel: {0}'.format(channel)
+                "Problems...{error}".format(error=status) +
+                " : channel: {0}".format(channel)
             )
 
     def exportUsersListAsJson(self):
@@ -102,6 +102,6 @@ class ManageUsers(BrowserView):
             return userList
         else:
             logger.exception(
-                '{error}'.format(error=self.errors)
-                + ' : channel: {0}'.format(channel)
+                "{error}".format(error=self.errors) +
+                " : channel: {0}".format(channel)
             )

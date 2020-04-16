@@ -17,106 +17,100 @@ from zope.event import notify
 
 
 class ConfirmAction(BrowserView):
-
     def render(self):
         return self.index()
 
     def _sendGenericMessage(self, template, receiver, message, message_title):
         mail_template = self.context.restrictedTraverse(
-            '@@{0}'.format(template)
+            "@@{0}".format(template)
         )
 
         parameters = {
-            'header': self.context.header,
-            'footer': self.context.footer,
-            'style': self.context.css_style,
-            'portal_name': get_site_title(),
-            'channel_name': self.context.title,
+            "header": self.context.header,
+            "footer": self.context.footer,
+            "style": self.context.css_style,
+            "portal_name": get_site_title(),
+            "channel_name": self.context.title,
         }
 
         mail_text = mail_template(**parameters)
 
         portal = api.portal.get()
-        mail_text = portal.portal_transforms.convertTo(
-            'text/mail', mail_text)
+        mail_text = portal.portal_transforms.convertTo("text/mail", mail_text)
 
         response_email = None
         if self.context.sender_email:
             response_email = self.context.sender_email
         else:
-            response_email = u'noreply@rer.it'
+            response_email = u"noreply@rer.it"
 
         # invio la mail ad ogni utente
-        mail_host = api.portal.get_tool(name='MailHost')
+        mail_host = api.portal.get_tool(name="MailHost")
         mail_host.send(
             mail_text.getData(),
             mto=receiver,
             mfrom=response_email,
             subject=message_title,
-            charset='utf-8',
-            msg_type='text/html'
+            charset="utf-8",
+            msg_type="text/html",
         )
 
         return OK
 
     def __call__(self):
-        secret = self.request.get('secret')
-        action = self.request.get('action')
+        secret = self.request.get("secret")
+        action = self.request.get("action")
 
         response = None
         api_channel = getUtility(IChannelUtility)
 
-        if action == u'subscribe':
+        if action == u"subscribe":
             response, user = api_channel.activateUser(
-                self.context.id_channel,
-                secret=secret
+                self.context.id_channel, secret=secret
             )
             # mandare mail di avvenuta conferma
             if response == OK:
                 notify(SubscriptionEvent(self.context, user))
                 self._sendGenericMessage(
-                    template='activeuserconfirm_template',
+                    template="activeuserconfirm_template",
                     receiver=user,
-                    message='Messaggio di avvenuta iscrizione',
-                    message_title='Iscrizione confermata'
+                    message="Messaggio di avvenuta iscrizione",
+                    message_title="Iscrizione confermata",
                 )
                 status = _(
-                    u'generic_activate_message_success',
-                    default=u'Ti sei iscritto alla newsletter '
-                    + self.context.title + ' del portale ' +
-                    get_site_title()
+                    u"generic_activate_message_success",
+                    default=u"Ti sei iscritto alla newsletter " +
+                    self.context.title +
+                    " del portale " +
+                    get_site_title(),
                 )
 
-        elif action == u'unsubscribe':
+        elif action == u"unsubscribe":
             response, user = api_channel.deleteUser(
-                self.context.id_channel,
-                secret=secret
+                self.context.id_channel, secret=secret
             )
             # mandare mail di avvenuta cancellazione
             if response == OK:
                 notify(UnsubscriptionEvent(self.context, user))
                 self._sendGenericMessage(
-                    template='deleteuserconfirm_template',
+                    template="deleteuserconfirm_template",
                     receiver=user,
-                    message='L\'utente è stato eliminato dal canale.',
-                    message_title='Cancellazione avvenuta'
+                    message="L'utente è stato eliminato dal canale.",
+                    message_title="Cancellazione avvenuta",
                 )
                 status = _(
-                    u'generic_delete_message_success',
-                    default=u'User Deleted.'
+                    u"generic_delete_message_success", default=u"User Deleted."
                 )
 
         if response == OK:
             api.portal.show_message(
-                message=status,
-                request=self.request,
-                type=u'info'
+                message=status, request=self.request, type=u"info"
             )
         else:
             api.portal.show_message(
-                message=u'Problems...{0}'.format(response),
+                message=u"Problems...{0}".format(response),
                 request=self.request,
-                type=u'error'
+                type=u"error",
             )
 
         return self.render()
