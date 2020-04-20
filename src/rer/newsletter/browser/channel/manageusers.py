@@ -47,7 +47,7 @@ class ManageUsers(BrowserView):
         else:
             response["ok"] = False
             logger.exception(
-                "Problems: {error} - channel: {channel} - email: {email}".format( # noqa
+                "Error: {error} - channel: {channel} - email: {email}".format(
                     error=status, channel=channel, email=email
                 )
             )
@@ -89,7 +89,8 @@ class ManageUsers(BrowserView):
         else:
             logger.exception(
                 "Problems: {error} - channel: {channel}".format(
-                    error=status, channel=channel)
+                    error=status, channel=channel
+                )
             )
 
     def exportUsersListAsJson(self):
@@ -107,5 +108,6 @@ class ManageUsers(BrowserView):
         else:
             logger.exception(
                 "Error: {error} - channel: {channel}".format(
-                    error=self.errors, channel=channel)
+                    error=self.errors, channel=channel
+                )
             )
