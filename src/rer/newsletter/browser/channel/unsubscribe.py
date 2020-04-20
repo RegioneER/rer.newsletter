@@ -102,10 +102,10 @@ class UnsubscribeForm(form.Form):
                 mail_text.getData(),
                 mto=email,
                 mfrom=response_email,
-                subject='Conferma la cancellazione dalla newsletter '
-                + self.context.title
-                + ' del portale '
-                + get_site_title(),
+                subject='Conferma la cancellazione dalla newsletter'
+                ' {channel} del portale {site}'.format(
+                    channel=self.context.title, site=get_site_title()
+                ),
                 charset='utf-8',
                 msg_type='text/html',
                 immediate=True,

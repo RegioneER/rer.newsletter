@@ -10,16 +10,14 @@ from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
-from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.utility.channel import SUBSCRIBED
 from rer.newsletter.utility.channel import UNHANDLED
 from rer.newsletter.utils import get_site_title
 from z3c.form import button
 from z3c.form import form
 from zope.component import getMultiAdapter
-from zope.component import getUtility
 from zope.interface import Interface
-from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 
 
 class ISubscribeForm(Interface):
@@ -80,8 +78,8 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
             if self.status:
                 self.status = (
                     u"Indirizzo email non inserito o non "
-                    + "valido, oppure controllo di sicurezza non "
-                    + "inserito."
+                    + "valido, oppure controllo di sicurezza non "  # noqa
+                    + "inserito."  # noqa
                 )
             return
         if not captcha.verify():
@@ -145,10 +143,10 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
                 mail_text.getData(),
                 mto=email,
                 mfrom=response_email,
-                subject="Conferma la tua iscrizione alla Newsletter "
-                + self.context.title
-                + " del portale "
-                + get_site_title(),
+                subject="Conferma la tua iscrizione alla Newsletter {channel}"
+                " del portale {site}".format(
+                    channel=self.context.title, portal=get_site_title()
+                ),
                 charset="utf-8",
                 msg_type="text/html",
                 immediate=True,

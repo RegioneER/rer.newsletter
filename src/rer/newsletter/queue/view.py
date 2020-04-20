@@ -5,18 +5,16 @@ from plone import api
 from plone.protect.interfaces import IDisableCSRFProtection
 from Products.Five.browser import BrowserView
 from rer.newsletter import logger
+from rer.newsletter.adapter.sender import IChannelSender
 from rer.newsletter.content.channel import Channel
 from rer.newsletter.content.message import Message
-from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utility.channel import UNHANDLED
 from rer.newsletter.utils import addToHistory
 from rer.newsletter.utils import get_site_title
 from zope.annotation.interfaces import IAnnotations
-from zope.component import getUtility
-from zope.interface import alsoProvides
 from zope.component import getMultiAdapter
-from rer.newsletter.adapter.sender import IChannelSender
+from zope.interface import alsoProvides
 
 
 KEY = 'rer.newsletter.message.details'

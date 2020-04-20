@@ -29,7 +29,7 @@ def mailValidation(mail):
     # valido la mail
     match = re.match(
         '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]'
-        + '+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+        + '+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',  # noqa
         mail,
     )
     if match is None:
@@ -89,8 +89,8 @@ class BaseAdapter(object):
         for subscriber in subscriptions.values():
             if (mail == subscriber['email'] and subscriber['is_active']) or (
                 mail == subscriber['email']
-                and not subscriber['is_active']
-                and isCreationDateExpired(subscriber['creation_date'])
+                and not subscriber['is_active']  # noqa
+                and isCreationDateExpired(subscriber['creation_date'])  # noqa
             ):
                 return ALREADY_SUBSCRIBED, None
         else:
@@ -193,8 +193,8 @@ class BaseAdapter(object):
         for subscriber in list(subscriptions.values()):
             if (mail == subscriber['email'] and subscriber['is_active']) or (
                 mail == subscriber['email']
-                and not subscriber['is_active']
-                and isCreationDateExpired(subscriber['creation_date'])
+                and not subscriber['is_active']  # noqa
+                and isCreationDateExpired(subscriber['creation_date'])  # noqa
             ):
                 return ALREADY_SUBSCRIBED
         else:
@@ -254,7 +254,7 @@ class BaseAdapter(object):
         for user in usersList:
             match = re.match(
                 '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]'
-                + '+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+                + '+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',  # noqa
                 user,
             )
             if match is not None:

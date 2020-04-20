@@ -5,11 +5,9 @@ from rer.newsletter import _
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.contentrules.events import SubscriptionEvent
 from rer.newsletter.contentrules.events import UnsubscriptionEvent
-from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utils import get_site_title
 from zope.component import getMultiAdapter
-from zope.component import getUtility
 from zope.event import notify
 
 
@@ -76,10 +74,10 @@ class ConfirmSubscription(BrowserView):
                 )
                 status = _(
                     u"generic_activate_message_success",
-                    default=u"Ti sei iscritto alla newsletter "
-                    + self.context.title
-                    + " del portale "
-                    + get_site_title(),
+                    default=u'Ti sei iscritto alla newsletter {channel}'
+                    ' del portale "{site}".'.format(
+                        channel=self.context.title, site=get_site_title()
+                    ),
                 )
 
         elif action == u"unsubscribe":

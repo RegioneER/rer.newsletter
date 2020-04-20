@@ -3,13 +3,11 @@ from plone import api
 from plone.dexterity.browser import add
 from rer.newsletter import _
 from rer.newsletter import logger
-from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.adapter.sender import IChannelSender
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utility.channel import UNHANDLED
 from z3c.form import button
-from zope.component import getUtility
 from zope.component import getMultiAdapter
-from rer.newsletter.adapter.sender import IChannelSender
 
 
 class AddForm(add.DefaultAddForm):

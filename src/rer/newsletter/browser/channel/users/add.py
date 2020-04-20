@@ -3,16 +3,14 @@ from plone import api
 from plone import schema
 from rer.newsletter import _
 from rer.newsletter import logger
-from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.utility.channel import SUBSCRIBED
 from rer.newsletter.utility.channel import UNHANDLED
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
-from zope.component import getUtility
-from zope.interface import Interface
-from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from zope.component import getMultiAdapter
+from zope.interface import Interface
 
 
 class IAddForm(Interface):

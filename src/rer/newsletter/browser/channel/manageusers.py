@@ -2,14 +2,12 @@
 from Products.CMFPlone.resources import add_bundle_on_request
 from Products.Five import BrowserView
 from rer.newsletter import logger
-from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utility.channel import UNHANDLED
-from zope.component import getUtility
+from zope.component import getMultiAdapter
 from zope.interface import implementer
 from zope.interface import Interface
-from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
-from zope.component import getMultiAdapter
 
 import csv
 import json
@@ -49,10 +47,9 @@ class ManageUsers(BrowserView):
         else:
             response["ok"] = False
             logger.exception(
-                "Problems...{error}".format(error=status)
-                + " : channel: %s, email: %s",
-                channel,
-                email,
+                "Problems: {error} - channel: {channel} - email: {email}".format( # noqa
+                    error=status, channel=channel, email=email
+                )
             )
 
         return json.dumps(response)
@@ -91,8 +88,8 @@ class ManageUsers(BrowserView):
 
         else:
             logger.exception(
-                "Problems...{error}".format(error=status)
-                + " : channel: {0}".format(channel)
+                "Problems: {error} - channel: {channel}".format(
+                    error=status, channel=channel)
             )
 
     def exportUsersListAsJson(self):
@@ -109,6 +106,6 @@ class ManageUsers(BrowserView):
             return userList
         else:
             logger.exception(
-                "{error}".format(error=self.errors)
-                + " : channel: {0}".format(channel)
+                "Error: {error} - channel: {channel}".format(
+                    error=self.errors, channel=channel)
             )

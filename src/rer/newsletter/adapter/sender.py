@@ -3,7 +3,6 @@ from datetime import datetime
 from email.utils import formataddr
 from persistent.dict import PersistentDict
 from plone import api
-from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.utility.channel import OK
@@ -14,30 +13,9 @@ from smtplib import SMTPRecipientsRefused
 from zope.annotation.interfaces import IAnnotations
 from zope.interface import implementer
 from zope.interface import Interface
-from zope.interface import Invalid
-
-
-import re
 
 SUBSCRIBERS_KEY = 'rer.newsletter.subscribers'
 HISTORY_KEY = 'rer.newsletter.channel.history'
-
-
-def mailValidation(mail):
-    # valido la mail
-    match = re.match(
-        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]'
-        + '+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
-        mail,
-    )
-    if match is None:
-        raise Invalid(
-            _(
-                u'generic_problem_email_validation',
-                default=u'Una o piu delle mail inserite non sono valide',
-            )
-        )
-    return True
 
 
 class IChannelSender(Interface):
@@ -137,10 +115,10 @@ class BaseAdapter(object):
         )
         sender = (
             self.context.sender_name
-            and formataddr(
+            and formataddr(  # noqa
                 (self.context.sender_name, self.context.sender_email)
             )
-            or self.context.sender_email
+            or self.context.sender_email  # noqa
         )
         subject = message.title + nl_subject
 
@@ -154,7 +132,7 @@ class BaseAdapter(object):
         return res
 
     def doSend(self, body, subject, subscribers, sender):
-        """ 
+        """
         Override this method with a new (and more specific) adapter to
         customize the email sending.
         """
