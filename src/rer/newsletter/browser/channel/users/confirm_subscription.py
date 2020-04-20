@@ -2,21 +2,18 @@
 from plone import api
 from Products.Five.browser import BrowserView
 from rer.newsletter import _
+from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.contentrules.events import SubscriptionEvent
 from rer.newsletter.contentrules.events import UnsubscriptionEvent
 from rer.newsletter.utility.channel import IChannelUtility
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utils import get_site_title
+from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.event import notify
 
 
-# disable CSRF
-# from plone.protect.interfaces import IDisableCSRFProtection
-# from zope.interface import alsoProvides
-
-
-class ConfirmAction(BrowserView):
+class ConfirmSubscription(BrowserView):
     def render(self):
         return self.index()
 
@@ -62,12 +59,12 @@ class ConfirmAction(BrowserView):
         action = self.request.get("action")
 
         response = None
-        api_channel = getUtility(IChannelUtility)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
 
         if action == u"subscribe":
-            response, user = api_channel.activateUser(
-                self.context.id_channel, secret=secret
-            )
+            response, user = channel.activateUser(secret=secret)
             # mandare mail di avvenuta conferma
             if response == OK:
                 notify(SubscriptionEvent(self.context, user))
@@ -79,16 +76,14 @@ class ConfirmAction(BrowserView):
                 )
                 status = _(
                     u"generic_activate_message_success",
-                    default=u"Ti sei iscritto alla newsletter " +
-                    self.context.title +
-                    " del portale " +
-                    get_site_title(),
+                    default=u"Ti sei iscritto alla newsletter "
+                    + self.context.title
+                    + " del portale "
+                    + get_site_title(),
                 )
 
         elif action == u"unsubscribe":
-            response, user = api_channel.deleteUser(
-                self.context.id_channel, secret=secret
-            )
+            response, user = channel.deleteUser(secret=secret)
             # mandare mail di avvenuta cancellazione
             if response == OK:
                 notify(UnsubscriptionEvent(self.context, user))

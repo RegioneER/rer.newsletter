@@ -8,6 +8,8 @@ from rer.newsletter.utility.channel import OK
 from rer.newsletter.utility.channel import UNHANDLED
 from z3c.form import button
 from zope.component import getUtility
+from zope.component import getMultiAdapter
+from rer.newsletter.adapter.sender import IChannelSender
 
 
 class AddForm(add.DefaultAddForm):
@@ -27,26 +29,28 @@ class AddForm(add.DefaultAddForm):
             self._finishedAdd = True
 
             # chiamo l'utility per la creazione anche il channel
-            api_channel = getUtility(IChannelUtility)
-            status = api_channel.addChannel(obj.id_channel)
+            channel = getMultiAdapter(
+                (self.context, self.request), IChannelSender
+            )
+            status = channel.addChannel()
 
             if status == OK:
                 api.portal.show_message(
                     message=_(u'add_channel', default='Channel Created'),
                     request=self.request,
-                    type=u'info'
+                    type=u'info',
                 )
 
         if not obj or status != OK:
             logger.exception(
-                _(u'generic_problem_add_channel',
-                    default=u'Unhandled problem with add of channel.')
+                _(
+                    u'generic_problem_add_channel',
+                    default=u'Unhandled problem with add of channel.',
+                )
             )
             status = u'Problems...{status}'.format(status=status)
             api.portal.show_message(
-                message=status,
-                request=self.request,
-                type=u'error'
+                message=status, request=self.request, type=u'error'
             )
 
 

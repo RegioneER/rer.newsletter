@@ -2,20 +2,19 @@
 from plone import api
 from plone.namedfile.field import NamedBlobFile
 from rer.newsletter import _
-from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utility.channel import UNHANDLED
+from six import PY2
+from six.moves import range
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 from zope import schema
-from zope.component import getUtility
+from zope.component import getMultiAdapter
 from zope.interface import Interface
-
 import csv
 import re
-from six.moves import range
-from six import PY2
 
 try:
     from StringIO import StringIO
@@ -111,10 +110,7 @@ class UsersImport(form.Form):
         io = StringIO(input_data)
 
         reader = csv.reader(
-            io,
-            delimiter=input_separator,
-            dialect='excel',
-            quotechar='\'',
+            io, delimiter=input_separator, dialect='excel', quotechar='\''
         )
         index = 0
         if headerline:
@@ -160,12 +156,13 @@ class UsersImport(form.Form):
             self.status = self.formErrorsMessage
             return
 
-        # prendo la connessione con il server mailman
-        api_channel = getUtility(IChannelUtility)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
 
         # devo svuotare la lista di utenti del channel
         if data['emptyList']:
-            status = api_channel.emptyChannelUsersList(self.context.id_channel)
+            status = channel.emptyChannelUsersList()
 
         csv_file = data['userListFile'].data
         # esporto la lista di utenti dal file
@@ -178,20 +175,17 @@ class UsersImport(form.Form):
         if data['removeSubscribers'] and not data['emptyList']:
             # chiamo l'api per rimuovere l'intera lista di utenti
             if usersList:
-                status = api_channel.deleteUserList(
-                    self.context.id_channel, usersList
-                )
+                status = channel.deleteUserList(usersList)
 
         else:
             if usersList:
                 # mi connetto con le api di mailman
-                status = api_channel.importUsersList(
-                    self.context.id_channel, usersList
-                )
+                status = channel.importUsersList(usersList)
 
         if status == OK:
             status = _(
-                u'generic_subscribe_message_success', default=u'User Subscribed'
+                u'generic_subscribe_message_success',
+                default=u'User Subscribed',
             )
             api.portal.show_message(
                 message=status, request=self.request, type=u'info'

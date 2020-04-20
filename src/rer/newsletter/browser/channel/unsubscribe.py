@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from plone import api
 from plone import schema
 from plone.protect.authenticator import createToken
@@ -7,25 +6,23 @@ from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
-from rer.newsletter.utility.channel import IChannelUtility
+from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.utility.channel import OK
 from rer.newsletter.utility.channel import UNHANDLED
 from rer.newsletter.utils import get_site_title
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
-from zope.component import getUtility
+from zope.component import getMultiAdapter
 from zope.interface import Interface
 
 
 class IUnsubscribeForm(Interface):
     """ define field for channel unsubscription """
+
     email = schema.Email(
         title=_(u'unsubscribe_email_title', default=u'Unsubscription Email'),
-        description=_(
-            u'unsubscribe_email_description',
-            default=u''
-        ),
+        description=_(u'unsubscribe_email_description', default=u''),
         required=True,
     )
 
@@ -57,12 +54,13 @@ class UnsubscribeForm(form.Form):
             self.status = self.formErrorsMessage
             return
 
-        if self.context.portal_type == 'Channel':
-            channel = self.context.id_channel
         email = data.get('email', None)
 
-        api_channel = getUtility(IChannelUtility)
-        status, secret = api_channel.unsubscribe(channel, email)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
+
+        status, secret = channel.unsubscribe(email)
 
         if status == OK:
 
@@ -71,7 +69,7 @@ class UnsubscribeForm(form.Form):
 
             # mando mail di conferma
             url = self.context.absolute_url()
-            url += '/confirmaction?secret=' + secret
+            url += '/confirm-subscription?secret=' + secret
             url += '&_authenticator=' + token
             url += '&action=unsubscribe'
 
@@ -83,14 +81,15 @@ class UnsubscribeForm(form.Form):
                 'header': self.context.header,
                 'footer': self.context.footer,
                 'style': self.context.css_style,
-                'activationUrl': url
+                'activationUrl': url,
             }
 
             mail_text = mail_template(**parameters)
 
             portal = api.portal.get()
             mail_text = portal.portal_transforms.convertTo(
-                'text/mail', mail_text)
+                'text/mail', mail_text
+            )
 
             response_email = None
             if self.context.sender_email:
@@ -103,34 +102,34 @@ class UnsubscribeForm(form.Form):
                 mail_text.getData(),
                 mto=email,
                 mfrom=response_email,
-                subject='Conferma la cancellazione dalla newsletter ' +
-                self.context.title + ' del portale ' + get_site_title(),
+                subject='Conferma la cancellazione dalla newsletter '
+                + self.context.title
+                + ' del portale '
+                + get_site_title(),
                 charset='utf-8',
                 msg_type='text/html',
-                immediate=True
+                immediate=True,
             )
 
             api.portal.show_message(
                 message=_(
                     u'user_unsubscribe_success',
                     default=u'Riceverai una e-mail per confermare'
-                    ' la cancellazione dalla newsletter'
+                    ' la cancellazione dalla newsletter',
                 ),
                 request=self.request,
-                type=u'info'
+                type=u'info',
             )
         else:
-            logger.exception(
-                'unhandled error unsubscribe user'
-            )
+            logger.exception('unhandled error unsubscribe user')
             api.portal.show_message(
                 message=u'Problems...{0}'.format(status),
                 request=self.request,
-                type=u'error'
+                type=u'error',
             )
 
 
 unsubscribe_view = wrap_form(
     UnsubscribeForm,
-    index=ViewPageTemplateFile('templates/unsubscribechannel.pt')
+    index=ViewPageTemplateFile('templates/unsubscribechannel.pt'),
 )

@@ -7,10 +7,16 @@
   <adapter
     for="rer.newsletter.behaviors.ships.IShippableMarker
          zope.publisher.interfaces.browser.IBrowserRequest"
-    provides=".base_adapter.IChannelSender"
-    factory=".base_adapter.BaseAdapter"
+    provides=".sender.IChannelSender"
+    factory=".sender.BaseAdapter"
     />
 
+  <adapter
+    for="rer.newsletter.interfaces.IChannel
+         zope.publisher.interfaces.browser.IBrowserRequest"
+    provides=".subscriptions.IChannelSubscriptions"
+    factory=".subscriptions.BaseAdapter"
+    />
 
 
 

@@ -8,6 +8,8 @@ from rer.newsletter.utility.channel import UNHANDLED
 from zope.component import getUtility
 from zope.interface import implementer
 from zope.interface import Interface
+from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
+from zope.component import getMultiAdapter
 
 import csv
 import json
@@ -35,10 +37,11 @@ class ManageUsers(BrowserView):
         status = UNHANDLED
 
         email = self.request["email"]
-        channel = self.context.id_channel
 
-        api_channel = getUtility(IChannelUtility)
-        status = api_channel.deleteUser(channel, email)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
+        status = channel.deleteUser(email)
 
         response = {}
         if status == OK:
@@ -46,8 +49,8 @@ class ManageUsers(BrowserView):
         else:
             response["ok"] = False
             logger.exception(
-                "Problems...{error}".format(error=status) +
-                " : channel: %s, email: %s",
+                "Problems...{error}".format(error=status)
+                + " : channel: %s, email: %s",
                 channel,
                 email,
             )
@@ -59,8 +62,10 @@ class ManageUsers(BrowserView):
         status = UNHANDLED
         channel = self.context.id_channel
 
-        api_channel = getUtility(IChannelUtility)
-        userList, status = api_channel.exportUsersList(channel)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
+        userList, status = channel.exportUsersList()
 
         if status == OK:
             # predisporre download del file
@@ -86,8 +91,8 @@ class ManageUsers(BrowserView):
 
         else:
             logger.exception(
-                "Problems...{error}".format(error=status) +
-                " : channel: {0}".format(channel)
+                "Problems...{error}".format(error=status)
+                + " : channel: {0}".format(channel)
             )
 
     def exportUsersListAsJson(self):
@@ -95,13 +100,15 @@ class ManageUsers(BrowserView):
         status = UNHANDLED
         channel = self.context.id_channel
 
-        api_channel = getUtility(IChannelUtility)
-        userList, status = api_channel.exportUsersList(channel)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
+        userList, status = channel.exportUsersList()
 
         if status == OK:
             return userList
         else:
             logger.exception(
-                "{error}".format(error=self.errors) +
-                " : channel: {0}".format(channel)
+                "{error}".format(error=self.errors)
+                + " : channel: {0}".format(channel)
             )

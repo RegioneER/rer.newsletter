@@ -2,6 +2,7 @@
 from datetime import datetime
 from persistent.dict import PersistentDict
 from plone import api
+from plone.memoize.view import memoize
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
@@ -16,7 +17,7 @@ from z3c.form import form
 from zope.annotation.interfaces import IAnnotations
 from zope.component import queryUtility
 from zope.component import getMultiAdapter
-from rer.newsletter.adapter.base_adapter import IChannelSender
+from rer.newsletter.adapter.sender import IChannelSender
 
 
 try:
@@ -36,6 +37,11 @@ class SendMessageView(form.Form):
 
     ignoreContext = True
 
+    @property
+    @memoize
+    def channel(self):
+        return getMultiAdapter((self.context, self.request), IChannelSender)
+
     def _getNewsletter(self):
         channel = None
         for obj in self.context.aq_chain:
@@ -50,12 +56,7 @@ class SendMessageView(form.Form):
     def getUserNumber(self):
         channel = self._getNewsletter()
 
-        api_channel = getMultiAdapter(
-            (self.context, self.request),
-            IChannelSender
-        )
-
-        active_users, status = api_channel.getNumActiveSubscribers(
+        active_users, status = self.channel.getNumActiveSubscribers(
             channel.id_channel
         )
         if status == OK:
@@ -65,14 +66,6 @@ class SendMessageView(form.Form):
 
     @button.buttonAndHandler(_('send_sendingview', default='Send'))
     def handleSave(self, action):
-        channel = self._getNewsletter()
-        api_channel = getMultiAdapter(
-            (self.context, self.request),
-            IChannelSender
-        )
-        active_users, status = api_channel.getNumActiveSubscribers(
-            channel.id_channel
-        )
 
         if HAS_TASKQUEUE:
             messageQueue = queryUtility(IMessageQueue)
@@ -82,23 +75,16 @@ class SendMessageView(form.Form):
                 messageQueue.start(self.context)
             else:
                 # invio sincrono del messaggio
-                self.send_syncronous(
-                    api_channel=api_channel,
-                    status=status,
-                    active_users=active_users,
-                )
+                self.send_syncronous()
         else:
             # invio sincrono del messaggio
-            self.send_syncronous(
-                api_channel=api_channel,
-                status=status,
-                active_users=active_users,
-            )
+            self.send_syncronous()
 
         # cambio di stato dopo l'invio
         # api.content.transition(obj=self.context, transition='send')
 
         # self.request.response.redirect('view')
+        active_users, status = self.channel.getNumActiveSubscribers()
         self.request.response.redirect(
             '@@send_success_view?' + urlencode({'active_users': active_users})
         )
@@ -112,8 +98,10 @@ class SendMessageView(form.Form):
             type=u'info',
         )
 
-    def send_syncronous(self, api_channel, status, active_users):
-        channel = self._getNewsletter()
+    def send_syncronous(self):
+        channel = self.channel
+        active_users, status = channel.getNumActiveSubscribers()
+
         # preparo il messaggio
         unsubscribe_footer_template = self.context.restrictedTraverse(
             '@@unsubscribe_channel_template'
@@ -124,7 +112,7 @@ class SendMessageView(form.Form):
             'unsubscribe_link': channel.absolute_url() + '/@@unsubscribe',
         }
         unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
-        api_channel.sendMessage(
+        channel.sendMessage(
             channel.id_channel, self.context, unsubscribe_footer_text
         )
 

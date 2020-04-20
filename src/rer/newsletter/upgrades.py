@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
 from plone import api
 from rer.newsletter import logger
+from zope.annotation.interfaces import IAnnotations
+from persistent.list import PersistentList
+from plone.app.layout.viewlets.content import ContentHistoryView
+
+import re
 
 
 default_profile = 'profile-rer.newsletter:default'
+
+KEY = 'rer.newsletter.channel.history'
 
 
 def migrate_to_1001(context):
@@ -23,3 +30,53 @@ def migrate_to_1003(context):
     setup_tool = api.portal.get_tool('portal_setup')
     setup_tool.runImportStepFromProfile(default_profile, 'typeinfo')
     logger.info(u'Updated to 1003')
+
+
+def migrate_to_1004(context):
+    """
+    Fix channel send history
+    """
+    for channel_brain in api.content.find(portal_type='Channel'):
+        channel = channel_brain.getObject()
+        channel_annotations = IAnnotations(channel)
+        channel_annotations[KEY] = PersistentList()
+        messages = api.content.find(
+            context=channel, portal_type=['Message', 'Shippable Collection']
+        )
+        for brain in messages:
+            item = brain.getObject()
+            send_history = extract_send_history(item)
+            for action in send_history:
+                uid = '{time}-{id}'.format(
+                    time=action['time'].strftime('%Y%m%d%H%M%S'),
+                    id=item.getId(),
+                )
+                subscribers = int(
+                    re.search(
+                        r'Inviato il messaggio a (.*?) utenti.',
+                        action['comments'],
+                    ).group(1)
+                )
+                channel_annotations[KEY].append(
+                    {
+                        'uid': uid,
+                        'message': item.title,
+                        'subscribers': subscribers,
+                        'send_date_start': action['time'].strftime(
+                            '%d/%m/%Y %H:%M:%S'
+                        ),
+                        'send_date_end': action['time'].strftime(
+                            '%d/%m/%Y %H:%M:%S'
+                        ),
+                    }
+                )
+            item_annotations = IAnnotations(item)
+            del item_annotations['rer.newsletter.message.details']
+        channel_annotations[KEY] = sorted(
+            channel_annotations[KEY], key=lambda i: i.get('uid', '')
+        )
+
+
+def extract_send_history(item):
+    history = ContentHistoryView(item, item.REQUEST).fullHistory()
+    return [x for x in history if x['action'] == 'Invio']

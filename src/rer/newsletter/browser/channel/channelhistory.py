@@ -5,14 +5,12 @@ from Products.Five.browser import BrowserView
 from zope.annotation.interfaces import IAnnotations
 
 import json
-import six
 
 
-KEY = 'rer.newsletter.message.details'
+KEY = 'rer.newsletter.channel.history'
 
 
 class ChannelHistory(BrowserView):
-
     def __init__(self, context, request):
         self.context = context
         self.request = request
@@ -21,41 +19,16 @@ class ChannelHistory(BrowserView):
 
     def getMessageSentDetails(self):
 
-        if self.context.portal_type == 'Channel':
-            messageList = api.content.find(
-                context=self.context,
-                portal_type=['Message', 'Shippable Collection']
-            )
+        annotations = IAnnotations(self.context)
 
-        activeMessageList = []
-        if messageList:
-            for message in messageList:
-                obj = message.getObject()
-                annotations = IAnnotations(obj)
-                if KEY in list(annotations.keys()):
-                    count = 0
-                    for k, v in six.iteritems(annotations[KEY]):
-                        au = v['num_active_subscribers']
-                        sd = v['send_date']
-
-                        element = {}
-                        element['id'] = count
-                        element['uid'] = obj.title + str(count)
-                        element['message'] = obj.title
-                        element['active_users'] = au
-                        element['send_date'] = sd
-                        count += 1
-                        activeMessageList.append(element)
-
-        return json.dumps(activeMessageList)
+        return json.dumps(annotations[KEY][::-1])
 
     def deleteMessageFromHistory(self):
         message_history = self.request.get('message_history')
 
         # recupero tutti i messaggi del canale
         messages = api.content.find(
-            context=self.context,
-            portal_type='Message',
+            context=self.context, portal_type='Message'
         )
         for message in messages:
             obj = message.getObject()

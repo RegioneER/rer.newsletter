@@ -19,6 +19,7 @@ from z3c.form import form
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.interface import Interface
+from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 
 
 class ISubscribeForm(Interface):
@@ -78,9 +79,9 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
             self.status = self.formErrorsMessage
             if self.status:
                 self.status = (
-                    u"Indirizzo email non inserito o non " +
-                    "valido, oppure controllo di sicurezza non " +
-                    "inserito."
+                    u"Indirizzo email non inserito o non "
+                    + "valido, oppure controllo di sicurezza non "
+                    + "inserito."
                 )
             return
         if not captcha.verify():
@@ -94,14 +95,13 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
             )
             return
 
-        email = None
-        if self.context.portal_type == "Channel":
-            channel = self.context.id_channel
-        email = data["email"]
+        email = data.get("email", "")
 
         if self.context.is_subscribable:
-            api_channel = getUtility(IChannelUtility)
-            status, secret = api_channel.subscribe(channel, email)
+            channel = getMultiAdapter(
+                (self.context, self.request), IChannelSubscriptions
+            )
+            status, secret = channel.subscribe(email)
 
         if status == SUBSCRIBED:
 
@@ -110,7 +110,7 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
 
             # mando mail di conferma
             url = self.context.absolute_url()
-            url += "/confirmaction?secret=" + secret
+            url += "/confirm-subscription?secret=" + secret
             url += "&_authenticator=" + token
             url += "&action=subscribe"
 
@@ -145,10 +145,10 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
                 mail_text.getData(),
                 mto=email,
                 mfrom=response_email,
-                subject="Conferma la tua iscrizione alla Newsletter " +
-                self.context.title +
-                " del portale " +
-                get_site_title(),
+                subject="Conferma la tua iscrizione alla Newsletter "
+                + self.context.title
+                + " del portale "
+                + get_site_title(),
                 charset="utf-8",
                 msg_type="text/html",
                 immediate=True,

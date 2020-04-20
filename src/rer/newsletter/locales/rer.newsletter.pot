@@ -319,7 +319,7 @@ msgid "footer_channel"
 msgstr ""
 
 #. Default: "Ti sei iscritto alla newsletter  del portale "
-#: ./browser/channel/users/confirmaction.py:83
+#: ./browser/channel/users/confirm-subscription.py:83
 msgid "generic_activate_message_success"
 msgstr ""
 
@@ -329,7 +329,7 @@ msgid "generic_add_message_success"
 msgstr ""
 
 #. Default: "User Deleted."
-#: ./browser/channel/users/confirmaction.py:104
+#: ./browser/channel/users/confirm-subscription.py:104
 msgid "generic_delete_message_success"
 msgstr ""
 
