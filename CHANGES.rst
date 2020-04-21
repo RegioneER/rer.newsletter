@@ -8,7 +8,9 @@ Changelog
 
 - Fixed subscribers import in Python3.
 - Fixed RichText behavior name in types definition.
-  [daniele] 
+  [daniele]
+- Fix initializedModal.js to correctly support tiles loading
+  [nzambello]
 
 0.3.0 (2020-03-07)
 ------------------
