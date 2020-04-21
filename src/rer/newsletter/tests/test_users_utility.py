@@ -5,10 +5,18 @@ from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.testing import RER_NEWSLETTER_INTEGRATION_TESTING
+from rer.newsletter.utility.channel import ALREADY_ACTIVE
+from rer.newsletter.utility.channel import ALREADY_SUBSCRIBED
+from rer.newsletter.utility.channel import INEXISTENT_EMAIL
+from rer.newsletter.utility.channel import INVALID_EMAIL
+from rer.newsletter.utility.channel import INVALID_SECRET
+from rer.newsletter.utility.channel import MAIL_NOT_PRESENT
+from rer.newsletter.utility.channel import OK
 from zope.component import getMultiAdapter
 from zope.interface import Invalid
 
 import unittest
+import json
 
 
 class TestSetup(unittest.TestCase):
@@ -44,7 +52,7 @@ class TestSetup(unittest.TestCase):
         status, token = self.subscribers_adapter.subscribe('foo@foo.com')
 
         subscribers = self.subscribers_adapter.channel_subscriptions
-        self.assertEqual(status, 1)
+        self.assertEqual(status, OK)
         self.assertNotEqual(subscribers, {})
         self.assertEqual(token, subscribers['foo@foo.com']['token'])
         self.assertEqual(subscribers['foo@foo.com']['is_active'], False)
@@ -61,19 +69,124 @@ class TestSetup(unittest.TestCase):
             len(self.subscribers_adapter.channel_subscriptions.keys()), 1
         )
         self.assertEqual(token, None)
-        self.assertEqual(status, 2)
+        self.assertEqual(status, ALREADY_SUBSCRIBED)
 
-    def test_activate_subscription(self):
+    def test_cant_activate_subscription_with_wrong_token(self):
         status, token = self.subscribers_adapter.subscribe('foo@foo.com')
         subscribers = self.subscribers_adapter.channel_subscriptions
         self.assertEqual(subscribers['foo@foo.com']['is_active'], False)
 
         status, res = self.subscribers_adapter.activateUser('xyz')
         self.assertEqual(res, None)
-        self.assertEqual(status, 10)
+        self.assertEqual(status, INVALID_SECRET)
+
+    def test_activate_subscription_with_token(self):
+        status, token = self.subscribers_adapter.subscribe('foo@foo.com')
+        subscribers = self.subscribers_adapter.channel_subscriptions
+        self.assertEqual(subscribers['foo@foo.com']['is_active'], False)
 
         status, res = self.subscribers_adapter.activateUser(token)
         subscribers = self.subscribers_adapter.channel_subscriptions
         self.assertEqual(res, 'foo@foo.com')
-        self.assertEqual(status, 1)
+        self.assertEqual(status, OK)
         self.assertEqual(subscribers['foo@foo.com']['is_active'], True)
+
+    def test_cant_delete_subscription_with_wrong_token(self):
+        status, token = self.subscribers_adapter.subscribe('foo@foo.com')
+        self.assertEqual(
+            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
+        )
+
+        status, res = self.subscribers_adapter.deleteUser('foo@foo.com', 'xyz')
+        self.assertEqual(res, None)
+        self.assertEqual(status, INVALID_SECRET)
+
+    def test_cant_delete_subscription_with_wrong_email(self):
+        status, token = self.subscribers_adapter.subscribe('foo@foo.com')
+        self.assertEqual(
+            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
+        )
+
+        status, res = self.subscribers_adapter.deleteUser('bar@bar.com', token)
+        self.assertEqual(res, 'bar@bar.com')
+        self.assertEqual(status, MAIL_NOT_PRESENT)
+
+    def test_delete_subscription_with_email_and_token(self):
+        status, token = self.subscribers_adapter.subscribe('foo@foo.com')
+        self.assertEqual(
+            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
+        )
+
+        status, res = self.subscribers_adapter.deleteUser('foo@foo.com', token)
+        self.assertEqual(res, 'foo@foo.com')
+        self.assertEqual(status, OK)
+        self.assertEqual(
+            len(self.subscribers_adapter.channel_subscriptions.keys()), 0
+        )
+
+    def test_add_user_required_mail(self):
+        self.assertRaises(TypeError, self.subscribers_adapter.addUser)
+
+    def test_add_user_with_mail(self):
+        token = self.subscribers_adapter.addUser('foo@foo.com')
+
+        subscribers = self.subscribers_adapter.channel_subscriptions
+        self.assertEqual(len(subscribers.keys()), 1)
+        self.assertEqual(subscribers['foo@foo.com']['is_active'], True)
+        self.assertEqual(token, 1)
+
+    def test_unsubscribe_user_required_mail(self):
+        self.assertRaises(TypeError, self.subscribers_adapter.unsubscribe)
+
+    def test_unsubscribe_user_with_mail(self):
+        self.subscribers_adapter.addUser('foo@foo.com')
+        self.assertEqual(
+            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
+        )
+
+        self.subscribers_adapter.unsubscribe('foo@foo.com')
+
+        self.assertEqual(
+            len(self.subscribers_adapter.channel_subscriptions.keys()), 0
+        )
+
+    def test_unsubscribe_user_with_wrong_mail(self):
+        self.subscribers_adapter.addUser('foo@foo.com')
+        self.assertEqual(
+            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
+        )
+
+        status = self.subscribers_adapter.unsubscribe('bar@bar.com')
+
+        self.assertEqual(status, INEXISTENT_EMAIL)
+
+    def test_export_users_list(self):
+        res, token = self.subscribers_adapter.exportUsersList()
+        self.assertEqual(res, '[]')
+
+        self.subscribers_adapter.subscribe('foo@foo.com')
+        self.subscribers_adapter.subscribe('bar@bar.com')
+
+        res, token = self.subscribers_adapter.exportUsersList()
+        res_json = json.loads(res)
+        self.assertEqual(len(res_json), 2)
+
+    def test_import_users_list(self):
+        self.assertEqual(
+            len(self.subscribers_adapter.channel_subscriptions.keys()), 0
+        )
+        self.subscribers_adapter.importUsersList(
+            ['foo@foo.com', 'bar@bar.com']
+        )
+        self.assertEqual(
+            len(self.subscribers_adapter.channel_subscriptions.keys()), 2
+        )
+
+    def test_import_users_list_with_wrong_mail(self):
+        self.assertEqual(
+            len(self.subscribers_adapter.channel_subscriptions.keys()), 0
+        )
+        self.subscribers_adapter.importUsersList(['foo@foo.com', 'bar'])
+        self.assertEqual(
+            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
+        )

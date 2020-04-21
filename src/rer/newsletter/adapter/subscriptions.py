@@ -137,13 +137,14 @@ class BaseAdapter(object):
         else:
             return INVALID_SECRET, element_id
 
-    def deleteUser(self, mail=None, secret=None):
+    def deleteUser(self, mail, secret=None):
         logger.info('delete user %s from channel %s', mail, self.context.title)
         subscriptions = self.channel_subscriptions
 
         if secret is not None:
             # cancello l'utente con il secret (AnonimousUser)
-
+            if mail not in list(subscriptions.keys()):
+                return MAIL_NOT_PRESENT, mail
             # valido il secret
             if not uuidValidation(secret):
                 return INVALID_SECRET, None
@@ -161,26 +162,11 @@ class BaseAdapter(object):
 
         else:
             # cancello l'utente con la mail (Admin)
-            if mail in list(subscriptions.keys()):
-                del subscriptions[mail]
-                return OK
-            else:
-                return MAIL_NOT_PRESENT
+            if mail not in list(subscriptions.keys()):
+                return MAIL_NOT_PRESENT, mail
 
-    def exportUsersList(self):
-        logger.info('DEBUG: export users of a channel: %s', self.context.title)
-        response = []
-        subscriptions = self.channel_subscriptions
-
-        for i, subscriber in enumerate(subscriptions.values()):
-            element = {}
-            element['id'] = i
-            element['email'] = subscriber['email']
-            element['is_active'] = subscriber['is_active']
-            element['creation_date'] = subscriber['creation_date']
-            response.append(element)
-
-        return json.dumps(response), OK
+            del subscriptions[mail]
+            return OK
 
     def addUser(self, mail):
         logger.info('DEBUG: add user: %s %s', self.context.title, mail)
@@ -213,39 +199,26 @@ class BaseAdapter(object):
         logger.info('DEBUG: unsubscribe %s %s', self.context.title, user)
         subscriptions = self.channel_subscriptions
 
-        secret = six.text_type(uuid.uuid4())
-        if user in list(subscriptions.keys()):
-            subscriptions[user] = {
-                'email': user,
-                'is_active': subscriptions[user]['is_active'],
-                'token': secret,
-                'creation_date': datetime.today().strftime(
-                    '%d/%m/%Y %H:%M:%S'
-                ),
-            }
-        else:
-            return INEXISTENT_EMAIL, None
+        if user not in list(subscriptions.keys()):
+            return INEXISTENT_EMAIL
 
-        return OK, secret
-
-    def emptyChannelUsersList(self):
-        logger.info('DEBUG: emptyChannelUsersList %s', self.context.title)
-
-        subscriptions = self.channel_subscriptions
-        subscriptions.clear()
-
+        del subscriptions[user]
         return OK
 
-    def deleteUserList(self, usersList):
-        # manca il modo di far capire se una mail non e presente nella lista
-        logger.info('delete userslist from %s', self.context.title)
+    def exportUsersList(self):
+        logger.info('DEBUG: export users of a channel: %s', self.context.title)
+        response = []
         subscriptions = self.channel_subscriptions
 
-        for user in usersList:
-            if user in list(subscriptions.keys()):
-                del subscriptions[user]
+        for i, subscriber in enumerate(subscriptions.values()):
+            element = {}
+            element['id'] = i
+            element['email'] = subscriber['email']
+            element['is_active'] = subscriber['is_active']
+            element['creation_date'] = subscriber['creation_date']
+            response.append(element)
 
-        return OK
+        return json.dumps(response), OK
 
     def importUsersList(self, usersList):
         logger.info('DEBUG: import userslist in %s', self.context.title)
@@ -268,5 +241,24 @@ class BaseAdapter(object):
                 }
             else:
                 logger.info('INVALID_EMAIL: %s', user)
+
+        return OK
+
+    def deleteUserList(self, usersList):
+        # manca il modo di far capire se una mail non e presente nella lista
+        logger.info('delete userslist from %s', self.context.title)
+        subscriptions = self.channel_subscriptions
+
+        for user in usersList:
+            if user in list(subscriptions.keys()):
+                del subscriptions[user]
+
+        return OK
+
+    def emptyChannelUsersList(self):
+        logger.info('DEBUG: emptyChannelUsersList %s', self.context.title)
+
+        subscriptions = self.channel_subscriptions
+        subscriptions.clear()
 
         return OK
