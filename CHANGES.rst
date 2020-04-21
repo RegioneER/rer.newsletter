@@ -3,7 +3,7 @@ Changelog
 =========
 
 
-0.3.1 (unreleased)
+0.4.0 (2020-04-21)
 ------------------
 
 - Fixed subscribers import in Python3.
