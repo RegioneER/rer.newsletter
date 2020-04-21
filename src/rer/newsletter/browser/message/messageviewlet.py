@@ -37,9 +37,9 @@ class MessageManagerViewlet(ViewletBase):
         if not self._getChannel():
             return False
 
-        if (api.content.get_state(obj=self.context) == 'published'
-                and api.user.get_permissions(obj=self.context).get(
-                'rer.newsletter: Send Newsletter')):
+        if (api.content.get_state(obj=self.context) == 'published' and
+                api.user.get_permissions(obj=self.context).get(
+                    'rer.newsletter: Send Newsletter')):
             return True
         else:
             return False

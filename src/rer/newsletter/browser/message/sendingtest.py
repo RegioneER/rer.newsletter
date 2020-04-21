@@ -66,8 +66,8 @@ class MessageSendingTest(form.Form):
             parameters = {
                 'portal_name': get_site_title(),
                 'channel_name': ns_obj.title,
-                'unsubscribe_link': ns_obj.absolute_url()
-                + '/@@unsubscribe',
+                'unsubscribe_link': ns_obj.absolute_url() +
+                '/@@unsubscribe',
             }
             unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
 
@@ -103,8 +103,8 @@ class MessageSendingTest(form.Form):
                     body.getData(),
                     mto=email.strip(),
                     mfrom=sender,
-                    subject='Messaggio di prova ' + message_obj.title
-                    + ' del canale ' + ns_obj.title,
+                    subject='Messaggio di prova ' + message_obj.title +
+                    ' del canale ' + ns_obj.title,
                     charset='utf-8',
                     msg_type='text/html',
                     immediate=True

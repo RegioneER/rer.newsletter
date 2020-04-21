@@ -103,11 +103,11 @@ class UsersImport(form.Form):
     def processCSV(self, data, headerline, separator):
         input_data = data.decode()
         input_separator = separator.encode('ascii', 'ignore').decode()
-        
+
         if PY2:
             input_data = data
             input_separator = separator.encode('ascii', 'ignore')
-        
+
         io = StringIO(input_data)
 
         reader = csv.reader(
