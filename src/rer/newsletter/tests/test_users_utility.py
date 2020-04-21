@@ -5,10 +5,8 @@ from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.testing import RER_NEWSLETTER_INTEGRATION_TESTING
-from rer.newsletter.utility.channel import ALREADY_ACTIVE
 from rer.newsletter.utility.channel import ALREADY_SUBSCRIBED
 from rer.newsletter.utility.channel import INEXISTENT_EMAIL
-from rer.newsletter.utility.channel import INVALID_EMAIL
 from rer.newsletter.utility.channel import INVALID_SECRET
 from rer.newsletter.utility.channel import MAIL_NOT_PRESENT
 from rer.newsletter.utility.channel import OK
