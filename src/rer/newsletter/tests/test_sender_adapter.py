@@ -6,11 +6,8 @@ from plone.app.testing import TEST_USER_ID
 from rer.newsletter.adapter.sender import IChannelSender
 from rer.newsletter.testing import RER_NEWSLETTER_INTEGRATION_TESTING
 from zope.component import getMultiAdapter
-from zope.interface import Invalid
-from plone.app.textfield.value import RichTextValue
 
 import unittest
-import json
 
 
 class TestSenderAdapter(unittest.TestCase):
