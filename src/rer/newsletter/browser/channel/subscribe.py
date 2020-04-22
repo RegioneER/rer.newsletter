@@ -145,7 +145,7 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
                 mfrom=response_email,
                 subject="Conferma la tua iscrizione alla Newsletter {channel}"
                 " del portale {site}".format(
-                    channel=self.context.title, portal=get_site_title()
+                    channel=self.context.title, site=get_site_title()
                 ),
                 charset="utf-8",
                 msg_type="text/html",

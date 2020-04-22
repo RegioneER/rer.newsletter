@@ -25,11 +25,8 @@ class AddForm(add.DefaultAddForm):
         obj = self.createAndAdd(data)
         if obj:
             self._finishedAdd = True
-
             # chiamo l'utility per la creazione anche il channel
-            channel = getMultiAdapter(
-                (self.context, self.request), IChannelSender
-            )
+            channel = getMultiAdapter((obj, self.request), IChannelSender)
             status = channel.addChannel()
 
             if status == OK:

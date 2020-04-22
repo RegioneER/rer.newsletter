@@ -5,7 +5,7 @@
   i18n_domain="rer.newsletter">
 
   <adapter
-    for="rer.newsletter.behaviors.ships.IShippableMarker
+    for="rer.newsletter.interfaces.IChannel
          zope.publisher.interfaces.browser.IBrowserRequest"
     provides=".sender.IChannelSender"
     factory=".sender.BaseAdapter"
