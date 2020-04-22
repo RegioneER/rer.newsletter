@@ -8,6 +8,8 @@ from plone import api
 from rer.newsletter import logger
 from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.utils import OK
+from rer.newsletter.utils import OK
+from rer.newsletter.utils import SEND_UID_NOT_FOUND
 from rer.newsletter.utils import UNHANDLED
 from rer.newsletter.utils import get_site_title
 from smtplib import SMTPRecipientsRefused
@@ -51,6 +53,10 @@ class BaseAdapter(object):
     def active_subscriptions(self):
         subscribers = self.get_annotations_for_channel(key=SUBSCRIBERS_KEY)
         return len([x for x in subscribers.values() if x['is_active']])
+
+    @property
+    def channel_history(self):
+        return self.get_annotations_for_channel(key=HISTORY_KEY)
 
     #  utils methods end
 
@@ -107,10 +113,11 @@ class BaseAdapter(object):
         details = self.get_annotations_for_channel(key=HISTORY_KEY)
         send_info = [x for x in details if x['uid'] == send_uid]
         if not send_info:
-            return
+            return SEND_UID_NOT_FOUND
         send_info[0]['send_date_end'] = (
             datetime.today().strftime('%d/%m/%Y %H:%M:%S'),
         )
+        return OK
 
     def prepare_body(self, message):
         unsubscribe_footer_template = self.context.restrictedTraverse(

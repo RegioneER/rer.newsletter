@@ -32,6 +32,9 @@ MAIL_NOT_PRESENT = 8
 ALREADY_ACTIVE = 9
 INVALID_SECRET = 10
 
+# channel history
+SEND_UID_NOT_FOUND = 11
+
 
 def get_site_title():
     current_lang = api.portal.get_current_language()
