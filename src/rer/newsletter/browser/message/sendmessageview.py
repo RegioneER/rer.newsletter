@@ -67,8 +67,9 @@ class SendMessageView(form.Form):
 
         # self.request.response.redirect('view')
         self.request.response.redirect(
-            '@@send_success_view?'
-            + urlencode({'active_users': self.active_subscriptions})
+            '@@send_success_view?{}'.format(
+                urlencode({'active_users': self.active_subscriptions})
+            )
         )
         api.portal.show_message(
             message=_(

@@ -36,9 +36,9 @@ class DeleteExpiredUsersView(BrowserView):
             )
             if (
                 creation_date + timedelta(hours=expired_time_token)
-                < expired_date
-                and not subscription['is_active']
-            ):  # noqa
+                < expired_date  # noqa
+                and not subscription['is_active']  # noqa
+            ):
                 del subscription
                 self.user_removed += 1
 

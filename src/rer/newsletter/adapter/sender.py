@@ -173,9 +173,9 @@ class BaseAdapter(object):
             action=u'Invio',
             review_state=api.content.get_state(obj=message),
             actor=current.getId(),
-            comments='Inviato il messaggio a '
-            + str(self.active_subscriptions)
-            + ' utenti.',
+            comments='Inviato il messaggio a {} utenti.'.format(
+                self.active_subscriptions
+            ),
             time=DateTime(),
         )
         list_history.append(entry)
