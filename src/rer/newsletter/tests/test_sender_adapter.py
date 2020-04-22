@@ -31,3 +31,6 @@ class TestSenderAdapter(unittest.TestCase):
         self.adapter = getMultiAdapter(
             (self.channel, self.request), IChannelSender
         )
+
+    def test_skip(self):
+        self.assertTrue(True)
