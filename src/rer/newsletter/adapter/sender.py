@@ -8,7 +8,6 @@ from plone import api
 from rer.newsletter import logger
 from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.utils import OK
-from rer.newsletter.utils import OK
 from rer.newsletter.utils import SEND_UID_NOT_FOUND
 from rer.newsletter.utils import UNHANDLED
 from rer.newsletter.utils import get_site_title
