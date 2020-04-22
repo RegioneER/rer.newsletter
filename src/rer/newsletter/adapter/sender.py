@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+from DateTime import DateTime
 from email.utils import formataddr
 from persistent.dict import PersistentDict
+from persistent.list import PersistentList
 from plone import api
 from rer.newsletter import logger
 from rer.newsletter.behaviors.ships import IShippable
-from rer.newsletter.utility.channel import OK
-from rer.newsletter.utility.channel import UNHANDLED
-from rer.newsletter.utils import addToHistory
+from rer.newsletter.utils import OK
+from rer.newsletter.utils import UNHANDLED
 from rer.newsletter.utils import get_site_title
 from smtplib import SMTPRecipientsRefused
 from zope.annotation.interfaces import IAnnotations
@@ -38,7 +39,10 @@ class BaseAdapter(object):
             channel = self.context
         annotations = IAnnotations(channel)
         if key not in list(annotations.keys()):
-            annotations[key] = PersistentDict({})
+            if key == HISTORY_KEY:
+                annotations[key] = PersistentList({})
+            else:
+                annotations[key] = PersistentDict({})
         return annotations[key]
 
     @property
@@ -77,17 +81,22 @@ class BaseAdapter(object):
 
     def set_start_send_infos(self, message):
         details = self.get_annotations_for_channel(key=HISTORY_KEY)
-        subscribers = self.get_annotations_for_channel(key=SUBSCRIBERS_KEY)
 
-        now = datetime.today().strftime('%d/%m/%Y %H:%M:%S')
-        active_subscriptions = len(
-            [x for x in subscribers.values() if x['is_active']]
+        now = datetime.today()
+
+        uid = '{time}-{id}'.format(
+            time=now.strftime('%Y%m%d%H%M%S'), id=message.getId()
         )
-        details[self.context.title + str(len(list(details.keys())))] = {
-            'num_active_subscribers': active_subscriptions,
-            'send_date': now,
-        }
-        addToHistory(message, active_subscriptions)
+        details.append(
+            {
+                'uid': uid,
+                'message': message.title,
+                'subscribers': self.active_subscriptions,
+                'send_date_start': now.strftime('%d/%m/%Y %H:%M:%S'),
+                'send_date_end': now.strftime('%d/%m/%Y %H:%M:%S'),
+            }
+        )
+        self.addToHistory(message)
 
     def prepare_body(self, message):
         unsubscribe_footer_template = self.context.restrictedTraverse(
@@ -152,3 +161,22 @@ class BaseAdapter(object):
             return UNHANDLED
 
         return OK
+
+    def addToHistory(self, message):
+        """ Add to history that message is sent """
+
+        list_history = [
+            x for x in message.workflow_history.get('message_workflow')
+        ]
+        current = api.user.get_current()
+        entry = dict(
+            action=u'Invio',
+            review_state=api.content.get_state(obj=message),
+            actor=current.getId(),
+            comments='Inviato il messaggio a '
+            + str(self.active_subscriptions)
+            + ' utenti.',
+            time=DateTime(),
+        )
+        list_history.append(entry)
+        message.workflow_history['message_workflow'] = tuple(list_history)

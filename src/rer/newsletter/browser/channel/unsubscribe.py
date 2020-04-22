@@ -7,8 +7,8 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
-from rer.newsletter.utility.channel import OK
-from rer.newsletter.utility.channel import UNHANDLED
+from rer.newsletter.utils import OK
+from rer.newsletter.utils import UNHANDLED
 from rer.newsletter.utils import get_site_title
 from z3c.form import button
 from z3c.form import field

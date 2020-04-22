@@ -3,8 +3,8 @@ from Products.CMFPlone.resources import add_bundle_on_request
 from Products.Five import BrowserView
 from rer.newsletter import logger
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
-from rer.newsletter.utility.channel import OK
-from rer.newsletter.utility.channel import UNHANDLED
+from rer.newsletter.utils import OK
+from rer.newsletter.utils import UNHANDLED
 from zope.component import getMultiAdapter
 from zope.interface import implementer
 from zope.interface import Interface

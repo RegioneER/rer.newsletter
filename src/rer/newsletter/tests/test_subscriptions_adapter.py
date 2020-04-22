@@ -5,11 +5,11 @@ from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.testing import RER_NEWSLETTER_INTEGRATION_TESTING
-from rer.newsletter.utility.channel import ALREADY_SUBSCRIBED
-from rer.newsletter.utility.channel import INEXISTENT_EMAIL
-from rer.newsletter.utility.channel import INVALID_SECRET
-from rer.newsletter.utility.channel import MAIL_NOT_PRESENT
-from rer.newsletter.utility.channel import OK
+from rer.newsletter.utils import ALREADY_SUBSCRIBED
+from rer.newsletter.utils import INEXISTENT_EMAIL
+from rer.newsletter.utils import INVALID_SECRET
+from rer.newsletter.utils import MAIL_NOT_PRESENT
+from rer.newsletter.utils import OK
 from zope.component import getMultiAdapter
 from zope.interface import Invalid
 

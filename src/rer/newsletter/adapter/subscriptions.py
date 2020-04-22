@@ -4,13 +4,13 @@ from datetime import timedelta
 from persistent.dict import PersistentDict
 from rer.newsletter import _
 from rer.newsletter import logger
-from rer.newsletter.utility.channel import ALREADY_ACTIVE
-from rer.newsletter.utility.channel import ALREADY_SUBSCRIBED
-from rer.newsletter.utility.channel import INEXISTENT_EMAIL
-from rer.newsletter.utility.channel import INVALID_EMAIL
-from rer.newsletter.utility.channel import INVALID_SECRET
-from rer.newsletter.utility.channel import MAIL_NOT_PRESENT
-from rer.newsletter.utility.channel import OK
+from rer.newsletter.utils import ALREADY_ACTIVE
+from rer.newsletter.utils import ALREADY_SUBSCRIBED
+from rer.newsletter.utils import INEXISTENT_EMAIL
+from rer.newsletter.utils import INVALID_EMAIL
+from rer.newsletter.utils import INVALID_SECRET
+from rer.newsletter.utils import MAIL_NOT_PRESENT
+from rer.newsletter.utils import OK
 from zope.annotation.interfaces import IAnnotations
 from zope.interface import implementer
 from zope.interface import Interface
@@ -78,6 +78,12 @@ class BaseAdapter(object):
         if KEY not in list(annotations.keys()):
             annotations[KEY] = PersistentDict({})
         return annotations[KEY]
+
+    @property
+    def active_subscriptions(self):
+        return len(
+            [x for x in self.channel_subscriptions.values() if x['is_active']]
+        )
 
     def subscribe(self, mail):
         subscriptions = self.channel_subscriptions

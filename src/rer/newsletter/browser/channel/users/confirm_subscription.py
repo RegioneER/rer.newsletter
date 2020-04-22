@@ -5,7 +5,7 @@ from rer.newsletter import _
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.contentrules.events import SubscriptionEvent
 from rer.newsletter.contentrules.events import UnsubscriptionEvent
-from rer.newsletter.utility.channel import OK
+from rer.newsletter.utils import OK
 from rer.newsletter.utils import get_site_title
 from zope.component import getMultiAdapter
 from zope.event import notify

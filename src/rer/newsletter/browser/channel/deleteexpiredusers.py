@@ -5,9 +5,10 @@ from plone.protect.interfaces import IDisableCSRFProtection
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from rer.newsletter import logger
-from rer.newsletter.utils import storage
-from zope.interface import alsoProvides
+from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from six.moves import map
+from zope.component import getMultiAdapter
+from zope.interface import alsoProvides
 
 
 class DeleteExpiredUsersView(BrowserView):
@@ -22,16 +23,23 @@ class DeleteExpiredUsersView(BrowserView):
         expired_date = datetime.now()
         expired_time_token = self.context.portal_registry.get(
             'rer.newsletter.browser.settings.ISettingsSchema.expired_time_token',  # noqa
-            None
+            None,
         )
 
-        annotations = storage(channel.getObject())
-        for val in annotations.keys():
+        adapter = getMultiAdapter(
+            (channel, self.request), IChannelSubscriptions
+        )
+
+        for key, subscription in adapter.channel_subscriptions.items():
             creation_date = datetime.strptime(
-                annotations[val]['creation_date'],
-                '%d/%m/%Y %H:%M:%S')
-            if creation_date + timedelta(hours=expired_time_token) < expired_date and not annotations[val]['is_active']:  # noqa
-                del annotations[val]
+                subscription['creation_date'], '%d/%m/%Y %H:%M:%S'
+            )
+            if (
+                creation_date + timedelta(hours=expired_time_token)
+                < expired_date
+                and not subscription['is_active']
+            ):  # noqa
+                del subscription
                 self.user_removed += 1
 
     def __call__(self):
@@ -40,9 +48,13 @@ class DeleteExpiredUsersView(BrowserView):
 
         pc = getToolByName(self.context, 'portal_catalog')  # noqa
         channels_brain = pc.unrestrictedSearchResults(
-            {'portal_type': 'Channel'})
+            {'portal_type': 'Channel'}
+        )
 
         list(map(lambda x: self.update_annotations(x), channels_brain))
-        logger.info(u'DONE:Remove {0} expired user from channels'.format(
-            self.user_removed))
+        logger.info(
+            u'DONE:Remove {0} expired user from channels'.format(
+                self.user_removed
+            )
+        )
         return True

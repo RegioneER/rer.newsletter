@@ -8,8 +8,8 @@ from rer.newsletter import logger
 from rer.newsletter.adapter.sender import IChannelSender
 from rer.newsletter.content.channel import Channel
 from rer.newsletter.content.message import Message
-from rer.newsletter.utility.channel import OK
-from rer.newsletter.utility.channel import UNHANDLED
+from rer.newsletter.utils import OK
+from rer.newsletter.utils import UNHANDLED
 from rer.newsletter.utils import addToHistory
 from rer.newsletter.utils import get_site_title
 from zope.annotation.interfaces import IAnnotations

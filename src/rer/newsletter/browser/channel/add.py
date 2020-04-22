@@ -4,8 +4,8 @@ from plone.dexterity.browser import add
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.adapter.sender import IChannelSender
-from rer.newsletter.utility.channel import OK
-from rer.newsletter.utility.channel import UNHANDLED
+from rer.newsletter.utils import OK
+from rer.newsletter.utils import UNHANDLED
 from z3c.form import button
 from zope.component import getMultiAdapter
 

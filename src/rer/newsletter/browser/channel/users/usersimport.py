@@ -3,8 +3,8 @@ from plone import api
 from plone.namedfile.field import NamedBlobFile
 from rer.newsletter import _
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
-from rer.newsletter.utility.channel import OK
-from rer.newsletter.utility.channel import UNHANDLED
+from rer.newsletter.utils import OK
+from rer.newsletter.utils import UNHANDLED
 from six import PY2
 from six.moves import range
 from z3c.form import button

@@ -40,6 +40,7 @@ def migrate_to_1004(context):
         channel = channel_brain.getObject()
         channel_annotations = IAnnotations(channel)
         channel_annotations[KEY] = PersistentList()
+        new_history = []
         messages = api.content.find(
             context=channel, portal_type=['Message', 'Shippable Collection']
         )
@@ -57,7 +58,7 @@ def migrate_to_1004(context):
                         action['comments'],
                     ).group(1)
                 )
-                channel_annotations[KEY].append(
+                new_history.append(
                     {
                         'uid': uid,
                         'message': item.title,
@@ -72,8 +73,8 @@ def migrate_to_1004(context):
                 )
             item_annotations = IAnnotations(item)
             del item_annotations['rer.newsletter.message.details']
-        channel_annotations[KEY] = sorted(
-            channel_annotations[KEY], key=lambda i: i.get('uid', '')
+        channel_annotations[KEY].extend(
+            sorted(new_history, key=lambda i: i.get('uid', ''))
         )
 
 
