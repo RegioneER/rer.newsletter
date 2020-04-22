@@ -18,7 +18,7 @@ import json
 
 
 class TestSubscriptionsAdapter(unittest.TestCase):
-    """Test that rer.newsletter is properly installed."""
+    """Test on the 'subscriptions' adapter """
 
     layer = RER_NEWSLETTER_INTEGRATION_TESTING
 
