@@ -15,6 +15,8 @@ from zope.annotation.interfaces import IAnnotations
 from zope.interface import implementer
 from zope.interface import Interface
 
+from transaction import commit
+
 SUBSCRIBERS_KEY = 'rer.newsletter.subscribers'
 HISTORY_KEY = 'rer.newsletter.channel.history'
 
@@ -93,10 +95,22 @@ class BaseAdapter(object):
                 'message': message.title,
                 'subscribers': self.active_subscriptions,
                 'send_date_start': now.strftime('%d/%m/%Y %H:%M:%S'),
-                'send_date_end': now.strftime('%d/%m/%Y %H:%M:%S'),
+                'send_date_end': '---',
             }
         )
         self.addToHistory(message)
+        # commit transaction, to see the history updated
+        commit()
+        return uid
+
+    def set_end_send_infos(self, send_uid):
+        details = self.get_annotations_for_channel(key=HISTORY_KEY)
+        send_info = [x for x in details if x['uid'] == send_uid]
+        if not send_info:
+            return
+        send_info[0]['send_date_end'] = (
+            datetime.today().strftime('%d/%m/%Y %H:%M:%S'),
+        )
 
     def prepare_body(self, message):
         unsubscribe_footer_template = self.context.restrictedTraverse(
@@ -131,13 +145,14 @@ class BaseAdapter(object):
         )
         subject = message.title + nl_subject
 
-        self.set_start_send_infos(message=message)
+        send_uid = self.set_start_send_infos(message=message)
         res = self.doSend(
             body=self.prepare_body(message=message),
             subject=subject,
             subscribers=subscribers,
             sender=sender,
         )
+        self.set_end_send_infos(send_uid=send_uid)
         return res
 
     def doSend(self, body, subject, subscribers, sender):
