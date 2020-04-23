@@ -512,7 +512,7 @@ msgstr "Cancellami"
 #. Default: "Mail for unsubscribe from channel"
 #: ./browser/channel/unsubscribe.py:25
 msgid "unsubscribe_email_description"
-msgstr "Email da disciscrivere dal canale"
+msgstr ""
 
 #. Default: "Unsubscription Email"
 #: ./browser/channel/unsubscribe.py:24

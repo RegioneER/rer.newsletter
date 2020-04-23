@@ -143,36 +143,30 @@ class BaseAdapter(object):
         else:
             return INVALID_SECRET, element_id
 
-    def deleteUser(self, mail, secret=None):
+    def deleteUserWithSecret(self, secret):
+        subscriptions = self.channel_subscriptions
+        if not uuidValidation(secret):
+            return INVALID_SECRET, None
+        for key, subscriber in subscriptions.items():
+            if subscriber['token'] == six.text_type(secret):
+                cd = subscriber['creation_date']
+                if isCreationDateExpired(cd):
+                    del subscriptions[key]
+                    return OK, key
+                else:
+                    return INVALID_SECRET, None
+        return INVALID_SECRET, None
+
+    def deleteUser(self, mail=None):
         logger.info('delete user %s from channel %s', mail, self.context.title)
         subscriptions = self.channel_subscriptions
 
-        if secret is not None:
-            # cancello l'utente con il secret (AnonimousUser)
-            if mail not in list(subscriptions.keys()):
-                return MAIL_NOT_PRESENT, mail
-            # valido il secret
-            if not uuidValidation(secret):
-                return INVALID_SECRET, None
+        # cancello l'utente con la mail (Admin)
+        if mail not in list(subscriptions.keys()):
+            return MAIL_NOT_PRESENT
 
-            for mail, subscriber in subscriptions.items():
-                if subscriber['token'] == six.text_type(secret):
-                    cd = subscriber['creation_date']
-                    if isCreationDateExpired(cd):
-                        del subscriptions[mail]
-                        return OK, mail
-                    else:
-                        return INVALID_SECRET, mail
-
-            return MAIL_NOT_PRESENT, None
-
-        else:
-            # cancello l'utente con la mail (Admin)
-            if mail not in list(subscriptions.keys()):
-                return MAIL_NOT_PRESENT, mail
-
-            del subscriptions[mail]
-            return OK
+        del subscriptions[mail]
+        return OK
 
     def addUser(self, mail):
         logger.info('DEBUG: add user: %s %s', self.context.title, mail)
@@ -201,15 +195,17 @@ class BaseAdapter(object):
 
         return OK
 
-    def unsubscribe(self, user):
-        logger.info('DEBUG: unsubscribe %s %s', self.context.title, user)
+    def unsubscribe(self, mail):
+        """
+        do not unsubscribe directly, but return user token
+        """
+        logger.info('DEBUG: unsubscribe %s %s', self.context.title, mail)
         subscriptions = self.channel_subscriptions
 
-        if user not in list(subscriptions.keys()):
-            return INEXISTENT_EMAIL
-
-        del subscriptions[user]
-        return OK
+        subscription = subscriptions.get(mail, None)
+        if not subscription:
+            return INEXISTENT_EMAIL, None
+        return OK, subscription['token']
 
     def exportUsersList(self):
         logger.info('DEBUG: export users of a channel: %s', self.context.title)

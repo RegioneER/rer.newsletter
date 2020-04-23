@@ -7,9 +7,9 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
+from rer.newsletter.utils import get_site_title
 from rer.newsletter.utils import OK
 from rer.newsletter.utils import UNHANDLED
-from rer.newsletter.utils import get_site_title
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
@@ -62,71 +62,68 @@ class UnsubscribeForm(form.Form):
 
         status, secret = channel.unsubscribe(email)
 
-        if status == OK:
-
-            # creo il token CSRF
-            token = createToken()
-
-            # mando mail di conferma
-            url = self.context.absolute_url()
-            url += '/confirm-subscription?secret=' + secret
-            url += '&_authenticator=' + token
-            url += '&action=unsubscribe'
-
-            mail_template = self.context.restrictedTraverse(
-                '@@deleteuser_template'
-            )
-
-            parameters = {
-                'header': self.context.header,
-                'footer': self.context.footer,
-                'style': self.context.css_style,
-                'activationUrl': url,
-            }
-
-            mail_text = mail_template(**parameters)
-
-            portal = api.portal.get()
-            mail_text = portal.portal_transforms.convertTo(
-                'text/mail', mail_text
-            )
-
-            response_email = None
-            if self.context.sender_email:
-                response_email = self.context.sender_email
-            else:
-                response_email = u'noreply@rer.it'
-
-            mailHost = api.portal.get_tool(name='MailHost')
-            mailHost.send(
-                mail_text.getData(),
-                mto=email,
-                mfrom=response_email,
-                subject='Conferma la cancellazione dalla newsletter'
-                ' {channel} del portale {site}'.format(
-                    channel=self.context.title, site=get_site_title()
-                ),
-                charset='utf-8',
-                msg_type='text/html',
-                immediate=True,
-            )
-
-            api.portal.show_message(
-                message=_(
-                    u'user_unsubscribe_success',
-                    default=u'Riceverai una e-mail per confermare'
-                    ' la cancellazione dalla newsletter',
-                ),
-                request=self.request,
-                type=u'info',
-            )
-        else:
+        if status != OK:
             logger.exception('unhandled error unsubscribe user')
             api.portal.show_message(
                 message=u'Problems...{0}'.format(status),
                 request=self.request,
                 type=u'error',
             )
+
+        # creo il token CSRF
+        token = createToken()
+
+        # mando mail di conferma
+        url = self.context.absolute_url()
+        url += '/confirm-subscription?secret=' + secret
+        url += '&_authenticator=' + token
+        url += '&action=unsubscribe'
+
+        mail_template = self.context.restrictedTraverse(
+            '@@deleteuser_template'
+        )
+
+        parameters = {
+            'header': self.context.header,
+            'footer': self.context.footer,
+            'style': self.context.css_style,
+            'activationUrl': url,
+        }
+
+        mail_text = mail_template(**parameters)
+
+        portal = api.portal.get()
+        mail_text = portal.portal_transforms.convertTo('text/mail', mail_text)
+
+        response_email = None
+        if self.context.sender_email:
+            response_email = self.context.sender_email
+        else:
+            response_email = u'noreply@rer.it'
+
+        mailHost = api.portal.get_tool(name='MailHost')
+        mailHost.send(
+            mail_text.getData(),
+            mto=email,
+            mfrom=response_email,
+            subject='Conferma la cancellazione dalla newsletter'
+            ' {channel} del portale {site}'.format(
+                channel=self.context.title, site=get_site_title()
+            ),
+            charset='utf-8',
+            msg_type='text/html',
+            immediate=True,
+        )
+
+        api.portal.show_message(
+            message=_(
+                u'user_unsubscribe_success',
+                default=u'Riceverai una e-mail per confermare'
+                ' la cancellazione dalla newsletter',
+            ),
+            request=self.request,
+            type=u'info',
+        )
 
 
 unsubscribe_view = wrap_form(

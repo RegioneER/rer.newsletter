@@ -81,18 +81,12 @@ class ConfirmSubscription(BrowserView):
                 )
 
         elif action == u"unsubscribe":
-            response, user = channel.deleteUser(secret=secret)
-            # mandare mail di avvenuta cancellazione
+            response, mail = channel.deleteUserWithSecret(secret=secret)
             if response == OK:
-                notify(UnsubscriptionEvent(self.context, user))
-                self._sendGenericMessage(
-                    template="deleteuserconfirm_template",
-                    receiver=user,
-                    message="L'utente è stato eliminato dal canale.",
-                    message_title="Cancellazione avvenuta",
-                )
+                notify(UnsubscriptionEvent(self.context, mail))
                 status = _(
-                    u"generic_delete_message_success", default=u"User Deleted."
+                    u"generic_delete_message_success",
+                    default=u"Succesfully unbuscribed.",
                 )
 
         if response == OK:
