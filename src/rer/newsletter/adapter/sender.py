@@ -37,10 +37,8 @@ class BaseAdapter(object):
 
     #  utils methods
 
-    def get_annotations_for_channel(self, key, channel=None):
-        if not channel:
-            channel = self.context
-        annotations = IAnnotations(channel)
+    def get_annotations_for_channel(self, key):
+        annotations = IAnnotations(self.context)
         if key not in list(annotations.keys()):
             if key == HISTORY_KEY:
                 annotations[key] = PersistentList({})
