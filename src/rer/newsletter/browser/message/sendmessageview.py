@@ -77,13 +77,10 @@ class SendMessageView(form.Form):
         else:
             # invio sincrono del messaggio
             status = self.send_syncronous()
-
+        message = status == OK and self.success_message or self.error_message
+        type = status == OK and u'info' or u'error'
         api.portal.show_message(
-            message=status == OK
-            and self.success_message
-            or self.error_message,
-            request=self.request,
-            type=status == OK and u'info' or u'error',
+            message=message, request=self.request, type=type
         )
         self.request.response.redirect(self.context.absolute_url())
 
