@@ -5,6 +5,7 @@ import json
 
 # STATUS MESSAGES
 # general
+NOK = -1
 UNHANDLED = 0
 SUBSCRIBED = OK = 1
 INVALID_CHANNEL = 5

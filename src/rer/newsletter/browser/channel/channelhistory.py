@@ -20,7 +20,7 @@ class ChannelHistory(BrowserView):
     def getMessageSentDetails(self):
 
         annotations = IAnnotations(self.context)
-        history = list(annotations.get(KEY, []))
+        history = [x.data for x in annotations.get(KEY, [])]
         return json.dumps(history[::-1])
 
     def deleteMessageFromHistory(self):

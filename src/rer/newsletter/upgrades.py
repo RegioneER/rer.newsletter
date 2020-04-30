@@ -69,6 +69,7 @@ def migrate_to_1004(context):
                         'send_date_end': action['time'].strftime(
                             '%d/%m/%Y %H:%M:%S'
                         ),
+                        'completed': True,
                     }
                 )
             item_annotations = IAnnotations(item)

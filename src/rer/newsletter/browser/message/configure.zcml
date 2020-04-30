@@ -31,15 +31,6 @@
     layer="rer.newsletter.interfaces.IRerNewsletterLayer"
     />
 
-  <!-- view for send success messagge-->
-  <browser:page
-    for="rer.newsletter.behaviors.ships.IShippableMarker"
-    name="send_success_view"
-    class=".sendmessagesupportview.SendMessageSuccessView"
-    template="templates/sendmessagesuccessview.pt"
-    permission="zope2.View"
-    />
-
   <!-- view for send message -->
   <browser:page
     for="rer.newsletter.behaviors.ships.IShippableMarker"

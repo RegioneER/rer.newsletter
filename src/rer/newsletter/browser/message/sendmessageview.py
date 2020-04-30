@@ -7,7 +7,7 @@ from rer.newsletter import _
 from rer.newsletter.adapter.sender import IChannelSender
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.content.channel import Channel
-from six.moves.urllib.parse import urlencode
+from rer.newsletter.utils import OK
 from z3c.form import button
 from z3c.form import form
 from zope.component import getMultiAdapter
@@ -29,6 +29,22 @@ KEY = 'rer.newsletter.message.details'
 class SendMessageView(form.Form):
 
     ignoreContext = True
+
+    @property
+    def success_message(self):
+        return _(
+            u'message_send',
+            default=u'Message sent correctly to ${subscribers} subscribers.',
+            mapping=dict(subscribers=self.active_subscriptions),
+        )
+
+    @property
+    def error_message(self):
+        return _(
+            u'message_send_error',
+            default=u'Unable to send the message to subscribers. '
+            u'Please contact the site administrator.',
+        )
 
     @property
     @memoize
@@ -57,36 +73,23 @@ class SendMessageView(form.Form):
                 messageQueue.start(self.context)
             else:
                 # invio sincrono del messaggio
-                self.send_syncronous()
+                status = self.send_syncronous()
         else:
             # invio sincrono del messaggio
-            self.send_syncronous()
+            status = self.send_syncronous()
 
-        # cambio di stato dopo l'invio
-        # api.content.transition(obj=self.context, transition='send')
-
-        # self.request.response.redirect('view')
-        self.request.response.redirect(
-            '@@send_success_view?{}'.format(
-                urlencode({'active_users': self.active_subscriptions})
-            )
-        )
         api.portal.show_message(
-            message=_(
-                u'message_send',
-                default=u'Il messaggio è stato '
-                'inviato a {0} iscritti al canale'.format(
-                    self.active_subscriptions
-                ),
-            ),
+            message=status == OK
+            and self.success_message
+            or self.error_message,
             request=self.request,
-            type=u'info',
+            type=status == OK and u'info' or u'error',
         )
+        self.request.response.redirect(self.context.absolute_url())
 
     def send_syncronous(self):
-
         adapter = getMultiAdapter((self.channel, self.request), IChannelSender)
-        adapter.sendMessage(message=self.context)
+        return adapter.sendMessage(message=self.context)
 
 
 message_sending_view = wrap_form(

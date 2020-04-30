@@ -34,9 +34,10 @@
               <tr>
                 <th>uid</th>
                 <th>Messaggio</th>
-                <th>Numero di utenti attivi</th>
+                <th>Iscritti attivi</th>
                 <th>Inizio invio</th>
                 <th>Fine invio</th>
+                <th>Stato</th>
               </tr>
             </thead>
           </table>

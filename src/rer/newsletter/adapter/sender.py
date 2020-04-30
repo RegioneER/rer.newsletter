@@ -93,27 +93,31 @@ class BaseAdapter(object):
             time=now.strftime('%Y%m%d%H%M%S'), id=message.getId()
         )
         details.append(
-            {
-                'uid': uid,
-                'message': message.title,
-                'subscribers': self.active_subscriptions,
-                'send_date_start': now.strftime('%d/%m/%Y %H:%M:%S'),
-                'send_date_end': '---',
-            }
+            PersistentDict(
+                {
+                    'uid': uid,
+                    'message': message.title,
+                    'subscribers': self.active_subscriptions,
+                    'send_date_start': now.strftime('%d/%m/%Y %H:%M:%S'),
+                    'send_date_end': '---',
+                    'completed': False,
+                }
+            )
         )
         self.addToHistory(message)
         # commit transaction, to see the history updated
         commit()
         return uid
 
-    def set_end_send_infos(self, send_uid):
+    def set_end_send_infos(self, send_uid, completed=True):
         details = self.get_annotations_for_channel(key=HISTORY_KEY)
         send_info = [x for x in details if x['uid'] == send_uid]
         if not send_info:
             return SEND_UID_NOT_FOUND
-        send_info[0]['send_date_end'] = (
-            datetime.today().strftime('%d/%m/%Y %H:%M:%S'),
+        send_info[0]['send_date_end'] = datetime.today().strftime(
+            '%d/%m/%Y %H:%M:%S'
         )
+        send_info[0]['completed'] = completed
         return OK
 
     def prepare_body(self, message):

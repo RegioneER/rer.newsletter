@@ -62,6 +62,12 @@ requirejs(["jquery", "datatables"], function ($, datatables) {
         { data: "subscribers" },
         { data: "send_date_start" },
         { data: "send_date_end" },
+        {
+          data: "completed",
+          render: function (data, type, row) {
+            return row.completed ? "Inviata" : "Errore";
+          },
+        },
       ],
       columnDefs: [
         {
