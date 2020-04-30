@@ -86,7 +86,7 @@ class ConfirmSubscription(BrowserView):
                 notify(UnsubscriptionEvent(self.context, mail))
                 status = _(
                     u"generic_delete_message_success",
-                    default=u"Succesfully unbuscribed.",
+                    default=u"Succesfully unsubscribed.",
                 )
 
         if response == OK:
