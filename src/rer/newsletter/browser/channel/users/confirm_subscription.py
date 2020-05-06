@@ -10,6 +10,10 @@ from rer.newsletter.utils import get_site_title
 from zope.component import getMultiAdapter
 from zope.event import notify
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class ConfirmSubscription(BrowserView):
     def render(self):
@@ -94,8 +98,17 @@ class ConfirmSubscription(BrowserView):
                 message=status, request=self.request, type=u"info"
             )
         else:
+            logger.error(
+                'Unable to unsubscribe user with token "{token}" on channel {channel}.'.format(  # noqa
+                    token=secret, channel=channel.absolute_url()
+                )
+            )
             api.portal.show_message(
-                message=u"Problems...{0}".format(response),
+                message=_(
+                    "unable_to_unsubscribe",
+                    default=u"Unable to unsubscribe to this channel."
+                    u" Please contact site administrator.",
+                ),
                 request=self.request,
                 type=u"error",
             )

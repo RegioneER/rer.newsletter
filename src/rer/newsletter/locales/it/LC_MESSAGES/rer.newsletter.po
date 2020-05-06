@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2020-04-30 13:33+0000\n"
+"POT-Creation-Date: 2020-05-06 14:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Filippo Campi <filippo.campi@redturtle.it>\n"
 "Language-Team: Italian <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 #. Default: "Controllo di sicurezza"
 #: rer/newsletter/browser/channel/subscribe.py:37
 msgid "Captcha"
-msgstr ""
+msgstr "Controllo di sicurezza"
 
 #: rer/newsletter/profiles/default/types/Channel.xml
 msgid "Channel"
@@ -54,11 +54,11 @@ msgstr "Modifica la regola per l'iscrizione alla newsletter"
 #. Default: "Email"
 #: rer/newsletter/browser/message/sendingtest.py:24
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: rer/newsletter/profiles/default/sharing.xml
 msgid "Gestore newsletter"
-msgstr ""
+msgstr "Gestore newsletter"
 
 #: rer/newsletter/configure.zcml:49
 msgid "Installs the rer.newsletter add-on."
@@ -316,7 +316,7 @@ msgid "footer_channel"
 msgstr "Foooter del messagio"
 
 #. Default: "Ti sei iscritto alla newsletter {channel} del portale \"{site}\"."
-#: rer/newsletter/browser/channel/users/confirm_subscription.py:75
+#: rer/newsletter/browser/channel/users/confirm_subscription.py:79
 msgid "generic_activate_message_success"
 msgstr ""
 
@@ -326,7 +326,7 @@ msgid "generic_add_message_success"
 msgstr "Utente aggiunto con successo."
 
 #. Default: "Succesfully unsubscribed."
-#: rer/newsletter/browser/channel/users/confirm_subscription.py:87
+#: rer/newsletter/browser/channel/users/confirm_subscription.py:91
 msgid "generic_delete_message_success"
 msgstr "Ti sei cancellato dalla newsletter."
 
@@ -366,7 +366,7 @@ msgid "is_subscribable"
 msgstr "Sottoscrivibile"
 
 #. Default: "Message Preview"
-#: rer/newsletter/browser/message/templates/messageviewlet.pt:9
+#: rer/newsletter/browser/message/templates/messageviewlet.pt:4
 msgid "message_preview"
 msgstr "Anteprima del messaggio"
 
@@ -381,7 +381,7 @@ msgid "message_send_error"
 msgstr "Impossibile spedire il messaggio agli iscritti. Per favore contatta l'amministratore del sito."
 
 #. Default: "Message test"
-#: rer/newsletter/browser/message/templates/messageviewlet.pt:17
+#: rer/newsletter/browser/message/templates/messageviewlet.pt:12
 msgid "message_test"
 msgstr "Test del messaggio"
 
@@ -403,13 +403,18 @@ msgstr ""
 msgid "rer.newsletter (uninstall)"
 msgstr ""
 
+#. Default: "Re-send Message"
+#: rer/newsletter/browser/message/templates/messageviewlet.pt:26
+msgid "resend_message_confirm"
+msgstr "Rimanda il messaggio"
+
 #. Default: "Response email"
 #: rer/newsletter/interfaces.py:57
 msgid "response_email"
 msgstr "Email dove rispondere"
 
 #. Default: "Send Message"
-#: rer/newsletter/browser/message/templates/messageviewlet.pt:25
+#: rer/newsletter/browser/message/templates/messageviewlet.pt:22
 msgid "send_message_confirm"
 msgstr "Invia Messaggio"
 
@@ -509,6 +514,11 @@ msgstr "Separatore CSV"
 msgid "title_users_list_file"
 msgstr "File di utenti"
 
+#. Default: "Unable to unsubscribe to this channel. Please contact site administrator."
+#: rer/newsletter/browser/channel/users/confirm_subscription.py:107
+msgid "unable_to_unsubscribe"
+msgstr "Si è verificato un errore annullando la tua iscrizione da questo canale. Per favore contatta l'amministratore del sito."
+
 #. Default: "Unsubscribe"
 #: rer/newsletter/browser/channel/unsubscribe.py:49
 msgid "unsubscribe_button"
@@ -517,7 +527,7 @@ msgstr "Cancellami"
 #. Default: "Mail for unsubscribe from channel"
 #: rer/newsletter/browser/channel/unsubscribe.py:25
 msgid "unsubscribe_email_description"
-msgstr ""
+msgstr "Email per disiscriversi dal canale"
 
 #. Default: "Unsubscription Email"
 #: rer/newsletter/browser/channel/unsubscribe.py:24

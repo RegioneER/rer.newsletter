@@ -149,12 +149,8 @@ class BaseAdapter(object):
             return INVALID_SECRET, None
         for key, subscriber in subscriptions.items():
             if subscriber['token'] == six.text_type(secret):
-                cd = subscriber['creation_date']
-                if isCreationDateExpired(cd):
-                    del subscriptions[key]
-                    return OK, key
-                else:
-                    return INVALID_SECRET, None
+                del subscriptions[key]
+                return OK, key
         return INVALID_SECRET, None
 
     def deleteUser(self, mail=None):

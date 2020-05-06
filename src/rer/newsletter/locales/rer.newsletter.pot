@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-04-30 13:45+0000\n"
+"POT-Creation-Date: 2020-05-06 14:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -319,7 +319,7 @@ msgid "footer_channel"
 msgstr ""
 
 #. Default: "Ti sei iscritto alla newsletter {channel} del portale \"{site}\"."
-#: rer/newsletter/browser/channel/users/confirm_subscription.py:75
+#: rer/newsletter/browser/channel/users/confirm_subscription.py:79
 msgid "generic_activate_message_success"
 msgstr ""
 
@@ -329,7 +329,7 @@ msgid "generic_add_message_success"
 msgstr ""
 
 #. Default: "Succesfully unsubscribed."
-#: rer/newsletter/browser/channel/users/confirm_subscription.py:87
+#: rer/newsletter/browser/channel/users/confirm_subscription.py:91
 msgid "generic_delete_message_success"
 msgstr ""
 
@@ -369,7 +369,7 @@ msgid "is_subscribable"
 msgstr ""
 
 #. Default: "Message Preview"
-#: rer/newsletter/browser/message/templates/messageviewlet.pt:9
+#: rer/newsletter/browser/message/templates/messageviewlet.pt:4
 msgid "message_preview"
 msgstr ""
 
@@ -384,7 +384,7 @@ msgid "message_send_error"
 msgstr ""
 
 #. Default: "Message test"
-#: rer/newsletter/browser/message/templates/messageviewlet.pt:17
+#: rer/newsletter/browser/message/templates/messageviewlet.pt:12
 msgid "message_test"
 msgstr ""
 
@@ -406,13 +406,18 @@ msgstr ""
 msgid "rer.newsletter (uninstall)"
 msgstr ""
 
+#. Default: "Re-send Message"
+#: rer/newsletter/browser/message/templates/messageviewlet.pt:26
+msgid "resend_message_confirm"
+msgstr ""
+
 #. Default: "Response email"
 #: rer/newsletter/interfaces.py:57
 msgid "response_email"
 msgstr ""
 
 #. Default: "Send Message"
-#: rer/newsletter/browser/message/templates/messageviewlet.pt:25
+#: rer/newsletter/browser/message/templates/messageviewlet.pt:22
 msgid "send_message_confirm"
 msgstr ""
 
@@ -510,6 +515,11 @@ msgstr ""
 #. Default: "Users List File"
 #: rer/newsletter/browser/channel/users/usersimport.py:37
 msgid "title_users_list_file"
+msgstr ""
+
+#. Default: "Unable to unsubscribe to this channel. Please contact site administrator."
+#: rer/newsletter/browser/channel/users/confirm_subscription.py:107
+msgid "unable_to_unsubscribe"
 msgstr ""
 
 #. Default: "Unsubscribe"

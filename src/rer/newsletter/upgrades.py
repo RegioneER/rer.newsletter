@@ -3,6 +3,7 @@ from plone import api
 from rer.newsletter import logger
 from zope.annotation.interfaces import IAnnotations
 from persistent.list import PersistentList
+from persistent.dict import PersistentDict
 from plone.app.layout.viewlets.content import ContentHistoryView
 
 import re
@@ -59,18 +60,20 @@ def migrate_to_1004(context):
                     ).group(1)
                 )
                 new_history.append(
-                    {
-                        'uid': uid,
-                        'message': item.title,
-                        'subscribers': subscribers,
-                        'send_date_start': action['time'].strftime(
-                            '%d/%m/%Y %H:%M:%S'
-                        ),
-                        'send_date_end': action['time'].strftime(
-                            '%d/%m/%Y %H:%M:%S'
-                        ),
-                        'completed': True,
-                    }
+                    PersistentDict(
+                        {
+                            'uid': uid,
+                            'message': item.title,
+                            'subscribers': subscribers,
+                            'send_date_start': action['time'].strftime(
+                                '%d/%m/%Y %H:%M:%S'
+                            ),
+                            'send_date_end': action['time'].strftime(
+                                '%d/%m/%Y %H:%M:%S'
+                            ),
+                            'completed': True,
+                        }
+                    )
                 )
             item_annotations = IAnnotations(item)
             del item_annotations['rer.newsletter.message.details']

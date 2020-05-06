@@ -6,7 +6,7 @@
 # locales/[language]/LC_MESSAGES/rer.newsletterplugin.flask.po
 # (e.g. locales/de/LC_MESSAGES/rer.newsletterplugin.flask.po)
 
-domain=rer.newsletterplugin.flask
+domain=rer.newsletter
 
 i18ndude rebuild-pot --pot $domain.pot --create $domain ../
 i18ndude sync --pot $domain.pot */LC_MESSAGES/$domain.po

@@ -49,6 +49,6 @@ def get_site_title():
     if current_lang not in titles and 'default' in titles:
         return site_title.get('default', None)
     elif current_lang in titles:
-        return site_title.get(current_lang, None)
+        return title_json.get(current_lang, None)
     else:
         return 'Plone Site'
