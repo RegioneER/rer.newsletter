@@ -72,11 +72,9 @@ class MessageSendingTest(form.Form):
             body = u''
             body += ns_obj.header.output if ns_obj.header else u''
             body += u'<style>{css}</style>'.format(css=ns_obj.css_style or u'')
-            body += (
-                u'<div id="message_description">'
-                + u'<p>{desc}</p></div>'.format(
-                    desc=message_obj.description or u''
-                )
+            body += u'<div id="message_description">'
+            body += u'<p>{desc}</p></div>'.format(
+                desc=message_obj.description or u''
             )
             body += IShippable(message_obj).message_content
             body += ns_obj.footer.output if ns_obj.footer else u''
