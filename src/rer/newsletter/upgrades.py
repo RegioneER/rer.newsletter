@@ -76,7 +76,8 @@ def migrate_to_1004(context):
                     )
                 )
             item_annotations = IAnnotations(item)
-            del item_annotations['rer.newsletter.message.details']
+            if 'rer.newsletter.message.details' in item:
+                del item_annotations['rer.newsletter.message.details']
         channel_annotations[KEY].extend(
             sorted(new_history, key=lambda i: i.get('uid', ''))
         )
