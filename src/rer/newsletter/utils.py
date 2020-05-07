@@ -47,7 +47,7 @@ def get_site_title():
         return site_title
     titles = list(title_json.keys())
     if current_lang not in titles and 'default' in titles:
-        return site_title.get('default', None)
+        return title_json.get('default', None)
     elif current_lang in titles:
         return title_json.get(current_lang, None)
     else:
