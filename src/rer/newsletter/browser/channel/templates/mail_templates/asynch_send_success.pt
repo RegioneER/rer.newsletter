@@ -2,13 +2,16 @@
                   footer python:options['footer'];
                   style python:options['style'];
                   channel_name python:options['channel_name'];
-                  message_title python:options['message_title'];"
+                  message_title python:options['message_title'];
+                  subscribers python:options.get('subscribers', '');"
 >
 <span tal:replace="structure header" />
 <style tal:content="style" ></style>
 <br />
 <p class="message_core">
-  L'invio del messaggio ${message_title} del canale ${channel_name} è andato a buon fine.
+  L'invio del messaggio ${message_title}
+  <tal:subscribers condition="subscribers">a ${subscribers} iscritti</tal:subscribers>
+  del canale ${channel_name} è andato a buon fine.
 </p>
 <br />
 <span tal:replace="structure footer" />
