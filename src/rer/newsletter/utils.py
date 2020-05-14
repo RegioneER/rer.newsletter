@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from email.utils import formataddr
 from plone import api
 
 import json
@@ -52,3 +53,11 @@ def get_site_title():
         return title_json.get(current_lang, None)
     else:
         return 'Plone Site'
+
+
+def compose_sender(channel):
+    return (
+        channel.sender_name
+        and formataddr((channel.sender_name, channel.sender_email))
+        or channel.sender_email
+    )

@@ -7,6 +7,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
+from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
 from rer.newsletter.utils import OK
 from rer.newsletter.utils import UNHANDLED
@@ -95,11 +96,7 @@ class UnsubscribeForm(form.Form):
         portal = api.portal.get()
         mail_text = portal.portal_transforms.convertTo('text/mail', mail_text)
 
-        response_email = None
-        if self.context.sender_email:
-            response_email = self.context.sender_email
-        else:
-            response_email = u'noreply@rer.it'
+        response_email = compose_sender(channel=self.context)
 
         mailHost = api.portal.get_tool(name='MailHost')
         mailHost.send(

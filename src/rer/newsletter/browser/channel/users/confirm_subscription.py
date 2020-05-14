@@ -6,6 +6,7 @@ from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.contentrules.events import SubscriptionEvent
 from rer.newsletter.contentrules.events import UnsubscriptionEvent
 from rer.newsletter.utils import OK
+from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
 from zope.component import getMultiAdapter
 from zope.event import notify
@@ -37,11 +38,7 @@ class ConfirmSubscription(BrowserView):
         portal = api.portal.get()
         mail_text = portal.portal_transforms.convertTo("text/mail", mail_text)
 
-        response_email = None
-        if self.context.sender_email:
-            response_email = self.context.sender_email
-        else:
-            response_email = u"noreply@rer.it"
+        response_email = compose_sender(self.context)
 
         # invio la mail ad ogni utente
         mail_host = api.portal.get_tool(name="MailHost")

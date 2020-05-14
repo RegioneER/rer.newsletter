@@ -11,9 +11,10 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
+from rer.newsletter.utils import compose_sender
+from rer.newsletter.utils import get_site_title
 from rer.newsletter.utils import SUBSCRIBED
 from rer.newsletter.utils import UNHANDLED
-from rer.newsletter.utils import get_site_title
 from z3c.form import button
 from z3c.form import form
 from zope.component import getMultiAdapter
@@ -132,17 +133,13 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
                 "text/mail", mail_text
             )
 
-            response_email = None
-            if self.context.sender_email:
-                response_email = self.context.sender_email
-            else:
-                response_email = u"noreply@rer.it"
+            sender = compose_sender(channel=self.context)
 
             mailHost = api.portal.get_tool(name="MailHost")
             mailHost.send(
                 mail_text.getData(),
                 mto=email,
-                mfrom=response_email,
+                mfrom=sender,
                 subject="Conferma la tua iscrizione alla Newsletter {channel}"
                 " del portale {site}".format(
                     channel=self.context.title, site=get_site_title()

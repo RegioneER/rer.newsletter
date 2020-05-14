@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from email.utils import formataddr
 from plone import api
 from plone import schema
 from plone.z3cform.layout import wrap_form
@@ -7,6 +6,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.content.channel import Channel
+from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
 from smtplib import SMTPRecipientsRefused
 from z3c.form import button
@@ -84,13 +84,7 @@ class MessageSendingTest(form.Form):
             portal = api.portal.get()
             body = portal.portal_transforms.convertTo('text/mail', body)
 
-            response_email = None
-            if ns_obj.sender_email:
-                response_email = ns_obj.sender_email
-            else:
-                response_email = u'noreply@rer.it'
-
-            sender = formataddr((ns_obj.sender_name, response_email))
+            sender = compose_sender(channel=ns_obj)
 
             nl_subject = (
                 ' - ' + ns_obj.subject_email if ns_obj.subject_email else u''
