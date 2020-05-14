@@ -65,7 +65,7 @@
     manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
     class=".messageviewlet.MessageManagerViewlet"
     layer="rer.newsletter.interfaces.IRerNewsletterLayer"
-    permission="zope2.View"
+    permission="rer.newsletter.SendMessage"
     template="templates/messageviewlet.pt"
     />
 

@@ -40,6 +40,8 @@ class MessageManagerViewlet(ViewletBase):
 
     def messageAlreadySent(self):
         history = ContentHistoryView(self.context, self.request).fullHistory()
+        if not history:
+            return False
         send_history = [x for x in history if x['action'] == 'Invio']
         return len(send_history) > 0
 
