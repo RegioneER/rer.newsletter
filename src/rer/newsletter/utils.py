@@ -56,8 +56,8 @@ def get_site_title():
 
 
 def compose_sender(channel):
-    return (
-        channel.sender_name
-        and formataddr((channel.sender_name, channel.sender_email))
-        or channel.sender_email
-    )
+    if not channel.sender_email:
+        return 'noreply@rer.it'
+    if channel.sender_name:
+        return formataddr((channel.sender_name, channel.sender_email))
+    return channel.sender_email
