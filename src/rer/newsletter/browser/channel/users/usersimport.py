@@ -102,7 +102,6 @@ class UsersImport(form.Form):
     def processCSV(self, data, headerline, separator):
         input_data = data.decode()
         input_separator = separator.encode('ascii', 'ignore').decode()
-
         if PY2:
             input_data = data
             input_separator = separator.encode('ascii', 'ignore')
@@ -112,7 +111,7 @@ class UsersImport(form.Form):
         reader = csv.reader(
             io, delimiter=input_separator, dialect='excel', quotechar='\''
         )
-        index = 0
+        index = 1
         if headerline:
             header = next(reader)
 
@@ -169,7 +168,6 @@ class UsersImport(form.Form):
         usersList = self.processCSV(
             csv_file, data['headerLine'], data['separator']
         )
-
         # controllo se devo eliminare l'intera lista di utenti
         # invece di importarla
         if data['removeSubscribers'] and not data['emptyList']:
