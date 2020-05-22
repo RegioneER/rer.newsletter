@@ -1,0 +1,128 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+categories:
+  - application-development
+  - communications
+  - email-management
+  - email-marketing
+dependsOn:
+  open:
+    - name: Plone
+      optional: false
+      version: ''
+      versionMax: ''
+      versionMin: '5.1'
+logo: docs/rer-logo.png
+description:
+  it:
+    features:
+      - Tipi di contenuto Canale e Messaggio
+      - Portlet e tile
+      - Gestione utenti
+      - Impostazioni avanzate di sicurezza
+      - Impostazioni avanzate per l'invio di email
+    genericName: Plone addon
+    longDescription: >
+      Questo prodotto consente la gestione completa di una newsletter.
+
+
+      ## Nuovo tipo di contenuto
+
+
+      ### Canale
+
+
+      - Totalmente personalizzabile perché è possibile impostare
+      un'intestazione, un piè di pagina e gli stili CSS. Questo campo permette
+      di uniformare il modello di email che verrà inviato da un unico canale.
+
+      - Tipo di contenuto che ereditano dal contenuto della cartella.
+
+
+      ### Messaggio
+
+
+      - Tipo di contenuto che eredita dal contenuto della cartella.
+
+
+
+
+      ## Portlet e tile
+
+
+      Il prodotto fornisce un portlet e una tessera per l'utente che si iscrive.
+
+
+      Il form per l'iscrizione utente ha due campi: email e reCaptcha, quindi
+      non dimenticare di impostare la chiave per i campi reCaptcha. Vedi
+      plone.formwidget.recaptcha per maggiori dettagli.
+
+
+
+
+      ## Gestione utenti
+
+
+      Permette una gestione completa dell'utente.
+
+
+      - Aggiungi un utente dall'impostazione dell'amministratore
+
+      - Elimina un utente dall'impostazione dell'amministratore
+
+      - Importa gli utenti direttamente dal file CSV
+
+      - Esporta gli utenti direttamente nel file CSV
+
+      - Elimina un gruppo di utenti direttamente dal file CSV
+
+      - Iscrivere utenti
+
+      - Annulla l'iscrizione degli utenti
+
+
+    shortDescription: Addon per le newsletter per Plone
+developmentStatus: stable
+it:
+  conforme:
+    gdpr: true
+    lineeGuidaDesign: false
+    misureMinimeSicurezza: true
+    modelloInteroperabilita: true
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: false
+    pagopa: false
+    spid: false
+legal:
+  license: GPL-2.0-or-later
+  mainCopyrightOwner: Regione Emilia-Romagna
+  repoOwner: Regione Emilia-Romagna
+localisation:
+  availableLanguages:
+    - it
+    - en
+  localisationReady: true
+maintenance:
+  contacts:
+    - affiliation: Regione Emilia-Romagna
+      email: webmaster@regione.emilia-romagna.it
+      name: Sara Turra
+  contractors:
+    - name: RedTurtle
+      until: '2020-08-31'
+      website: 'https://www.redturtle.it/'
+  type: contract
+name: rer.newsletter
+platforms:
+  - web
+releaseDate: '2020-03-15'
+softwareType: addon
+softwareVersion: 0.4.0
+url: 'https://github.com/RegioneER/rer.newsletter'
+usedBy:
+  - Regione Emilia-Romagna
