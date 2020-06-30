@@ -87,6 +87,8 @@ description:
     shortDescription: Addon per le newsletter per Plone
 developmentStatus: stable
 it:
+  riuso:
+    codiceIPA: r_emiro
   conforme:
     gdpr: true
     lineeGuidaDesign: false
