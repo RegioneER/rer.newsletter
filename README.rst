@@ -55,14 +55,14 @@ Customize how to send your newsletter
 -------------------------------------
 
 By default, this product send all the emails through the standard plone mailer.
-The actual sending mechanism is handled by an adapter (a multi-adapter):
+The actual sending mechanism is handled by an adapter (a multi-adapter)::
 
-    <adapter
-      for="rer.newsletter.behaviors.ships.IShippableMarker
-           zope.publisher.interfaces.browser.IBrowserRequest"
-      provides=".base_adapter.IChannelSender"
-      factory=".base_adapter.BaseAdapter"
-      />
+  <adapter
+    for="rer.newsletter.behaviors.ships.IShippableMarker
+         zope.publisher.interfaces.browser.IBrowserRequest"
+    provides=".base_adapter.IChannelSender"
+    factory=".base_adapter.BaseAdapter"
+  />
 
 
 To change this default activity, you can create a new Plone add-on that
