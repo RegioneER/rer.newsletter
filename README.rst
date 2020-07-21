@@ -32,8 +32,8 @@ Form for user subscribe have two fields: email and reCaptcha, so do not forget t
 set key for reCaptcha fields. See `plone.formwidget.recaptcha <https://github.com/plone/plone.formwidget.recaptcha>`_ for more details.
 
 
-User Manage
------------
+User Management
+---------------
 
 Allows complete management of user.
 
@@ -69,14 +69,8 @@ To change this default activity, you can create a new Plone add-on that
 register a new adapter with a more specific layer (e.g. use the browser layer
 of the new add-on) and override the ``sendMessage`` method as you wish.
 
-
-IChannelUtility
----------------
-
-All the channel management is contained in the utility ``IChannelUtility``.
-
-Inside the ``IChannel Utility`` interface are described all methods that will be
-implemented and the way they must reply.
+`rer.newsletterplugin.flask <https://github.com/RegioneER/rer.newsletterplugin.flask>`_ is an example
+of plugin with a custom sender. It uses an external Flask app to send emails.
 
 
 Advanced security
@@ -94,43 +88,17 @@ a new role, ``Gestore Newsletter``, which has permissions for all possible
 operations on newsletter.
 
 
-> TODO: controllare il resto del readme relativo alla queue
+Subscriptions cleanup
+----------------------
 
-
-Asynchronous sending of email
------------------------------
-
-rer.newsletter supports asyncronous sendout using collective.taskqueue,
-that it is already installed like a dependency of product.
-
-For support this asyncronous sendout you must add to section instance-settings of your
-buildout this configuration::
-
-    zope-conf-additional =
-       %import collective.taskqueue
-       <taskqueue>
-         queue rer.newsletter.queue
-       </taskqueue>
-       <taskqueue-server>
-         queue rer.newsletter.queue
-       </taskqueue-server>
-
-This code adds a queue to which various email submissions are added.
-See `collective.taskqueue <https://github.com/collective/collective.taskqueue>`_ for more details.
-
-
-Cron job
---------
-
-rer.newsletter have a view that can called from a cron job. This view delete all
+There is a view (*@@delete_expired_users*) that delete all
 users that not have confirmed subscription to a channel in time.
+
+You can set subscription token validity from the product's control panel.
 
 Inside the settings of the product there is a field that allows you to set
 validity time of the channel subscription token.
 
-View is::
-
-    .../@@delete_expired_users
 
 ============
 Installation
@@ -167,8 +135,8 @@ Regione Emilia Romagna supports the `PloneGov initiative <http://www.plonegov.it
 Authors
 =======
 
-This product was developed by RedTurtle Technology team.
+This product was developed by **RedTurtle Technology** team.
 
-.. image:: http://www.redturtle.it/redturtle_banner.png
+.. image:: https://avatars1.githubusercontent.com/u/1087171?s=100&v=4
    :alt: RedTurtle Technology Site
    :target: http://www.redturtle.it/

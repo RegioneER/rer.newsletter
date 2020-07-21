@@ -3,12 +3,16 @@ Changelog
 =========
 
 
-0.3.1 (unreleased)
+1.0.0 (unreleased)
 ------------------
 
 - Fixed subscribers import in Python3.
+  [daniele]
 - Fixed RichText behavior name in types definition.
-  [daniele] 
+  [daniele]
+- Heavy refactoring to support different send methods from adapters.
+  [cekk]
+
 
 0.3.0 (2020-03-07)
 ------------------
