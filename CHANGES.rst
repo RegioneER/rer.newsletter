@@ -2,17 +2,22 @@
 Changelog
 =========
 
-
 1.0.0 (unreleased)
+------------------
+
+- Heavy refactoring to support different send methods from adapters.
+  [cekk]
+
+
+0.4.0 (2020-04-21)
 ------------------
 
 - Fixed subscribers import in Python3.
   [daniele]
 - Fixed RichText behavior name in types definition.
   [daniele]
-- Heavy refactoring to support different send methods from adapters.
-  [cekk]
-
+- Fix initializedModal.js to correctly support tiles loading
+  [nzambello]
 
 0.3.0 (2020-03-07)
 ------------------
