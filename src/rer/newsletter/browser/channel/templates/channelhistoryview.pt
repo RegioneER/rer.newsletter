@@ -5,12 +5,6 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="rer.newsletter">
 
-      <metal:block metal:fill-slot="style_slot">
-      </metal:block>
-
-      <metal:block metal:fill-slot="javascript_head_slot">
-      </metal:block>
-
       <metal:content-core fill-slot="content-title">
         <h1>Gestione dello storico dei messaggi</h1>
         <a class="link-parent" i18n:translate="come_back" href=""
@@ -40,8 +34,10 @@
               <tr>
                 <th>uid</th>
                 <th>Messaggio</th>
-                <th>Numero di utenti attivi</th>
-                <th>Data di invio</th>
+                <th>Iscritti attivi</th>
+                <th>Inizio invio</th>
+                <th>Fine invio</th>
+                <th>Stato</th>
               </tr>
             </thead>
           </table>

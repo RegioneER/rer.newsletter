@@ -2,21 +2,21 @@
 from plone import api
 from Products.Five.browser import BrowserView
 from rer.newsletter import _
+from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.contentrules.events import SubscriptionEvent
 from rer.newsletter.contentrules.events import UnsubscriptionEvent
-from rer.newsletter.utility.channel import IChannelUtility
-from rer.newsletter.utility.channel import OK
+from rer.newsletter.utils import OK
+from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
-from zope.component import getUtility
+from zope.component import getMultiAdapter
 from zope.event import notify
 
+import logging
 
-# disable CSRF
-# from plone.protect.interfaces import IDisableCSRFProtection
-# from zope.interface import alsoProvides
+logger = logging.getLogger(__name__)
 
 
-class ConfirmAction(BrowserView):
+class ConfirmSubscription(BrowserView):
     def render(self):
         return self.index()
 
@@ -38,11 +38,7 @@ class ConfirmAction(BrowserView):
         portal = api.portal.get()
         mail_text = portal.portal_transforms.convertTo("text/mail", mail_text)
 
-        response_email = None
-        if self.context.sender_email:
-            response_email = self.context.sender_email
-        else:
-            response_email = u"noreply@rer.it"
+        response_email = compose_sender(self.context)
 
         # invio la mail ad ogni utente
         mail_host = api.portal.get_tool(name="MailHost")
@@ -62,12 +58,12 @@ class ConfirmAction(BrowserView):
         action = self.request.get("action")
 
         response = None
-        api_channel = getUtility(IChannelUtility)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
 
         if action == u"subscribe":
-            response, user = api_channel.activateUser(
-                self.context.id_channel, secret=secret
-            )
+            response, user = channel.activateUser(secret=secret)
             # mandare mail di avvenuta conferma
             if response == OK:
                 notify(SubscriptionEvent(self.context, user))
@@ -79,27 +75,19 @@ class ConfirmAction(BrowserView):
                 )
                 status = _(
                     u"generic_activate_message_success",
-                    default=u"Ti sei iscritto alla newsletter " +
-                    self.context.title +
-                    " del portale " +
-                    get_site_title(),
+                    default=u'Ti sei iscritto alla newsletter {channel}'
+                    ' del portale "{site}".'.format(
+                        channel=self.context.title, site=get_site_title()
+                    ),
                 )
 
         elif action == u"unsubscribe":
-            response, user = api_channel.deleteUser(
-                self.context.id_channel, secret=secret
-            )
-            # mandare mail di avvenuta cancellazione
+            response, mail = channel.deleteUserWithSecret(secret=secret)
             if response == OK:
-                notify(UnsubscriptionEvent(self.context, user))
-                self._sendGenericMessage(
-                    template="deleteuserconfirm_template",
-                    receiver=user,
-                    message="L'utente è stato eliminato dal canale.",
-                    message_title="Cancellazione avvenuta",
-                )
+                notify(UnsubscriptionEvent(self.context, mail))
                 status = _(
-                    u"generic_delete_message_success", default=u"User Deleted."
+                    u"generic_delete_message_success",
+                    default=u"Succesfully unsubscribed.",
                 )
 
         if response == OK:
@@ -107,8 +95,17 @@ class ConfirmAction(BrowserView):
                 message=status, request=self.request, type=u"info"
             )
         else:
+            logger.error(
+                'Unable to unsubscribe user with token "{token}" on channel {channel}.'.format(  # noqa
+                    token=secret, channel=channel.absolute_url()
+                )
+            )
             api.portal.show_message(
-                message=u"Problems...{0}".format(response),
+                message=_(
+                    "unable_to_unsubscribe",
+                    default=u"Unable to unsubscribe to this channel."
+                    u" Please contact site administrator.",
+                ),
                 request=self.request,
                 type=u"error",
             )

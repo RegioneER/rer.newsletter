@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from email.utils import formataddr
 from plone import api
 from plone import schema
 from plone.z3cform.layout import wrap_form
@@ -7,6 +6,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
 from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.content.channel import Channel
+from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
 from smtplib import SMTPRecipientsRefused
 from z3c.form import button
@@ -24,7 +24,7 @@ class IMessageSendingTest(Interface):
         title=_(u'Email', default='Email'),
         description=_(
             u'email_sendingtest_description',
-            default=u'Email to send the test message'
+            default=u'Email to send the test message',
         ),
         required=True,
     )
@@ -45,7 +45,6 @@ class MessageSendingTest(form.Form):
         try:
 
             # prendo l'email dai parametri
-            emails = []
             email = data['email']
             emails = re.compile('[,|;]').split(email)
 
@@ -66,19 +65,17 @@ class MessageSendingTest(form.Form):
             parameters = {
                 'portal_name': get_site_title(),
                 'channel_name': ns_obj.title,
-                'unsubscribe_link': ns_obj.absolute_url() +
-                '/@@unsubscribe',
+                'unsubscribe_link': ns_obj.absolute_url() + '/@@unsubscribe',
             }
             unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
 
             body = u''
             body += ns_obj.header.output if ns_obj.header else u''
-            body += u'<style>{css}</style>'.format(
-                css=ns_obj.css_style or u''
+            body += u'<style>{css}</style>'.format(css=ns_obj.css_style or u'')
+            body += u'<div id="message_description">'
+            body += u'<p>{desc}</p></div>'.format(
+                desc=message_obj.description or u''
             )
-            body += u'<div id="message_description">' + \
-                u'<p>{desc}</p></div>'.format(
-                    desc=message_obj.description or u'')
             body += IShippable(message_obj).message_content
             body += ns_obj.footer.output if ns_obj.footer else u''
             body += unsubscribe_footer_text if unsubscribe_footer_text else u''
@@ -87,14 +84,13 @@ class MessageSendingTest(form.Form):
             portal = api.portal.get()
             body = portal.portal_transforms.convertTo('text/mail', body)
 
-            response_email = None
-            if ns_obj.sender_email:
-                response_email = ns_obj.sender_email
-            else:
-                response_email = u'noreply@rer.it'
+            sender = compose_sender(channel=ns_obj)
 
-            sender = formataddr((ns_obj.sender_name, response_email))
+            nl_subject = (
+                ' - ' + ns_obj.subject_email if ns_obj.subject_email else u''
+            )
 
+            subject = 'Messaggio di prova - ' + message_obj.title + nl_subject
             # per mandare la mail non passo per l'utility
             # in ogni caso questa mail viene mandata da plone
             mailHost = api.portal.get_tool(name='MailHost')
@@ -103,11 +99,10 @@ class MessageSendingTest(form.Form):
                     body.getData(),
                     mto=email.strip(),
                     mfrom=sender,
-                    subject='Messaggio di prova ' + message_obj.title +
-                    ' del canale ' + ns_obj.title,
+                    subject=subject,
                     charset='utf-8',
                     msg_type='text/html',
-                    immediate=True
+                    immediate=True,
                 )
 
         except SMTPRecipientsRefused:
@@ -116,19 +111,16 @@ class MessageSendingTest(form.Form):
         # da sistemare la gestione degli errori
         if 'errors' in list(self.__dict__.keys()):
             api.portal.show_message(
-                message=self.errors,
-                request=self.request,
-                type=u'error'
+                message=self.errors, request=self.request, type=u'error'
             )
         else:
             api.portal.show_message(
                 message=u'Messaggio inviato correttamente!',
                 request=self.request,
-                type=u'info'
+                type=u'info',
             )
 
 
 message_sending_test = wrap_form(
-    MessageSendingTest,
-    index=ViewPageTemplateFile('templates/sendingtest.pt')
+    MessageSendingTest, index=ViewPageTemplateFile('templates/sendingtest.pt')
 )

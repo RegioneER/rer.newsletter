@@ -1,23 +1,17 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-from persistent.dict import PersistentDict
 from plone import api
+from plone.memoize.view import memoize
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
-from rer.newsletter import logger
+from rer.newsletter.adapter.sender import IChannelSender
+from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.content.channel import Channel
-from rer.newsletter.utility.channel import IChannelUtility
-from rer.newsletter.utility.channel import OK
-from rer.newsletter.utils import addToHistory
-from rer.newsletter.utils import get_site_title
-from six.moves.urllib.parse import urlencode
+from rer.newsletter.utils import OK
 from z3c.form import button
 from z3c.form import form
-from zope.annotation.interfaces import IAnnotations
-from zope.component import getUtility
+from zope.component import getMultiAdapter
 from zope.component import queryUtility
-
 
 try:
     from collective.taskqueue.interfaces import ITaskQueue
@@ -36,36 +30,41 @@ class SendMessageView(form.Form):
 
     ignoreContext = True
 
-    def _getNewsletter(self):
-        channel = None
+    @property
+    def success_message(self):
+        return _(
+            u'message_send',
+            default=u'Message sent correctly to ${subscribers} subscribers.',
+            mapping=dict(subscribers=self.active_subscriptions),
+        )
+
+    @property
+    def error_message(self):
+        return _(
+            u'message_send_error',
+            default=u'Unable to send the message to subscribers. '
+            u'Please contact the site administrator.',
+        )
+
+    @property
+    @memoize
+    def channel(self):
         for obj in self.context.aq_chain:
             if isinstance(obj, Channel):
-                channel = obj
-                break
-        else:
-            if not channel:
-                return
-        return channel
+                return obj
+        return None
 
-    def getUserNumber(self):
-        channel = self._getNewsletter()
-
-        api_channel = getUtility(IChannelUtility)
-        active_users, status = api_channel.getNumActiveSubscribers(
-            channel.id_channel
+    @property
+    @memoize
+    def active_subscriptions(self):
+        channel = getMultiAdapter(
+            (self.channel, self.request), IChannelSubscriptions
         )
-        if status == OK:
-            return active_users
-        else:
-            return 0
+        return channel.active_subscriptions
 
     @button.buttonAndHandler(_('send_sendingview', default='Send'))
     def handleSave(self, action):
-        channel = self._getNewsletter()
-        api_channel = getUtility(IChannelUtility)
-        active_users, status = api_channel.getNumActiveSubscribers(
-            channel.id_channel
-        )
+
         if HAS_TASKQUEUE:
             messageQueue = queryUtility(IMessageQueue)
             isQueuePresent = queryUtility(ITaskQueue, name=QUEUE_NAME)
@@ -74,74 +73,20 @@ class SendMessageView(form.Form):
                 messageQueue.start(self.context)
             else:
                 # invio sincrono del messaggio
-                self.send_syncronous(
-                    api_channel=api_channel,
-                    status=status,
-                    active_users=active_users,
-                )
+                status = self.send_syncronous()
         else:
             # invio sincrono del messaggio
-            self.send_syncronous(
-                api_channel=api_channel,
-                status=status,
-                active_users=active_users,
-            )
-
-        # cambio di stato dopo l'invio
-        # api.content.transition(obj=self.context, transition='send')
-
-        # self.request.response.redirect('view')
-        self.request.response.redirect(
-            '@@send_success_view?' + urlencode({'active_users': active_users})
-        )
+            status = self.send_syncronous()
+        message = status == OK and self.success_message or self.error_message
+        type = status == OK and u'info' or u'error'
         api.portal.show_message(
-            message=_(
-                u'message_send',
-                default=u'Il messaggio è stato '
-                'inviato a {0} iscritti al canale'.format(active_users),
-            ),
-            request=self.request,
-            type=u'info',
+            message=message, request=self.request, type=type
         )
+        self.request.response.redirect(self.context.absolute_url())
 
-    def send_syncronous(self, api_channel, status, active_users):
-        channel = self._getNewsletter()
-        # preparo il messaggio
-        unsubscribe_footer_template = self.context.restrictedTraverse(
-            '@@unsubscribe_channel_template'
-        )
-        parameters = {
-            'portal_name': get_site_title(),
-            'channel_name': channel.title,
-            'unsubscribe_link': channel.absolute_url() + '/@@unsubscribe',
-        }
-        unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
-        api_channel.sendMessage(
-            channel.id_channel, self.context, unsubscribe_footer_text
-        )
-
-        # i dettagli sull'invio del messaggio per lo storico
-        annotations = IAnnotations(self.context)
-        if KEY not in list(annotations.keys()):
-            annotations[KEY] = PersistentDict({})
-
-        annotations = annotations[KEY]
-        now = datetime.today().strftime('%d/%m/%Y %H:%M:%S')
-
-        if status != OK:
-            logger.warning('Problems...{0}'.format(status))
-            api.portal.show_message(
-                message=u'Problemi con l\'invio del messaggio. '
-                'Contattare l\'assistenza.',
-                request=self.request,
-                type=u'error',
-            )
-            return
-
-        annotations[
-            self.context.title + str(len(list(annotations.keys())))
-        ] = {'num_active_subscribers': active_users, 'send_date': now}
-        addToHistory(self.context, active_users)
+    def send_syncronous(self):
+        adapter = getMultiAdapter((self.channel, self.request), IChannelSender)
+        return adapter.sendMessage(message=self.context)
 
 
 message_sending_view = wrap_form(

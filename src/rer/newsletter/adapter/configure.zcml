@@ -1,0 +1,23 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  xmlns:plone="http://namespaces.plone.org/plone"
+  i18n_domain="rer.newsletter">
+
+  <adapter
+    for="rer.newsletter.interfaces.IChannel
+         zope.publisher.interfaces.browser.IBrowserRequest"
+    provides=".sender.IChannelSender"
+    factory=".sender.BaseAdapter"
+    />
+
+  <adapter
+    for="rer.newsletter.interfaces.IChannel
+         zope.publisher.interfaces.browser.IBrowserRequest"
+    provides=".subscriptions.IChannelSubscriptions"
+    factory=".subscriptions.BaseAdapter"
+    />
+
+
+
+</configure>

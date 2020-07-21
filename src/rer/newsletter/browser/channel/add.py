@@ -3,11 +3,11 @@ from plone import api
 from plone.dexterity.browser import add
 from rer.newsletter import _
 from rer.newsletter import logger
-from rer.newsletter.utility.channel import IChannelUtility
-from rer.newsletter.utility.channel import OK
-from rer.newsletter.utility.channel import UNHANDLED
+from rer.newsletter.adapter.sender import IChannelSender
+from rer.newsletter.utils import OK
+from rer.newsletter.utils import UNHANDLED
 from z3c.form import button
-from zope.component import getUtility
+from zope.component import getMultiAdapter
 
 
 class AddForm(add.DefaultAddForm):
@@ -25,28 +25,27 @@ class AddForm(add.DefaultAddForm):
         obj = self.createAndAdd(data)
         if obj:
             self._finishedAdd = True
-
             # chiamo l'utility per la creazione anche il channel
-            api_channel = getUtility(IChannelUtility)
-            status = api_channel.addChannel(obj.id_channel)
+            channel = getMultiAdapter((obj, self.request), IChannelSender)
+            status = channel.addChannel()
 
             if status == OK:
                 api.portal.show_message(
                     message=_(u'add_channel', default='Channel Created'),
                     request=self.request,
-                    type=u'info'
+                    type=u'info',
                 )
 
         if not obj or status != OK:
             logger.exception(
-                _(u'generic_problem_add_channel',
-                    default=u'Unhandled problem with add of channel.')
+                _(
+                    u'generic_problem_add_channel',
+                    default=u'Unhandled problem with add of channel.',
+                )
             )
             status = u'Problems...{status}'.format(status=status)
             api.portal.show_message(
-                message=status,
-                request=self.request,
-                type=u'error'
+                message=status, request=self.request, type=u'error'
             )
 
 

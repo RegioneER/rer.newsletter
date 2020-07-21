@@ -29,6 +29,14 @@
     profile="rer.newsletter:default"
     handler=".upgrades.migrate_to_1003"
     />
-
+  
+  <genericsetup:upgradeStep
+    source="1003"
+    destination="1004"
+    title="Upgrade rer.newsletter to 1004"
+    description=""
+    profile="rer.newsletter:default"
+    handler=".upgrades.migrate_to_1004"
+    />
 
 </configure>
