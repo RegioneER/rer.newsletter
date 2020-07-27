@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.0.1 (unreleased)
+1.0.1 (2020-07-27)
 ------------------
 
 - Remove direct dependency to collective.taskqueue.
