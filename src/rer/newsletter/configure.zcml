@@ -59,7 +59,7 @@
 
   <!-- registro l'utility per la coda dei messaggi -->
   <utility
-      zcml:condition="not-have plone-52"
+      zcml:condition="installed collective.taskqueue"
       provides=".queue.interfaces.IMessageQueue"
       factory=".queue.handler.TCMessageQueue"
       />

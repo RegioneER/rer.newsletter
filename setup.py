@@ -40,7 +40,6 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'collective.taskqueue [redis]; python_version<"3"',
         'mailmanclient==3.1',
         'plone.api',
         'plone.app.tiles',

@@ -5,8 +5,8 @@ Changelog
 1.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Remove direct dependency to collective.taskqueue.
+  [cekk]
 
 1.0.0 (2020-07-21)
 ------------------
