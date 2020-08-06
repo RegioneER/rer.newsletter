@@ -19,6 +19,7 @@ from z3c.form import button
 from z3c.form import form
 from zope.component import getMultiAdapter
 from zope.interface import Interface
+from six import PY2
 
 
 class ISubscribeForm(Interface):
@@ -132,8 +133,11 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
             mail_text = portal.portal_transforms.convertTo(
                 "text/mail", mail_text
             )
-
             sender = compose_sender(channel=self.context)
+           
+            channel_title = self.context.title
+            if PY2:
+                channel_title = self.context.title.encode('utf-8')
 
             mailHost = api.portal.get_tool(name="MailHost")
             mailHost.send(
@@ -142,7 +146,7 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
                 mfrom=sender,
                 subject="Conferma la tua iscrizione alla Newsletter {channel}"
                 " del portale {site}".format(
-                    channel=self.context.title, site=get_site_title()
+                    channel=channel_title, site=get_site_title()
                 ),
                 charset="utf-8",
                 msg_type="text/html",
