@@ -5,7 +5,9 @@ Changelog
 1.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Styles for newsletter subscription modal
+- Fix cancel button moving when in error state
+  [nzambello]
 
 
 1.0.1 (2020-07-27)
