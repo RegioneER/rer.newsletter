@@ -42,14 +42,9 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal) {
             closeInput = $(".button-plone-modal-close");
             firstInput.focus();
             // setTimeout(function(){ firstInput.focus(); }, 50);
-
-            $(".pattern-modal-buttons").prepend($(".button-plone-modal-close"));
           }
         });
     } else {
-      $(".plone-modal-close").attr("title", "chiudi");
-      $(".pattern-modal-buttons").prepend($(".button-plone-modal-close"));
-
       // modifica accessibilità
       var inputs = $(".plone-modal-wrapper").find(
         "select, textarea, .redirect, button, input"
@@ -60,6 +55,9 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal) {
       lastInput = inputs.last();
       firstInput.focus();
     }
+
+    $(".plone-modal-close").attr("title", "chiudi");
+    $(".pattern-modal-buttons").prepend($(".button-plone-modal-close"));
 
     if (lastInput && closeInput) {
       lastInput.on("keydown", function(e) {
@@ -132,12 +130,12 @@ requirejs(["jquery", "mockup-patterns-modal"], function($, Modal) {
 
   // aspetto che le tile all'interno della pagina siano caricate
   $(document).ready(function() {
-    if ($('body').hasClass('userrole-anonymous')) {
+    if ($("body").hasClass("userrole-anonymous")) {
       $(".tileBody #channel-subscribe a").each(function(i, el) {
         render_modal(el);
       });
     } else {
-      $('.tiles-management').on('rtTilesLoaded', function() {
+      $(".tiles-management").on("rtTilesLoaded", function() {
         $(".tileBody #channel-subscribe a").each(function(i, el) {
           render_modal(el);
         });
