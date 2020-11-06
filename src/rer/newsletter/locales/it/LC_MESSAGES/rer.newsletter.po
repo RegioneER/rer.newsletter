@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2020-05-14 09:08+0000\n"
+"POT-Creation-Date: 2020-11-06 13:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Filippo Campi <filippo.campi@redturtle.it>\n"
 "Language-Team: Italian <LL@li.org>\n"
@@ -164,7 +164,7 @@ msgid "channel_setting"
 msgstr "Impostazioni Newsletter"
 
 #. Default: "Import"
-#: rer/newsletter/browser/channel/users/usersimport.py:151
+#: rer/newsletter/browser/channel/users/usersimport.py:150
 msgid "charge_userimport"
 msgstr "Importa utenti"
 
@@ -341,7 +341,7 @@ msgid "generic_problem_email_validation"
 msgstr ""
 
 #. Default: "User Subscribed"
-#: rer/newsletter/browser/channel/users/usersimport.py:186
+#: rer/newsletter/browser/channel/users/usersimport.py:184
 msgid "generic_subscribe_message_success"
 msgstr "Utente iscritto con successo. Controlla l'email..."
 
@@ -520,19 +520,29 @@ msgid "unable_to_unsubscribe"
 msgstr "Si è verificato un errore annullando la tua iscrizione da questo canale. Per favore contatta l'amministratore del sito."
 
 #. Default: "Unsubscribe"
-#: rer/newsletter/browser/channel/unsubscribe.py:50
+#: rer/newsletter/browser/channel/unsubscribe.py:53
 msgid "unsubscribe_button"
 msgstr "Cancellami"
 
 #. Default: "Mail for unsubscribe from channel"
-#: rer/newsletter/browser/channel/unsubscribe.py:26
+#: rer/newsletter/browser/channel/unsubscribe.py:29
 msgid "unsubscribe_email_description"
 msgstr "Email per disiscriversi dal canale"
 
 #. Default: "Unsubscription Email"
-#: rer/newsletter/browser/channel/unsubscribe.py:25
+#: rer/newsletter/browser/channel/unsubscribe.py:28
 msgid "unsubscribe_email_title"
 msgstr "Inserisci la tua e-mail per cancellarti dal canale"
+
+#. Default: "Unable to perform unsubscription. Please contact site administrators."
+#: rer/newsletter/browser/channel/unsubscribe.py:77
+msgid "unsubscribe_generic"
+msgstr "Impossibile eseguire la disiscrizione. Per favore contatta l'amministatore del sito."
+
+#. Default: "Mail not found. Unable to unsubscribe."
+#: rer/newsletter/browser/channel/unsubscribe.py:72
+msgid "unsubscribe_inexistent_mail"
+msgstr "Email non trovata. Impossibile eseguire la disiscrizione."
 
 #. Default: "Sei già iscritto a questa newsletter, oppure non hai ancora confermato l'iscrizione."
 #: rer/newsletter/browser/channel/subscribe.py:166
@@ -540,7 +550,7 @@ msgid "user_already_subscribed"
 msgstr ""
 
 #. Default: "Riceverai una e-mail per confermare la cancellazione dalla newsletter"
-#: rer/newsletter/browser/channel/unsubscribe.py:116
+#: rer/newsletter/browser/channel/unsubscribe.py:128
 msgid "user_unsubscribe_success"
 msgstr ""
 

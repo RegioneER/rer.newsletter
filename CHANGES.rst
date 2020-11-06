@@ -5,7 +5,8 @@ Changelog
 1.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Handle mail not found in subscribe form.
+  [cekk]
 
 
 1.0.2 (2020-08-18)

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2020-05-14 09:08+0000\n"
+"POT-Creation-Date: 2020-11-06 13:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -167,7 +167,7 @@ msgid "channel_setting"
 msgstr ""
 
 #. Default: "Import"
-#: rer/newsletter/browser/channel/users/usersimport.py:151
+#: rer/newsletter/browser/channel/users/usersimport.py:150
 msgid "charge_userimport"
 msgstr ""
 
@@ -344,7 +344,7 @@ msgid "generic_problem_email_validation"
 msgstr ""
 
 #. Default: "User Subscribed"
-#: rer/newsletter/browser/channel/users/usersimport.py:186
+#: rer/newsletter/browser/channel/users/usersimport.py:184
 msgid "generic_subscribe_message_success"
 msgstr ""
 
@@ -523,17 +523,27 @@ msgid "unable_to_unsubscribe"
 msgstr ""
 
 #. Default: "Unsubscribe"
-#: rer/newsletter/browser/channel/unsubscribe.py:50
+#: rer/newsletter/browser/channel/unsubscribe.py:53
 msgid "unsubscribe_button"
 msgstr ""
 
-#: rer/newsletter/browser/channel/unsubscribe.py:26
+#: rer/newsletter/browser/channel/unsubscribe.py:29
 msgid "unsubscribe_email_description"
 msgstr ""
 
 #. Default: "Unsubscription Email"
-#: rer/newsletter/browser/channel/unsubscribe.py:25
+#: rer/newsletter/browser/channel/unsubscribe.py:28
 msgid "unsubscribe_email_title"
+msgstr ""
+
+#. Default: "Unable to perform unsubscription. Please contact site administrators."
+#: rer/newsletter/browser/channel/unsubscribe.py:77
+msgid "unsubscribe_generic"
+msgstr ""
+
+#. Default: "Mail not found. Unable to unsubscribe."
+#: rer/newsletter/browser/channel/unsubscribe.py:72
+msgid "unsubscribe_inexistent_mail"
 msgstr ""
 
 #. Default: "Sei già iscritto a questa newsletter, oppure non hai ancora confermato l'iscrizione."
@@ -542,7 +552,7 @@ msgid "user_already_subscribed"
 msgstr ""
 
 #. Default: "Riceverai una e-mail per confermare la cancellazione dalla newsletter"
-#: rer/newsletter/browser/channel/unsubscribe.py:116
+#: rer/newsletter/browser/channel/unsubscribe.py:128
 msgid "user_unsubscribe_success"
 msgstr ""
 
