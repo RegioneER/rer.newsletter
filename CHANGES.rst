@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.0.3 (unreleased)
+1.0.3 (2020-11-06)
 ------------------
 
 - Handle mail not found in subscribe form.
