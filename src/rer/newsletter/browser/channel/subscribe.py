@@ -134,10 +134,10 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
                 "text/mail", mail_text
             )
             sender = compose_sender(channel=self.context)
-           
+
             channel_title = self.context.title
             if PY2:
-                channel_title = self.context.title.encode('utf-8')
+                channel_title = self.context.title.encode("utf-8")
 
             mailHost = api.portal.get_tool(name="MailHost")
             mailHost.send(
