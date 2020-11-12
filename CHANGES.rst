@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.0.4 (unreleased)
+1.0.4 (2020-11-12)
 ------------------
 
 - Fix encoding for the channel title.
