@@ -5,7 +5,8 @@ Changelog
 1.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix encoding for the channel title.
+  [daniele]
 
 
 1.0.3 (2020-11-06)
