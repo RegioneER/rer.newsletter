@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.0.5 (unreleased)
+1.0.5 (2020-11-25)
 ------------------
 
 - Fix upgrade step.
