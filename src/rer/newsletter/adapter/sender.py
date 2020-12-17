@@ -18,8 +18,8 @@ from zope.interface import Interface
 
 from transaction import commit
 
-SUBSCRIBERS_KEY = 'rer.newsletter.subscribers'
-HISTORY_KEY = 'rer.newsletter.channel.history'
+SUBSCRIBERS_KEY = "rer.newsletter.subscribers"
+HISTORY_KEY = "rer.newsletter.channel.history"
 
 
 class IChannelSender(Interface):
@@ -49,7 +49,7 @@ class BaseAdapter(object):
     @property
     def active_subscriptions(self):
         subscribers = self.get_annotations_for_channel(key=SUBSCRIBERS_KEY)
-        return len([x for x in subscribers.values() if x['is_active']])
+        return len([x for x in subscribers.values() if x["is_active"]])
 
     @property
     def channel_history(self):
@@ -58,29 +58,29 @@ class BaseAdapter(object):
     #  utils methods end
 
     def addChannel(self):
-        logger.info('DEBUG: add channel {0}'.format(self.context.title))
+        logger.info("DEBUG: add channel {0}".format(self.context.title))
         return OK
 
     def _getMessage(self, message, footer):
-        logger.debug('getMessage %s %s', self.context.title, message.title)
+        logger.debug("getMessage %s %s", self.context.title, message.title)
 
         content = IShippable(message).message_content
 
-        body = u''
-        body += self.context.header.output if self.context.header else u''
-        body += u'<style>{css}</style>'.format(
-            css=self.context.css_style or u''
+        body = u""
+        body += self.context.header.output if self.context.header else u""
+        body += u"<style>{css}</style>".format(
+            css=self.context.css_style or u""
         )
         body += u'<div id="message_description"><p>{desc}</p></div>'.format(
-            desc=message.description or u''
+            desc=message.description or u""
         )
         body += content
-        body += self.context.footer.output if self.context.footer else u''
-        body += footer or u''
+        body += self.context.footer.output if self.context.footer else u""
+        body += footer or u""
 
         # passo la mail per il transform
         portal = api.portal.get()
-        body = portal.portal_transforms.convertTo('text/mail', body)
+        body = portal.portal_transforms.convertTo("text/mail", body)
 
         return body
 
@@ -89,18 +89,19 @@ class BaseAdapter(object):
 
         now = datetime.today()
 
-        uid = '{time}-{id}'.format(
-            time=now.strftime('%Y%m%d%H%M%S'), id=message.getId()
+        uid = "{time}-{id}".format(
+            time=now.strftime("%Y%m%d%H%M%S"), id=message.getId()
         )
         details.append(
             PersistentDict(
                 {
-                    'uid': uid,
-                    'message': message.title,
-                    'subscribers': self.active_subscriptions,
-                    'send_date_start': now.strftime('%d/%m/%Y %H:%M:%S'),
-                    'send_date_end': '---',
-                    'completed': False,
+                    "uid": uid,
+                    "message": message.title,
+                    "subscribers": self.active_subscriptions,
+                    "send_date_start": now.strftime("%d/%m/%Y %H:%M:%S"),
+                    "send_date_end": "---",
+                    "completed": False,
+                    "running": True,
                 }
             )
         )
@@ -111,23 +112,24 @@ class BaseAdapter(object):
 
     def set_end_send_infos(self, send_uid, completed=True):
         details = self.get_annotations_for_channel(key=HISTORY_KEY)
-        send_info = [x for x in details if x['uid'] == send_uid]
+        send_info = [x for x in details if x["uid"] == send_uid]
         if not send_info:
             return SEND_UID_NOT_FOUND
-        send_info[0]['send_date_end'] = datetime.today().strftime(
-            '%d/%m/%Y %H:%M:%S'
+        send_info[0]["send_date_end"] = datetime.today().strftime(
+            "%d/%m/%Y %H:%M:%S"
         )
-        send_info[0]['completed'] = completed
+        send_info[0]["completed"] = completed
+        send_info[0]["running"] = False
         return OK
 
     def prepare_body(self, message):
         unsubscribe_footer_template = self.context.restrictedTraverse(
-            '@@unsubscribe_channel_template'
+            "@@unsubscribe_channel_template"
         )
         parameters = {
-            'portal_name': get_site_title(),
-            'channel_name': self.context.title,
-            'unsubscribe_link': self.context.absolute_url() + '/@@unsubscribe',
+            "portal_name": get_site_title(),
+            "channel_name": self.context.title,
+            "unsubscribe_link": self.context.absolute_url() + "/@@unsubscribe",
         }
         footer = unsubscribe_footer_template(**parameters)
         return self._getMessage(message=message, footer=footer)
@@ -135,14 +137,14 @@ class BaseAdapter(object):
     def sendMessage(self, message):
         """ This is the primary method to send emails for the channel.
         """
-        logger.debug('sendMessage %s %s', self.context.title, message.title)
+        logger.debug("sendMessage %s %s", self.context.title, message.title)
 
         subscribers = self.get_annotations_for_channel(key=SUBSCRIBERS_KEY)
 
         nl_subject = (
-            ' - ' + self.context.subject_email
+            " - " + self.context.subject_email
             if self.context.subject_email
-            else u''
+            else u""
         )
         sender = (
             self.context.sender_name
@@ -168,17 +170,17 @@ class BaseAdapter(object):
         Override this method with a new (and more specific) adapter to
         customize the email sending.
         """
-        mail_host = api.portal.get_tool(name='MailHost')
+        mail_host = api.portal.get_tool(name="MailHost")
         try:
             for subscriber in subscribers.values():
-                if subscriber['is_active']:
+                if subscriber["is_active"]:
                     mail_host.send(
                         body.getData(),
-                        mto=subscriber['email'],
+                        mto=subscriber["email"],
                         mfrom=sender,
                         subject=subject,
-                        charset='utf-8',
-                        msg_type='text/html',
+                        charset="utf-8",
+                        msg_type="text/html",
                     )
         except SMTPRecipientsRefused:
             return UNHANDLED
@@ -189,17 +191,18 @@ class BaseAdapter(object):
         """ Add to history that message is sent """
 
         list_history = [
-            x for x in message.workflow_history.get('message_workflow')
+            x for x in message.workflow_history.get("message_workflow")
         ]
         current = api.user.get_current()
         entry = dict(
-            action=u'Invio',
+            action=u"Invio",
             review_state=api.content.get_state(obj=message),
             actor=current.getId(),
-            comments='Inviato il messaggio a {} utenti.'.format(
+            comments="Inviato il messaggio a {} utenti.".format(
                 self.active_subscriptions
             ),
             time=DateTime(),
         )
         list_history.append(entry)
-        message.workflow_history['message_workflow'] = tuple(list_history)
+        message.workflow_history["message_workflow"] = tuple(list_history)
+
