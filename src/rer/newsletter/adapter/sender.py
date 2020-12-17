@@ -205,4 +205,3 @@ class BaseAdapter(object):
         )
         list_history.append(entry)
         message.workflow_history["message_workflow"] = tuple(list_history)
-
