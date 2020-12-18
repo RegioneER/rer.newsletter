@@ -65,6 +65,9 @@ requirejs(["jquery", "datatables"], function ($, datatables) {
         {
           data: "completed",
           render: function (data, type, row) {
+            if (row.running) {
+              return "In corso";
+            }
             return row.completed ? "Inviata" : "Errore";
           },
         },
