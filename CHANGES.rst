@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.0.6 (unreleased)
+1.0.6 (2020-12-18)
 ------------------
 
 - Handle "running" state in status table for long queues.
