@@ -5,7 +5,8 @@ Changelog
 1.0.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix logic in delete expired users view.
+  [cekk]
 
 
 1.0.6 (2020-12-18)
