@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.0.7 (unreleased)
+1.0.7 (2021-01-28)
 ------------------
 
 - Fix logic in delete expired users view.
