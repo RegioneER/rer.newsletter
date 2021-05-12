@@ -211,4 +211,3 @@ class TestSubscriptionsAdapter(unittest.TestCase):
         self.assertEqual(
             len(self.subscribers_adapter.channel_subscriptions.keys()), 1
         )
-
