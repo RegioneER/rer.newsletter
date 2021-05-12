@@ -12,7 +12,6 @@ from rer.newsletter.utils import INVALID_SECRET
 from rer.newsletter.utils import MAIL_NOT_PRESENT
 from rer.newsletter.utils import OK
 from zope.component import getMultiAdapter
-from zope.interface import Invalid
 
 import unittest
 import json
