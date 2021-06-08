@@ -77,6 +77,8 @@ class BaseAdapter(object):
         if not mailValidation(mail):
             return INVALID_EMAIL, None
 
+        # always store in lowercase
+        mail = mail.lower()
         uuid_activation = six.text_type(uuid.uuid4())
         for subscriber in subscriptions.values():
             if (mail == subscriber["email"] and subscriber["is_active"]) or (

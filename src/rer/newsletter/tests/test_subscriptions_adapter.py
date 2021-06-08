@@ -60,11 +60,23 @@ class TestSubscriptionsAdapter(unittest.TestCase):
         status, token = self.subscribers_adapter.subscribe("Foo@foo.com")
         self.assertEqual(status, OK)
 
-        status, token = self.subscribers_adapter.subscribe("Foo@FOO.com")
+        status, token = self.subscribers_adapter.subscribe("Bar@BAR.com")
         self.assertEqual(status, OK)
 
-        status, token = self.subscribers_adapter.subscribe("Foo@foo.COM")
+        status, token = self.subscribers_adapter.subscribe("Baz@baz.COM")
         self.assertEqual(status, OK)
+
+    def test_emails_are_stored_lowered(self):
+        self.subscribers_adapter.subscribe("Foo@foo.com")
+        self.subscribers_adapter.subscribe("BAR@Bar.com")
+        subscriptions = self.subscribers_adapter.channel_subscriptions
+
+        self.assertIn("foo@foo.com", subscriptions.keys())
+        self.assertIn("bar@bar.com", subscriptions.keys())
+        self.assertNotIn("Foo@foo.com", subscriptions.keys())
+        self.assertNotIn("BAR@Bar.com", subscriptions.keys())
+        self.assertEqual(subscriptions["foo@foo.com"]["email"], "foo@foo.com")
+        self.assertEqual(subscriptions["bar@bar.com"]["email"], "bar@bar.com")
 
     def test_subscribe_email_twice_return_error(self):
         self.subscribers_adapter.subscribe("foo@foo.com")
@@ -73,6 +85,15 @@ class TestSubscriptionsAdapter(unittest.TestCase):
             len(self.subscribers_adapter.channel_subscriptions.keys()), 1
         )
         status, token = self.subscribers_adapter.subscribe("foo@foo.com")
+
+        self.assertEqual(
+            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
+        )
+        self.assertEqual(token, None)
+        self.assertEqual(status, ALREADY_SUBSCRIBED)
+
+        # also if we try with capital letters
+        status, token = self.subscribers_adapter.subscribe("Foo@FoO.coM")
 
         self.assertEqual(
             len(self.subscribers_adapter.channel_subscriptions.keys()), 1
