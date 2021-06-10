@@ -24,7 +24,7 @@ except ImportError:
 
 
 def check_separator(value):
-    match = re.match('^,|^;', value)
+    match = re.match("^,|^;", value)
     if match:
         return True
     else:
@@ -34,16 +34,16 @@ def check_separator(value):
 class IUsersImport(Interface):
 
     userListFile = NamedBlobFile(
-        title=_(u'title_users_list_file', default=u'Users List File'),
-        description=_(u'description_file', default=u'File must be a CSV'),
+        title=_(u"title_users_list_file", default=u"Users List File"),
+        description=_(u"description_file", default=u"File must be a CSV"),
         required=True,
     )
 
     # se questo e ceccato allora i dati non vengono inseriti
     emptyList = schema.Bool(
-        title=_(u'title_empty_list', default=u'Empties users list'),
+        title=_(u"title_empty_list", default=u"Empties users list"),
         description=_(
-            u'description_empty_list', default=u'Empties channel users list'
+            u"description_empty_list", default=u"Empties channel users list"
         ),
         required=False,
     )
@@ -52,46 +52,39 @@ class IUsersImport(Interface):
     # allora do precedenza a emptyList
     removeSubscribers = schema.Bool(
         title=_(
-            u'title_remove_subscribers',
-            default=u'Remove subscribers of the list',
+            u"title_remove_subscribers",
+            default=u"Remove subscribers of the list",
         ),
         description=_(
-            u'description_remove_subscribers',
-            default=u'Remove users of CSV from channel',
+            u"description_remove_subscribers",
+            default=u"Remove users of CSV from channel",
         ),
         required=False,
     )
 
     headerLine = schema.Bool(
-        title=_(u'title_header_line', default=u'Header Line'),
+        title=_(u"title_header_line", default=u"Header Line"),
         description=_(
-            u'description_header_line',
-            default=_(u'if CSV File contains a header line'),
+            u"description_header_line",
+            default=_(u"if CSV File contains a header line"),
         ),
         required=False,
     )
 
     separator = schema.TextLine(
-        title=_(u'title_separator', default=u'CSV separator'),
+        title=_(u"title_separator", default=u"CSV separator"),
         description=_(
-            u'description_separator', default=_(u'Separator of CSV file')
+            u"description_separator", default=_(u"Separator of CSV file")
         ),
-        default=u';',
+        default=u";",
         required=True,
         constraint=check_separator,
     )
 
 
 def _mailValidation(mail):
-    # valido la mail
-    match = re.match(
-        '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+'
-        '(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
-        mail,
-    )
-    if match is None:
-        return False
-    return True
+    reg_tool = api.portal.get_tool(name="portal_registration")
+    return reg_tool.isValidEmail(mail)
 
 
 class UsersImport(form.Form):
@@ -101,15 +94,15 @@ class UsersImport(form.Form):
 
     def processCSV(self, data, headerline, separator):
         input_data = data.decode()
-        input_separator = separator.encode('ascii', 'ignore').decode()
+        input_separator = separator.encode("ascii", "ignore").decode()
         if PY2:
             input_data = data
-            input_separator = separator.encode('ascii', 'ignore')
+            input_separator = separator.encode("ascii", "ignore")
 
         io = StringIO(input_data)
 
         reader = csv.reader(
-            io, delimiter=input_separator, dialect='excel', quotechar='\''
+            io, delimiter=input_separator, dialect="excel", quotechar="'"
         )
         index = 1
         if headerline:
@@ -120,16 +113,16 @@ class UsersImport(form.Form):
             for i in range(0, len(header)):
                 header_value = header[i]
                 if PY2:
-                    header_value = header[i].decode('utf-8-sig')
+                    header_value = header[i].decode("utf-8-sig")
 
-                if header_value == 'email':
+                if header_value == "email":
                     index = i
             if index is None:
                 api.portal.show_message(
-                    message=u'Il CSV non ha la colonna email oppure il '
-                    'separatore potrebbe non essere corretto',
+                    message=u"Il CSV non ha la colonna email oppure il "
+                    "separatore potrebbe non essere corretto",
                     request=self.request,
-                    type=u'error',
+                    type=u"error",
                 )
 
         if index is not None:
@@ -139,7 +132,7 @@ class UsersImport(form.Form):
                 line_number += 1
                 row_value = row[index]
                 if PY2:
-                    row_value = row[index].decode('utf-8-sig')
+                    row_value = row[index].decode("utf-8-sig")
 
                 mail = row_value
                 if _mailValidation(mail):
@@ -147,7 +140,7 @@ class UsersImport(form.Form):
 
             return usersList
 
-    @button.buttonAndHandler(_(u'charge_userimport', default=u'Import'))
+    @button.buttonAndHandler(_(u"charge_userimport", default=u"Import"))
     def handleSave(self, action):
         status = UNHANDLED
         data, errors = self.extractData()
@@ -160,17 +153,17 @@ class UsersImport(form.Form):
         )
 
         # devo svuotare la lista di utenti del channel
-        if data['emptyList']:
+        if data["emptyList"]:
             status = channel.emptyChannelUsersList()
 
-        csv_file = data['userListFile'].data
+        csv_file = data["userListFile"].data
         # esporto la lista di utenti dal file
         usersList = self.processCSV(
-            csv_file, data['headerLine'], data['separator']
+            csv_file, data["headerLine"], data["separator"]
         )
         # controllo se devo eliminare l'intera lista di utenti
         # invece di importarla
-        if data['removeSubscribers'] and not data['emptyList']:
+        if data["removeSubscribers"] and not data["emptyList"]:
             # chiamo l'api per rimuovere l'intera lista di utenti
             if usersList:
                 status = channel.deleteUserList(usersList)
@@ -182,9 +175,9 @@ class UsersImport(form.Form):
 
         if status == OK:
             status = _(
-                u'generic_subscribe_message_success',
-                default=u'User Subscribed',
+                u"generic_subscribe_message_success",
+                default=u"User Subscribed",
             )
             api.portal.show_message(
-                message=status, request=self.request, type=u'info'
+                message=status, request=self.request, type=u"info"
             )
