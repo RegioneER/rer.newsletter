@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.0.8 (unreleased)
+1.1.0 (2021-06-10)
 ------------------
 
 - Use mail validator from portal_registration.
