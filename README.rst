@@ -2,8 +2,17 @@
 rer.newsletter
 ==============
 
-.. image:: https://travis-ci.org/PloneGov-IT/rer.newsletter.svg?branch=master
-    :target: https://travis-ci.org/PloneGov-IT/rer.newsletter
+|python| |version| |ci|
+
+.. |python| image:: https://img.shields.io/pypi/pyversions/rer.newsletter.svg
+  :target: https://pypi.python.org/pypi/rer.newsletter/
+
+.. |version| image:: http://img.shields.io/pypi/v/rer.newsletter.svg
+  :target: https://pypi.python.org/pypi/rer.newsletter
+
+.. |ci| image:: https://github.com/RegioneER/rer.newsletter/actions/workflows/tests.yml/badge.svg
+  :target: https://github.com/RegioneER/rer.newsletter/actions
+
 
 This product allows the complete management of a newsletter.
 
