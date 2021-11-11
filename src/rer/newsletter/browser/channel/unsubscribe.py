@@ -10,6 +10,7 @@ from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
 from rer.newsletter.utils import OK
 from rer.newsletter.utils import UNHANDLED
+from six import PY2
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
@@ -22,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class IUnsubscribeForm(Interface):
-    """ define field for channel unsubscription """
+    """define field for channel unsubscription"""
 
     email = schema.Email(
         title=_(u"unsubscribe_email_title", default=u"Unsubscription Email"),
@@ -109,6 +110,9 @@ class UnsubscribeForm(form.Form):
         mail_text = portal.portal_transforms.convertTo("text/mail", mail_text)
 
         response_email = compose_sender(channel=self.context)
+        channel_title = self.context.title
+        if PY2:
+            channel_title = self.context.title.encode("utf-8")
 
         mailHost = api.portal.get_tool(name="MailHost")
         mailHost.send(
@@ -117,7 +121,7 @@ class UnsubscribeForm(form.Form):
             mfrom=response_email,
             subject="Conferma la cancellazione dalla newsletter"
             " {channel} del portale {site}".format(
-                channel=self.context.title, site=get_site_title()
+                channel=channel_title, site=get_site_title()
             ),
             charset="utf-8",
             msg_type="text/html",

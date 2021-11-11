@@ -5,7 +5,8 @@ Changelog
 1.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix encoding in unsubscribe.py.
+  [cekk]
 
 
 1.1.0 (2021-06-10)
