@@ -104,6 +104,6 @@ class NewsletterUnsubscribe(Service):
 
         return {
             '@id': self.request.get("URL"),
-            'status':  u"user_unsubscribe_success",
+            'status':  u"user_unsubscribe_success" if not errors else u'error',
             'errors': errors if errors else None,
         }

@@ -94,11 +94,10 @@ class NewsletterConfirmSubscription(Service):
                     token=secret, channel=channel.absolute_url()
                 )
             )
-            status = u"unable_to_unsubscribe"
             error = u"unable_to_unsubscribe"
 
         return {
             "@id": self.request.get("URL"),
-            "status": status,
-            "error": error,
+            "status": status if not error else u'error',
+            "errors": error if error else None,
         }
