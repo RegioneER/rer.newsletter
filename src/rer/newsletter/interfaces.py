@@ -68,19 +68,21 @@ class IChannelSchema(model.Schema):
         required=True,
     )
 
-    header = BlocksField(
+    header = RichTextField(
         title=_(u'header_channel', default=u'Header of message'),
         description=_(u'description_header_channel',
                       default=u'Header for message of this channel'),
         required=False,
     )
+    form.widget('header', RichTextFieldWidget)
 
-    footer = BlocksField(
+    footer = RichTextField(
         title=_(u'footer_channel', default=u'Footer of message'),
         description=_(u'description_footer_channel',
                       default=u'Footer for message of this channel'),
         required=False,
     )
+    form.widget('footer', RichTextFieldWidget)
 
     css_style = schema.Text(
         title=_(u'css_style', default=u'CSS Style'),
