@@ -38,6 +38,7 @@
   <include package=".tiles" />
   <include file="upgrades.zcml" />
   <include package=".contentrules" />
+  <include package=".restapi" />
 
   <genericsetup:registerProfile
       name="default"

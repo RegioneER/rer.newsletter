@@ -1,0 +1,30 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone">
+
+
+    <plone:service
+      method="POST"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      factory=".subscribe.NewsletterSubscribe"
+      name="@subscribe-newsletter"
+      permission="zope2.View"
+    />
+
+    <plone:service
+      method="POST"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      factory=".unsubscribe.NewsletterUnsubscribe"
+      name="@unsubscribe-newsletter"
+      permission="zope2.View"
+    />
+
+    <plone:service
+      method="POST"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      factory=".confirm_subscription.NewsletterConfirmSubscription"
+      name="@confirm-subscription-newsletter"
+      permission="zope2.View"
+    />
+
+</configure>
