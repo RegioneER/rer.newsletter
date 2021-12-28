@@ -28,7 +28,6 @@ class NewsletterSubscribe(Service):
     def handleSubscribe(self, postData):
         status = UNHANDLED
         data, errors = self.getData(postData)
-        import pdb; pdb.set_trace()
         # recaptcha
         captcha = getMultiAdapter(
             (aq_inner(self.context), self.request), name="captcha"
