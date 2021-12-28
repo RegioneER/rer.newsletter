@@ -7,6 +7,7 @@ from plone.autoform import directives as form
 from plone.supermodel import model
 from rer.newsletter import _
 from zope.interface import Interface
+from collective.volto.blocksfield.field import BlocksField
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
 import uuid
@@ -60,32 +61,26 @@ class IChannelSchema(model.Schema):
         required=False,
     )
 
-    privacy = RichTextField(
+    privacy = BlocksField(
         title=_(u'privacy_channel', default=u'Informativa sulla privacy'),
         description=_(u'description_privacy_channel',
                       default=u'Informativa sulla privacy per questo canale'),
         required=True,
-        default=u'',
     )
-    form.widget('privacy', RichTextFieldWidget)
 
-    header = RichTextField(
+    header = BlocksField(
         title=_(u'header_channel', default=u'Header of message'),
         description=_(u'description_header_channel',
                       default=u'Header for message of this channel'),
         required=False,
-        default=u'',
     )
-    form.widget('header', RichTextFieldWidget)
 
-    footer = RichTextField(
+    footer = BlocksField(
         title=_(u'footer_channel', default=u'Footer of message'),
         description=_(u'description_footer_channel',
                       default=u'Footer for message of this channel'),
         required=False,
-        default=u'',
     )
-    form.widget('footer', RichTextFieldWidget)
 
     css_style = schema.Text(
         title=_(u'css_style', default=u'CSS Style'),
