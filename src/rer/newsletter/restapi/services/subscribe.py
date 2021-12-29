@@ -10,9 +10,52 @@ from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.utils import compose_sender, get_site_title, SUBSCRIBED, UNHANDLED
 from six import PY2
 from zope.component import getMultiAdapter
+from zExceptions import BadRequest
+
+import os
+import requests
+
+
+try:
+    from collective.recaptcha.settings import IRecaptchaSettings
+
+    HAS_COLLECTIVE_RECAPTCHA = True
+except ImportError:
+    HAS_COLLECTIVE_RECAPTCHA = False
 
 
 class NewsletterSubscribe(Service):
+
+    def get_secret_key(self):
+        if HAS_COLLECTIVE_RECAPTCHA:
+            return api.portal.get_registry_record(
+                "private_key", interface=IRecaptchaSettings
+            )
+
+        return os.environ.get("RECAPTCHA_PRIVATE_KEY", "")
+
+    def check_recaptcha(self, form_data):
+        if "g-recaptcha-response" not in form_data:
+            raise BadRequest("Campo obbligatorio mancante: Non sono un robot")
+        secret = self.get_secret_key()
+
+        if not secret:
+            logger.error(
+                "Missing Recaptcha private key. Set it into collective.recaptcha "
+                "control panel or in RECAPTCHA_PRIVATE_KEY env variable."
+            )
+            raise BadRequest("Chiave privata di Recaptcha non impostata.")
+        payload = {
+            "response": form_data["g-recaptcha-response"],
+            "secret": secret,
+        }
+        response = requests.post(
+            url="https://www.google.com/recaptcha/api/siteverify", data=payload
+        )
+        result = response.json()
+        if not result.get("success", False):
+            raise BadRequest("Validazione richiesta per il campo: Non sono un robot")
+        return True
 
     def getData(self, data):
         errors = {}
@@ -29,15 +72,20 @@ class NewsletterSubscribe(Service):
         status = UNHANDLED
         data, errors = self.getData(postData)
         # recaptcha
-        captcha = getMultiAdapter(
-            (aq_inner(self.context), self.request), name="captcha"
-        )
+        # captcha = getMultiAdapter(
+        #     (aq_inner(self.context), self.request), name="captcha"
+        # )
         if errors:
-           return data, errors
+            return data, errors
 
         self.request['g-recaptcha-response'] = data['g-recaptcha-response']
         # come funziona/ come testarlo?
-        if not captcha.verify():
+        # if not captcha.verify():
+        #     errors = u"message_wrong_captcha"
+
+        #     return data, errors
+
+        if not self.check_recaptcha(data):
             errors = u"message_wrong_captcha"
 
             return data, errors
