@@ -69,6 +69,7 @@ class NewsletterConfirmSubscription(Service):
         action = data.get("action")
         errors = []
         response = None
+        status = u'error'
         channel = getMultiAdapter(
             (self.context, self.request), IChannelSubscriptions
         )
@@ -93,12 +94,12 @@ class NewsletterConfirmSubscription(Service):
                 status = u"generic_delete_message_success"
 
         if response != OK:
+            errors = errors.append(u"unable_to_unsubscribe")
             logger.error(
                 'Unable to unsubscribe user with token "{token}" on channel {channel}.'.format(  # noqa
-                    token=secret, channel=channel.absolute_url()
+                    token=secret, channel=channel.context.absolute_url()
                 )
             )
-            errors = errors.append(u"unable_to_unsubscribe")
 
         return {
             "@id": self.request.get("URL"),

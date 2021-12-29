@@ -73,20 +73,12 @@ class NewsletterSubscribe(Service):
     def handleSubscribe(self, postData):
         status = UNHANDLED
         data, errors = self.getData(postData)
-        # recaptcha
-        # captcha = getMultiAdapter(
-        #     (aq_inner(self.context), self.request), name="captcha"
-        # )
+
         if errors:
             return data, errors
 
         self.request['g-recaptcha-response'] = data['g-recaptcha-response']
-        # come funziona/ come testarlo?
-        # if not captcha.verify():
-        #     errors = u"message_wrong_captcha"
-
-        #     return data, errors
-
+    
         if not self.check_recaptcha(data):
             errors = errors.append(u"message_wrong_captcha")
 

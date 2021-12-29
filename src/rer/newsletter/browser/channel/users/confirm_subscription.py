@@ -97,7 +97,7 @@ class ConfirmSubscription(BrowserView):
         else:
             logger.error(
                 'Unable to unsubscribe user with token "{token}" on channel {channel}.'.format(  # noqa
-                    token=secret, channel=channel.absolute_url()
+                    token=secret, channel=channel.context.absolute_url()
                 )
             )
             api.portal.show_message(
