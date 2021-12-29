@@ -9,6 +9,8 @@ from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.utils import compose_sender, get_site_title, OK, UNHANDLED
 from six import PY2
 from zope.component import getMultiAdapter
+from zope.interface import alsoProvides
+from plone.protect import interfaces
 
 import logging
 
@@ -19,6 +21,8 @@ class NewsletterUnsubscribe(Service):
 
     def reply(self):
         data = json_body(self.request)
+        if "IDisableCSRFProtection" in dir(interfaces):
+            alsoProvides(self.request, interfaces.IDisableCSRFProtection)
         response, errors = self.handleUnsubscribe(data)
         if errors:
             response['errors'] = errors

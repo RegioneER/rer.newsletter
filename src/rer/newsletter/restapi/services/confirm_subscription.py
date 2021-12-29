@@ -17,6 +17,8 @@ from rer.newsletter import logger
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from six import PY2
 from zope.component import getMultiAdapter
+from zope.interface import alsoProvides
+from plone.protect import interfaces
 
 import logging
 
@@ -61,6 +63,8 @@ class NewsletterConfirmSubscription(Service):
 
     def reply(self):
         data = json_body(self.request)
+        if "IDisableCSRFProtection" in dir(interfaces):
+            alsoProvides(self.request, interfaces.IDisableCSRFProtection)
         secret = data.get("secret")
         action = data.get("action")
         errors = []
