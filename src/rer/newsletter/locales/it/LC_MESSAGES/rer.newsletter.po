@@ -313,7 +313,7 @@ msgstr "Esporta lista di utenti"
 #. Default: "Footer of message"
 #: rer/newsletter/interfaces.py:82
 msgid "footer_channel"
-msgstr "Foooter del messagio"
+msgstr "Footer del messaggio"
 
 #. Default: "Ti sei iscritto alla newsletter {channel} del portale \"{site}\"."
 #: rer/newsletter/browser/channel/users/confirm_subscription.py:76
@@ -333,7 +333,7 @@ msgstr "Ti sei cancellato dalla newsletter."
 #. Default: "Unhandled problem with add of channel."
 #: rer/newsletter/browser/channel/add.py:41
 msgid "generic_problem_add_channel"
-msgstr "Problema inespattetato con l'aggiunta del canale."
+msgstr "Problema inaspettato con l'aggiunta del canale."
 
 #. Default: "Una o piu delle mail inserite non sono valide"
 #: rer/newsletter/adapter/subscriptions.py:37
