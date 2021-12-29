@@ -11,6 +11,8 @@ from rer.newsletter.utils import compose_sender, get_site_title, SUBSCRIBED, UNH
 from six import PY2
 from zope.component import getMultiAdapter
 from zExceptions import BadRequest
+from zope.interface import alsoProvides
+from plone.protect import interfaces
 
 import os
 import requests
@@ -161,6 +163,9 @@ class NewsletterSubscribe(Service):
 
     def reply(self):
         data = json_body(self.request)
+        if "IDisableCSRFProtection" in dir(interfaces):
+            alsoProvides(self.request, interfaces.IDisableCSRFProtection)
+
         _data, errors = self.handleSubscribe(data)
 
         return {
