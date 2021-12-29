@@ -63,7 +63,7 @@ class NewsletterConfirmSubscription(Service):
         data = json_body(self.request)
         secret = data.get("secret")
         action = data.get("action")
-        error = None
+        errors = []
         response = None
         channel = getMultiAdapter(
             (self.context, self.request), IChannelSubscriptions
@@ -94,10 +94,10 @@ class NewsletterConfirmSubscription(Service):
                     token=secret, channel=channel.absolute_url()
                 )
             )
-            error = u"unable_to_unsubscribe"
+            errors = errors.append(u"unable_to_unsubscribe")
 
         return {
             "@id": self.request.get("URL"),
-            "status": status if not error else u'error',
-            "errors": error if error else None,
+            "status": status if not errors else u'error',
+            "errors": errors if errors else None,
         }

@@ -25,9 +25,9 @@ class NewsletterUnsubscribe(Service):
         return response
 
     def getData(self, data):
-        errors = {}
+        errors = []
         if not data.get("email", None):
-            errors['email'] = u"Indirizzo email non inserito o non valido"
+            errors = errors.append(u"Indirizzo email non inserito o non valido")
         return {
             "email": data.get("email", None),
         }, errors
