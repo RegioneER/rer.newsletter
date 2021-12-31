@@ -65,7 +65,7 @@ class MessageSendingTest(form.Form):
             parameters = {
                 'portal_name': get_site_title(),
                 'channel_name': ns_obj.title,
-                'unsubscribe_link': ns_obj.absolute_url() + '/@@unsubscribe',
+                'unsubscribe_link': ns_obj.absolute_url(),
             }
             unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
 

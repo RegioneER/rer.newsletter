@@ -104,10 +104,11 @@ class ProcessQueue(BrowserView):
         unsubscribe_footer_template = message.restrictedTraverse(
             '@@unsubscribe_channel_template'
         )
+
         parameters = {
             'portal_name': get_site_title(),
             'channel_name': channel.title,
-            'unsubscribe_link': channel.absolute_url() + '/@@unsubscribe',
+            'unsubscribe_link': channel.absolute_url(),
         }
         unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
         status = channel.sendMessage(message, unsubscribe_footer_text)
