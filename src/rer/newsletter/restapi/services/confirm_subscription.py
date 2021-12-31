@@ -4,7 +4,7 @@ from rer.newsletter import _
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.contentrules.events import SubscriptionEvent
 from rer.newsletter.contentrules.events import UnsubscriptionEvent
-from rer.newsletter.utils import OK
+from rer.newsletter.utils import INVALID_SECRET, OK, INEXISTENT_EMAIL
 from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
 from zope.component import getMultiAdapter
@@ -94,8 +94,15 @@ class NewsletterConfirmSubscription(Service):
                 status = u"generic_delete_message_success"
 
         if response != OK:
-            errors = errors.append(u"unable_to_unsubscribe")
-            logger.error(
+            # TODO: gestione corretta dei vari errori per informare il frontend
+            if response == INVALID_SECRET:
+                errors.append(u"user_secret_not_found")
+            elif response == INEXISTENT_EMAIL:
+                errors.append(u"user_not_found")
+            else:
+                errors.append(u"unable_to_unsubscribe")
+
+            logger.info(
                 'Unable to unsubscribe user with token "{token}" on channel {channel}.'.format(  # noqa
                     token=secret, channel=channel.context.absolute_url()
                 )

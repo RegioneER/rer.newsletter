@@ -62,9 +62,9 @@ class NewsletterSubscribe(Service):
     def getData(self, data):
         errors = []
         if not data.get("email", None):
-            errors = errors.append(u"invalid_email")
+            errors.append(u"invalid_email")
         if not data.get("g-recaptcha-response", None):
-            errors = errors.append(u"invalid_captcha")
+            errors.append(u"invalid_captcha")
         return {
             "email": data.get("email", None),
             'g-recaptcha-response': data.get('g-recaptcha-response', None),
@@ -78,9 +78,9 @@ class NewsletterSubscribe(Service):
             return data, errors
 
         self.request['g-recaptcha-response'] = data['g-recaptcha-response']
-    
+
         if not self.check_recaptcha(data):
-            errors = errors.append(u"message_wrong_captcha")
+            errors.append(u"message_wrong_captcha")
 
             return data, errors
 
@@ -146,11 +146,11 @@ class NewsletterSubscribe(Service):
         else:
             if status == 2:
                 logger.exception("user already subscribed")
-                errors = errors.append(u"user_already_subscribed")
+                errors.append(u"user_already_subscribed")
                 return data, errors
             else:
                 logger.exception("unhandled error subscribe user")
-                errors = errors.append(u"Problems...{0}".format(status))
+                errors.append(u"Problems...{0}".format(status))
                 return data, errors
 
     def reply(self):

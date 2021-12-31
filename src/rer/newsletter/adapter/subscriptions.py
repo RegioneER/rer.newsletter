@@ -135,10 +135,16 @@ class BaseAdapter(object):
         subscriptions = self.channel_subscriptions
         if not uuidValidation(secret):
             return INVALID_SECRET, None
+        user_found = False
+        # cancello l'utente con il secret
         for key, subscriber in subscriptions.items():
             if subscriber["token"] == six.text_type(secret):
                 del subscriptions[key]
                 return OK, key
+
+        # caso in cui non trovo l'utente
+        if not user_found:
+            return INEXISTENT_EMAIL, None
         return INVALID_SECRET, None
 
     def deleteUser(self, mail=None):
