@@ -129,7 +129,7 @@ class BaseAdapter(object):
         parameters = {
             "portal_name": get_site_title(),
             "channel_name": self.context.title,
-            "unsubscribe_link": self.context.absolute_url() + "/@@unsubscribe",
+            "unsubscribe_link": self.context.absolute_url(),
         }
         footer = unsubscribe_footer_template(**parameters)
         return self._getMessage(message=message, footer=footer)
