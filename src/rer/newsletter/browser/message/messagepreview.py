@@ -33,7 +33,11 @@ class MessagePreview(BrowserView):
             return f"""
                 <tr>
                     <td align="left">
-                        <div class="divider"></div>
+                        <div class="gmail-blend-screen">
+                        <div class="gmail-blend-difference">
+                            <div class="divider"></div>
+                        </div>
+                        </div>
                         <div class="newsletterTitle">
                         <h1>{self.context.title}</h1>
                         <h4 class="newsletterDate">{
