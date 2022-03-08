@@ -5,7 +5,7 @@ from Products.PortalTransforms.interfaces import ITransform
 from rer.newsletter.browser.settings import ISettingsSchema
 from zope.interface import implementer
 
-import premailer
+from premailer import Premailer
 import re
 
 
@@ -34,7 +34,8 @@ class link_transform(object):
         return self.__name__
 
     def convert(self, orig, data, **kwargs):
-        orig = premailer.transform(orig)
+        p = Premailer(orig, strip_important=False)
+        orig = p.transform()
 
         # come riprendo gli elementi dal control panel
         source_link = api.portal.get_registry_record(

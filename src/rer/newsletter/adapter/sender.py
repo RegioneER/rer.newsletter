@@ -63,20 +63,39 @@ class BaseAdapter(object):
 
     def _getMessage(self, message, footer):
         logger.debug("getMessage %s %s", self.context.title, message.title)
-
         content = IShippable(message).message_content
+        message_template = self.context.restrictedTraverse("@@messagepreview_view")
+        parameters = {
+            'css': self.context.css_style,
+            'message_header': self.context.header if self.context.header else u'',
+            'message_footer': self.context.footer if self.context.footer else u'',
+            'message_content': f"""
+                <tr>
+                    <td align="left">
+                    <div class="gmail-blend-screen">
+                        <div class="gmail-blend-difference">
+                            <div class="divider"></div>
+                        </div>
+                    </div>
+                        <div class="newsletterTitle">
+                        <h1>{self.context.title}</h1>
+                        <h4 class="newsletterDate">{
+                            datetime.today().strftime('Newsletter %d %B %Y')
+                        }</h4>
+                    </div>
 
-        body = u""
-        body += self.context.header.output if self.context.header else u""
-        body += u"<style>{css}</style>".format(
-            css=self.context.css_style or u""
-        )
-        body += u'<div id="message_description"><p>{desc}</p></div>'.format(
-            desc=message.description or u""
-        )
-        body += content
-        body += self.context.footer.output if self.context.footer else u""
-        body += footer or u""
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                    {content}
+                    </td>
+                </tr>
+            """,
+            'message_unsubscribe_default': footer,
+        }
+
+        body = message_template(**parameters)
 
         # passo la mail per il transform
         portal = api.portal.get()
@@ -130,6 +149,7 @@ class BaseAdapter(object):
             "portal_name": get_site_title(),
             "channel_name": self.context.title,
             "unsubscribe_link": self.context.absolute_url(),
+            "enabled": self.context.standard_unsubscribe,
         }
         footer = unsubscribe_footer_template(**parameters)
         return self._getMessage(message=message, footer=footer)

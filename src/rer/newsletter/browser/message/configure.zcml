@@ -6,7 +6,7 @@
 
   <!-- view for message preview -->
   <browser:page
-    for="rer.newsletter.behaviors.ships.IShippableMarker"
+    for="*"
     name="messagepreview_view"
     class=".messagepreview.MessagePreview"
     template="templates/messagepreview.pt"

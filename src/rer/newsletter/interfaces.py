@@ -68,21 +68,21 @@ class IChannelSchema(model.Schema):
         required=True,
     )
 
-    header = RichTextField(
+    header = schema.Text(
         title=_(u'header_channel', default=u'Header of message'),
         description=_(u'description_header_channel',
                       default=u'Header for message of this channel'),
         required=False,
+        default=u""
     )
-    form.widget('header', RichTextFieldWidget)
 
-    footer = RichTextField(
+    footer = schema.Text(
         title=_(u'footer_channel', default=u'Footer of message'),
         description=_(u'description_footer_channel',
                       default=u'Footer for message of this channel'),
         required=False,
+        default=u""
     )
-    form.widget('footer', RichTextFieldWidget)
 
     css_style = schema.Text(
         title=_(u'css_style', default=u'CSS Style'),
@@ -102,6 +102,12 @@ class IChannelSchema(model.Schema):
     is_subscribable = schema.Bool(
         title=_(u'is_subscribable', default=u'Is Subscribable'),
         default=False,
+        required=False
+    )
+    standard_unsubscribe = schema.Bool(
+        title=_(u'standard_unsubscribe', default=u'Standard unsubscribe link'),
+        description=_(u'descriptin_standard_unsubscribe', default=u'Usa il link standard per l\'unsubscribe'),
+        default=True,
         required=False
     )
 

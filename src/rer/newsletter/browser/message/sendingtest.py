@@ -13,6 +13,7 @@ from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 from zope.interface import Interface
+from datetime import datetime
 
 import re
 
@@ -34,6 +35,47 @@ class MessageSendingTest(form.Form):
 
     ignoreContext = True
     fields = field.Fields(IMessageSendingTest)
+
+    def _getMessage(self, channel, message, footer):
+        content = IShippable(message).message_content
+        message_template = self.context.restrictedTraverse("@@messagepreview_view")
+        parameters = {
+            'css': channel.css_style,
+            'message_header': channel.header if channel.header else u'',
+            'message_footer': channel.footer if channel.footer else u'',
+            'message_content': f"""
+                <tr>
+                    <td align="left">
+                        <div class="gmail-blend-screen">
+                        <div class="gmail-blend-difference">
+                            <div class="divider"></div>
+                        </div>
+                        </div>
+                        <div class="newsletterTitle">
+                        <h1>{self.context.title}</h1>
+                        <h4 class="newsletterDate">{
+                            datetime.today().strftime('Newsletter %d %B %Y')
+                        }</h4>
+                    </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                    {content}
+                    </td>
+                </tr>
+            """,
+            'message_unsubscribe_default': footer,
+        }
+
+        body = message_template(**parameters)
+
+        # passo la mail per il transform
+        portal = api.portal.get()
+        body = portal.portal_transforms.convertTo("text/mail", body)
+
+        return body
 
     @button.buttonAndHandler(_('send_sendingtest', default='Send'))
     def handleSave(self, action):
@@ -66,23 +108,10 @@ class MessageSendingTest(form.Form):
                 'portal_name': get_site_title(),
                 'channel_name': ns_obj.title,
                 'unsubscribe_link': ns_obj.absolute_url(),
+                "enabled": ns_obj.standard_unsubscribe,
             }
             unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
-
-            body = u''
-            body += ns_obj.header.output if ns_obj.header else u''
-            body += u'<style>{css}</style>'.format(css=ns_obj.css_style or u'')
-            body += u'<div id="message_description">'
-            body += u'<p>{desc}</p></div>'.format(
-                desc=message_obj.description or u''
-            )
-            body += IShippable(message_obj).message_content
-            body += ns_obj.footer.output if ns_obj.footer else u''
-            body += unsubscribe_footer_text if unsubscribe_footer_text else u''
-
-            # passo la mail per il transform
-            portal = api.portal.get()
-            body = portal.portal_transforms.convertTo('text/mail', body)
+            body = self._getMessage(ns_obj, message_obj, unsubscribe_footer_text)
 
             sender = compose_sender(channel=ns_obj)
 
