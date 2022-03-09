@@ -42,15 +42,12 @@ class MessageSendingTest(form.Form):
         parameters = {
             'css': channel.css_style,
             'message_header': channel.header if channel.header else u'',
-            'message_footer': channel.footer if channel.footer else u'',
-            'message_content': f"""
+            'message_subheader': f'''
                 <tr>
                     <td align="left">
-                        <div class="gmail-blend-screen">
-                        <div class="gmail-blend-difference">
+
                             <div class="divider"></div>
-                        </div>
-                        </div>
+
                         <div class="newsletterTitle">
                         <h1>{self.context.title}</h1>
                         <h4 class="newsletterDate">{
@@ -59,7 +56,10 @@ class MessageSendingTest(form.Form):
                     </div>
 
                     </td>
-                </tr>
+                </tr>''',
+            'message_footer': channel.footer if channel.footer else u'',
+            'message_content': f"""
+
                 <tr>
                     <td align="left">
                     {content}

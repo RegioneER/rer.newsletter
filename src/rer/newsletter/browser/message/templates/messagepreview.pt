@@ -19,18 +19,17 @@
       <body class="body">
           <table role="presentation"
                 style="width:100%;border:0;border-spacing:0;color:#000">
-            <div class="gmail-blend-screen">
-              <div class="gmail-blend-difference">
-                <tr tal:content="structure python: options.get('message_header', None) or view.getMessageHeader()">
-              </div>
-            </div>
+            <div tal:replace="structure python: options.get('message_header', None) or view.getMessageHeader()">
+            <tr tal:replace="structure python: options.get('message_subheader', None) or view.getMessageSubHeader()">
             <tr tal:content="structure python: options.get('message_content', None) or view.getMessageContent()">
+            <tr>
             <div class="gmail-blend-screen">
               <div class="gmail-blend-difference">
-                <tr tal:content="structure python: options.get('message_footer', None) or view.getMessageFooter()">
-                <tr tal:content="structure python: options.get('message_unsubscribe_default', None) or ''">
+                <div tal:replace="structure python: options.get('message_footer', None) or view.getMessageFooter()">
+                <div tal:content="structure python: options.get('message_unsubscribe_default', None) or ''">
               </div>
             </div>
+            </tr>
           </table>
       </body>
 </html>

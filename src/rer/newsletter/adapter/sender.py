@@ -68,15 +68,12 @@ class BaseAdapter(object):
         parameters = {
             'css': self.context.css_style,
             'message_header': self.context.header if self.context.header else u'',
-            'message_footer': self.context.footer if self.context.footer else u'',
-            'message_content': f"""
+            'message_subheader': f'''
                 <tr>
                     <td align="left">
-                    <div class="gmail-blend-screen">
-                        <div class="gmail-blend-difference">
+
                             <div class="divider"></div>
-                        </div>
-                    </div>
+                        
                         <div class="newsletterTitle">
                         <h1>{self.context.title}</h1>
                         <h4 class="newsletterDate">{
@@ -85,7 +82,9 @@ class BaseAdapter(object):
                     </div>
 
                     </td>
-                </tr>
+                </tr>''',
+            'message_footer': self.context.footer if self.context.footer else u'',
+            'message_content': f"""
                 <tr>
                     <td align="left">
                     {content}
