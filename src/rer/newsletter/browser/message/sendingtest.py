@@ -14,6 +14,7 @@ from z3c.form import field
 from z3c.form import form
 from zope.interface import Interface
 from datetime import datetime
+import locale
 
 import re
 
@@ -36,6 +37,17 @@ class MessageSendingTest(form.Form):
     ignoreContext = True
     fields = field.Fields(IMessageSendingTest)
 
+    def _getDate(self):
+        # this would be good but it doesn't work, locale not supported
+        # try:
+        #     locale.setlocale(locale.LC_ALL, 'it_IT.utf8')
+        # except Exception:
+        #     try:
+        #         locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
+        #     except Exception:
+        #         locale.setlocale(locale.LC_ALL, 'it_IT')
+        return datetime.today().strftime('Newsletter %d-%m-%Y')
+
     def _getMessage(self, channel, message, footer):
         content = IShippable(message).message_content
         message_template = self.context.restrictedTraverse("@@messagepreview_view")
@@ -51,7 +63,7 @@ class MessageSendingTest(form.Form):
                         <div class="newsletterTitle">
                         <h1>{self.context.title}</h1>
                         <h4 class="newsletterDate">{
-                            datetime.today().strftime('Newsletter %d %B %Y')
+                            self._getDate()
                         }</h4>
                     </div>
 

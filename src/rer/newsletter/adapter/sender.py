@@ -17,6 +17,7 @@ from zope.interface import implementer
 from zope.interface import Interface
 
 from transaction import commit
+import locale
 
 SUBSCRIBERS_KEY = "rer.newsletter.subscribers"
 HISTORY_KEY = "rer.newsletter.channel.history"
@@ -61,6 +62,18 @@ class BaseAdapter(object):
         logger.info("DEBUG: add channel {0}".format(self.context.title))
         return OK
 
+    def _getDate(self):
+        # this would be good but it doesn't work, locale not supported
+        # try:
+        #     locale.setlocale(locale.LC_ALL, 'it_IT.utf8')
+        # except Exception:
+        #     try:
+        #         locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
+        #     except Exception:
+        #         locale.setlocale(locale.LC_ALL, 'it_IT')
+        return datetime.today().strftime('Newsletter %d-%m-%Y')
+
+
     def _getMessage(self, message, footer):
         logger.debug("getMessage %s %s", self.context.title, message.title)
         content = IShippable(message).message_content
@@ -73,11 +86,11 @@ class BaseAdapter(object):
                     <td align="left">
 
                             <div class="divider"></div>
-                        
+
                         <div class="newsletterTitle">
                         <h1>{self.context.title}</h1>
                         <h4 class="newsletterDate">{
-                            datetime.today().strftime('Newsletter %d %B %Y')
+                            self._getDate()
                         }</h4>
                     </div>
 
