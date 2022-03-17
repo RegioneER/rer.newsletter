@@ -35,8 +35,8 @@ class ProcessQueue(BrowserView):
                     '@@{0}'.format('asynch_send_fail')
                 )
             parameters = {
-                'header': channel.header.output if channel.header else u'',
-                'footer': channel.footer.output if channel.footer else u'',
+                'header': channel.header if channel.header else u'',
+                'footer': channel.footer if channel.footer else u'',
                 'style': channel.css_style if channel.css_style else u'',
                 'portal_name': portal.title,
                 'channel_name': channel.title,
