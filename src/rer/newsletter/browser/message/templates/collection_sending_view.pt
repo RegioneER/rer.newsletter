@@ -9,13 +9,16 @@
       <metal:entry fill-slot="entry">
         <article class="tileItem">
 
-            <div tal:define="thumb_url python:item_url + '/@@images/image/' + 'preview';"
-                 tal:condition="python: obj.preview_image"
+            <div tal:define="thumb_url python:item_url + '/@@images/image/' + 'preview';
+                             item_has_image python: view.item_has_image(obj);
+                             item_has_preview_image python: view.item_has_preview_image(obj)"
+                 tal:condition="python: item_has_image or item_has_preview_image"
                  tal:attributes="class python: 'tileImage' if item_description else 'tileImageNoFloat'">
-              <a tal:attributes="href item_link">
+              <a tal:attributes="href item_link" tal:condition="python: item_has_image and not item_has_preview_image">
+                <img tal:replace="structure python:image_scale.tag(item, fieldname='image', scale='preview', css_class='thumb-' + 'preview')" />
+              </a>
+              <a tal:attributes="href item_link" tal:condition="python: item_has_preview_image">
                 <img tal:replace="structure python:image_scale.tag(item, fieldname='preview_image', scale='preview', css_class='thumb-' + 'preview')" />
-
-
               </a>
             </div>
 
