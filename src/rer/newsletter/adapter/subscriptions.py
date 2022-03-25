@@ -217,9 +217,10 @@ class BaseAdapter(object):
 
         subscriptions = self.channel_subscriptions
         for user in usersList:
+            user = user.lower()
             match = re.match(
                 "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]"
-                + "+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$",  # noqa
+                + "+(\.[a-z0-9-]+)*(\.[a-z]{2,10})$",  # noqa
                 user,
             )
             if match is not None:
