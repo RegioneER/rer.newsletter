@@ -8,11 +8,13 @@
                     image_scale portal/@@image_scale">
       <metal:entry fill-slot="entry">
         <article class="tileItem">
+
             <div tal:define="thumb_url python:item_url + '/@@images/image/' + 'preview';"
-                 tal:condition="python: item_has_image"
+                 tal:condition="python: obj.preview_image"
                  tal:attributes="class python: 'tileImage' if item_description else 'tileImageNoFloat'">
               <a tal:attributes="href item_link">
-                <img tal:replace="structure python:image_scale.tag(item, 'image', scale='preview', css_class='thumb-' + 'preview')" />
+                <img tal:replace="structure python:image_scale.tag(item, fieldname='preview_image', scale='preview', css_class='thumb-' + 'preview')" />
+
 
               </a>
             </div>
