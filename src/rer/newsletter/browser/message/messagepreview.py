@@ -28,7 +28,7 @@ class MessagePreview(BrowserView):
         return self.getChannel().footer if self.getChannel().footer else u''
 
     def getMessageSubHeader(self):
-        return f'''
+        return f"""
             <tr>
                 <td align="left">
                     <div class="gmail-blend-screen">
@@ -37,42 +37,24 @@ class MessagePreview(BrowserView):
                     </div>
                     </div>
                     <div class="newsletterTitle">
-                    <h1>{self.getChannel().title}</h1>
+                    <h1>{self.context.title}</h1>
                     <h4 class="newsletterDate">{
-                        datetime.today().strftime('Newsletter %d %B %Y')
+                        datetime.today().strftime('Newsletter %d-%m-%Y')
                     }</h4>
                 </div>
 
                 </td>
             </tr>
-        '''
+        """
 
     def getMessageContent(self):
-        channel = self.getChannel()
-        if channel:
-            return f"""
-                <tr>
-                    <td align="left">
-                        <div class="gmail-blend-screen">
-                        <div class="gmail-blend-difference">
-                            <div class="divider"></div>
-                        </div>
-                        </div>
-                        <div class="newsletterTitle">
-                        <h1>{self.context.title}</h1>
-                        <h4 class="newsletterDate">{
-                            datetime.today().strftime('Newsletter %d %B %Y')
-                        }</h4>
-                    </div>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td align="left">
-                     {IShippable(self.context).message_content}
-                    </td>
-                </tr>
-            """
+        return f"""
+            <tr>
+                <td align="left">
+                    {IShippable(self.context).message_content}
+                </td>
+            </tr>
+        """
 
     def getMessagePreview(self):
         channel = None
