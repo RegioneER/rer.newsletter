@@ -83,23 +83,22 @@ class BaseAdapter(object):
             'message_header': self.context.header if self.context.header else u'',
             'message_subheader': f'''
                 <tr>
-                    <td align="left">
-
-                            <div class="divider"></div>
-
+                    <td class="divider" colspan="2"></td>
+                </tr>
+                <tr>
+                    <td align="left" colspan="2">
                         <div class="newsletterTitle">
-                        <h1>{self.context.title}</h1>
-                        <h4 class="newsletterDate">{
-                            self._getDate()
-                        }</h4>
-                    </div>
-
+                            <h1>{self.context.title}</h1>
+                            <h4 class="newsletterDate">{
+                                self._getDate()
+                            }</h4>
+                        </div>
                     </td>
                 </tr>''',
             'message_footer': self.context.footer if self.context.footer else u'',
             'message_content': f"""
                 <tr>
-                    <td align="left">
+                    <td align="left" colspan="2">
                     {content}
                     </td>
                 </tr>

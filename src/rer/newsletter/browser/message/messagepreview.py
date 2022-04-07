@@ -30,19 +30,16 @@ class MessagePreview(BrowserView):
     def getMessageSubHeader(self):
         return f"""
             <tr>
-                <td align="left">
-                    <div class="gmail-blend-screen">
-                    <div class="gmail-blend-difference">
-                        <div class="divider"></div>
-                    </div>
-                    </div>
+                <td class="divider" colspan="2"></td>
+            </tr>
+            <tr>
+                <td align="left" colspan="2">
                     <div class="newsletterTitle">
-                    <h1>{self.context.title}</h1>
-                    <h4 class="newsletterDate">{
-                        datetime.today().strftime('Newsletter %d-%m-%Y')
-                    }</h4>
-                </div>
-
+                        <h1>{self.context.title}</h1>
+                        <h4 class="newsletterDate">{
+                            datetime.today().strftime('Newsletter %d-%m-%Y')
+                        }</h4>
+                    </div>
                 </td>
             </tr>
         """
@@ -50,7 +47,7 @@ class MessagePreview(BrowserView):
     def getMessageContent(self):
         return f"""
             <tr>
-                <td align="left">
+                <td align="left" colspan="2">
                     {IShippable(self.context).message_content}
                 </td>
             </tr>
