@@ -34,12 +34,9 @@ class MessagePreview(BrowserView):
             </tr>
             <tr>
                 <td align="left" colspan="2">
-                    <div class="newsletterTitle">
-                        <h1>{self.context.title}</h1>
-                        <h4 class="newsletterDate">{
-                            datetime.today().strftime('Newsletter %d-%m-%Y')
-                        }</h4>
-                    </div>
+                  <div class="newsletterTitle">
+                    <h1>{self.context.title}</h1>
+                  </div>
                 </td>
             </tr>
         """
