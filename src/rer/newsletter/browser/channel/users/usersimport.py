@@ -13,6 +13,7 @@ from z3c.form import form
 from zope import schema
 from zope.component import getMultiAdapter
 from zope.interface import Interface
+
 import csv
 import re
 
@@ -76,7 +77,7 @@ class IUsersImport(Interface):
         description=_(
             u"description_separator", default=_(u"Separator of CSV file")
         ),
-        default=u";",
+        default=u",",
         required=True,
         constraint=check_separator,
     )
@@ -93,7 +94,10 @@ class UsersImport(form.Form):
     fields = field.Fields(IUsersImport)
 
     def processCSV(self, data, headerline, separator):
-        input_data = data.decode()
+        try:
+            input_data = data.decode()
+        except UnicodeDecodeError:
+            input_data = data.decode("utf-8")
         input_separator = separator.encode("ascii", "ignore").decode()
         if PY2:
             input_data = data
@@ -158,9 +162,21 @@ class UsersImport(form.Form):
 
         csv_file = data["userListFile"].data
         # esporto la lista di utenti dal file
-        usersList = self.processCSV(
-            csv_file, data["headerLine"], data["separator"]
-        )
+        try:
+            usersList = self.processCSV(
+                csv_file, data["headerLine"], data["separator"]
+            )
+        except IndexError:
+            api.portal.show_message(
+                message=_(
+                    "import_error_index",
+                    default=u"Error parsing CSV file. Probably it has a different separator.",
+                ),
+                request=self.request,
+                type=u"error",
+            )
+            return
+
         # controllo se devo eliminare l'intera lista di utenti
         # invece di importarla
         if data["removeSubscribers"] and not data["emptyList"]:

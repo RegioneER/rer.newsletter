@@ -5,7 +5,8 @@ Changelog
 1.1.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Improve error handling messages in massive user import.
+  [cekk]
 
 
 1.1.1 (2021-11-11)
