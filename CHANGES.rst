@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.1.2 (unreleased)
+1.1.2 (2022-05-12)
 ------------------
 
 - Improve error handling messages in massive user import.
