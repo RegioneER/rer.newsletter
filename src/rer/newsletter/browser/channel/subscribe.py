@@ -34,13 +34,6 @@ class ISubscribeForm(Interface):
         required=True,
     )
 
-    directives.widget(captcha=ReCaptchaFieldWidget)
-    captcha = schema.TextLine(
-        title=_(u"Captcha", default=u"Controllo di sicurezza"),
-        description=u"",
-        required=False,
-    )
-
 
 class SubscribeForm(AutoExtensibleForm, form.Form):
 
@@ -71,10 +64,6 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
         status = UNHANDLED
         data, errors = self.extractData()
 
-        # recaptcha
-        captcha = getMultiAdapter(
-            (aq_inner(self.context), self.request), name="recaptcha"
-        )
         if errors:
             self.status = self.formErrorsMessage
             if self.status:
@@ -84,17 +73,7 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
                     + "inserito."  # noqa
                 )
             return
-        if not captcha.verify():
-            api.portal.show_message(
-                message=_(
-                    u"message_wrong_captcha",
-                    default=u"Captcha non inserito correttamente.",
-                ),
-                request=self.request,
-                type=u"error",
-            )
-            return
-
+        
         email = data.get("email", "").lower()
 
         if self.context.is_subscribable:
