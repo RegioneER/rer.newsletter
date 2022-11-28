@@ -70,7 +70,7 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
                     + "inserito."  # noqa
                 )
             return
-        
+
         email = data.get("email", "").lower()
 
         if self.context.is_subscribable:
