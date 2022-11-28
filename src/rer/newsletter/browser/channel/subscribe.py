@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-from Acquisition import aq_inner
 from plone import api
 from plone import schema
-from plone.autoform import directives
 from plone.autoform.form import AutoExtensibleForm
-from plone.formwidget.recaptcha.widget import ReCaptchaFieldWidget
 from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -32,13 +29,6 @@ class ISubscribeForm(Interface):
             default=u"Mail for subscribe to a channel",
         ),
         required=True,
-    )
-
-    directives.widget(captcha=ReCaptchaFieldWidget)
-    captcha = schema.TextLine(
-        title=_(u"Captcha", default=u"Controllo di sicurezza"),
-        description=u"",
-        required=False,
     )
 
 
@@ -71,10 +61,6 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
         status = UNHANDLED
         data, errors = self.extractData()
 
-        # recaptcha
-        captcha = getMultiAdapter(
-            (aq_inner(self.context), self.request), name="recaptcha"
-        )
         if errors:
             self.status = self.formErrorsMessage
             if self.status:
@@ -83,16 +69,6 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
                     + "valido, oppure controllo di sicurezza non "  # noqa
                     + "inserito."  # noqa
                 )
-            return
-        if not captcha.verify():
-            api.portal.show_message(
-                message=_(
-                    u"message_wrong_captcha",
-                    default=u"Captcha non inserito correttamente.",
-                ),
-                request=self.request,
-                type=u"error",
-            )
             return
 
         email = data.get("email", "").lower()
