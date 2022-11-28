@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-from Acquisition import aq_inner
 from plone import api
 from plone import schema
-from plone.autoform import directives
 from plone.autoform.form import AutoExtensibleForm
-from plone.formwidget.recaptcha.widget import ReCaptchaFieldWidget
 from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
