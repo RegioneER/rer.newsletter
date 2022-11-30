@@ -97,6 +97,21 @@ a new role, ``Gestore Newsletter``, which has permissions for all possible
 operations on newsletter.
 
 
+Bot protection
+==============
+
+This product use `collective.honeypot <https://pypi.org/project/collective.honeypot/>`_ to prevent bot submissions.
+
+You just need to set two environment variables:
+
+- *EXTRA_PROTECTED_ACTIONS customer-satisfaction-add*
+- *HONEYPOT_FIELD xxx*
+
+xxx should be a field name that bot should compile.
+
+If you get hacked, you could simply change that variable.
+
+
 Subscriptions cleanup
 ----------------------
 
