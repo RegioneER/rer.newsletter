@@ -5,7 +5,8 @@ Changelog
 1.1.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Remove recaptha usage in the channel subscribe form, will be used honeypot instead.
+  [foxtrot-dfm1]
 
 
 1.1.2 (2022-05-12)
