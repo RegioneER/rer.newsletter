@@ -29,11 +29,6 @@ msgstr ""
 msgid "Adds shippable workflows to content type"
 msgstr ""
 
-#. Default: "Controllo di sicurezza"
-#: rer/newsletter/browser/channel/subscribe.py:39
-msgid "Captcha"
-msgstr ""
-
 #: rer/newsletter/profiles/default/types/Channel.xml
 msgid "Channel"
 msgstr ""
@@ -386,11 +381,6 @@ msgstr ""
 #. Default: "Message test"
 #: rer/newsletter/browser/message/templates/messageviewlet.pt:12
 msgid "message_test"
-msgstr ""
-
-#. Default: "Captcha non inserito correttamente."
-#: rer/newsletter/browser/channel/subscribe.py:89
-msgid "message_wrong_captcha"
 msgstr ""
 
 #. Default: "Informativa sulla privacy"

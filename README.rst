@@ -37,8 +37,7 @@ Portlet and Tile
 
 The product provide a portlet and a tile for user subscribe.
 
-Form for user subscribe have two fields: email and reCaptcha, so do not forget to
-set key for reCaptcha fields. See `plone.formwidget.recaptcha <https://github.com/plone/plone.formwidget.recaptcha>`_ for more details.
+Form for user subscribe have an email field and is protected for spam with `collective.honeypot <https://github.com/plone/collective.honeypot>`_.
 
 
 User Management

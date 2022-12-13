@@ -43,7 +43,7 @@ setup(
         "mailmanclient==3.1",
         "plone.api",
         "plone.app.tiles",
-        "plone.formwidget.recaptcha",
+        "collective.honeypot",
         "plone.restapi",
         "premailer==3.1.1",
         "Products.GenericSetup>=1.8.2",

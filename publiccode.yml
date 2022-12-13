@@ -56,9 +56,8 @@ description:
       Il prodotto fornisce un portlet e una tessera per l'utente che si iscrive.
 
 
-      Il form per l'iscrizione utente ha due campi: email e reCaptcha, quindi
-      non dimenticare di impostare la chiave per i campi reCaptcha. Vedi
-      plone.formwidget.recaptcha per maggiori dettagli.
+      Il form per l'iscrizione utente ha un campo email ed è protetto da eventuali spam con honeypot. Vedi
+      collective.honeypot per maggiori dettagli.
 
 
 
