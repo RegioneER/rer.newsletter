@@ -37,7 +37,7 @@ Portlet and Tile
 
 The product provide a portlet and a tile for user subscribe.
 
-Form for user subscribe have an email field and is protected for spam with `collective.honeypot <https://github.com/plone/collective.honeypot>`_.
+Form for user subscribe have an email field and is protected for spam with `collective.honeypot <https://github.com/plone/collective.honeypot>`__.
 
 
 User Management
@@ -77,7 +77,7 @@ To change this default activity, you can create a new Plone add-on that
 register a new adapter with a more specific layer (e.g. use the browser layer
 of the new add-on) and override the ``sendMessage`` method as you wish.
 
-`rer.newsletterplugin.flask <https://github.com/RegioneER/rer.newsletterplugin.flask>`_ is an example
+`rer.newsletterplugin.flask <https://github.com/RegioneER/rer.newsletterplugin.flask>`__ is an example
 of plugin with a custom sender. It uses an external Flask app to send emails.
 
 
@@ -99,7 +99,7 @@ operations on newsletter.
 Bot protection
 ==============
 
-This product use `collective.honeypot <https://pypi.org/project/collective.honeypot/>`_ to prevent bot submissions.
+This product use `collective.honeypot <https://pypi.org/project/collective.honeypot/>`__ to prevent bot submissions.
 
 You just need to set two environment variables:
 
