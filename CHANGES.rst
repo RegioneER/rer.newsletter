@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.1.3 (unreleased)
+1.2.0 (2023-01-25)
 ------------------
 
 - Remove recaptha usage in the channel subscribe form, will be used honeypot instead.
