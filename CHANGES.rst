@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.1.2 (unreleased)
+1.2.1 (unreleased)
 ------------------
 
 - added restapi services for Volto usage
@@ -13,6 +13,20 @@ Changelog
 - fix email validation when mailinglist are imported
 - using preview_image instead of lead image in newsletter shippable collection
 - Remove subtitle (h4) in nl template and preview
+
+1.2.0 (2023-01-25)
+------------------
+
+- Remove recaptha usage in the channel subscribe form, will be used honeypot instead.
+  [foxtrot-dfm1]
+
+
+1.1.2 (2022-05-12)
+------------------
+
+- Improve error handling messages in massive user import.
+  [cekk]
+
 
 1.1.1 (2021-11-11)
 ------------------

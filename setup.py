@@ -16,7 +16,7 @@ long_description = "\n\n".join(
 
 setup(
     name="rer.newsletter",
-    version="1.1.2.dev2",
+    version="1.2.1.dev0",
     description="An add-on for Plone",
     long_description=long_description,
     # Get more from https://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -43,7 +43,7 @@ setup(
         "mailmanclient==3.1",
         "plone.api",
         "plone.app.tiles",
-        "plone.formwidget.recaptcha",
+        "collective.honeypot",
         "plone.restapi",
         "premailer==3.1.1",
         "Products.GenericSetup>=1.8.2",

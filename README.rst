@@ -37,8 +37,7 @@ Portlet and Tile
 
 The product provide a portlet and a tile for user subscribe.
 
-Form for user subscribe have two fields: email and reCaptcha, so do not forget to
-set key for reCaptcha fields. See `plone.formwidget.recaptcha <https://github.com/plone/plone.formwidget.recaptcha>`_ for more details.
+Form for user subscribe have an email field and is protected for spam with `collective.honeypot <https://github.com/plone/collective.honeypot>`__.
 
 
 User Management
@@ -78,7 +77,7 @@ To change this default activity, you can create a new Plone add-on that
 register a new adapter with a more specific layer (e.g. use the browser layer
 of the new add-on) and override the ``sendMessage`` method as you wish.
 
-`rer.newsletterplugin.flask <https://github.com/RegioneER/rer.newsletterplugin.flask>`_ is an example
+`rer.newsletterplugin.flask <https://github.com/RegioneER/rer.newsletterplugin.flask>`__ is an example
 of plugin with a custom sender. It uses an external Flask app to send emails.
 
 
@@ -95,6 +94,21 @@ New permissions have been added for the management of the Newsletter:
 This permission are assigned to Manager and Site Administrator. There is also
 a new role, ``Gestore Newsletter``, which has permissions for all possible
 operations on newsletter.
+
+
+Bot protection
+==============
+
+This product use `collective.honeypot <https://pypi.org/project/collective.honeypot/>`__ to prevent bot submissions.
+
+You just need to set two environment variables:
+
+- *EXTRA_PROTECTED_ACTIONS customer-satisfaction-add*
+- *HONEYPOT_FIELD xxx*
+
+xxx should be a field name that bot should compile.
+
+If you get hacked, you could simply change that variable.
 
 
 Subscriptions cleanup
