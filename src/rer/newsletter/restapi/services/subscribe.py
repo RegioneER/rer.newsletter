@@ -18,56 +18,14 @@ import os
 import requests
 
 
-try:
-    from collective.recaptcha.settings import IRecaptchaSettings
-
-    HAS_COLLECTIVE_RECAPTCHA = True
-except ImportError:
-    HAS_COLLECTIVE_RECAPTCHA = False
-
-
 class NewsletterSubscribe(Service):
-
-    def get_secret_key(self):
-        if HAS_COLLECTIVE_RECAPTCHA:
-            return api.portal.get_registry_record(
-                "private_key", interface=IRecaptchaSettings
-            )
-
-        return os.environ.get("RECAPTCHA_PRIVATE_KEY", "")
-
-    def check_recaptcha(self, form_data):
-        if "g-recaptcha-response" not in form_data:
-            raise BadRequest("Campo obbligatorio mancante: Non sono un robot")
-        secret = self.get_secret_key()
-
-        if not secret:
-            logger.error(
-                "Missing Recaptcha private key. Set it into collective.recaptcha "
-                "control panel or in RECAPTCHA_PRIVATE_KEY env variable."
-            )
-            raise BadRequest("Chiave privata di Recaptcha non impostata.")
-        payload = {
-            "response": form_data["g-recaptcha-response"],
-            "secret": secret,
-        }
-        response = requests.post(
-            url="https://www.google.com/recaptcha/api/siteverify", data=payload
-        )
-        result = response.json()
-        if not result.get("success", False):
-            raise BadRequest("Validazione richiesta per il campo: Non sono un robot")
-        return True
 
     def getData(self, data):
         errors = []
         if not data.get("email", None):
             errors.append(u"invalid_email")
-        if not data.get("g-recaptcha-response", None):
-            errors.append(u"invalid_captcha")
         return {
             "email": data.get("email", None),
-            'g-recaptcha-response': data.get('g-recaptcha-response', None),
         }, errors
 
     def handleSubscribe(self, postData):
@@ -75,13 +33,6 @@ class NewsletterSubscribe(Service):
         data, errors = self.getData(postData)
 
         if errors:
-            return data, errors
-
-        self.request['g-recaptcha-response'] = data['g-recaptcha-response']
-
-        if not self.check_recaptcha(data):
-            errors.append(u"message_wrong_captcha")
-
             return data, errors
 
         email = data.get("email", "").lower()

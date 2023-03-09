@@ -7,8 +7,7 @@ Changelog
 
 - added restapi services for Volto usage
 - fixed results for unsubscribe service
-- converting to recaptcha v3 for volto use
-- italian translation 
+- italian translation
 - remove CSRFProtection when call services
 - fix email validation when mailinglist are imported
 - using preview_image instead of lead image in newsletter shippable collection
