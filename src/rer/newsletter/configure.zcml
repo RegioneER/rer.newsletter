@@ -7,9 +7,6 @@
 
   <i18n:registerTranslations directory="locales" />
 
-  <includeDependencies package="." />
-
-
   <permission
       id="rer.newsletter.ManageNewsletter"
       title="rer.newsletter: Manage Newsletter"
