@@ -93,7 +93,9 @@ class UnsubscribeForm(form.Form):
         url += "&_authenticator=" + token
         url += "&action=unsubscribe"
 
-        mail_template = self.context.restrictedTraverse("@@deleteuser_template")
+        mail_template = self.context.restrictedTraverse(
+            "@@deleteuser_template"
+        )
 
         parameters = {
             "header": self.context.header,

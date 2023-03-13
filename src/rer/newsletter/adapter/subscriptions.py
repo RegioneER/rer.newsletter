@@ -92,7 +92,9 @@ class BaseAdapter(object):
                 "email": mail,
                 "is_active": False,
                 "token": uuid_activation,
-                "creation_date": datetime.today().strftime("%d/%m/%Y %H:%M:%S"),
+                "creation_date": datetime.today().strftime(
+                    "%d/%m/%Y %H:%M:%S"
+                ),
             }
 
         return OK, uuid_activation
@@ -176,7 +178,9 @@ class BaseAdapter(object):
                 "email": mail,
                 "is_active": True,
                 "token": six.text_type(uuid.uuid4()),
-                "creation_date": datetime.today().strftime("%d/%m/%Y %H:%M:%S"),
+                "creation_date": datetime.today().strftime(
+                    "%d/%m/%Y %H:%M:%S"
+                ),
             }
 
         return OK

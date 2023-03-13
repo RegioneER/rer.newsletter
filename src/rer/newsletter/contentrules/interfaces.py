@@ -22,7 +22,9 @@ class Notify(Interface):
 
     dest_addr = schema.TextLine(
         title=_("Receiver email"),
-        description=_("The address where you want to send the e-mail message."),
+        description=_(
+            "The address where you want to send the e-mail message."
+        ),
         required=True,
     )
 

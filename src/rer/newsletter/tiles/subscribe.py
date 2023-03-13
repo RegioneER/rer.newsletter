@@ -22,7 +22,9 @@ class SubscribeTile(Tile):
 
     def is_subscribable(self):
         if self.data.get("newsletter", None):
-            if api.content.get(UID=self.data.get("newsletter")).is_subscribable:
+            if api.content.get(
+                UID=self.data.get("newsletter")
+            ).is_subscribable:
                 return True
 
         elif (

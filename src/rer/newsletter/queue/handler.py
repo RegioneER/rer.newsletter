@@ -14,7 +14,8 @@ class TCMessageQueue(object):
     def start(self, context):
         """Queues message for sendout through collective.taskqueue"""
         jobid = taskqueue.add(
-            "/".join(context.getPhysicalPath() + (VIEW_NAME,)), queue=QUEUE_NAME
+            "/".join(context.getPhysicalPath() + (VIEW_NAME,)),
+            queue=QUEUE_NAME,
         )
         if jobid:
             logger.info("Processo in coda: " + str(jobid))

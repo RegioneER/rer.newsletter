@@ -36,7 +36,9 @@ class TestSetup(unittest.TestCase):
             )
         else:
             # Plone 5
-            self.assertTrue(self.installer.isProductInstalled("rer.newsletter"))
+            self.assertTrue(
+                self.installer.isProductInstalled("rer.newsletter")
+            )
 
     def test_browserlayer(self):
         """Test that IRerNewsletterLayer is registered."""

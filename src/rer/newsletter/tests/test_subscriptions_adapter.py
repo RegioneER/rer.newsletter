@@ -217,7 +217,9 @@ class TestSubscriptionsAdapter(unittest.TestCase):
         self.assertEqual(
             len(self.subscribers_adapter.channel_subscriptions.keys()), 0
         )
-        self.subscribers_adapter.importUsersList(["foo@foo.com", "bar@bar.com"])
+        self.subscribers_adapter.importUsersList(
+            ["foo@foo.com", "bar@bar.com"]
+        )
         self.assertEqual(
             len(self.subscribers_adapter.channel_subscriptions.keys()), 2
         )
