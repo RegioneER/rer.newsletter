@@ -8,9 +8,7 @@ from zope.interface import Interface
 
 
 class IMessageQueue(Interface):
-    """ Queues message into a queue
-    """
+    """Queues message into a queue"""
 
     def start(message):
-        """Queues an IMessage for sendout
-        """
+        """Queues an IMessage for sendout"""

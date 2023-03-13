@@ -7,7 +7,7 @@ from zope.annotation.interfaces import IAnnotations
 import json
 
 
-KEY = 'rer.newsletter.channel.history'
+KEY = "rer.newsletter.channel.history"
 
 
 class ChannelHistory(BrowserView):
@@ -15,21 +15,18 @@ class ChannelHistory(BrowserView):
         self.context = context
         self.request = request
 
-        add_bundle_on_request(self.request, 'message_datatables')
+        add_bundle_on_request(self.request, "message_datatables")
 
     def getMessageSentDetails(self):
-
         annotations = IAnnotations(self.context)
         history = [x.data for x in annotations.get(KEY, [])]
         return json.dumps(history[::-1])
 
     def deleteMessageFromHistory(self):
-        message_history = self.request.get('message_history')
+        message_history = self.request.get("message_history")
 
         # recupero tutti i messaggi del canale
-        messages = api.content.find(
-            context=self.context, portal_type='Message'
-        )
+        messages = api.content.find(context=self.context, portal_type="Message")
         for message in messages:
             obj = message.getObject()
             annotations = IAnnotations(obj)
@@ -40,5 +37,5 @@ class ChannelHistory(BrowserView):
                         del annotations[k]
                         break
         response = {}
-        response['ok'] = True
+        response["ok"] = True
         return json.dumps(response)

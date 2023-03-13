@@ -19,11 +19,13 @@ def getDefaultChannel(context):
 
 class IPortletTileSchema(Interface):
     header = schema.TextLine(
-        title=_(u'title_portlet_header', default=u'Header'),
-        description=_(u'description_portlet_header',
-                      default=u'Title of the rendered portlet'),
-        constraint=re.compile('[^\s]').match,
-        required=False)
+        title=_("title_portlet_header", default="Header"),
+        description=_(
+            "description_portlet_header", default="Title of the rendered portlet"
+        ),
+        constraint=re.compile("[^\\s]").match,
+        required=False,
+    )
 
     # link_to_archive = schema.ASCIILine(
     #     title=_(u'title_portlet_link', default=u'Details link'),
@@ -34,17 +36,17 @@ class IPortletTileSchema(Interface):
     #     required=False)
 
     css_class = schema.TextLine(
-        title=_(u'title_css_portlet_class', default=u'Portlet class'),
-        description=_(u'description_css_portlet_class',
-                      default=u'CSS class to add at the portlet'),
-        required=False
+        title=_("title_css_portlet_class", default="Portlet class"),
+        description=_(
+            "description_css_portlet_class", default="CSS class to add at the portlet"
+        ),
+        required=False,
     )
 
     newsletter = schema.Choice(
-        title=_(u'title_newsletter', default=u'Newsletter'),
-        description=_(u'description_newsletter',
-                      default=u'Newsletters'),
-        vocabulary='rer.newsletter.subscribablenewsletter.vocabulary',
+        title=_("title_newsletter", default="Newsletter"),
+        description=_("description_newsletter", default="Newsletters"),
+        vocabulary="rer.newsletter.subscribablenewsletter.vocabulary",
         defaultFactory=getDefaultChannel,
-        required=False
+        required=False,
     )

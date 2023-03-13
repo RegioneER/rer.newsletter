@@ -4,7 +4,6 @@ from plone.app.contenttypes.browser.collection import CollectionView as View
 
 
 class CollectionView(View):
-
     def item_has_image(self, item):
         obj = aq_base(item)
         if obj.image:

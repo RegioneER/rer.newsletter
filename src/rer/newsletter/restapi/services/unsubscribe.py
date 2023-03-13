@@ -1,37 +1,34 @@
 # -*- coding: utf-8 -*-
-from plone.restapi.deserializer import json_body
 from plone import api
+from plone.protect import interfaces
 from plone.protect.authenticator import createToken
+from plone.restapi.deserializer import json_body
 from plone.restapi.services import Service
-from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
-from rer.newsletter.utils import compose_sender, get_site_title, OK, UNHANDLED
+from rer.newsletter.utils import compose_sender
+from rer.newsletter.utils import get_site_title
+from rer.newsletter.utils import OK
+from rer.newsletter.utils import UNHANDLED
 from six import PY2
 from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
-from plone.protect import interfaces
-
-import logging
-
-logger = logging.getLogger(__name__)
 
 
 class NewsletterUnsubscribe(Service):
-
     def reply(self):
         data = json_body(self.request)
         if "IDisableCSRFProtection" in dir(interfaces):
             alsoProvides(self.request, interfaces.IDisableCSRFProtection)
         response, errors = self.handleUnsubscribe(data)
         if errors:
-            response['errors'] = errors
+            response["errors"] = errors
         return response
 
     def getData(self, data):
         errors = []
         if not data.get("email", None):
-            errors.append(u"Indirizzo email non inserito o non valido")
+            errors.append("Indirizzo email non inserito o non valido")
         return {
             "email": data.get("email", None),
         }, errors
@@ -44,23 +41,19 @@ class NewsletterUnsubscribe(Service):
 
         email = data.get("email", None)
 
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
 
         status, secret = channel.unsubscribe(email)
 
         if status != OK:
             logger.exception("Error: {}".format(status))
             if status == 4:
-                msg = u"unsubscribe_inexistent_mail"
+                msg = "unsubscribe_inexistent_mail"
 
             else:
-                msg = u"unsubscribe_generic"
+                msg = "unsubscribe_generic"
             errors = msg
-            return {
-                '@id': self.request.get("URL")
-            }, errors
+            return {"@id": self.request.get("URL")}, errors
 
         # creo il token CSRF
         token = createToken()
@@ -71,9 +64,7 @@ class NewsletterUnsubscribe(Service):
         url += "&_authenticator=" + token
         url += "&action=unsubscribe"
 
-        mail_template = self.context.restrictedTraverse(
-            "@@deleteuser_template"
-        )
+        mail_template = self.context.restrictedTraverse("@@deleteuser_template")
 
         parameters = {
             "header": self.context.header,
@@ -107,7 +98,7 @@ class NewsletterUnsubscribe(Service):
         )
 
         return {
-            '@id': self.request.get("URL"),
-            'status':  u"user_unsubscribe_success" if not errors else u'error',
-            'errors': errors if errors else None,
+            "@id": self.request.get("URL"),
+            "status": "user_unsubscribe_success" if not errors else "error",
+            "errors": errors if errors else None,
         }, errors

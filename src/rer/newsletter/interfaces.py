@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
+from collective.volto.blocksfield.field import BlocksField
 from plone import schema
 from plone.app.contenttypes.interfaces import ICollection
-from plone.app.textfield import RichText as RichTextField
-from plone.app.z3cform.widget import RichTextFieldWidget
-from plone.autoform import directives as form
 from plone.supermodel import model
 from rer.newsletter import _
 from zope.interface import Interface
-from collective.volto.blocksfield.field import BlocksField
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
-import uuid
 import six
+import uuid
 
 
 def default_id_channel():
@@ -34,81 +31,88 @@ class IChannelSchema(model.Schema):
     """a dexterity schema for channel of newsletter"""
 
     sender_name = schema.TextLine(
-        title=_(u'sender_name', default=u'Sender Fullname'),
-        description=_(u'description_sender_name',
-                      default=u'Fullname of sender'),
+        title=_("sender_name", default="Sender Fullname"),
+        description=_("description_sender_name", default="Fullname of sender"),
         required=False,
     )
 
     sender_email = schema.Email(
-        title=_(u'sender_email', default=u'Sender email'),
-        description=_(u'description_sender_email',
-                      default=u'Email of sender'),
+        title=_("sender_email", default="Sender email"),
+        description=_("description_sender_email", default="Email of sender"),
         required=True,
     )
 
     subject_email = schema.TextLine(
-        title=_(u'subject_email', default=u'Subject email'),
-        description=_(u'description_subject_mail',
-                      default=u'Subject for channel message'),
-        required=False
+        title=_("subject_email", default="Subject email"),
+        description=_(
+            "description_subject_mail", default="Subject for channel message"
+        ),
+        required=False,
     )
 
     response_email = schema.Email(
-        title=_(u'response_email', default=u'Response email'),
-        description=_(u'description_response_email',
-                      default=u'Response email of channel'),
+        title=_("response_email", default="Response email"),
+        description=_(
+            "description_response_email", default="Response email of channel"
+        ),
         required=False,
     )
 
     privacy = BlocksField(
-        title=_(u'privacy_channel', default=u'Informativa sulla privacy'),
-        description=_(u'description_privacy_channel',
-                      default=u'Informativa sulla privacy per questo canale'),
+        title=_("privacy_channel", default="Informativa sulla privacy"),
+        description=_(
+            "description_privacy_channel",
+            default="Informativa sulla privacy per questo canale",
+        ),
         required=True,
     )
 
     header = schema.Text(
-        title=_(u'header_channel', default=u'Header of message'),
-        description=_(u'description_header_channel',
-                      default=u'Header for message of this channel'),
+        title=_("header_channel", default="Header of message"),
+        description=_(
+            "description_header_channel", default="Header for message of this channel"
+        ),
         required=False,
-        default=u""
+        default="",
     )
 
     footer = schema.Text(
-        title=_(u'footer_channel', default=u'Footer of message'),
-        description=_(u'description_footer_channel',
-                      default=u'Footer for message of this channel'),
+        title=_("footer_channel", default="Footer of message"),
+        description=_(
+            "description_footer_channel", default="Footer for message of this channel"
+        ),
         required=False,
-        default=u""
+        default="",
     )
 
     css_style = schema.Text(
-        title=_(u'css_style', default=u'CSS Style'),
-        description=_(u'description_css_style', default=u'style for mail'),
+        title=_("css_style", default="CSS Style"),
+        description=_("description_css_style", default="style for mail"),
         required=False,
-        default=u'',
+        default="",
     )
 
     # probabilemente un campo che va nascosto
     id_channel = schema.TextLine(
-        title=_(u'idChannel', default=u'Channel ID'),
-        description=_(u'description_IDChannel', default=u'Channel ID'),
+        title=_("idChannel", default="Channel ID"),
+        description=_("description_IDChannel", default="Channel ID"),
         required=True,
         defaultFactory=default_id_channel,
     )
 
     is_subscribable = schema.Bool(
-        title=_(u'is_subscribable', default=u'Is Subscribable'),
+        title=_("is_subscribable", default="Is Subscribable"),
         default=False,
-        required=False
+        required=False,
     )
     standard_unsubscribe = schema.Bool(
-        title=_(u'standard_unsubscribe', default=u'Standard unsubscribe link'),
-        description=_(u'descriptin_standard_unsubscribe', default=u'Usa il link standard per l\'unsubscribe'),
+        title=_("standard_unsubscribe", default="Standard unsubscribe link"),
+        description=_(
+            "descriptin_standard_unsubscribe",
+            default="Usa il link standard per l'unsubscribe",
+        ),
         default=True,
-        required=False
+        required=False,
     )
 
 

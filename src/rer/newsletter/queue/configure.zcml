@@ -1,16 +1,17 @@
 <configure
-    i18n_domain="rer.newsletter"
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:zcml="http://namespaces.zope.org/zcml">
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="rer.newsletter"
+    >
 
   <utility factory=".handler.TCMessageQueue" />
 
   <browser:page
-      class=".view.ProcessQueue"
-      for="rer.newsletter.interfaces.IMessage"
-      layer="collective.taskqueue.interfaces.ITaskQueueLayer"
       name="message_sendout"
+      for="rer.newsletter.interfaces.IMessage"
+      class=".view.ProcessQueue"
       permission="zope2.View"
-  />
+      layer="collective.taskqueue.interfaces.ITaskQueueLayer"
+      />
 </configure>

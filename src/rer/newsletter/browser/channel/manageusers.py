@@ -12,6 +12,7 @@ from zope.interface import Interface
 import csv
 import json
 
+
 try:
     from StringIO import StringIO
 except ImportError:
@@ -36,9 +37,7 @@ class ManageUsers(BrowserView):
 
         email = self.request["email"]
 
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
         status = channel.deleteUser(email)
 
         response = {}
@@ -55,13 +54,10 @@ class ManageUsers(BrowserView):
         return json.dumps(response)
 
     def exportUsersListAsFile(self):
-
         status = UNHANDLED
         channel = self.context.id_channel
 
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
         userList, status = channel.exportUsersList()
 
         if status == OK:
@@ -94,13 +90,10 @@ class ManageUsers(BrowserView):
             )
 
     def exportUsersListAsJson(self):
-
         status = UNHANDLED
         channel = self.context.id_channel
 
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
         userList, status = channel.exportUsersList()
 
         if status == OK:

@@ -7,17 +7,16 @@ from persistent.list import PersistentList
 from plone import api
 from rer.newsletter import logger
 from rer.newsletter.behaviors.ships import IShippable
+from rer.newsletter.utils import get_site_title
 from rer.newsletter.utils import OK
 from rer.newsletter.utils import SEND_UID_NOT_FOUND
 from rer.newsletter.utils import UNHANDLED
-from rer.newsletter.utils import get_site_title
 from smtplib import SMTPRecipientsRefused
+from transaction import commit
 from zope.annotation.interfaces import IAnnotations
 from zope.interface import implementer
 from zope.interface import Interface
 
-from transaction import commit
-import locale
 
 SUBSCRIBERS_KEY = "rer.newsletter.subscribers"
 HISTORY_KEY = "rer.newsletter.channel.history"
@@ -29,8 +28,7 @@ class IChannelSender(Interface):
 
 @implementer(IChannelSender)
 class BaseAdapter(object):
-    """ Adapter standard di base, invio sincrono usando plone
-    """
+    """Adapter standard di base, invio sincrono usando plone"""
 
     def __init__(self, context, request):
         self.context = context
@@ -71,17 +69,16 @@ class BaseAdapter(object):
         #         locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
         #     except Exception:
         #         locale.setlocale(locale.LC_ALL, 'it_IT')
-        return datetime.today().strftime('Newsletter %d-%m-%Y')
-
+        return datetime.today().strftime("Newsletter %d-%m-%Y")
 
     def _getMessage(self, message, footer):
         logger.debug("getMessage %s %s", self.context.title, message.title)
         content = IShippable(message).message_content
         message_template = self.context.restrictedTraverse("@@messagepreview_view")
         parameters = {
-            'css': self.context.css_style,
-            'message_header': self.context.header if self.context.header else u'',
-            'message_subheader': f'''
+            "css": self.context.css_style,
+            "message_header": self.context.header if self.context.header else "",
+            "message_subheader": f"""
                 <tr>
                     <td class="divider" colspan="2"></td>
                 </tr>
@@ -91,16 +88,16 @@ class BaseAdapter(object):
                         <h1>{self.context.title}</h1>
                       </div>
                     </td>
-                </tr>''',
-            'message_footer': self.context.footer if self.context.footer else u'',
-            'message_content': f"""
+                </tr>""",
+            "message_footer": self.context.footer if self.context.footer else "",
+            "message_content": f"""
                 <tr>
                     <td align="left" colspan="2">
                     {content}
                     </td>
                 </tr>
             """,
-            'message_unsubscribe_default': footer,
+            "message_unsubscribe_default": footer,
         }
 
         body = message_template(**parameters)
@@ -142,9 +139,7 @@ class BaseAdapter(object):
         send_info = [x for x in details if x["uid"] == send_uid]
         if not send_info:
             return SEND_UID_NOT_FOUND
-        send_info[0]["send_date_end"] = datetime.today().strftime(
-            "%d/%m/%Y %H:%M:%S"
-        )
+        send_info[0]["send_date_end"] = datetime.today().strftime("%d/%m/%Y %H:%M:%S")
         send_info[0]["completed"] = completed
         send_info[0]["running"] = False
         return OK
@@ -163,16 +158,13 @@ class BaseAdapter(object):
         return self._getMessage(message=message, footer=footer)
 
     def sendMessage(self, message):
-        """ This is the primary method to send emails for the channel.
-        """
+        """This is the primary method to send emails for the channel."""
         logger.debug("sendMessage %s %s", self.context.title, message.title)
 
         subscribers = self.get_annotations_for_channel(key=SUBSCRIBERS_KEY)
 
         nl_subject = (
-            " - " + self.context.subject_email
-            if self.context.subject_email
-            else u""
+            " - " + self.context.subject_email if self.context.subject_email else ""
         )
         sender = (
             self.context.sender_name
@@ -216,14 +208,12 @@ class BaseAdapter(object):
         return OK
 
     def addToHistory(self, message):
-        """ Add to history that message is sent """
+        """Add to history that message is sent"""
 
-        list_history = [
-            x for x in message.workflow_history.get("message_workflow")
-        ]
+        list_history = [x for x in message.workflow_history.get("message_workflow")]
         current = api.user.get_current()
         entry = dict(
-            action=u"Invio",
+            action="Invio",
             review_state=api.content.get_state(obj=message),
             actor=current.getId(),
             comments="Inviato il messaggio a {} utenti.".format(

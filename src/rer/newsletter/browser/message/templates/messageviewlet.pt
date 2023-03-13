@@ -1,32 +1,53 @@
-<div id="manage-message" i18n:domain="rer.newsletter">
+<div id="manage-message"
+     i18n:domain="rer.newsletter"
+>
   <div style="margin-bottom: 2%;">
     <span id="message-preview">
-      <a class="plone-btn plone-btn-primary" href=""
-         tal:attributes="href string:${context/absolute_url}/@@messagepreview_view"
+      <a class="plone-btn plone-btn-primary"
+         href=""
          tal:condition="view/canManageNewsletter"
-         i18n:translate="message_preview">
+         tal:attributes="
+           href string:${context/absolute_url}/@@messagepreview_view;
+         "
+         i18n:translate="message_preview"
+      >
           Message Preview
       </a>
     </span>
     <span id="message-test">
-      <a class="plone-btn plone-btn-primary" href=""
-         tal:attributes="href string:${context/absolute_url}/@@sendingtest_view"
+      <a class="plone-btn plone-btn-primary"
+         href=""
          tal:condition="view/canManageNewsletter"
-         i18n:translate="message_test">
+         tal:attributes="
+           href string:${context/absolute_url}/@@sendingtest_view;
+         "
+         i18n:translate="message_test"
+      >
           Message test
       </a>
     </span>
     <span id="message-preview"
+          tal:define="
+            already_sent view/messageAlreadySent;
+          "
           tal:condition="view/canSendMessage"
-          tal:define="already_sent view/messageAlreadySent">
-      <a class="plone-btn plone-btn-primary" href=""
-         tal:attributes="href string:${context/absolute_url}/@@send_message_view"
+    >
+      <a class="plone-btn plone-btn-primary"
+         href=""
          tal:condition="not: already_sent"
-         i18n:translate="send_message_confirm">Send Message</a>
-       <a class="plone-btn plone-btn-primary" href=""
-          tal:attributes="href string:${context/absolute_url}/@@send_message_view"
-          tal:condition="already_sent"
-          i18n:translate="resend_message_confirm">Re-send Message</a>
+         tal:attributes="
+           href string:${context/absolute_url}/@@send_message_view;
+         "
+         i18n:translate="send_message_confirm"
+      >Send Message</a>
+      <a class="plone-btn plone-btn-primary"
+         href=""
+         tal:condition="already_sent"
+         tal:attributes="
+           href string:${context/absolute_url}/@@send_message_view;
+         "
+         i18n:translate="resend_message_confirm"
+      >Re-send Message</a>
     </span>
   </div>
 </div>

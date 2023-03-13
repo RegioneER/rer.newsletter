@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from Products.Five import BrowserView
 from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.content.channel import Channel
-from datetime import datetime
 
 
 class MessagePreview(BrowserView):
-    """ view for message preview """
+    """view for message preview"""
 
     def getMessageStyle(self):
         for obj in self.context.aq_chain:
@@ -22,10 +22,10 @@ class MessagePreview(BrowserView):
         return channel
 
     def getMessageHeader(self):
-        return self.getChannel().header if self.getChannel().header else u''
+        return self.getChannel().header if self.getChannel().header else ""
 
     def getMessageFooter(self):
-        return self.getChannel().footer if self.getChannel().footer else u''
+        return self.getChannel().footer if self.getChannel().footer else ""
 
     def getMessageSubHeader(self):
         return f"""
@@ -57,8 +57,8 @@ class MessagePreview(BrowserView):
                 channel = obj
                 break
         if channel:
-            body = u''
-            body = channel.header if channel.header else u''
+            body = ""
+            body = channel.header if channel.header else ""
             body += f"""
 
                 <tr>
@@ -84,6 +84,6 @@ class MessagePreview(BrowserView):
                 </tr>
 
             """
-            body += channel.footer if channel.footer else u''
+            body += channel.footer if channel.footer else ""
 
         return body

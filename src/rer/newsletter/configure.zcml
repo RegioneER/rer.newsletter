@@ -1,9 +1,10 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:i18n="http://namespaces.zope.org/i18n"
-    i18n_domain="rer.newsletter">
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="rer.newsletter"
+    >
 
   <i18n:registerTranslations directory="locales" />
 
@@ -40,26 +41,26 @@
   <genericsetup:registerProfile
       name="default"
       title="rer.newsletter"
-      directory="profiles/default"
       description="Installs the rer.newsletter add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/default"
       post_handler=".setuphandlers.post_install"
       />
 
   <genericsetup:registerProfile
       name="uninstall"
       title="rer.newsletter (uninstall)"
-      directory="profiles/uninstall"
       description="Uninstalls the rer.newsletter add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/uninstall"
       post_handler=".setuphandlers.uninstall"
       />
 
   <!-- registro l'utility per la coda dei messaggi -->
   <utility
-      zcml:condition="installed collective.taskqueue"
-      provides=".queue.interfaces.IMessageQueue"
       factory=".queue.handler.TCMessageQueue"
+      provides=".queue.interfaces.IMessageQueue"
+      zcml:condition="installed collective.taskqueue"
       />
 
   <utility
@@ -68,8 +69,8 @@
       />
 
   <utility
-    name="rer.newsletter.subscribablenewsletter.vocabulary"
-    component=".vocabularies.SubscribableNewsletterVocabulary"
-    />
+      name="rer.newsletter.subscribablenewsletter.vocabulary"
+      component=".vocabularies.SubscribableNewsletterVocabulary"
+      />
 
 </configure>

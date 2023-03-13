@@ -1,22 +1,23 @@
-<tal:root define="title python:options['title'];
-                  portal_name python:options['portal_name'];
-                  activationUrl python:options['activationUrl'];
-                  header python:options['header'] if options['header'] else '';
-                  footer python:options['footer'] if options['footer'] else '';
-                  style python:options['style']"
->
-<span tal:replace="structure header" />
-<style tal:content="style" ></style>
-<br />
-<p class="message_core">
-  Per confermare la tua richiesta di iscrizione a Newsletter ${title}, è necessario collegarsi entro 48 ore al seguente link:
+<tal:root define="
+            title python:options['title'];
+            portal_name python:options['portal_name'];
+            activationUrl python:options['activationUrl'];
+            header python:options['header'] if options['header'] else '';
+            footer python:options['footer'] if options['footer'] else '';
+            style python:options['style'];
+          ">
+  <span tal:replace="structure header"></span>
+  <style tal:content="style"></style>
   <br />
-  <a href="${activationUrl}">${activationUrl}</a>
-  <br />
+  <p class="message_core">
+  Per confermare la tua richiesta di iscrizione a Newsletter ${title}, &egrave; necessario collegarsi entro 48 ore al seguente link:
+    <br />
+    <a href="${activationUrl}">${activationUrl}</a>
+    <br />
   Cordiali saluti
-  <br />
+    <br />
   Redazione del portale ${portal_name}
-</p>
-<br />
-<span tal:replace="structure footer" />
+  </p>
+  <br />
+  <span tal:replace="structure footer"></span>
 </tal:root>

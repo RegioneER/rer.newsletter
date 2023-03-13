@@ -1,41 +1,56 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
       lang="en"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="rer.newsletter">
+      xml:lang="en"
+      i18n:domain="rer.newsletter"
+>
 
-        <body>
-          <metal:main fill-slot="main">
-            <metal:main-macro define-macro="main">
+  <body>
+    <metal:main fill-slot="main">
+      <metal:main-macro define-macro="main">
 
-              <div id="content">
-                <button class="button-plone-modal-close plone-btn" type="button" title="chiudi">Chiudi</button>
+        <div id="content">
+          <button class="button-plone-modal-close plone-btn"
+                  title="chiudi"
+                  type="button"
+          >Chiudi</button>
 
-                <div class="content_container">
-                  <div class="informativa"
-                       tal:define="privacy view/form_instance/getChannelPrivacyPolicy"
-                       tal:condition="privacy"
-                       tal:content="structure privacy"></div>
-                  <div id="content-core" class="subscription_form"
-                       tal:content="structure view/contents"
-                       tal:condition="view/form_instance/isVisible"
-                       data-abs=""
-                       tal:attributes="data-abs python:context.absolute_url();" />
-                </div>
+          <div class="content_container">
+            <div class="informativa"
+                 tal:define="
+                   privacy view/form_instance/getChannelPrivacyPolicy;
+                 "
+                 tal:condition="privacy"
+                 tal:content="structure privacy"
+            ></div>
+            <div class="subscription_form"
+                 id="content-core"
+                 data-abs
+                 tal:condition="view/form_instance/isVisible"
+                 tal:content="structure view/contents"
+                 tal:attributes="
+                   data-abs python:context.absolute_url();
+                 "
+            ></div>
+          </div>
 
-                 <a href=""
-                    style="display: none;"
-                    class="redirect"
-                    title="disiscrizione"
-                    tal:attributes="href python:context.absolute_url();">
+          <a class="redirect"
+             href=""
+             style="display: none;"
+             title="disiscrizione"
+             tal:attributes="
+               href python:context.absolute_url();
+             "
+          >
                     Clicca questo link per cancellarti dalla newsletter
-                 </a>
-              </div>
+          </a>
+        </div>
 
-            </metal:main-macro>
-          </metal:main>
-        </body>
+      </metal:main-macro>
+    </metal:main>
+  </body>
 
 </html>

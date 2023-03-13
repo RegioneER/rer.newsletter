@@ -2,10 +2,14 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:plone="http://namespaces.plone.org/plone"
-    i18n_domain="rer.newsletter">
+    i18n_domain="rer.newsletter"
+    >
 
   <!-- Set overrides folder for Just-a-Bunch-Of-Templates product -->
-  <include package="z3c.jbot" file="meta.zcml" />
+  <include
+      package="z3c.jbot"
+      file="meta.zcml"
+      />
   <include package=".channel" />
   <include package=".message" />
 
@@ -16,16 +20,16 @@
 
   <!-- Publish static files -->
   <plone:static
+      directory="static"
       name="rer.newsletter"
       type="plone"
-      directory="static"
       />
 
   <browser:page
-      for="Products.CMFCore.interfaces.ISiteRoot"
       name="channel-settings"
-      permission="cmf.ManagePortal"
+      for="Products.CMFCore.interfaces.ISiteRoot"
       class=".settings.ChannelSettings"
+      permission="cmf.ManagePortal"
       layer="rer.newsletter.interfaces.IRerNewsletterLayer"
       />
 

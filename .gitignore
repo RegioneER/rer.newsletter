@@ -28,6 +28,7 @@ log.html
 output.xml
 pip-selfcheck.json
 report.html
+Pipfile*
 # excludes
 !.coveragerc
 !.editorconfig

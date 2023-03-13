@@ -1,37 +1,25 @@
 # -*- coding: utf-8 -*-
 from plone import api
-from rer.newsletter import _
+from plone.protect import interfaces
+from plone.restapi.deserializer import json_body
+from plone.restapi.services import Service
+from rer.newsletter import logger
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.contentrules.events import SubscriptionEvent
 from rer.newsletter.contentrules.events import UnsubscriptionEvent
-from rer.newsletter.utils import INVALID_SECRET, OK, INEXISTENT_EMAIL
 from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
+from rer.newsletter.utils import INEXISTENT_EMAIL
+from rer.newsletter.utils import INVALID_SECRET
+from rer.newsletter.utils import OK
 from zope.component import getMultiAdapter
 from zope.event import notify
-from plone import api
-from plone.restapi.deserializer import json_body
-from plone.restapi.services import Service
-from rer.newsletter import _
-from rer.newsletter import logger
-from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
-from six import PY2
-from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
-from plone.protect import interfaces
-
-import logging
-
-
-logger = logging.getLogger(__name__)
 
 
 class NewsletterConfirmSubscription(Service):
-
     def _sendGenericMessage(self, template, receiver, message, message_title):
-        mail_template = self.context.restrictedTraverse(
-            "@@{0}".format(template)
-        )
+        mail_template = self.context.restrictedTraverse("@@{0}".format(template))
 
         parameters = {
             "header": self.context.header,
@@ -69,12 +57,10 @@ class NewsletterConfirmSubscription(Service):
         action = data.get("action")
         errors = []
         response = None
-        status = u'error'
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        status = "error"
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
 
-        if action == u"subscribe":
+        if action == "subscribe":
             response, user = channel.activateUser(secret=secret)
             # mandare mail di avvenuta conferma
             if response == OK:
@@ -85,22 +71,22 @@ class NewsletterConfirmSubscription(Service):
                     message="Messaggio di avvenuta iscrizione",
                     message_title="Iscrizione confermata",
                 )
-                status = u"generic_activate_message_success"
+                status = "generic_activate_message_success"
 
-        elif action == u"unsubscribe":
+        elif action == "unsubscribe":
             response, mail = channel.deleteUserWithSecret(secret=secret)
             if response == OK:
                 notify(UnsubscriptionEvent(self.context, mail))
-                status = u"generic_delete_message_success"
+                status = "generic_delete_message_success"
 
         if response != OK:
             # TODO: gestione corretta dei vari errori per informare il frontend
             if response == INVALID_SECRET:
-                errors.append(u"user_secret_not_found")
+                errors.append("user_secret_not_found")
             elif response == INEXISTENT_EMAIL:
-                errors.append(u"user_not_found")
+                errors.append("user_not_found")
             else:
-                errors.append(u"unable_to_unsubscribe")
+                errors.append("unable_to_unsubscribe")
 
             logger.info(
                 'Unable to unsubscribe user with token "{token}" on channel {channel}.'.format(  # noqa
@@ -110,6 +96,6 @@ class NewsletterConfirmSubscription(Service):
 
         return {
             "@id": self.request.get("URL"),
-            "status": status if not errors else u'error',
+            "status": status if not errors else "error",
             "errors": errors if errors else None,
         }

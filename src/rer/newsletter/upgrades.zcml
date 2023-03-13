@@ -1,42 +1,43 @@
 <configure
-  xmlns="http://namespaces.zope.org/zope"
-  xmlns:genericsetup="http://namespaces.zope.org/genericsetup">
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    >
 
   <!-- -*- extra stuff goes here -*- -->
   <genericsetup:upgradeStep
-    source="1000"
-    destination="1001"
-    title="Upgrade rer.newsletter to 1001"
-    description=""
-    profile="rer.newsletter:default"
-    handler=".upgrades.migrate_to_1001"
-    />
+      title="Upgrade rer.newsletter to 1001"
+      description=""
+      profile="rer.newsletter:default"
+      source="1000"
+      destination="1001"
+      handler=".upgrades.migrate_to_1001"
+      />
 
   <genericsetup:upgradeStep
-    source="1001"
-    destination="1002"
-    title="Upgrade rer.newsletter to 1002"
-    description=""
-    profile="rer.newsletter:default"
-    handler=".upgrades.migrate_to_1002"
-    />
+      title="Upgrade rer.newsletter to 1002"
+      description=""
+      profile="rer.newsletter:default"
+      source="1001"
+      destination="1002"
+      handler=".upgrades.migrate_to_1002"
+      />
 
   <genericsetup:upgradeStep
-    source="1002"
-    destination="1003"
-    title="Upgrade rer.newsletter to 1003"
-    description=""
-    profile="rer.newsletter:default"
-    handler=".upgrades.migrate_to_1003"
-    />
-  
+      title="Upgrade rer.newsletter to 1003"
+      description=""
+      profile="rer.newsletter:default"
+      source="1002"
+      destination="1003"
+      handler=".upgrades.migrate_to_1003"
+      />
+
   <genericsetup:upgradeStep
-    source="1003"
-    destination="1004"
-    title="Upgrade rer.newsletter to 1004"
-    description=""
-    profile="rer.newsletter:default"
-    handler=".upgrades.migrate_to_1004"
-    />
+      title="Upgrade rer.newsletter to 1004"
+      description=""
+      profile="rer.newsletter:default"
+      source="1003"
+      destination="1004"
+      handler=".upgrades.migrate_to_1004"
+      />
 
 </configure>

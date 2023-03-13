@@ -1,29 +1,25 @@
 # -*- coding: utf-8 -*-
-from Acquisition import aq_inner
 from plone import api
-from plone.restapi.deserializer import json_body
+from plone.protect import interfaces
 from plone.protect.authenticator import createToken
+from plone.restapi.deserializer import json_body
 from plone.restapi.services import Service
-from rer.newsletter import _
 from rer.newsletter import logger
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
-from rer.newsletter.utils import compose_sender, get_site_title, SUBSCRIBED, UNHANDLED
+from rer.newsletter.utils import compose_sender
+from rer.newsletter.utils import get_site_title
+from rer.newsletter.utils import SUBSCRIBED
+from rer.newsletter.utils import UNHANDLED
 from six import PY2
 from zope.component import getMultiAdapter
-from zExceptions import BadRequest
 from zope.interface import alsoProvides
-from plone.protect import interfaces
-
-import os
-import requests
 
 
 class NewsletterSubscribe(Service):
-
     def getData(self, data):
         errors = []
         if not data.get("email", None):
-            errors.append(u"invalid_email")
+            errors.append("invalid_email")
         return {
             "email": data.get("email", None),
         }, errors
@@ -44,7 +40,6 @@ class NewsletterSubscribe(Service):
             status, secret = channel.subscribe(email)
 
         if status == SUBSCRIBED:
-
             # creo il token CSRF
             token = createToken()
 
@@ -54,9 +49,7 @@ class NewsletterSubscribe(Service):
             url += "&_authenticator=" + token
             url += "&action=subscribe"
 
-            mail_template = self.context.restrictedTraverse(
-                "@@activeuser_template"
-            )
+            mail_template = self.context.restrictedTraverse("@@activeuser_template")
 
             parameters = {
                 "title": self.context.title,
@@ -70,9 +63,7 @@ class NewsletterSubscribe(Service):
             mail_text = mail_template(**parameters)
 
             portal = api.portal.get()
-            mail_text = portal.portal_transforms.convertTo(
-                "text/mail", mail_text
-            )
+            mail_text = portal.portal_transforms.convertTo("text/mail", mail_text)
             sender = compose_sender(channel=self.context)
 
             channel_title = self.context.title
@@ -97,11 +88,11 @@ class NewsletterSubscribe(Service):
         else:
             if status == 2:
                 logger.exception("user already subscribed")
-                errors.append(u"user_already_subscribed")
+                errors.append("user_already_subscribed")
                 return data, errors
             else:
                 logger.exception("unhandled error subscribe user")
-                errors.append(u"Problems...{0}".format(status))
+                errors.append("Problems...{0}".format(status))
                 return data, errors
 
     def reply(self):
@@ -114,5 +105,5 @@ class NewsletterSubscribe(Service):
         return {
             "@id": self.request.get("URL"),
             "errors": errors if errors else None,
-            'status': u"user_subscribe_success" if not errors else 'error',
+            "status": "user_subscribe_success" if not errors else "error",
         }

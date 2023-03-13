@@ -4,6 +4,7 @@ from plone import api
 
 import json
 
+
 # STATUS MESSAGES
 # general
 NOK = -1
@@ -40,24 +41,24 @@ SEND_UID_NOT_FOUND = 11
 
 def get_site_title():
     current_lang = api.portal.get_current_language()
-    site_title = api.portal.get_registry_record('plone.site_title')
+    site_title = api.portal.get_registry_record("plone.site_title")
     try:
         title_json = json.loads(site_title)
     except ValueError:
         #  standard site title, not RER customization
         return site_title
     titles = list(title_json.keys())
-    if current_lang not in titles and 'default' in titles:
-        return title_json.get('default', None)
+    if current_lang not in titles and "default" in titles:
+        return title_json.get("default", None)
     elif current_lang in titles:
         return title_json.get(current_lang, None)
     else:
-        return 'Plone Site'
+        return "Plone Site"
 
 
 def compose_sender(channel):
     if not channel.sender_email:
-        return 'noreply@rer.it'
+        return "noreply@rer.it"
     if channel.sender_name:
         return formataddr((channel.sender_name, channel.sender_email))
     return channel.sender_email

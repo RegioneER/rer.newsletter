@@ -8,9 +8,7 @@ from zope.interface import implementer
 
 @implementer(IPortletTileSchema)
 class Assignment(base.Assignment):
-
-    def __init__(self, header=u'',
-                 link_to_archive='', css_class='', newsletter=None):
+    def __init__(self, header="", link_to_archive="", css_class="", newsletter=None):
         self.header = header
         self.link_to_archive = link_to_archive
         self.css_class = css_class
@@ -21,16 +19,16 @@ class Assignment(base.Assignment):
         if self.header:
             return self.header
         else:
-            return u'RER portlet newsletter'
+            return "RER portlet newsletter"
 
 
 class Renderer(base.Renderer):
-    render = ViewPageTemplateFile('subscribe.pt')
+    render = ViewPageTemplateFile("subscribe.pt")
 
     def getPortletClass(self):
-        classes = 'portlet NewsletterSubscribePortlet'
+        classes = "portlet NewsletterSubscribePortlet"
         if self.data.css_class:
-            classes += ' {0}'.format(self.data.css_class)
+            classes += " {0}".format(self.data.css_class)
         return classes
 
     def getNewsletterUrl(self):
@@ -39,7 +37,7 @@ class Renderer(base.Renderer):
             if newsletter_obj.is_subscribable:
                 return newsletter_obj.absolute_url()
 
-        elif self.context.portal_type == u'Channel':
+        elif self.context.portal_type == "Channel":
             return self.context.absolute_url()
         else:
             return None
@@ -49,8 +47,7 @@ class Renderer(base.Renderer):
             if api.content.get(UID=self.data.newsletter).is_subscribable:
                 return True
 
-        elif self.context.portal_type == 'Channel' \
-                and self.context.is_subscribable:
+        elif self.context.portal_type == "Channel" and self.context.is_subscribable:
             return True
         else:
             return False
