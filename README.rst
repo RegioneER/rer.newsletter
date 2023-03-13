@@ -10,6 +10,12 @@ rer.newsletter
 .. |version| image:: http://img.shields.io/pypi/v/rer.newsletter.svg
   :target: https://pypi.python.org/pypi/rer.newsletter
 
+.. |Number of PyPI downloads| image:: http://img.shields.io/pypi/dm/rer.newsletter.svg
+  :target: https://pypi.python.org/pypi/rer.newsletter
+
+.. |license| image:: http://img.shields.io/pypi/l/rer.newsletter.svg
+  :target: https://pypi.python.org/pypi/rer.newsletter
+
 .. |ci| image:: https://github.com/RegioneER/rer.newsletter/actions/workflows/tests.yml/badge.svg
   :target: https://github.com/RegioneER/rer.newsletter/actions
 

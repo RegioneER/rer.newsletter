@@ -15,6 +15,9 @@ jobs:
             plone: "51"
           - python: "3.7"
             plone: "60"
+          - python: "3.11"
+            plone: "52"
+
     steps:
       - uses: actions/checkout@v1
       - name: Cache eggs
