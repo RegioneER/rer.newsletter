@@ -22,7 +22,9 @@ class ConfirmSubscription(BrowserView):
         return self.index()
 
     def _sendGenericMessage(self, template, receiver, message, message_title):
-        mail_template = self.context.restrictedTraverse("@@{0}".format(template))
+        mail_template = self.context.restrictedTraverse(
+            "@@{0}".format(template)
+        )
 
         parameters = {
             "header": self.context.header,
@@ -57,7 +59,9 @@ class ConfirmSubscription(BrowserView):
         action = self.request.get("action")
 
         response = None
-        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
 
         if action == "subscribe":
             response, user = channel.activateUser(secret=secret)
@@ -88,7 +92,9 @@ class ConfirmSubscription(BrowserView):
                 )
 
         if response == OK:
-            api.portal.show_message(message=status, request=self.request, type="info")
+            api.portal.show_message(
+                message=status, request=self.request, type="info"
+            )
         else:
             logger.error(
                 'Unable to unsubscribe user with token "{token}" on channel {channel}.'.format(  # noqa

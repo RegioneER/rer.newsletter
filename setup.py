@@ -49,6 +49,8 @@ setup(
         "plone.api",
         "plone.app.tiles",
         "collective.honeypot",
+        "collective.volto.blocksfield",
+        "redturtle.volto",
         "plone.restapi",
         "premailer==3.1.1",
         "Products.GenericSetup>=1.8.2",

@@ -21,7 +21,8 @@ class IPortletTileSchema(Interface):
     header = schema.TextLine(
         title=_("title_portlet_header", default="Header"),
         description=_(
-            "description_portlet_header", default="Title of the rendered portlet"
+            "description_portlet_header",
+            default="Title of the rendered portlet",
         ),
         constraint=re.compile("[^\\s]").match,
         required=False,
@@ -38,7 +39,8 @@ class IPortletTileSchema(Interface):
     css_class = schema.TextLine(
         title=_("title_css_portlet_class", default="Portlet class"),
         description=_(
-            "description_css_portlet_class", default="CSS class to add at the portlet"
+            "description_css_portlet_class",
+            default="CSS class to add at the portlet",
         ),
         required=False,
     )

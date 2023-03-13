@@ -14,7 +14,9 @@ class ChannelView(BrowserView):
 
     def getMessageList(self):
         if self.context.portal_type == "Channel":
-            brainsList = api.content.find(context=self.context, portal_type="Message")
+            brainsList = api.content.find(
+                context=self.context, portal_type="Message"
+            )
 
             messageList = []
             for brain in brainsList:

@@ -70,7 +70,8 @@ class IChannelSchema(model.Schema):
     header = schema.Text(
         title=_("header_channel", default="Header of message"),
         description=_(
-            "description_header_channel", default="Header for message of this channel"
+            "description_header_channel",
+            default="Header for message of this channel",
         ),
         required=False,
         default="",
@@ -79,7 +80,8 @@ class IChannelSchema(model.Schema):
     footer = schema.Text(
         title=_("footer_channel", default="Footer of message"),
         description=_(
-            "description_footer_channel", default="Footer for message of this channel"
+            "description_footer_channel",
+            default="Footer for message of this channel",
         ),
         required=False,
         default="",

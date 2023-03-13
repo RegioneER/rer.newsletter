@@ -25,7 +25,10 @@ class SubscribeTile(Tile):
             if api.content.get(UID=self.data.get("newsletter")).is_subscribable:
                 return True
 
-        elif self.context.portal_type == "Channel" and self.context.is_subscribable:
+        elif (
+            self.context.portal_type == "Channel"
+            and self.context.is_subscribable
+        ):
             return True
         else:
             return False

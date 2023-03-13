@@ -43,7 +43,9 @@ class IUsersImport(Interface):
     # se questo e ceccato allora i dati non vengono inseriti
     emptyList = schema.Bool(
         title=_("title_empty_list", default="Empties users list"),
-        description=_("description_empty_list", default="Empties channel users list"),
+        description=_(
+            "description_empty_list", default="Empties channel users list"
+        ),
         required=False,
     )
 
@@ -72,7 +74,9 @@ class IUsersImport(Interface):
 
     separator = schema.TextLine(
         title=_("title_separator", default="CSV separator"),
-        description=_("description_separator", default=_("Separator of CSV file")),
+        description=_(
+            "description_separator", default=_("Separator of CSV file")
+        ),
         default=",",
         required=True,
         constraint=check_separator,
@@ -147,7 +151,9 @@ class UsersImport(form.Form):
             self.status = self.formErrorsMessage
             return
 
-        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
 
         # devo svuotare la lista di utenti del channel
         if data["emptyList"]:
@@ -156,7 +162,9 @@ class UsersImport(form.Form):
         csv_file = data["userListFile"].data
         # esporto la lista di utenti dal file
         try:
-            usersList = self.processCSV(csv_file, data["headerLine"], data["separator"])
+            usersList = self.processCSV(
+                csv_file, data["headerLine"], data["separator"]
+            )
         except IndexError:
             api.portal.show_message(
                 message=_(
@@ -186,4 +194,6 @@ class UsersImport(form.Form):
                 "generic_subscribe_message_success",
                 default="User Subscribed",
             )
-            api.portal.show_message(message=status, request=self.request, type="info")
+            api.portal.show_message(
+                message=status, request=self.request, type="info"
+            )

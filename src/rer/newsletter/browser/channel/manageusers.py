@@ -37,7 +37,9 @@ class ManageUsers(BrowserView):
 
         email = self.request["email"]
 
-        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
         status = channel.deleteUser(email)
 
         response = {}
@@ -57,7 +59,9 @@ class ManageUsers(BrowserView):
         status = UNHANDLED
         channel = self.context.id_channel
 
-        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
         userList, status = channel.exportUsersList()
 
         if status == OK:
@@ -93,7 +97,9 @@ class ManageUsers(BrowserView):
         status = UNHANDLED
         channel = self.context.id_channel
 
-        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
         userList, status = channel.exportUsersList()
 
         if status == OK:

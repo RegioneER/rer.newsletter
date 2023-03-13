@@ -6,7 +6,9 @@ from zope.interface import Interface
 
 class Notify(Interface):
     subject = schema.TextLine(
-        title=_("Subject"), description=_("Subject of the message"), required=True
+        title=_("Subject"),
+        description=_("Subject of the message"),
+        required=True,
     )
 
     source = schema.TextLine(
@@ -27,11 +29,11 @@ class Notify(Interface):
     message = schema.Text(
         title=_("Message"),
         description=_(
-            "Type in here the message that you want to mail. Some"
-            "defined content can be replaced: ${portal} will be replaced by the title"
-            "of the portal. ${url} will be replaced by the URL of the newsletter."
-            "${channel} will be replaced by the newsletter channel name. ${subscriber} "
-            "will be replaced by subscriber name."
+            "Type in here the message that you want to mail. Some defined "
+            "content can be replaced: ${portal} will be replaced by the title"
+            " of the portal. ${url} will be replaced by the URL of the "
+            "newsletter.${channel} will be replaced by the newsletter channel"
+            " name. ${subscriber} will be replaced by subscriber name."
         ),
         required=True,
     )
