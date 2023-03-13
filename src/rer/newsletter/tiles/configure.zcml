@@ -5,7 +5,8 @@
     i18n_domain="rer.newsletter"
     >
 
-  <plone:tile
+    <include package="plone.app.tiles" />
+    <plone:tile
       name="rer.newsletter.tile"
       title="Newsletter Subscribe"
       for="*"
