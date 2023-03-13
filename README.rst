@@ -2,7 +2,7 @@
 rer.newsletter
 ==============
 
-|python| |version| |ci|
+|python| |version| |ci| |license| |number|
 
 .. |python| image:: https://img.shields.io/pypi/pyversions/rer.newsletter.svg
   :target: https://pypi.python.org/pypi/rer.newsletter/
@@ -10,7 +10,7 @@ rer.newsletter
 .. |version| image:: http://img.shields.io/pypi/v/rer.newsletter.svg
   :target: https://pypi.python.org/pypi/rer.newsletter
 
-.. |Number of PyPI downloads| image:: http://img.shields.io/pypi/dm/rer.newsletter.svg
+.. |number| image:: http://img.shields.io/pypi/dm/rer.newsletter.svg
   :target: https://pypi.python.org/pypi/rer.newsletter
 
 .. |license| image:: http://img.shields.io/pypi/l/rer.newsletter.svg
