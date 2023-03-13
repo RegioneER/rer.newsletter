@@ -4,6 +4,7 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="rer.newsletter">
 
+    <include package="plone.app.tiles" />
     <plone:tile
       name="rer.newsletter.tile"
       title="Newsletter Subscribe"
