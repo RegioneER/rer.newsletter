@@ -2,7 +2,7 @@
 Changelog
 =========
 
-2.0.0a1 (unreleased)
+2.0.0a1 (2023-03-14)
 --------------------
 
 - added restapi services for Volto usage
