@@ -2,8 +2,8 @@
 Changelog
 =========
 
-2.0.0 (unreleased)
-------------------
+2.0.0a1 (unreleased)
+--------------------
 
 - added restapi services for Volto usage
 - fixed results for unsubscribe service
