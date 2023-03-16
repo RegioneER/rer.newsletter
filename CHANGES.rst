@@ -5,7 +5,8 @@ Changelog
 2.0.0a2 (unreleased)
 --------------------
 
-- Nothing changed yet.
+- Updated subheader template
+  [pnicolli]
 
 
 2.0.0a1 (2023-03-14)

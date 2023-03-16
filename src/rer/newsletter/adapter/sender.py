@@ -84,9 +84,6 @@ class BaseAdapter(object):
             else "",
             "message_subheader": f"""
                 <tr>
-                    <td class="divider" colspan="2"></td>
-                </tr>
-                <tr>
                     <td align="left" colspan="2">
                       <div class="newsletterTitle">
                         <h1>{self.context.title}</h1>
