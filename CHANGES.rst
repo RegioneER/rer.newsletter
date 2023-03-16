@@ -2,7 +2,7 @@
 Changelog
 =========
 
-2.0.0a2 (unreleased)
+2.0.0a2 (2023-03-16)
 --------------------
 
 - Updated subheader template
