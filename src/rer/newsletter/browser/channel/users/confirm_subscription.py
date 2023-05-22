@@ -4,7 +4,6 @@ from Products.Five.browser import BrowserView
 from rer.newsletter import _
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.contentrules.events import SubscriptionEvent
-from rer.newsletter.contentrules.events import UnsubscriptionEvent
 from rer.newsletter.utils import OK
 from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title

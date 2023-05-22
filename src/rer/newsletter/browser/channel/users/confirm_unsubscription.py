@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 
 
 class ConfirmUnsubscription(BrowserView):
-
     def __call__(self):
         secret = self.request.get("secret")
 
@@ -23,25 +22,32 @@ class ConfirmUnsubscription(BrowserView):
             (self.context, self.request), IChannelSubscriptions
         )
 
-        secret = self.request.form.get('secret', "")
-        submitted = self.request.form.get('submitted', "")
+        secret = self.request.form.get("secret", "")
+        submitted = self.request.form.get("submitted", "")
 
         if not secret:
             api.portal.show_message(
                 message=_(
-                    u"unsubscribe_missing_secret",
-                    default=u"Unable to unsubscribe to channel. Missing secret key.",
-                ), request=self.request, type=u"error",
+                    "unsubscribe_missing_secret",
+                    default="Unable to unsubscribe to channel. Missing secret key.",
+                ),
+                request=self.request,
+                type="error",
             )
             return self.request.response.redirect(self.context.absolute_url())
-        if not submitted or self.request.method != 'POST':
+        if not submitted or self.request.method != "POST":
             return super(ConfirmUnsubscription, self).__call__()
 
         response, mail = channel.deleteUserWithSecret(secret=secret)
         if response == OK:
             notify(UnsubscriptionEvent(self.context, mail))
             api.portal.show_message(
-                message=_(u"generic_delete_message_success",default=u"Succesfully unsubscribed."), request=self.request, type=u"info",
+                message=_(
+                    "generic_delete_message_success",
+                    default="Succesfully unsubscribed.",
+                ),
+                request=self.request,
+                type="info",
             )
         else:
             logger.error(
@@ -52,11 +58,11 @@ class ConfirmUnsubscription(BrowserView):
             api.portal.show_message(
                 message=_(
                     "unable_to_unsubscribe",
-                    default=u"Unable to unsubscribe to this channel."
-                    u" Please contact site administrator.",
+                    default="Unable to unsubscribe to this channel."
+                    " Please contact site administrator.",
                 ),
                 request=self.request,
-                type=u"error",
+                type="error",
             )
 
         return self.request.response.redirect(self.context.absolute_url())
