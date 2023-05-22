@@ -5,7 +5,8 @@ Changelog
 1.2.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Handle unsubscribe with POST method, to avoid unwanted unsubscriptions or double clicks.
+  [cekk]
 
 
 1.2.0 (2023-01-25)
