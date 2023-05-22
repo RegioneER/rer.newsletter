@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2022-05-12 10:11+0000\n"
+"POT-Creation-Date: 2023-05-22 10:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Filippo Campi <filippo.campi@redturtle.it>\n"
 "Language-Team: Italian <LL@li.org>\n"
@@ -38,6 +38,10 @@ msgstr "Impostazioni Newsletter"
 msgid "Configure element"
 msgstr "Configura elemento"
 
+#: rer/newsletter/browser/channel/templates/confirm_unsubscription.pt:27
+msgid "Confirm"
+msgstr "Conferma"
+
 #: rer/newsletter/profiles/default/types/Shippable_Collection.xml
 msgid "Edit"
 msgstr "Modifica"
@@ -57,15 +61,15 @@ msgstr "Gestore newsletter"
 
 #: rer/newsletter/configure.zcml:49
 msgid "Installs the rer.newsletter add-on."
-msgstr ""
+msgstr "Installa rer.newsletter."
 
 #: rer/newsletter/contentrules/configure.zcml:63
 msgid "Manda una email quando un utente conferma iscrizione"
-msgstr ""
+msgstr "Manda una email quando un utente conferma iscrizione"
 
 #: rer/newsletter/contentrules/configure.zcml:90
 msgid "Manda una email quando un utente conferma la disiscrizione"
-msgstr ""
+msgstr "Manda una email quando un utente conferma la disiscrizione"
 
 #: rer/newsletter/contentrules/interfaces.py:29
 #: rer/newsletter/profiles/default/types/Message.xml
@@ -114,19 +118,19 @@ msgstr "Digita il messaggio che vuoi inviare. Qualche contenuto può essere sost
 
 #: rer/newsletter/configure.zcml:58
 msgid "Uninstalls the rer.newsletter add-on."
-msgstr ""
+msgstr "Disinstalla rer.newsletter."
 
 #: rer/newsletter/contentrules/configure.zcml:24
 msgid "Utente conferma iscrizione al canale della newsletter"
-msgstr ""
+msgstr "Utente conferma iscrizione al canale della newsletter"
 
 #: rer/newsletter/contentrules/configure.zcml:18
 msgid "Utente conferma la disiscrizione dal canale della newsletter"
-msgstr ""
+msgstr "Utente conferma la disiscrizione dal canale della newsletter"
 
 #: rer/newsletter/profiles/default/types/Shippable_Collection.xml
 msgid "View"
-msgstr ""
+msgstr "Vista"
 
 #. Default: "Channel Created"
 #: rer/newsletter/browser/channel/add.py:34
@@ -170,6 +174,11 @@ msgstr "Importa utenti"
 msgid "come_back"
 msgstr "Torna indietro"
 
+#. Default: "Clicking here, you will be unsubscribed from this channel."
+#: rer/newsletter/browser/channel/templates/confirm_unsubscription.pt:15
+msgid "confirm_unsubscribe_legend"
+msgstr "Cliccando qui, confermi di volerti disiscrivere da questa newsletter."
+
 #. Default: "Channel History"
 #: rer/newsletter/browser/channel/templates/channelviewlet.pt:12
 msgid "cronologia_canale"
@@ -183,7 +192,7 @@ msgstr "Stili CSS"
 #. Default: "Cancella messaggio inviato"
 #: rer/newsletter/browser/channel/templates/channelhistoryview.pt:25
 msgid "delete_message_sent"
-msgstr ""
+msgstr "Cancella messaggio inviato"
 
 #. Default: "Delete User"
 #: rer/newsletter/browser/channel/templates/manageusers.pt:60
@@ -208,7 +217,7 @@ msgstr "Stili per la mail."
 #. Default: "Indirizzo da sostituire"
 #: rer/newsletter/browser/settings.py:28
 msgid "description_destination_link"
-msgstr ""
+msgstr "Indirizzo da sostituire"
 
 #. Default: "Empties channel users list"
 #: rer/newsletter/browser/channel/users/usersimport.py:46
@@ -238,7 +247,7 @@ msgstr "Se il file CSV contiene una riga di intestazione."
 #. Default: "Newsletters"
 #: rer/newsletter/portlets/interface.py:45
 msgid "description_newsletter"
-msgstr ""
+msgstr "Newsletter"
 
 #. Default: "Title of the rendered portlet"
 #: rer/newsletter/portlets/interface.py:23
@@ -248,7 +257,7 @@ msgstr "Titolo della portlet."
 #. Default: "Informativa sulla privacy per questo canale"
 #: rer/newsletter/interfaces.py:65
 msgid "description_privacy_channel"
-msgstr ""
+msgstr "Informativa sulla privacy per questo canale"
 
 #. Default: "Remove users of CSV from channel"
 #: rer/newsletter/browser/channel/users/usersimport.py:59
@@ -278,7 +287,7 @@ msgstr "Separatore del file CSV, i valori possibili sono ',' o ';'"
 #. Default: "Indirizzo da sostituire"
 #: rer/newsletter/browser/settings.py:18
 msgid "description_source_link"
-msgstr ""
+msgstr "Indirizzo da sostituire"
 
 #. Default: "Subject for channel message"
 #: rer/newsletter/interfaces.py:51
@@ -288,7 +297,7 @@ msgstr "Oggetto dei messaggi del canale."
 #. Default: "Link di destinazione"
 #: rer/newsletter/browser/settings.py:27
 msgid "destination_link"
-msgstr ""
+msgstr "Link di destinazione"
 
 #. Default: "Email to send the test message"
 #: rer/newsletter/browser/message/sendingtest.py:25
@@ -298,7 +307,7 @@ msgstr "Indirizzo email alla quale mandare l'email di test."
 #. Default: "Validità del token in ore"
 #: rer/newsletter/browser/settings.py:36
 msgid "expired_time_token"
-msgstr ""
+msgstr "Validità del token in ore"
 
 #. Default: "Export Users List"
 #: rer/newsletter/browser/channel/templates/manageusers.pt:47
@@ -311,9 +320,9 @@ msgid "footer_channel"
 msgstr "Foooter del messagio"
 
 #. Default: "Ti sei iscritto alla newsletter {channel} del portale \"{site}\"."
-#: rer/newsletter/browser/channel/users/confirm_subscription.py:76
+#: rer/newsletter/browser/channel/users/confirm_subscription.py:72
 msgid "generic_activate_message_success"
-msgstr ""
+msgstr "Ti sei iscritto alla newsletter {channel} del portale \"{site}\"."
 
 #. Default: "User Added."
 #: rer/newsletter/browser/channel/users/add.py:51
@@ -321,7 +330,7 @@ msgid "generic_add_message_success"
 msgstr "Utente aggiunto con successo."
 
 #. Default: "Succesfully unsubscribed."
-#: rer/newsletter/browser/channel/users/confirm_subscription.py:88
+#: rer/newsletter/browser/channel/users/confirm_unsubscription.py:45
 msgid "generic_delete_message_success"
 msgstr "Ti sei cancellato dalla newsletter."
 
@@ -383,7 +392,7 @@ msgstr "Test del messaggio"
 #. Default: "Informativa sulla privacy"
 #: rer/newsletter/interfaces.py:64
 msgid "privacy_channel"
-msgstr ""
+msgstr "Informativa sulla privacy"
 
 #: rer/newsletter/configure.zcml:49
 msgid "rer.newsletter"
@@ -431,12 +440,12 @@ msgstr "Nome completo del mittente"
 #. Default: "Link sorgente"
 #: rer/newsletter/browser/settings.py:17
 msgid "source_link"
-msgstr ""
+msgstr "Link sorgente"
 
 #. Default: "Riceverai una e-mail per confermare l'iscrizione alla newsletter."
-#: rer/newsletter/browser/channel/subscribe.py:157
+#: rer/newsletter/browser/channel/subscribe.py:132
 msgid "status_user_subscribed"
-msgstr ""
+msgstr "Riceverai una e-mail per confermare l'iscrizione alla newsletter."
 
 #. Default: "Subject email"
 #: rer/newsletter/interfaces.py:50
@@ -450,24 +459,24 @@ msgid "subscribe"
 msgstr "Iscriviti"
 
 #. Default: "Subscribe"
-#: rer/newsletter/browser/channel/subscribe.py:68
+#: rer/newsletter/browser/channel/subscribe.py:58
 msgid "subscribe_submit_label"
 msgstr "Iscriviti"
 
 #. Default: "Subscription Mail"
-#: rer/newsletter/browser/channel/subscribe.py:29
+#: rer/newsletter/browser/channel/subscribe.py:26
 msgid "subscribe_user"
 msgstr "Email di iscrizione"
 
 #. Default: "Mail for subscribe to a channel"
-#: rer/newsletter/browser/channel/subscribe.py:30
+#: rer/newsletter/browser/channel/subscribe.py:27
 msgid "subscribe_user_description"
 msgstr "Email per l'iscrizione ad un canale."
 
 #. Default: "Portlet class"
 #: rer/newsletter/portlets/interface.py:37
 msgid "title_css_portlet_class"
-msgstr ""
+msgstr "Classe portlet"
 
 #. Default: "Empties users list"
 #: rer/newsletter/browser/channel/users/usersimport.py:45
@@ -482,7 +491,7 @@ msgstr "Intestazione"
 #. Default: "Newsletter"
 #: rer/newsletter/portlets/interface.py:44
 msgid "title_newsletter"
-msgstr ""
+msgstr "Newsletter"
 
 #. Default: "Header"
 #: rer/newsletter/portlets/interface.py:22
@@ -504,45 +513,55 @@ msgstr "Separatore CSV"
 msgid "title_users_list_file"
 msgstr "File di utenti"
 
+#. Default: "Unable to subscribe to this channel. Please contact site administrator."
+#: rer/newsletter/browser/channel/users/confirm_subscription.py:90
+msgid "unable_to_subscribe"
+msgstr "Impossibile iscriversi a questo canale. Per favore contatta l'amministratore del sito."
+
 #. Default: "Unable to unsubscribe to this channel. Please contact site administrator."
-#: rer/newsletter/browser/channel/users/confirm_subscription.py:104
+#: rer/newsletter/browser/channel/users/confirm_unsubscription.py:59
 msgid "unable_to_unsubscribe"
 msgstr "Si è verificato un errore annullando la tua iscrizione da questo canale. Per favore contatta l'amministratore del sito."
 
 #. Default: "Unsubscribe"
-#: rer/newsletter/browser/channel/unsubscribe.py:54
+#: rer/newsletter/browser/channel/unsubscribe.py:52
 msgid "unsubscribe_button"
 msgstr "Cancellami"
 
 #. Default: "Mail for unsubscribe from channel"
-#: rer/newsletter/browser/channel/unsubscribe.py:30
+#: rer/newsletter/browser/channel/unsubscribe.py:29
 msgid "unsubscribe_email_description"
 msgstr "Email per disiscriversi dal canale"
 
 #. Default: "Unsubscription Email"
-#: rer/newsletter/browser/channel/unsubscribe.py:29
+#: rer/newsletter/browser/channel/unsubscribe.py:28
 msgid "unsubscribe_email_title"
 msgstr "Inserisci la tua e-mail per cancellarti dal canale"
 
 #. Default: "Unable to perform unsubscription. Please contact site administrators."
-#: rer/newsletter/browser/channel/unsubscribe.py:78
+#: rer/newsletter/browser/channel/unsubscribe.py:76
 msgid "unsubscribe_generic"
 msgstr "Impossibile eseguire la disiscrizione. Per favore contatta l'amministatore del sito."
 
 #. Default: "Mail not found. Unable to unsubscribe."
-#: rer/newsletter/browser/channel/unsubscribe.py:73
+#: rer/newsletter/browser/channel/unsubscribe.py:71
 msgid "unsubscribe_inexistent_mail"
 msgstr "Email non trovata. Impossibile eseguire la disiscrizione."
 
+#. Default: "Unable to unsubscribe to channel. Missing secret key."
+#: rer/newsletter/browser/channel/users/confirm_unsubscription.py:30
+msgid "unsubscribe_missing_secret"
+msgstr "Impossibile disiscriversi a questo canale. Parametro mancante."
+
 #. Default: "Sei già iscritto a questa newsletter, oppure non hai ancora confermato l'iscrizione."
-#: rer/newsletter/browser/channel/subscribe.py:170
+#: rer/newsletter/browser/channel/subscribe.py:145
 msgid "user_already_subscribed"
-msgstr ""
+msgstr "Sei già iscritto a questa newsletter, oppure non hai ancora confermato l'iscrizione."
 
 #. Default: "Riceverai una e-mail per confermare la cancellazione dalla newsletter"
-#: rer/newsletter/browser/channel/unsubscribe.py:132
+#: rer/newsletter/browser/channel/unsubscribe.py:125
 msgid "user_unsubscribe_success"
-msgstr ""
+msgstr "Riceverai una e-mail per confermare la cancellazione dalla newsletter"
 
 #. Default: "User Manage"
 #: rer/newsletter/browser/channel/templates/channelviewlet.pt:4
