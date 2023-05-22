@@ -71,8 +71,8 @@ class ConfirmSubscription(BrowserView):
             )
             status = _(
                 u"generic_activate_message_success",
-                default=u'Ti sei iscritto alla newsletter {channel}'
-                ' del portale "{site}".'.format(
+                default=u'Ti sei iscritto alla newsletter ${channel} del portale "${site}".',
+                mapping=dict(
                     channel=self.context.title, site=get_site_title()
                 ),
             )

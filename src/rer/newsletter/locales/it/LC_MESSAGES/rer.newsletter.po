@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2023-05-22 10:02+0000\n"
+"POT-Creation-Date: 2023-05-22 10:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Filippo Campi <filippo.campi@redturtle.it>\n"
 "Language-Team: Italian <LL@li.org>\n"
@@ -319,10 +319,10 @@ msgstr "Esporta lista di utenti"
 msgid "footer_channel"
 msgstr "Foooter del messagio"
 
-#. Default: "Ti sei iscritto alla newsletter {channel} del portale \"{site}\"."
+#. Default: "Ti sei iscritto alla newsletter ${channel} del portale \"${site}\"."
 #: rer/newsletter/browser/channel/users/confirm_subscription.py:72
 msgid "generic_activate_message_success"
-msgstr "Ti sei iscritto alla newsletter {channel} del portale \"{site}\"."
+msgstr "Ti sei iscritto alla newsletter ${channel} del portale \"${site}\"."
 
 #. Default: "User Added."
 #: rer/newsletter/browser/channel/users/add.py:51
