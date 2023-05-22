@@ -8,29 +8,27 @@ from zope.interface import implementer
 
 @implementer(INotifyOnSubscribe, IRuleElementData)
 class NotifyOnSubscribeAction(SimpleItem):
+    subject = ""
+    source = ""
+    dest_addr = ""
+    message = ""
 
-    subject = u''
-    source = u''
-    dest_addr = u''
-    message = u''
-
-    element = 'plone.actions.NotificationOnSubscribe'
+    element = "plone.actions.NotificationOnSubscribe"
 
     @property
     def summary(self):
-        return u'Send email for user subscribe'
+        return "Send email for user subscribe"
 
 
 @implementer(INotifyOnUnsubscribe, IRuleElementData)
 class NotifyOnUnsubscribeAction(SimpleItem):
+    subject = ""
+    source = ""
+    dest_addr = ""
+    message = ""
 
-    subject = u''
-    source = u''
-    dest_addr = u''
-    message = u''
-
-    element = 'plone.actions.NotificationOnUnsubscribe'
+    element = "plone.actions.NotificationOnUnsubscribe"
 
     @property
     def summary(self):
-        return u'Send email for user unsubscribe'
+        return "Send email for user unsubscribe"

@@ -20,9 +20,7 @@ class ConfirmSubscription(BrowserView):
         return self.index()
 
     def _sendGenericMessage(self, template, receiver, message, message_title):
-        mail_template = self.context.restrictedTraverse(
-            "@@{0}".format(template)
-        )
+        mail_template = self.context.restrictedTraverse("@@{0}".format(template))
 
         parameters = {
             "header": self.context.header,
@@ -56,9 +54,7 @@ class ConfirmSubscription(BrowserView):
         secret = self.request.get("secret")
 
         response = None
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
         response, user = channel.activateUser(secret=secret)
         # mandare mail di avvenuta conferma
         if response == OK:
@@ -70,16 +66,14 @@ class ConfirmSubscription(BrowserView):
                 message_title="Iscrizione confermata",
             )
             status = _(
-                u"generic_activate_message_success",
-                default=u'Ti sei iscritto alla newsletter {channel}'
+                "generic_activate_message_success",
+                default="Ti sei iscritto alla newsletter {channel}"
                 ' del portale "{site}".'.format(
                     channel=self.context.title, site=get_site_title()
                 ),
             )
         if response == OK:
-            api.portal.show_message(
-                message=status, request=self.request, type=u"info"
-            )
+            api.portal.show_message(message=status, request=self.request, type="info")
         else:
             logger.error(
                 'Unable to subscribe user with token "{token}" on channel {channel}.'.format(  # noqa
@@ -89,11 +83,11 @@ class ConfirmSubscription(BrowserView):
             api.portal.show_message(
                 message=_(
                     "unable_to_subscribe",
-                    default=u"Unable to subscribe to this channel."
-                    u" Please contact site administrator.",
+                    default="Unable to subscribe to this channel."
+                    " Please contact site administrator.",
                 ),
                 request=self.request,
-                type=u"error",
+                type="error",
             )
 
         return self.render()

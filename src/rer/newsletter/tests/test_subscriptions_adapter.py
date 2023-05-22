@@ -18,7 +18,7 @@ import json
 
 
 class TestSubscriptionsAdapter(unittest.TestCase):
-    """Test on the 'subscriptions' adapter """
+    """Test on the 'subscriptions' adapter"""
 
     layer = RER_NEWSLETTER_INTEGRATION_TESTING
 
@@ -81,23 +81,17 @@ class TestSubscriptionsAdapter(unittest.TestCase):
     def test_subscribe_email_twice_return_error(self):
         self.subscribers_adapter.subscribe("foo@foo.com")
 
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 1)
         status, token = self.subscribers_adapter.subscribe("foo@foo.com")
 
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 1)
         self.assertEqual(token, None)
         self.assertEqual(status, ALREADY_SUBSCRIBED)
 
         # also if we try with capital letters
         status, token = self.subscribers_adapter.subscribe("Foo@FoO.coM")
 
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 1)
         self.assertEqual(token, None)
         self.assertEqual(status, ALREADY_SUBSCRIBED)
 
@@ -123,9 +117,7 @@ class TestSubscriptionsAdapter(unittest.TestCase):
 
     def test_cant_delete_subscription_with_wrong_token(self):
         status, token = self.subscribers_adapter.subscribe("foo@foo.com")
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 1)
 
         status, res = self.subscribers_adapter.deleteUserWithSecret("xyz")
         self.assertEqual(res, None)
@@ -133,39 +125,27 @@ class TestSubscriptionsAdapter(unittest.TestCase):
 
     def test_cant_delete_subscription_with_wrong_email(self):
         status, token = self.subscribers_adapter.subscribe("foo@foo.com")
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 1)
 
         status = self.subscribers_adapter.deleteUser("bar@bar.com")
         self.assertEqual(status, MAIL_NOT_PRESENT)
 
     def test_delete_subscription_with_email(self):
         status, token = self.subscribers_adapter.subscribe("foo@foo.com")
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 1)
 
         status = self.subscribers_adapter.deleteUser("foo@foo.com")
         self.assertEqual(status, OK)
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 0
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 0)
 
     def test_delete_subscription_with_token(self):
         status, token = self.subscribers_adapter.subscribe("foo@foo.com")
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 1)
 
-        status, res = self.subscribers_adapter.deleteUserWithSecret(
-            secret=token
-        )
+        status, res = self.subscribers_adapter.deleteUserWithSecret(secret=token)
         self.assertEqual(res, "foo@foo.com")
         self.assertEqual(status, OK)
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 0
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 0)
 
     def test_add_user_required_mail(self):
         self.assertRaises(TypeError, self.subscribers_adapter.addUser)
@@ -183,9 +163,7 @@ class TestSubscriptionsAdapter(unittest.TestCase):
 
     def test_unsubscribe_user_with_mail(self):
         self.subscribers_adapter.addUser("foo@foo.com")
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 1)
         subscribers = self.subscribers_adapter.channel_subscriptions
         status, token = self.subscribers_adapter.unsubscribe("foo@foo.com")
 
@@ -194,9 +172,7 @@ class TestSubscriptionsAdapter(unittest.TestCase):
 
     def test_unsubscribe_user_with_wrong_mail(self):
         self.subscribers_adapter.addUser("foo@foo.com")
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 1)
 
         status, token = self.subscribers_adapter.unsubscribe("bar@bar.com")
 
@@ -214,21 +190,11 @@ class TestSubscriptionsAdapter(unittest.TestCase):
         self.assertEqual(len(res_json), 2)
 
     def test_import_users_list(self):
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 0
-        )
-        self.subscribers_adapter.importUsersList(
-            ["foo@foo.com", "bar@bar.com"]
-        )
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 2
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 0)
+        self.subscribers_adapter.importUsersList(["foo@foo.com", "bar@bar.com"])
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 2)
 
     def test_import_users_list_with_wrong_mail(self):
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 0
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 0)
         self.subscribers_adapter.importUsersList(["foo@foo.com", "bar"])
-        self.assertEqual(
-            len(self.subscribers_adapter.channel_subscriptions.keys()), 1
-        )
+        self.assertEqual(len(self.subscribers_adapter.channel_subscriptions.keys()), 1)

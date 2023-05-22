@@ -5,7 +5,7 @@ from rer.newsletter.content.channel import Channel
 
 
 class MessagePreview(BrowserView):
-    """ view for message preview """
+    """view for message preview"""
 
     def getMessageStyle(self):
         for obj in self.context.aq_chain:
@@ -19,9 +19,9 @@ class MessagePreview(BrowserView):
                 channel = obj
                 break
         if channel:
-            body = ''
-            body = channel.header.output if channel.header else u''
+            body = ""
+            body = channel.header.output if channel.header else ""
             body += IShippable(self.context).message_content
-            body += channel.footer.output if channel.footer else u''
+            body += channel.footer.output if channel.footer else ""
 
         return body

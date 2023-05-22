@@ -13,9 +13,7 @@ class SubscribableNewsletter(object):
     """
 
     def __call__(self, context):
-        brains = api.content.find(
-            portal_type=u'Channel'
-        )
+        brains = api.content.find(portal_type="Channel")
 
         newsletter_list = []
         for brain in brains:
@@ -23,11 +21,10 @@ class SubscribableNewsletter(object):
             if obj.is_subscribable:
                 newsletter_list.append(obj)
 
-        terms = [SimpleTerm(
-            value=x.UID(),
-            token=x.UID(),
-            title=x.title
-        ) for x in newsletter_list]
+        terms = [
+            SimpleTerm(value=x.UID(), token=x.UID(), title=x.title)
+            for x in newsletter_list
+        ]
 
         return SimpleVocabulary(terms)
 

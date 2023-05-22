@@ -59,9 +59,7 @@ class UnsubscribeForm(form.Form):
 
         email = data.get("email", None)
 
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
 
         status, secret = channel.unsubscribe(email)
 
@@ -77,18 +75,14 @@ class UnsubscribeForm(form.Form):
                     "unsubscribe_generic",
                     default="Unable to perform unsubscription. Please contact site administrators.",  # noqa
                 )
-            api.portal.show_message(
-                message=msg, request=self.request, type="error"
-            )
+            api.portal.show_message(message=msg, request=self.request, type="error")
             return
 
         # mando mail di conferma
         url = self.context.absolute_url()
         url += "/confirm-unsubscription?secret=" + secret
 
-        mail_template = self.context.restrictedTraverse(
-            "@@deleteuser_template"
-        )
+        mail_template = self.context.restrictedTraverse("@@deleteuser_template")
 
         parameters = {
             "header": self.context.header,

@@ -17,20 +17,20 @@ KEY = "rer.newsletter.channel.history"
 def migrate_to_1001(context):
     setup_tool = api.portal.get_tool("portal_setup")
     setup_tool.runImportStepFromProfile(default_profile, "plone.app.registry")
-    logger.info(u"Updated to 1001")
+    logger.info("Updated to 1001")
 
 
 def migrate_to_1002(context):
     setup_tool = api.portal.get_tool("portal_setup")
     setup_tool.runImportStepFromProfile(default_profile, "typeinfo")
     setup_tool.runImportStepFromProfile(default_profile, "workflow")
-    logger.info(u"Updated to 1002")
+    logger.info("Updated to 1002")
 
 
 def migrate_to_1003(context):
     setup_tool = api.portal.get_tool("portal_setup")
     setup_tool.runImportStepFromProfile(default_profile, "typeinfo")
-    logger.info(u"Updated to 1003")
+    logger.info("Updated to 1003")
 
 
 def migrate_to_1004(context):

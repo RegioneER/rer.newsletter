@@ -17,55 +17,53 @@ from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
 
 
-KEY = 'rer.newsletter.message.details'
+KEY = "rer.newsletter.message.details"
 
 
 class ProcessQueue(BrowserView):
     def _sendNotification(self, status, channel, message):
-        """ send notification to user when asynch call is finished """
+        """send notification to user when asynch call is finished"""
         portal = api.portal.get()
         if channel.sender_email:
             message_template = None
             if status == OK:
                 message_template = message.restrictedTraverse(
-                    '@@{0}'.format('asynch_send_success')
+                    "@@{0}".format("asynch_send_success")
                 )
             else:
                 message_template = message.restrictedTraverse(
-                    '@@{0}'.format('asynch_send_fail')
+                    "@@{0}".format("asynch_send_fail")
                 )
             parameters = {
-                'header': channel.header.output if channel.header else u'',
-                'footer': channel.footer.output if channel.footer else u'',
-                'style': channel.css_style if channel.css_style else u'',
-                'portal_name': portal.title,
-                'channel_name': channel.title,
-                'message_title': message.title,
+                "header": channel.header.output if channel.header else "",
+                "footer": channel.footer.output if channel.footer else "",
+                "style": channel.css_style if channel.css_style else "",
+                "portal_name": portal.title,
+                "channel_name": channel.title,
+                "message_title": message.title,
             }
             mail_text = message_template(**parameters)
-            mail_text = portal.portal_transforms.convertTo(
-                'text/mail', mail_text
-            )
+            mail_text = portal.portal_transforms.convertTo("text/mail", mail_text)
 
             # response_email = None
             # if channel.response_email:
             #     response_email = channel.response_email
 
-            subject = u'Risultato invio asincrono di {0} del {1} del '.format(
+            subject = "Risultato invio asincrono di {0} del {1} del ".format(
                 message.title, channel.title
-            ) + u'portale {0}'.format(get_site_title())
+            ) + "portale {0}".format(get_site_title())
 
-            mail_host = api.portal.get_tool(name='MailHost')
+            mail_host = api.portal.get_tool(name="MailHost")
             mail_host.send(
                 mail_text.getData(),
                 mto=channel.sender_email,
                 mfrom=channel.sender_email,
                 subject=subject,
-                charset='utf-8',
-                msg_type='text/html',
+                charset="utf-8",
+                msg_type="text/html",
             )
         else:
-            logger.exception('Non è stato impostato l\'indirizzo del mittente')
+            logger.exception("Non è stato impostato l'indirizzo del mittente")
 
     def _getChannel(self):
         channel = None
@@ -90,24 +88,22 @@ class ProcessQueue(BrowserView):
         return message
 
     def __call__(self):
-        """ asynchronous call """
+        """asynchronous call"""
         # la disabilito perchè in questa vista ci possono arrivare soltanto i
         # processi asincroni di collective.taskqueue
         alsoProvides(self.request, IDisableCSRFProtection)
 
         status = UNHANDLED
         message = self._getMessage()
-        channel = getMultiAdapter(
-            (self._getChannel(), self.request), IChannelSender
-        )
+        channel = getMultiAdapter((self._getChannel(), self.request), IChannelSender)
 
         unsubscribe_footer_template = message.restrictedTraverse(
-            '@@unsubscribe_channel_template'
+            "@@unsubscribe_channel_template"
         )
         parameters = {
-            'portal_name': get_site_title(),
-            'channel_name': channel.title,
-            'unsubscribe_link': channel.absolute_url() + '/@@unsubscribe',
+            "portal_name": get_site_title(),
+            "channel_name": channel.title,
+            "unsubscribe_link": channel.absolute_url() + "/@@unsubscribe",
         }
         unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
         status = channel.sendMessage(message, unsubscribe_footer_text)
@@ -118,20 +114,20 @@ class ProcessQueue(BrowserView):
             annotations[KEY] = PersistentDict({})
 
         annotations = annotations[KEY]
-        now = datetime.today().strftime('%d/%m/%Y %H:%M:%S')
+        now = datetime.today().strftime("%d/%m/%Y %H:%M:%S")
         if status == OK:
             active_users, status = channel.getNumActiveSubscribers()
 
         if status != OK:
             logger.exception(
-                'Problemi con la richiesta: {0}'.format(
-                    self.request.get('HTTP_X_TASK_ID')
+                "Problemi con la richiesta: {0}".format(
+                    self.request.get("HTTP_X_TASK_ID")
                 )
             )
         else:
             annotations[message.title + str(len(list(annotations.keys())))] = {
-                'num_active_subscribers': active_users,
-                'send_date': now,
+                "num_active_subscribers": active_users,
+                "send_date": now,
             }
             # aggiungo all'history dell'oggetto messaggio il suo invio
             addToHistory(message, active_users)
