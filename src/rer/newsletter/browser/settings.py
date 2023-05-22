@@ -11,25 +11,29 @@ def checkExpiredTimeToken(value):
 
 
 class ISettingsSchema(Interface):
-    """Schema for channel settings"""
+    """ Schema for channel settings"""
 
     source_link = schema.TextLine(
-        title=_("source_link", default="Link sorgente"),
-        description=_("description_source_link", default="Indirizzo da sostituire"),
-        default="",
+        title=_(u'source_link', default=u'Link sorgente'),
+        description=_(
+            u'description_source_link',
+            default=u'Indirizzo da sostituire'
+        ),
+        default=u'',
         required=False,
     )
 
     destination_link = schema.TextLine(
-        title=_("destination_link", default="Link di destinazione"),
+        title=_(u'destination_link', default=u'Link di destinazione'),
         description=_(
-            "description_destination_link", default="Indirizzo da sostituire"
+            u'description_destination_link',
+            default=u'Indirizzo da sostituire'
         ),
         required=False,
     )
 
     expired_time_token = schema.Int(
-        title=_("expired_time_token", default="Validità del token in ore"),
+        title=_(u'expired_time_token', default=u'Validità del token in ore'),
         required=False,
         default=48,
         # constraint=checkExpiredTimeToken,
@@ -38,8 +42,8 @@ class ISettingsSchema(Interface):
 
 class ChannelSettings(controlpanel.RegistryEditForm):
     schema = ISettingsSchema
-    id = "ChannelSettings"
-    label = _("channel_setting", default="Channel Settings")
+    id = 'ChannelSettings'
+    label = _(u'channel_setting', default=u'Channel Settings')
 
     def updateFields(self):
         super(ChannelSettings, self).updateFields()
@@ -49,4 +53,5 @@ class ChannelSettings(controlpanel.RegistryEditForm):
 
 
 class ChannelSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
+
     form = ChannelSettings

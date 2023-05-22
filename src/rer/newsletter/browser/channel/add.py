@@ -11,8 +11,9 @@ from zope.component import getMultiAdapter
 
 
 class AddForm(add.DefaultAddForm):
+
     # button handler
-    @button.buttonAndHandler("Salva", name="save")
+    @button.buttonAndHandler(u'Salva', name='save')
     def handleAdd(self, action):
         data, errors = self.extractData()
         if errors:
@@ -30,20 +31,22 @@ class AddForm(add.DefaultAddForm):
 
             if status == OK:
                 api.portal.show_message(
-                    message=_("add_channel", default="Channel Created"),
+                    message=_(u'add_channel', default='Channel Created'),
                     request=self.request,
-                    type="info",
+                    type=u'info',
                 )
 
         if not obj or status != OK:
             logger.exception(
                 _(
-                    "generic_problem_add_channel",
-                    default="Unhandled problem with add of channel.",
+                    u'generic_problem_add_channel',
+                    default=u'Unhandled problem with add of channel.',
                 )
             )
-            status = "Problems...{status}".format(status=status)
-            api.portal.show_message(message=status, request=self.request, type="error")
+            status = u'Problems...{status}'.format(status=status)
+            api.portal.show_message(
+                message=status, request=self.request, type=u'error'
+            )
 
 
 class AddView(add.DefaultAddView):

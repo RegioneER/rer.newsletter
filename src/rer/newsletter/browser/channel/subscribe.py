@@ -20,19 +20,20 @@ from six import PY2
 
 
 class ISubscribeForm(Interface):
-    """define field for channel subscription"""
+    """ define field for channel subscription """
 
     email = schema.Email(
-        title=_("subscribe_user", default="Subscription Mail"),
+        title=_(u"subscribe_user", default=u"Subscription Mail"),
         description=_(
-            "subscribe_user_description",
-            default="Mail for subscribe to a channel",
+            u"subscribe_user_description",
+            default=u"Mail for subscribe to a channel",
         ),
         required=True,
     )
 
 
 class SubscribeForm(AutoExtensibleForm, form.Form):
+
     ignoreContext = True
     schema = ISubscribeForm
 
@@ -53,7 +54,9 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
     def update(self):
         super(SubscribeForm, self).update()
 
-    @button.buttonAndHandler(_("subscribe_submit_label", default="Subscribe"))
+    @button.buttonAndHandler(
+        _(u"subscribe_submit_label", default=u"Subscribe")
+    )
     def handleSave(self, action):
         status = UNHANDLED
         data, errors = self.extractData()
@@ -62,7 +65,7 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
             self.status = self.formErrorsMessage
             if self.status:
                 self.status = (
-                    "Indirizzo email non inserito o non "
+                    u"Indirizzo email non inserito o non "
                     + "valido, oppure controllo di sicurezza non "  # noqa
                     + "inserito."  # noqa
                 )
@@ -77,6 +80,7 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
             status, secret = channel.subscribe(email)
 
         if status == SUBSCRIBED:
+
             # creo il token CSRF
             token = createToken()
 
@@ -85,7 +89,9 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
             url += "/confirm-subscription?secret=" + secret
             url += "&_authenticator=" + token
 
-            mail_template = self.context.restrictedTraverse("@@activeuser_template")
+            mail_template = self.context.restrictedTraverse(
+                "@@activeuser_template"
+            )
 
             parameters = {
                 "title": self.context.title,
@@ -99,7 +105,9 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
             mail_text = mail_template(**parameters)
 
             portal = api.portal.get()
-            mail_text = portal.portal_transforms.convertTo("text/mail", mail_text)
+            mail_text = portal.portal_transforms.convertTo(
+                "text/mail", mail_text
+            )
             sender = compose_sender(channel=self.context)
 
             channel_title = self.context.title
@@ -122,12 +130,12 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
 
             api.portal.show_message(
                 message=_(
-                    "status_user_subscribed",
-                    default="Riceverai una e-mail per confermare "
+                    u"status_user_subscribed",
+                    default=u"Riceverai una e-mail per confermare "
                     "l'iscrizione alla newsletter.",
                 ),
                 request=self.request,
-                type="info",
+                type=u"info",
             )
 
         else:
@@ -135,20 +143,20 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
                 logger.exception("user already subscribed")
                 api.portal.show_message(
                     message=_(
-                        "user_already_subscribed",
-                        default="Sei già iscritto a questa newsletter, "
+                        u"user_already_subscribed",
+                        default=u"Sei già iscritto a questa newsletter, "
                         "oppure non hai ancora"
                         " confermato l'iscrizione.",
                     ),
                     request=self.request,
-                    type="error",
+                    type=u"error",
                 )
             else:
                 logger.exception("unhandled error subscribe user")
                 api.portal.show_message(
-                    message="Problems...{0}".format(status),
+                    message=u"Problems...{0}".format(status),
                     request=self.request,
-                    type="error",
+                    type=u"error",
                 )
 
 

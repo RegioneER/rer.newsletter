@@ -6,6 +6,7 @@ from Products.Five.browser import BrowserView
 
 
 class CheckMessage(BrowserView):
+
     def __call__(self):
         # for obj in self.aq_chain:
         #     if isinstance(obj, Message):

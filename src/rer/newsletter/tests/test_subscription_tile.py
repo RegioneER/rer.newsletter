@@ -15,23 +15,23 @@ class SubscriptionTileTests(TestCase):
     layer = RER_NEWSLETTER_FUNCTIONAL_TESTING
 
     def setUp(self):
-        self.portal = self.layer["portal"]
+        self.portal = self.layer['portal']
         self.portalURL = self.portal.absolute_url()
-        setRoles(self.portal, TEST_USER_ID, ["Manager"])
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
-        self.browser = Browser(self.layer["app"])
+        self.browser = Browser(self.layer['app'])
         self.browser.handleErrors = False
         self.browser.addHeader(
-            "Authorization",
-            "Basic %s:%s" % (TEST_USER_NAME, TEST_USER_PASSWORD),
+            'Authorization',
+            'Basic %s:%s' % (TEST_USER_NAME, TEST_USER_PASSWORD),
         )
 
-        self.unprivileged_browser = Browser(self.layer["app"])
+        self.unprivileged_browser = Browser(self.layer['app'])
 
         self.channel = api.content.create(
             container=self.portal,
-            type="Channel",
-            title="Example channel",
+            type='Channel',
+            title='Example channel',
             is_subscribable=True,
         )
         transaction.commit()
@@ -40,12 +40,12 @@ class SubscriptionTileTests(TestCase):
         self.channel.is_subscribable = False
         transaction.commit()
         self.unprivileged_browser.open(
-            "{portal_url}/rer.newsletter.tile/unique?newsletter={uid}".format(
+            '{portal_url}/rer.newsletter.tile/unique?newsletter={uid}'.format(
                 portal_url=self.portalURL, uid=self.channel.UID()
             )
         )
 
-        self.assertNotIn("Subscribe", self.unprivileged_browser.contents)
+        self.assertNotIn(u'Subscribe', self.unprivileged_browser.contents)
 
         # re-set default
         self.channel.is_subscribable = True
@@ -56,9 +56,9 @@ class SubscriptionTileTests(TestCase):
         transaction.commit()
 
         self.unprivileged_browser.open(
-            "{portal_url}/rer.newsletter.tile/unique?newsletter={uid}".format(
+            '{portal_url}/rer.newsletter.tile/unique?newsletter={uid}'.format(
                 portal_url=self.portalURL, uid=self.channel.UID()
             )
         )
 
-        self.assertIn("Subscribe", self.unprivileged_browser.contents)
+        self.assertIn(u'Subscribe', self.unprivileged_browser.contents)

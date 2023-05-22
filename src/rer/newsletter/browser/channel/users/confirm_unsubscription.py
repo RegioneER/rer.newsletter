@@ -18,7 +18,9 @@ class ConfirmUnsubscription(BrowserView):
         secret = self.request.get("secret")
 
         response = None
-        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
 
         secret = self.request.form.get("secret", "")
         submitted = self.request.form.get("submitted", "")

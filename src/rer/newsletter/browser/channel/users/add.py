@@ -14,23 +14,24 @@ from zope.interface import Interface
 
 
 class IAddForm(Interface):
-    """define field for add user to a channel"""
+    """ define field for add user to a channel """
 
     email = schema.Email(
-        title=_("add_user_admin", default="Add User"),
+        title=_(u'add_user_admin', default=u'Add User'),
         description=_(
-            "add_user_admin_description",
-            default="Insert email for add user to a Channel",
+            u'add_user_admin_description',
+            default=u'Insert email for add user to a Channel',
         ),
         required=True,
     )
 
 
 class AddForm(form.Form):
+
     ignoreContext = True
     fields = field.Fields(IAddForm)
 
-    @button.buttonAndHandler(_("add_user_admin_button", default="Add"))
+    @button.buttonAndHandler(_(u'add_user_admin_button', default=u'Add'))
     def handleSave(self, action):
         status = UNHANDLED
         data, errors = self.extractData()
@@ -39,18 +40,22 @@ class AddForm(form.Form):
             return
 
         channel = self.context.id_channel
-        mail = data["email"]
+        mail = data['email']
 
-        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
         status = channel.addUser(mail)
 
         if status == SUBSCRIBED:
-            status = _("generic_add_message_success", default="User Added.")
-            api.portal.show_message(message=status, request=self.request, type="info")
-        else:
-            logger.exception("unhandled error add user")
+            status = _(u'generic_add_message_success', default=u'User Added.')
             api.portal.show_message(
-                message="Problems...{0}".format(status),
+                message=status, request=self.request, type=u'info'
+            )
+        else:
+            logger.exception('unhandled error add user')
+            api.portal.show_message(
+                message=u'Problems...{0}'.format(status),
                 request=self.request,
-                type="error",
+                type=u'error',
             )

@@ -5,16 +5,16 @@ from zope.interface import implementer
 
 
 class ISubscriptionEvent(IObjectEvent):
-    """Channel subscription event"""
+    """ Channel subscription event """
 
 
 class IUnsubscriptionEvent(IObjectEvent):
-    """Channel unsubscription event"""
+    """ Channel unsubscription event """
 
 
 @implementer(ISubscriptionEvent)
 class SubscriptionEvent(ObjectEvent):
-    """A subscriptin has been confirmed"""
+    """ A subscriptin has been confirmed """
 
     def __init__(self, channel, user):
         super(SubscriptionEvent, self).__init__(channel)
@@ -23,7 +23,7 @@ class SubscriptionEvent(ObjectEvent):
 
 @implementer(IUnsubscriptionEvent)
 class UnsubscriptionEvent(ObjectEvent):
-    """An unsubscription has been confirmed"""
+    """ An unsubscription has been confirmed """
 
     def __init__(self, channel, user):
         super(UnsubscriptionEvent, self).__init__(channel)

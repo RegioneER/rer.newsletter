@@ -12,7 +12,7 @@ from zope.interface import alsoProvides
 
 
 class DeleteExpiredUsersView(BrowserView):
-    """Delete expired users from channels"""
+    """ Delete expired users from channels """
 
     def __init__(self, context, request):
         self.context = context
@@ -27,7 +27,9 @@ class DeleteExpiredUsersView(BrowserView):
             None,
         )
 
-        adapter = getMultiAdapter((channel, self.request), IChannelSubscriptions)
+        adapter = getMultiAdapter(
+            (channel, self.request), IChannelSubscriptions
+        )
         keys = [x for x in adapter.channel_subscriptions.keys()]
         for key in keys:
             subscription = adapter.channel_subscriptions[key]
@@ -44,13 +46,17 @@ class DeleteExpiredUsersView(BrowserView):
 
     def __call__(self):
         alsoProvides(self.request, IDisableCSRFProtection)
-        logger.info("START:Remove expired user from channels")
+        logger.info(u"START:Remove expired user from channels")
 
         pc = getToolByName(self.context, "portal_catalog")  # noqa
-        channels_brain = pc.unrestrictedSearchResults({"portal_type": "Channel"})
+        channels_brain = pc.unrestrictedSearchResults(
+            {"portal_type": "Channel"}
+        )
 
         list(map(lambda x: self.update_annotations(x), channels_brain))
         logger.info(
-            "DONE:Remove {0} expired user from channels".format(self.user_removed)
+            u"DONE:Remove {0} expired user from channels".format(
+                self.user_removed
+            )
         )
         return True

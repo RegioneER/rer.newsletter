@@ -28,7 +28,8 @@ class IChannelSender(Interface):
 
 @implementer(IChannelSender)
 class BaseAdapter(object):
-    """Adapter standard di base, invio sincrono usando plone"""
+    """ Adapter standard di base, invio sincrono usando plone
+    """
 
     def __init__(self, context, request):
         self.context = context
@@ -65,15 +66,17 @@ class BaseAdapter(object):
 
         content = IShippable(message).message_content
 
-        body = ""
-        body += self.context.header.output if self.context.header else ""
-        body += "<style>{css}</style>".format(css=self.context.css_style or "")
-        body += '<div id="message_description"><p>{desc}</p></div>'.format(
-            desc=message.description or ""
+        body = u""
+        body += self.context.header.output if self.context.header else u""
+        body += u"<style>{css}</style>".format(
+            css=self.context.css_style or u""
+        )
+        body += u'<div id="message_description"><p>{desc}</p></div>'.format(
+            desc=message.description or u""
         )
         body += content
-        body += self.context.footer.output if self.context.footer else ""
-        body += footer or ""
+        body += self.context.footer.output if self.context.footer else u""
+        body += footer or u""
 
         # passo la mail per il transform
         portal = api.portal.get()
@@ -112,7 +115,9 @@ class BaseAdapter(object):
         send_info = [x for x in details if x["uid"] == send_uid]
         if not send_info:
             return SEND_UID_NOT_FOUND
-        send_info[0]["send_date_end"] = datetime.today().strftime("%d/%m/%Y %H:%M:%S")
+        send_info[0]["send_date_end"] = datetime.today().strftime(
+            "%d/%m/%Y %H:%M:%S"
+        )
         send_info[0]["completed"] = completed
         send_info[0]["running"] = False
         return OK
@@ -130,13 +135,16 @@ class BaseAdapter(object):
         return self._getMessage(message=message, footer=footer)
 
     def sendMessage(self, message):
-        """This is the primary method to send emails for the channel."""
+        """ This is the primary method to send emails for the channel.
+        """
         logger.debug("sendMessage %s %s", self.context.title, message.title)
 
         subscribers = self.get_annotations_for_channel(key=SUBSCRIBERS_KEY)
 
         nl_subject = (
-            " - " + self.context.subject_email if self.context.subject_email else ""
+            " - " + self.context.subject_email
+            if self.context.subject_email
+            else u""
         )
         sender = (
             self.context.sender_name
@@ -180,12 +188,14 @@ class BaseAdapter(object):
         return OK
 
     def addToHistory(self, message):
-        """Add to history that message is sent"""
+        """ Add to history that message is sent """
 
-        list_history = [x for x in message.workflow_history.get("message_workflow")]
+        list_history = [
+            x for x in message.workflow_history.get("message_workflow")
+        ]
         current = api.user.get_current()
         entry = dict(
-            action="Invio",
+            action=u"Invio",
             review_state=api.content.get_state(obj=message),
             actor=current.getId(),
             comments="Inviato il messaggio a {} utenti.".format(

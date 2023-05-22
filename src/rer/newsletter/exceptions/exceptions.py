@@ -3,5 +3,4 @@ class NotActivedException(Exception):
     """
     Raised wheen the Channel is not actived
     """
-
     pass
