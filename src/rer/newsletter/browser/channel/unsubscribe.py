@@ -83,15 +83,10 @@ class UnsubscribeForm(form.Form):
                 message=msg, request=self.request, type=u"error"
             )
             return
-
-        # creo il token CSRF
-        token = createToken()
-
+ 
         # mando mail di conferma
         url = self.context.absolute_url()
-        url += "/confirm-subscription?secret=" + secret
-        url += "&_authenticator=" + token
-        url += "&action=unsubscribe"
+        url += "/confirm-unsubscription?secret=" + secret
 
         mail_template = self.context.restrictedTraverse(
             "@@deleteuser_template"

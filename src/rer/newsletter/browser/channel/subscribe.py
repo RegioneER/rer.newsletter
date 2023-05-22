@@ -88,7 +88,6 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
             url = self.context.absolute_url()
             url += "/confirm-subscription?secret=" + secret
             url += "&_authenticator=" + token
-            url += "&action=subscribe"
 
             mail_template = self.context.restrictedTraverse(
                 "@@activeuser_template"
