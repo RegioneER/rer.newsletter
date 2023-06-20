@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from plone import api
 from plone import schema
-from plone.protect.authenticator import createToken
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
@@ -26,14 +25,13 @@ class IUnsubscribeForm(Interface):
     """define field for channel unsubscription"""
 
     email = schema.Email(
-        title=_(u"unsubscribe_email_title", default=u"Unsubscription Email"),
-        description=_(u"unsubscribe_email_description", default=u""),
+        title=_("unsubscribe_email_title", default="Unsubscription Email"),
+        description=_("unsubscribe_email_description", default=""),
         required=True,
     )
 
 
 class UnsubscribeForm(form.Form):
-
     ignoreContext = True
     fields = field.Fields(IUnsubscribeForm)
 
@@ -51,7 +49,7 @@ class UnsubscribeForm(form.Form):
         if self.request.get("email", None):
             self.widgets["email"].value = self.request.get("email")
 
-    @button.buttonAndHandler(_(u"unsubscribe_button", default="Unsubscribe"))
+    @button.buttonAndHandler(_("unsubscribe_button", default="Unsubscribe"))
     def handleSave(self, action):
         status = UNHANDLED
         data, errors = self.extractData()
@@ -71,27 +69,22 @@ class UnsubscribeForm(form.Form):
             logger.exception("Error: {}".format(status))
             if status == 4:
                 msg = _(
-                    u"unsubscribe_inexistent_mail",
-                    default=u"Mail not found. Unable to unsubscribe.",
+                    "unsubscribe_inexistent_mail",
+                    default="Mail not found. Unable to unsubscribe.",
                 )
             else:
                 msg = _(
-                    u"unsubscribe_generic",
-                    default=u"Unable to perform unsubscription. Please contact site administrators.",  # noqa
+                    "unsubscribe_generic",
+                    default="Unable to perform unsubscription. Please contact site administrators.",  # noqa
                 )
             api.portal.show_message(
-                message=msg, request=self.request, type=u"error"
+                message=msg, request=self.request, type="error"
             )
             return
 
-        # creo il token CSRF
-        token = createToken()
-
         # mando mail di conferma
         url = self.context.absolute_url()
-        url += "/confirm-subscription?secret=" + secret
-        url += "&_authenticator=" + token
-        url += "&action=unsubscribe"
+        url += "/confirm-unsubscription?secret=" + secret
 
         mail_template = self.context.restrictedTraverse(
             "@@deleteuser_template"
@@ -130,12 +123,12 @@ class UnsubscribeForm(form.Form):
 
         api.portal.show_message(
             message=_(
-                u"user_unsubscribe_success",
-                default=u"Riceverai una e-mail per confermare"
+                "user_unsubscribe_success",
+                default="Riceverai una e-mail per confermare"
                 " la cancellazione dalla newsletter",
             ),
             request=self.request,
-            type=u"info",
+            type="info",
         )
 
 

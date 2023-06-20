@@ -72,6 +72,14 @@
     template="templates/confirm_subscription.pt"
     permission="zope2.View"
     />
+  <browser:page
+    for="rer.newsletter.interfaces.IChannel"
+    name="confirm-unsubscription"
+    class=".users.confirm_unsubscription.ConfirmUnsubscription"
+    template="templates/confirm_unsubscription.pt"
+    permission="zope2.View"
+    />
+
 
   <!-- default view for channel -->
   <browser:page

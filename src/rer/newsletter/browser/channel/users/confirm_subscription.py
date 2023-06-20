@@ -4,7 +4,6 @@ from Products.Five.browser import BrowserView
 from rer.newsletter import _
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.contentrules.events import SubscriptionEvent
-from rer.newsletter.contentrules.events import UnsubscriptionEvent
 from rer.newsletter.utils import OK
 from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
@@ -55,55 +54,42 @@ class ConfirmSubscription(BrowserView):
 
     def __call__(self):
         secret = self.request.get("secret")
-        action = self.request.get("action")
 
         response = None
         channel = getMultiAdapter(
             (self.context, self.request), IChannelSubscriptions
         )
-
-        if action == u"subscribe":
-            response, user = channel.activateUser(secret=secret)
-            # mandare mail di avvenuta conferma
-            if response == OK:
-                notify(SubscriptionEvent(self.context, user))
-                self._sendGenericMessage(
-                    template="activeuserconfirm_template",
-                    receiver=user,
-                    message="Messaggio di avvenuta iscrizione",
-                    message_title="Iscrizione confermata",
-                )
-                status = _(
-                    u"generic_activate_message_success",
-                    default=u'Ti sei iscritto alla newsletter {channel}'
-                    ' del portale "{site}".'.format(
-                        channel=self.context.title, site=get_site_title()
-                    ),
-                )
-
-        elif action == u"unsubscribe":
-            response, mail = channel.deleteUserWithSecret(secret=secret)
-            if response == OK:
-                notify(UnsubscriptionEvent(self.context, mail))
-                status = _(
-                    u"generic_delete_message_success",
-                    default=u"Succesfully unsubscribed.",
-                )
-
+        response, user = channel.activateUser(secret=secret)
+        # mandare mail di avvenuta conferma
+        if response == OK:
+            notify(SubscriptionEvent(self.context, user))
+            self._sendGenericMessage(
+                template="activeuserconfirm_template",
+                receiver=user,
+                message="Messaggio di avvenuta iscrizione",
+                message_title="Iscrizione confermata",
+            )
+            status = _(
+                u"generic_activate_message_success",
+                default=u'Ti sei iscritto alla newsletter ${channel} del portale "${site}".',
+                mapping=dict(
+                    channel=self.context.title, site=get_site_title()
+                ),
+            )
         if response == OK:
             api.portal.show_message(
                 message=status, request=self.request, type=u"info"
             )
         else:
             logger.error(
-                'Unable to unsubscribe user with token "{token}" on channel {channel}.'.format(  # noqa
-                    token=secret, channel=channel.absolute_url()
+                'Unable to subscribe user with token "{token}" on channel {channel}.'.format(  # noqa
+                    token=secret, channel=self.context.absolute_url()
                 )
             )
             api.portal.show_message(
                 message=_(
-                    "unable_to_unsubscribe",
-                    default=u"Unable to unsubscribe to this channel."
+                    "unable_to_subscribe",
+                    default=u"Unable to subscribe to this channel."
                     u" Please contact site administrator.",
                 ),
                 request=self.request,

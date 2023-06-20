@@ -10,7 +10,6 @@
           <metal:main fill-slot="main">
             <metal:main-macro define-macro="main">
               <div id="content-core" tal:content="structure view/contents" tal:condition="view/form_instance/isVisible"/>
-              <button class="button-plone-modal-close plone-btn" type="button" title="chiudi">Chiudi</button>
               <div class="filter">
                 <div class="portalMessage error" tal:condition="not: view/form_instance/isVisible" role="alert">
                   <strong>Error</strong>

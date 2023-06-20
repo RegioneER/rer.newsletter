@@ -38,5 +38,15 @@
     profile="rer.newsletter:default"
     handler=".upgrades.migrate_to_1004"
     />
+  
+  <genericsetup:upgradeStep
+    source="1004"
+    destination="1005"
+    title="Upgrade rer.newsletter to 1005"
+    description=""
+    profile="rer.newsletter:default"
+    handler=".upgrades.migrate_to_1005"
+    />
+
 
 </configure>

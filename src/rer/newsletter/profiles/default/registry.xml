@@ -14,7 +14,8 @@
             </value>
             <value key="enabled">True</value>
             <value key="jscompilation">++plone++rer.newsletter/scripts/initializedModal.js</value>
-            <value key="compile">True</value>
+            <value key="compile">False</value>
+            <value key="last_compilation">2017-11-26 00:00:00</value>
           </records>
 
 
@@ -33,7 +34,8 @@
             <value key="enabled">False</value>
             <value key="jscompilation">++plone++rer.newsletter/scripts/manageusers.js</value>
             <value key="csscompilation">++plone++rer.newsletter/datatables.css</value>
-            <value key="compile">True</value>
+            <value key="compile">False</value>
+            <value key="last_compilation">2017-11-26 00:00:00</value>
           </records>
 
 
@@ -52,7 +54,8 @@
             <value key="enabled">False</value>
             <value key="jscompilation">++plone++rer.newsletter/scripts/channelhistory.js</value>
             <value key="csscompilation">++plone++rer.newsletter/datatables.css</value>
-            <value key="compile">True</value>
+            <value key="compile">False</value>
+            <value key="last_compilation">2017-11-26 00:00:00</value>
           </records>
 
           <records prefix="plone.resources/newsletter_style"
@@ -66,7 +69,8 @@
             </value>
             <value key="enabled">True</value>
             <value key="csscompilation">++plone++rer.newsletter/custom.css</value>
-            <value key="compile">True</value>
+            <value key="compile">False</value>
+            <value key="last_compilation">2017-11-26 00:00:00</value>
           </records>
 
           <record name="plone.app.tiles">
