@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.2.1 (unreleased)
+1.3.0 (2023-06-20)
 ------------------
 
 - Handle unsubscribe with POST method, to avoid unwanted unsubscriptions or double clicks.
