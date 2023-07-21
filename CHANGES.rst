@@ -2,7 +2,7 @@
 Changelog
 =========
 
-2.0.0a3 (unreleased)
+2.0.0a3 (2023-07-21)
 --------------------
 
 - Adapt management buttons for Plone 6
