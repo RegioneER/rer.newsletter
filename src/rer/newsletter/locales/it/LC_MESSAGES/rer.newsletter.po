@@ -146,7 +146,7 @@ msgstr "Aggiungi un utente"
 #. Default: "Add"
 #: rer/newsletter/browser/channel/users/add.py:34
 msgid "add_user_admin_button"
-msgstr "Aggiunti un utente"
+msgstr "Aggiungi un utente"
 
 #. Default: "Insert email for add user to a Channel"
 #: rer/newsletter/browser/channel/users/add.py:21

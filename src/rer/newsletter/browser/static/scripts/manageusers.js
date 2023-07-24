@@ -4,8 +4,8 @@ import './datatables';
 
 function render_error(message) {
   $('.portalMessage')
-    .removeClass('info')
-    .addClass('error')
+    .removeClass('alert-info')
+    .addClass('alert-danger alert')
     .attr('role', 'alert')
     .css('display', '')
     .html('<strong>Error</strong> ' + message);
@@ -13,8 +13,8 @@ function render_error(message) {
 
 function render_info(message) {
   $('.portalMessage')
-    .removeClass('error')
-    .addClass('info')
+    .removeClass('alert-danger')
+    .addClass('alert-info alert')
     .attr('role', 'status')
     .css('display', '')
     .html('<strong>Info</strong> ' + message);
