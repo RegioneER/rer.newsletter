@@ -52,7 +52,7 @@ module.exports = () => {
 
   // config.externals = {
   //   ...config.externals,
-  //   jquery: "jQuery",
+  //   jquery: 'jQuery',
   // };
 
   if (process.env.NODE_ENV === 'development') {
