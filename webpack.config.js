@@ -11,7 +11,15 @@ module.exports = () => {
     entry: {
       'manageusers.min': path.resolve(
         __dirname,
-        'src/rer/newsletter/browser/static/scripts/manageusers',
+        'src/rer/newsletter/browser/static/scripts/index_manageusers',
+      ),
+      'channelhistory.min': path.resolve(
+        __dirname,
+        'src/rer/newsletter/browser/static/scripts/index_channelhistory',
+      ),
+      'initializedModal.min': path.resolve(
+        __dirname,
+        'src/rer/newsletter/browser/static/scripts/index_initializedModal',
       ),
     },
   };
