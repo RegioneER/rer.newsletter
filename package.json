@@ -1,0 +1,23 @@
+{
+  "name": "rer.newsletter",
+  "version": "2.0.0",
+  "description": "Newsletter add-on for Plone",
+  "main": "index.js",
+  "repository": "git@github.com:RedTurtle/rer.newsletter.git",
+  "author": "Piero Nicolli <piero.nicolli@redturtle.it>",
+  "license": "MIT",
+  "scripts": {
+    "build": "NODE_ENV=production webpack --config webpack.config.js",
+    "start": "NODE_ENV=development webpack serve --config webpack.config.js",
+    "stats": "NODE_ENV=production webpack --config webpack.config.js --json > stats.json"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "devDependencies": {
+    "@patternslib/dev": "^3.3.5",
+    "@plone/mockup": "^5.1.1"
+  },
+  "dependencies": {}
+}

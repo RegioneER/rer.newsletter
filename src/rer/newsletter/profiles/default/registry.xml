@@ -27,7 +27,7 @@
   <records interface="Products.CMFPlone.interfaces.IResourceRegistry"
            prefix="plone.resources/datatables"
   >
-    <value key="js">++plone++rer.newsletter/scripts/manageusers.js</value>
+    <value key="js">++plone++rer.newsletter/scripts/prod/manageusers.min.js</value>
     <value key="css">
       <element>++plone++rer.newsletter/datatables.css</element>
     </value>
@@ -41,7 +41,7 @@
       <element>datatables</element>
     </value>
     <value key="enabled">False</value>
-    <value key="jscompilation">++plone++rer.newsletter/scripts/manageusers.js</value>
+    <value key="jscompilation">++plone++rer.newsletter/scripts/prod/manageusers.min.js</value>
     <value key="csscompilation">++plone++rer.newsletter/datatables.css</value>
     <value key="compile">True</value>
   </records>
