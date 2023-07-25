@@ -1789,7 +1789,7 @@
     codejar "^3.6.0"
     highlight.js "<11"
 
-"@patternslib/patternslib@>=9.7.0-alpha.0", "@patternslib/patternslib@^9.9.4":
+"@patternslib/patternslib@<10", "@patternslib/patternslib@>=9.7.0-alpha.0", "@patternslib/patternslib@^9.9.4":
   version "9.9.4"
   resolved "https://registry.yarnpkg.com/@patternslib/patternslib/-/patternslib-9.9.4.tgz#57bfc8a53c0484e420b937d909398e53de532b49"
   integrity sha512-ZifJGsc82eYCPxulk4dP3jYqu0Ap+d9vai/JyE87dB3eDYiV24zYLo1iVJGYY71ihzzWpEAaKmrptNzKSHSFjw==
@@ -6298,7 +6298,7 @@ jquery.browser@0.1.0:
   resolved "https://registry.yarnpkg.com/jquery.browser/-/jquery.browser-0.1.0.tgz#9c72a6095fd2814b44476ea8f716677b72a6a2bb"
   integrity sha512-5GjtLzzEBzxs/nwSVpCbSdk0acssfKsP7Upp43zmdHVV1Vb6E9VayyqPAQlfLrTeZL3YSWocCbkOvKdAc2CN4g==
 
-jquery@>=1.7, jquery@>=1.7.2, jquery@^3.6.3, jquery@^3.6.4:
+jquery@<4, jquery@>=1.7, jquery@>=1.7.2, jquery@^3.6.3, jquery@^3.6.4:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.7.0.tgz#fe2c01a05da500709006d8790fe21c8a39d75612"
   integrity sha512-umpJ0/k8X0MvD1ds0P9SfowREz2LenHsQaxSohMZ5OMNEU2r0tf8pdeEFTHMFxWVxKNyU9rTtK3CWzUCTKJUeQ==

@@ -23,8 +23,6 @@ function render_info(message) {
 }
 
 $(document).ready(function () {
-  var table = null;
-  // var num_users_table = 0;
 
   // triggero l'apertura delle modal
   $('#users-export > span').on('click', function () {
@@ -45,18 +43,18 @@ $(document).ready(function () {
   });
 
   $('#delete-user > span').on('click', function () {
-    if (!table.row('.selected').data()) {
+    if (!user_table.row('.selected').data()) {
       render_error('Prima va selezionato un utente.');
     } else {
       $.ajax({
         url: 'deleteUser',
         type: 'post',
         data: {
-          email: table.row('.selected').data().email,
+          email: user_table.row('.selected').data().email,
         },
       }).done(function (data) {
         if (JSON.parse(data).ok) {
-          table.row('.selected').remove().draw(false);
+          user_table.row('.selected').remove().draw(false);
           render_info('Utente eliminato con successo.');
         } else {
           render_error("Problemi con la cancellazione dell'utente");
@@ -64,27 +62,6 @@ $(document).ready(function () {
       });
     }
   });
-
-  function reload_table($action, response, options) {
-    count = table.data().count();
-    table.ajax.reload(function (json) {
-      num_users = json.length - count;
-      if (num_users > 0) {
-        if (num_users == 1) {
-          render_info('Aggiunto ' + num_users + ' utente.');
-        } else {
-          render_info('Aggiunti ' + num_users + ' utenti.');
-        }
-      } else if (num_users < 0) {
-        if (Math.abs(num_users) == 1) {
-          render_info('Rimosso ' + Math.abs(num_users) + ' utente.');
-        } else {
-          render_info('Rimossi ' + Math.abs(num_users) + ' utenti.');
-        }
-      }
-    });
-    $action.$modal.trigger('destroy.plone-modal.patterns');
-  }
 
   new Modal($('#button-add-user'), {
     backdropOptions: {
@@ -108,7 +85,7 @@ $(document).ready(function () {
   });
 
   // inizializzazione datatables
-  table = $('#users-table').DataTable({
+  var user_table = $('#users-table').DataTable({
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.10.16/i18n/Italian.json',
     },
@@ -127,8 +104,29 @@ $(document).ready(function () {
     if ($(this).hasClass('selected')) {
       $(this).removeClass('selected');
     } else {
-      table.$('tr.selected').removeClass('selected');
+      user_table.$('tr.selected').removeClass('selected');
       $(this).addClass('selected');
     }
   });
+
+  function reload_table($action, response, options) {
+    var count = user_table.data().count();
+    user_table.ajax.reload(function (json) {
+      var num_users = json.length - count;
+      if (num_users > 0) {
+        if (num_users == 1) {
+          render_info('Aggiunto ' + num_users + ' utente.');
+        } else {
+          render_info('Aggiunti ' + num_users + ' utenti.');
+        }
+      } else if (num_users < 0) {
+        if (Math.abs(num_users) == 1) {
+          render_info('Rimosso ' + Math.abs(num_users) + ' utente.');
+        } else {
+          render_info('Rimossi ' + Math.abs(num_users) + ' utenti.');
+        }
+      }
+    });
+    $action.$modal.trigger('destroy.plone-modal.patterns');
+  }
 });
