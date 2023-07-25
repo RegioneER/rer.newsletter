@@ -1,9 +1,8 @@
+import $ from 'jquery';
 import Modal from '@plone/mockup/src/pat/modal/modal';
 import './datatables';
 
-async function render_error(message) {
-  const $ = (await import('jquery')).default;
-
+function render_error(message) {
   $('.portalMessage')
     .removeClass('info')
     .addClass('error')
@@ -12,9 +11,7 @@ async function render_error(message) {
     .html('<strong>Error</strong> ' + message);
 }
 
-async function render_info(message) {
-  const $ = (await import('jquery')).default;
-
+function render_info(message) {
   $('.portalMessage')
     .removeClass('error')
     .addClass('info')
@@ -23,9 +20,7 @@ async function render_info(message) {
     .html('<strong>Info</strong> ' + message);
 }
 
-$(document).ready(async function () {
-  const $ = (await import('jquery')).default;
-
+$(document).ready(function () {
   var table = null;
   // var num_users_table = 0;
 

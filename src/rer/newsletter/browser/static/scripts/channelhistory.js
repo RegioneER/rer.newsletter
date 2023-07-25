@@ -1,8 +1,7 @@
+import $ from 'jquery';
 import './datatables';
 
-$(document).ready(async function () {
-  const $ = (await import('jquery')).default;
-
+$(document).ready(function () {
   $('#delete-message-sent > span').on('click', function () {
     if (!table.row('.selected').data()) {
       // render error user deleted

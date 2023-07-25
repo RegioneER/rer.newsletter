@@ -1,15 +1,12 @@
+import $ from 'jquery';
 import Modal from '@plone/mockup/src/pat/modal/modal';
 
-async function hide_element_modal() {
-  const $ = (await import('jquery')).default;
-
+function hide_element_modal() {
   $('.content_container').hide();
   $('.pattern-modal-buttons input').hide();
 }
 
-async function init(modal) {
-  const $ = (await import('jquery')).default;
-
+function init(modal) {
   var firstInput = null;
   var lastInput = null;
   var closeInput = null;
@@ -107,9 +104,7 @@ async function init(modal) {
     });
 }
 
-async function render_modal(el) {
-  const $ = (await import('jquery')).default;
-
+function render_modal(el) {
   modal = new Modal($(el), {
     backdropOptions: {
       closeOnEsc: true,
@@ -136,9 +131,7 @@ async function render_modal(el) {
 }
 
 // aspetto che le tile all'interno della pagina siano caricate
-$(document).ready(async function () {
-  const $ = (await import('jquery')).default;
-
+$(document).ready(function () {
   if ($('body').hasClass('userrole-anonymous')) {
     $('.tileBody #channel-subscribe a').each(function (i, el) {
       render_modal(el);
