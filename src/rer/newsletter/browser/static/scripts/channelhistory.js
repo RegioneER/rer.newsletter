@@ -6,8 +6,9 @@ $(document).ready(function () {
     if (!table.row('.selected').data()) {
       // render error user deleted
       $('.portalMessage')
-        .removeClass('info')
-        .addClass('error')
+        .removeClass('alert-info')
+        .addClass('alert')
+        .addClass('alert-danger')
         .attr('role', 'alert')
         .css('display', '')
         .html('<strong>Error</strong> Prima va selezionato un messaggio.');
@@ -22,8 +23,9 @@ $(document).ready(function () {
         if (JSON.parse(data).ok) {
           table.row('.selected').remove().draw(false);
           $('.portalMessage')
-            .removeClass('error')
-            .addClass('info')
+            .removeClass('alert-danger')
+            .addClass('alert')
+            .addClass('alert-info')
             .attr('role', 'status')
             .css('display', '')
             .html(
@@ -31,8 +33,9 @@ $(document).ready(function () {
             );
         } else {
           $('.portalMessage')
-            .removeClass('info')
-            .addClass('error')
+            .removeClass('alert-info')
+            .addClass('alert')
+            .addClass('alert-danger')
             .attr('role', 'alert')
             .css('display', '')
             .html(
@@ -44,7 +47,7 @@ $(document).ready(function () {
   });
 
   // inizializzazione datatables
-  table = $('#message-table').DataTable({
+  var table = $('#message-table').DataTable({
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.10.16/i18n/Italian.json',
     },

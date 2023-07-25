@@ -6,6 +6,9 @@
   "repository": "git@github.com:RedTurtle/rer.newsletter.git",
   "author": "Piero Nicolli <piero.nicolli@redturtle.it>",
   "license": "MIT",
+  "engines": {
+    "node": ">=12.20.0"
+  },
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.config.js",
     "start": "NODE_ENV=development webpack serve --config webpack.config.js",
@@ -13,11 +16,25 @@
   },
   "prettier": {
     "singleQuote": true,
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "overrides": [
+      {
+        "files": "*.css",
+        "options": {
+          "tabWidth": 4
+        }
+      }
+    ]
   },
   "devDependencies": {
-    "@patternslib/dev": "^3.3.5",
+    "@patternslib/dev": "^3.3.5"
+  },
+  "dependencies": {
+    "@patternslib/patternslib": ">=9.7.0-alpha.0",
     "@plone/mockup": "^5.1.1"
   },
-  "dependencies": {}
+  "resolutions": {
+    "@patternslib/patternslib": "<10",
+    "jquery": "<4"
+  }
 }

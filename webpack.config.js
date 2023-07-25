@@ -2,6 +2,7 @@ process.traceDeprecation = true;
 const mf_config = require('@patternslib/dev/webpack/webpack.mf');
 const path = require('path');
 const package_json = require('./package.json');
+const package_json_mockup = require('@plone/mockup/package.json');
 const package_json_patternslib = require('@patternslib/patternslib/package.json');
 const webpack_config =
   require('@patternslib/dev/webpack/webpack.config').config;
@@ -45,19 +46,15 @@ module.exports = () => {
       remote_entry: config.entry['manageusers.min'],
       dependencies: {
         ...package_json_patternslib.dependencies,
+        ...package_json_mockup.dependencies,
         ...package_json.dependencies,
       },
     }),
   );
 
-  // config.externals = {
-  //   ...config.externals,
-  //   jquery: "jQuery",
-  // };
-
   if (process.env.NODE_ENV === 'development') {
-    config.devServer.port = '8011';
-    config.devServer.static.directory = __dirname;
+    config.devServer.port = '3001';
+    config.devServer.static.directory = path.resolve(__dirname, './resources/');
   }
 
   // console.log(JSON.stringify(config, null, 4));

@@ -1789,7 +1789,7 @@
     codejar "^3.6.0"
     highlight.js "<11"
 
-"@patternslib/patternslib@^9.9.4":
+"@patternslib/patternslib@>=9.7.0-alpha.0", "@patternslib/patternslib@^9.9.4":
   version "9.9.4"
   resolved "https://registry.yarnpkg.com/@patternslib/patternslib/-/patternslib-9.9.4.tgz#57bfc8a53c0484e420b937d909398e53de532b49"
   integrity sha512-ZifJGsc82eYCPxulk4dP3jYqu0Ap+d9vai/JyE87dB3eDYiV24zYLo1iVJGYY71ihzzWpEAaKmrptNzKSHSFjw==
