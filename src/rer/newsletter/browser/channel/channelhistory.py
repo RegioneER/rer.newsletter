@@ -31,12 +31,11 @@ class ChannelHistory(BrowserView):
             context=self.context, portal_type="Message"
         )
         for message in messages:
-            obj = message.getObject()
             annotations = IAnnotations(self.context)
             if KEY in list(annotations.keys()):
                 annotations = annotations[KEY]
                 for i, k in enumerate(annotations):
-                    if message_history == k['uid']:
+                    if message_history == k["uid"]:
                         del annotations[i]
                         transaction.commit()
                         break
