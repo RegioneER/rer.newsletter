@@ -2,7 +2,7 @@
 Changelog
 =========
 
-2.0.0a4 (unreleased)
+2.0.0a4 (2023-07-26)
 --------------------
 
 - Fixed resources with module federation for Plone 6 support
