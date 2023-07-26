@@ -18,6 +18,7 @@ from zope.interface import Interface
 import json
 import re
 import six
+import transaction
 import uuid
 
 
@@ -97,6 +98,8 @@ class BaseAdapter(object):
                 ),
             }
 
+            transaction.commit()
+
         return OK, uuid_activation
 
     def activateUser(self, secret):
@@ -127,6 +130,8 @@ class BaseAdapter(object):
                 "creation_date": subscriptions[element_id]["creation_date"],
             }
 
+            transaction.commit()
+
             return OK, element_id
         else:
             return INVALID_SECRET, element_id
@@ -142,6 +147,8 @@ class BaseAdapter(object):
                 del subscriptions[key]
                 return OK, key
 
+        transaction.commit()
+
         # caso in cui non trovo l'utente
         if not user_found:
             return INEXISTENT_EMAIL, None
@@ -156,6 +163,8 @@ class BaseAdapter(object):
             return MAIL_NOT_PRESENT
 
         del subscriptions[mail]
+        transaction.commit()
+
         return OK
 
     def addUser(self, mail):
@@ -183,6 +192,8 @@ class BaseAdapter(object):
                 ),
             }
 
+            transaction.commit()
+
         return OK
 
     def unsubscribe(self, mail):
@@ -193,6 +204,9 @@ class BaseAdapter(object):
         subscriptions = self.channel_subscriptions
 
         subscription = subscriptions.get(mail, None)
+
+        transaction.commit()
+
         if not subscription:
             return INEXISTENT_EMAIL, None
         return OK, subscription["token"]
@@ -235,6 +249,8 @@ class BaseAdapter(object):
             else:
                 logger.info("INVALID_EMAIL: %s", user)
 
+        transaction.commit()
+
         return OK
 
     def deleteUserList(self, usersList):
@@ -246,6 +262,8 @@ class BaseAdapter(object):
             if user in list(subscriptions.keys()):
                 del subscriptions[user]
 
+        transaction.commit()
+
         return OK
 
     def emptyChannelUsersList(self):
@@ -253,5 +271,7 @@ class BaseAdapter(object):
 
         subscriptions = self.channel_subscriptions
         subscriptions.clear()
+
+        transaction.commit()
 
         return OK

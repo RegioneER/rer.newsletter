@@ -68,3 +68,7 @@ body.template-subscribe #content .informativa {
     height: 10em;
     overflow: auto;
 }
+
+.modal .modal-content .modal-body header {
+    display: none;
+}

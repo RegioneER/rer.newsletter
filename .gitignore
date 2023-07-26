@@ -17,6 +17,7 @@ htmlcov/
 include/
 lib/
 local/
+node_modules/
 parts/
 src/*
 test.plone_addon/
