@@ -5,7 +5,8 @@ Changelog
 2.0.0a4 (unreleased)
 --------------------
 
-- Nothing changed yet.
+- Fixed resources with module federation for Plone 6 support
+  [pnicolli,sabrybabi,eikichi18]
 
 
 2.0.0a3 (2023-07-21)
