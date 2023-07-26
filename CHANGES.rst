@@ -6,7 +6,7 @@ Changelog
 --------------------
 
 - Fixed resources with module federation for Plone 6 support
-  [pnicolli,sabrybabi,eikichi18]
+  [pnicolli,sabrina-bongiovanni,eikichi18]
 
 
 2.0.0a3 (2023-07-21)
