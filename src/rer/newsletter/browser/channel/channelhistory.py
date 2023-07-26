@@ -5,6 +5,7 @@ from Products.Five.browser import BrowserView
 from zope.annotation.interfaces import IAnnotations
 
 import json
+import transaction
 
 
 KEY = "rer.newsletter.channel.history"
@@ -30,13 +31,13 @@ class ChannelHistory(BrowserView):
             context=self.context, portal_type="Message"
         )
         for message in messages:
-            obj = message.getObject()
-            annotations = IAnnotations(obj)
+            annotations = IAnnotations(self.context)
             if KEY in list(annotations.keys()):
                 annotations = annotations[KEY]
-                for k in annotations.keys():
-                    if message_history == k:
-                        del annotations[k]
+                for i, k in enumerate(annotations):
+                    if message_history == k["uid"]:
+                        del annotations[i]
+                        transaction.commit()
                         break
         response = {}
         response["ok"] = True

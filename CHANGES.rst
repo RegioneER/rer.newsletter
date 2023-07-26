@@ -2,10 +2,24 @@
 Changelog
 =========
 
-2.0.0a3 (unreleased)
+2.0.0a5 (unreleased)
 --------------------
 
 - Nothing changed yet.
+
+
+2.0.0a4 (2023-07-26)
+--------------------
+
+- Fixed resources with module federation for Plone 6 support
+  [pnicolli,sabrina-bongiovanni,eikichi18]
+
+
+2.0.0a3 (2023-07-21)
+--------------------
+
+- Adapt management buttons for Plone 6
+  [pnicolli]
 
 
 2.0.0a2 (2023-03-16)
