@@ -69,6 +69,6 @@ body.template-subscribe #content .informativa {
     overflow: auto;
 }
 
-.modal .modal-content .modal-body header {
+.portaltype-channel .modal .modal-content .modal-body header {
     display: none;
 }
