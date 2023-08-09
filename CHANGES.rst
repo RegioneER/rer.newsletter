@@ -2,10 +2,11 @@
 Changelog
 =========
 
-2.0.0a5 (unreleased)
+3.0.0 (unreleased)
 --------------------
 
-- Nothing changed yet.
+- release
+  [eikichi18]
 
 
 2.0.0a4 (2023-07-26)
