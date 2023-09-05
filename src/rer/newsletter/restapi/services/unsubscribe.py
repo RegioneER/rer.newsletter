@@ -72,6 +72,7 @@ class NewsletterUnsubscribe(Service):
 
         parameters = {
             "header": self.context.header,
+            "title": self.context.title,
             "footer": self.context.footer,
             "style": self.context.css_style,
             "activationUrl": url,
