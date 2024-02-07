@@ -48,13 +48,6 @@
       />
 
   <genericsetup:registerProfile
-      name="plone5"
-      title="rer.newsletter: Plone5 profile"
-      description="Installs the rer.newsletter profile for Plone5."
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      directory="profiles/plone5"
-      />
-  <genericsetup:registerProfile
       name="uninstall"
       title="rer.newsletter (uninstall)"
       description="Uninstalls the rer.newsletter add-on."
