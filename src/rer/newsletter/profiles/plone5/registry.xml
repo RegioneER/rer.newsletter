@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<registry xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+          i18n:domain="rer.newsletter"
+>
+
+  <!-- this resource breaks plone6 rresource registry, needs to be fixed or dropped -->
+  <records interface="Products.CMFPlone.interfaces.IResourceRegistry"
+           prefix="plone.resources/initializedModal"
+  >
+    <value key="js">++plone++rer.newsletter/scripts/prod/initializedModal.min.js</value>
+  </records>
+  <records interface="Products.CMFPlone.interfaces.IBundleRegistry"
+           prefix="plone.bundles/initializedModal"
+  >
+    <value key="resources"
+           purge="false"
+    >
+      <element>initializedModal</element>
+    </value>
+    <value key="enabled">True</value>
+    <value key="jscompilation">++plone++rer.newsletter/scripts/prod/initializedModal.min.js</value>
+    <value key="compile">True</value>
+  </records>
