@@ -2,6 +2,7 @@
 from collective.volto.blocksfield.field import BlocksField
 from plone import schema
 from plone.app.contenttypes.interfaces import ICollection
+from plone.namedfile import field as namedfile
 from plone.supermodel import model
 from rer.newsletter import _
 from zope.interface import Interface
@@ -114,6 +115,26 @@ class IChannelSchema(model.Schema):
             default="Usa il link standard per l'unsubscribe",
         ),
         default=True,
+        required=False,
+    )
+
+    logo_header_mail = namedfile.NamedBlobImage(
+        title=_("logo_header_mail", default="Logo header mail"),
+        description=_(
+            "description_logo_header_mail",
+            default="Aggiungi il logo ne inserire nell'header della mail, copia il "
+                    "link e inseriscilo a mano nel campo HTML dell'header"
+        ),
+        required=False,
+    )
+
+    logo_footer_mail = namedfile.NamedBlobImage(
+        title=_("logo_footer_mail", default="Logo footer mail"),
+        description=_(
+            "description_logo_footer_mail",
+            default="Aggiungi il logo ne inserire nel footer della mail, copia il "
+                    "link e inseriscilo a mano nel campo HTML del footer"
+        ),
         required=False,
     )
 
