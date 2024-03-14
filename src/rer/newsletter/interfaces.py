@@ -129,7 +129,7 @@ class IChannelSchema(model.Schema):
     )
 
     logo_footer_mail = namedfile.NamedBlobImage(
-        title=_("logo_footer_mail", default="Logo footer mail"),
+        title=_("logo_footer_mail", default="Logo per il footer delle e-mail"),
         description=_(
             "description_logo_footer_mail",
             default="Aggiungi il logo ne inserire nel footer della mail, copia il "
