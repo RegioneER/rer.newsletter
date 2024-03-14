@@ -132,7 +132,7 @@ class IChannelSchema(model.Schema):
         title=_("logo_footer_mail", default="Logo per il footer delle e-mail"),
         description=_(
             "description_logo_footer_mail",
-            default="Aggiungi il logo ne inserire nel footer della mail, copia il "
+            default="Aggiungi il logo da inserire nel footer della mail, copia il "
                     "link e inseriscilo a mano nel campo HTML del footer"
         ),
         required=False,
