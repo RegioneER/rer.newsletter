@@ -39,16 +39,19 @@
       >
         <span tal:replace="structure header"></span>
         <tr>
-          <td align="left" colspan="2">
+          <td align="left"
+              colspan="2"
+          >
             <div class="newsletterTitle">
               <h1>${title}</h1>
             </div>
           </td>
         </tr>
         <tr>
-          <td align="left" colspan="2">
-            <p class="message_core"
-            >Per confermare la tua richiesta di iscrizione a Newsletter ${title}, &egrave; necessario collegarsi entro 48 ore al seguente link:
+          <td align="left"
+              colspan="2"
+          >
+            <p class="message_core">Per confermare la tua richiesta di iscrizione a Newsletter ${title}, &egrave; necessario collegarsi entro 48 ore al seguente link:
               <br />
               <a href="${activationUrl}">${activationUrl}</a>
               <br />

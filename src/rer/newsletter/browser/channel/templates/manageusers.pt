@@ -40,7 +40,9 @@
       </a>
 
       <div id="content-core"
-           tal:define="plone_6 context/@@plone_version/is_plone_6_or_above"
+           tal:define="
+             plone_6 context/@@plone_version/is_plone_6_or_above;
+           "
       >
         <div class="portalMessage"
              style="display:none;"
@@ -50,9 +52,11 @@
 
         <div style="margin-bottom: 2%;">
           <span id="users-import">
-            <a tal:attributes="class python: plone_6 and 'btn btn-primary' or 'plone-btn plone-btn-primary'"
-               id="button-import-users"
+            <a id="button-import-users"
                href="users_import"
+               tal:attributes="
+                 class python: plone_6 and 'btn btn-primary' or 'plone-btn plone-btn-primary';
+               "
                i18n:translate="import_user_list"
             >
               Import Users List
@@ -60,7 +64,9 @@
           </span>
 
           <span id="users-export">
-            <span tal:attributes="class python: plone_6 and 'btn btn-primary' or 'plone-btn plone-btn-primary'"
+            <span tal:attributes="
+                    class python: plone_6 and 'btn btn-primary' or 'plone-btn plone-btn-primary';
+                  "
                   i18n:translate="export_user_list"
             >
               Export Users List
@@ -68,9 +74,11 @@
           </span>
 
           <span id="add-user">
-            <a tal:attributes="class python: plone_6 and 'btn btn-large btn-primary' or 'plone-btn plone-btn-large plone-btn-primary'"
-               id="button-add-user"
+            <a id="button-add-user"
                href="adduser_channel"
+               tal:attributes="
+                 class python: plone_6 and 'btn btn-large btn-primary' or 'plone-btn plone-btn-large plone-btn-primary';
+               "
                i18n:translate="add_user"
             >
               Add User
@@ -78,7 +86,9 @@
           </span>
 
           <span id="delete-user">
-            <span tal:attributes="class python: plone_6 and 'btn btn-primary' or 'plone-btn plone-btn-primary'"
+            <span tal:attributes="
+                    class python: plone_6 and 'btn btn-primary' or 'plone-btn plone-btn-primary';
+                  "
                   i18n:translate="delete_user"
             >
               Delete User

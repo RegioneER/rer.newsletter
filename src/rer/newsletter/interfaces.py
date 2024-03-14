@@ -122,8 +122,9 @@ class IChannelSchema(model.Schema):
         title=_("logo_header_mail", default="Logo header mail"),
         description=_(
             "description_logo_header_mail",
-            default="Aggiungi il logo ne inserire nell'header della mail, copia il "
-                    "link e inseriscilo a mano nel campo HTML dell'header"
+            default="Aggiungi il logo ne inserire nell'header della mail, "
+            "copia il link e inseriscilo a mano nel campo HTML "
+            "dell'header",
         ),
         required=False,
     )
@@ -132,8 +133,9 @@ class IChannelSchema(model.Schema):
         title=_("logo_footer_mail", default="Logo footer mail"),
         description=_(
             "description_logo_footer_mail",
-            default="Aggiungi il logo ne inserire nel footer della mail, copia il "
-                    "link e inseriscilo a mano nel campo HTML del footer"
+            default="Aggiungi il logo ne inserire nel footer della mail, "
+            "copia il link e inseriscilo a mano nel campo HTML "
+            "del footer",
         ),
         required=False,
     )
