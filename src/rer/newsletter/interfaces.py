@@ -119,7 +119,7 @@ class IChannelSchema(model.Schema):
     )
 
     logo_header_mail = namedfile.NamedBlobImage(
-        title=_("logo_header_mail", default="Logo header mail"),
+        title=_("logo_header_mail", default="Logo per l'header delle e-mail"),
         description=_(
             "description_logo_header_mail",
             default="Aggiungi il logo ne inserire nell'header della mail, copia il "
