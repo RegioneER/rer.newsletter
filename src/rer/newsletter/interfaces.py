@@ -122,7 +122,7 @@ class IChannelSchema(model.Schema):
         title=_("logo_header_mail", default="Logo per l'header delle e-mail"),
         description=_(
             "description_logo_header_mail",
-            default="Aggiungi il logo ne inserire nell'header della mail, copia il "
+            default="Aggiungi il logo da inserire nell'header della mail, copia il "
                     "link e inseriscilo a mano nel campo HTML dell'header"
         ),
         required=False,
