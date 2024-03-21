@@ -1,6 +1,8 @@
 <div id="manage-channel"
+     tal:define="
+       plone_6 context/@@plone_version/is_plone_6_or_above;
+     "
      i18n:domain="rer.newsletter"
-     tal:define="plone_6 context/@@plone_version/is_plone_6_or_above"
 >
   <div style="margin-bottom: 2%;">
     <span id="users-manage">
