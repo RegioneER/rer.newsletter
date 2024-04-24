@@ -55,7 +55,7 @@
       directory="profiles/uninstall"
       post_handler=".setuphandlers.uninstall"
       />
-  
+
   <genericsetup:registerProfile
       name="to_1005"
       title="rer.newsletter: disable bundle"
