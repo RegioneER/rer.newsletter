@@ -15,9 +15,7 @@ class ISettingsSchema(Interface):
 
     source_link = schema.TextLine(
         title=_("source_link", default="Link sorgente"),
-        description=_(
-            "description_source_link", default="Indirizzo da sostituire"
-        ),
+        description=_("description_source_link", default="Indirizzo da sostituire"),
         default="",
         required=False,
     )

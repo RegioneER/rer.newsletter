@@ -86,9 +86,7 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
             url += "&_authenticator=" + token
             url += "&action=subscribe"
 
-            mail_template = self.context.restrictedTraverse(
-                "@@activeuser_template"
-            )
+            mail_template = self.context.restrictedTraverse("@@activeuser_template")
 
             parameters = {
                 "title": self.context.title,
@@ -102,9 +100,7 @@ class SubscribeForm(AutoExtensibleForm, form.Form):
             mail_text = mail_template(**parameters)
 
             portal = api.portal.get()
-            mail_text = portal.portal_transforms.convertTo(
-                "text/mail", mail_text
-            )
+            mail_text = portal.portal_transforms.convertTo("text/mail", mail_text)
             sender = compose_sender(channel=self.context)
 
             channel_title = self.context.title

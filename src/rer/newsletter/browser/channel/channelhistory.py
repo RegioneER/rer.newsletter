@@ -27,9 +27,7 @@ class ChannelHistory(BrowserView):
         message_history = self.request.get("message_history")
 
         # recupero tutti i messaggi del canale
-        messages = api.content.find(
-            context=self.context, portal_type="Message"
-        )
+        messages = api.content.find(context=self.context, portal_type="Message")
         for message in messages:
             annotations = IAnnotations(self.context)
             if KEY in list(annotations.keys()):

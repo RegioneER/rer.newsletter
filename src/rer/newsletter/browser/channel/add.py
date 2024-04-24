@@ -43,9 +43,7 @@ class AddForm(add.DefaultAddForm):
                 )
             )
             status = "Problems...{status}".format(status=status)
-            api.portal.show_message(
-                message=status, request=self.request, type="error"
-            )
+            api.portal.show_message(message=status, request=self.request, type="error")
 
 
 class AddView(add.DefaultAddView):

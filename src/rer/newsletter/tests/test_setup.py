@@ -31,14 +31,10 @@ class TestSetup(unittest.TestCase):
         """Test if rer.newsletter is installed."""
         if hasattr(self.installer, "is_product_installed"):
             # Plone 6
-            self.assertTrue(
-                self.installer.is_product_installed("rer.newsletter")
-            )
+            self.assertTrue(self.installer.is_product_installed("rer.newsletter"))
         else:
             # Plone 5
-            self.assertTrue(
-                self.installer.isProductInstalled("rer.newsletter")
-            )
+            self.assertTrue(self.installer.isProductInstalled("rer.newsletter"))
 
     def test_browserlayer(self):
         """Test that IRerNewsletterLayer is registered."""
@@ -71,14 +67,10 @@ class TestUninstall(unittest.TestCase):
         """Test if rer.newsletter is cleanly uninstalled."""
         if hasattr(self.installer, "is_product_installed"):
             # Plone 6
-            self.assertFalse(
-                self.installer.is_product_installed("rer.newsletter")
-            )
+            self.assertFalse(self.installer.is_product_installed("rer.newsletter"))
         else:
             # Plone 5
-            self.assertFalse(
-                self.installer.isProductInstalled("rer.newsletter")
-            )
+            self.assertFalse(self.installer.isProductInstalled("rer.newsletter"))
 
     def test_browserlayer_removed(self):
         """Test that IRerNewsletterLayer is removed."""

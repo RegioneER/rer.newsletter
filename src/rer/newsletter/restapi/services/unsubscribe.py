@@ -41,9 +41,7 @@ class NewsletterUnsubscribe(Service):
 
         email = data.get("email", None)
 
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
 
         status, secret = channel.unsubscribe(email)
 
@@ -66,9 +64,7 @@ class NewsletterUnsubscribe(Service):
         url += "&_authenticator=" + token
         url += "&action=unsubscribe"
 
-        mail_template = self.context.restrictedTraverse(
-            "@@deleteuser_template"
-        )
+        mail_template = self.context.restrictedTraverse("@@deleteuser_template")
 
         parameters = {
             "header": self.context.header,
