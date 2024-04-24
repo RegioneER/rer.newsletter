@@ -55,6 +55,14 @@
       directory="profiles/uninstall"
       post_handler=".setuphandlers.uninstall"
       />
+  
+  <genericsetup:registerProfile
+      name="to_1005"
+      title="rer.newsletter: disable bundle"
+      description="Disable the rer.newsletter bundle."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/to_1005"
+      />
 
   <!-- registro l'utility per la coda dei messaggi -->
   <utility
