@@ -5,7 +5,8 @@ Changelog
 3.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Added fields for customize header and footer logos in newsletter.
+  [eikichi18]
 
 
 3.0.1 (2023-09-06)

@@ -37,14 +37,18 @@
       >
         <span tal:replace="structure header"></span>
         <tr>
-          <td align="left" colspan="2">
+          <td align="left"
+              colspan="2"
+          >
             <div class="newsletterTitle">
               <h1>${channel_name}</h1>
             </div>
           </td>
         </tr>
         <tr>
-          <td align="left" colspan="2">
+          <td align="left"
+              colspan="2"
+          >
             <p class="message_core">
             La tua iscrizione alla newsletter ${channel_name} &egrave; stata effettuata con successo.
             </p>
