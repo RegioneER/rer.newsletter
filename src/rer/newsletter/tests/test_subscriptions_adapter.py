@@ -4,7 +4,7 @@ from plone import api
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
-from rer.newsletter.testing import RER_NEWSLETTER_INTEGRATION_TESTING
+from rer.newsletter.testing import RER_NEWSLETTER_FUNCTIONAL_TESTING
 from rer.newsletter.utils import ALREADY_SUBSCRIBED
 from rer.newsletter.utils import INEXISTENT_EMAIL
 from rer.newsletter.utils import INVALID_EMAIL
@@ -20,7 +20,7 @@ import unittest
 class TestSubscriptionsAdapter(unittest.TestCase):
     """Test on the 'subscriptions' adapter"""
 
-    layer = RER_NEWSLETTER_INTEGRATION_TESTING
+    layer = RER_NEWSLETTER_FUNCTIONAL_TESTING
 
     def setUp(self):
         """Custom shared utility setup for tests."""
