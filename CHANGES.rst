@@ -2,7 +2,7 @@
 Changelog
 =========
 
-3.0.2 (unreleased)
+3.0.2 (2024-05-06)
 ------------------
 
 - Added fields for customize header and footer logos in newsletter.
