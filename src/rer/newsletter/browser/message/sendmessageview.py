@@ -57,9 +57,7 @@ class SendMessageView(form.Form):
     @property
     @memoize
     def active_subscriptions(self):
-        channel = getMultiAdapter(
-            (self.channel, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.channel, self.request), IChannelSubscriptions)
         return channel.active_subscriptions
 
     @button.buttonAndHandler(_("send_sendingview", default="Send"))
@@ -78,9 +76,7 @@ class SendMessageView(form.Form):
             status = self.send_syncronous()
         message = status == OK and self.success_message or self.error_message
         type = status == OK and "info" or "error"
-        api.portal.show_message(
-            message=message, request=self.request, type=type
-        )
+        api.portal.show_message(message=message, request=self.request, type=type)
         self.request.response.redirect(self.context.absolute_url())
 
     def send_syncronous(self):

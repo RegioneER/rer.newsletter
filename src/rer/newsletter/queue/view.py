@@ -43,9 +43,7 @@ class ProcessQueue(BrowserView):
                 "message_title": message.title,
             }
             mail_text = message_template(**parameters)
-            mail_text = portal.portal_transforms.convertTo(
-                "text/mail", mail_text
-            )
+            mail_text = portal.portal_transforms.convertTo("text/mail", mail_text)
 
             # response_email = None
             # if channel.response_email:
@@ -97,9 +95,7 @@ class ProcessQueue(BrowserView):
 
         status = UNHANDLED
         message = self._getMessage()
-        channel = getMultiAdapter(
-            (self._getChannel(), self.request), IChannelSender
-        )
+        channel = getMultiAdapter((self._getChannel(), self.request), IChannelSender)
 
         unsubscribe_footer_template = message.restrictedTraverse(
             "@@unsubscribe_channel_template"

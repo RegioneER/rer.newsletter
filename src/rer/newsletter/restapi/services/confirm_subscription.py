@@ -19,9 +19,7 @@ from zope.interface import alsoProvides
 
 class NewsletterConfirmSubscription(Service):
     def _sendGenericMessage(self, template, receiver, message, message_title):
-        mail_template = self.context.restrictedTraverse(
-            "@@{0}".format(template)
-        )
+        mail_template = self.context.restrictedTraverse("@@{0}".format(template))
 
         parameters = {
             "header": self.context.header,
@@ -60,9 +58,7 @@ class NewsletterConfirmSubscription(Service):
         errors = []
         response = None
         status = "error"
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
 
         if action == "subscribe":
             response, user = channel.activateUser(secret=secret)

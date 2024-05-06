@@ -41,16 +41,12 @@ class AddForm(form.Form):
         channel = self.context.id_channel
         mail = data["email"]
 
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
         status = channel.addUser(mail)
 
         if status == SUBSCRIBED:
             status = _("generic_add_message_success", default="User Added.")
-            api.portal.show_message(
-                message=status, request=self.request, type="info"
-            )
+            api.portal.show_message(message=status, request=self.request, type="info")
         else:
             logger.exception("unhandled error add user")
             api.portal.show_message(

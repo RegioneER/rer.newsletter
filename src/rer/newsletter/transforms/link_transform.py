@@ -39,9 +39,7 @@ class link_transform(object):
         orig = p.transform()
 
         # come riprendo gli elementi dal control panel
-        source_link = api.portal.get_registry_record(
-            "source_link", ISettingsSchema
-        )
+        source_link = api.portal.get_registry_record("source_link", ISettingsSchema)
         if not source_link:
             source_link = api.portal.get().absolute_url()
 

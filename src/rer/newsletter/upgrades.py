@@ -14,6 +14,11 @@ default_profile = "profile-rer.newsletter:default"
 KEY = "rer.newsletter.channel.history"
 
 
+def extract_send_history(item):
+    history = ContentHistoryView(item, item.REQUEST).fullHistory()
+    return [x for x in history if x["action"] == "Invio"]
+
+
 def migrate_to_1001(context):
     setup_tool = api.portal.get_tool("portal_setup")
     setup_tool.runImportStepFromProfile(default_profile, "plone.app.registry")
@@ -83,6 +88,9 @@ def migrate_to_1004(context):
         )
 
 
-def extract_send_history(item):
-    history = ContentHistoryView(item, item.REQUEST).fullHistory()
-    return [x for x in history if x["action"] == "Invio"]
+def migrate_to_1005(context):
+    setup_tool = api.portal.get_tool("portal_setup")
+    setup_tool.runImportStepFromProfile(
+        "profile-rer.newsletter:to_1005", "plone.app.registry"
+    )
+    logger.info("Updated to 1005")
