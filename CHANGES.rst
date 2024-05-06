@@ -7,7 +7,8 @@ Changelog
 
 - Added fields for customize header and footer logos in newsletter.
   [eikichi18]
-
+- Disable resource not needed in Plone6.
+  [cekk]
 
 3.0.1 (2023-09-06)
 ------------------
