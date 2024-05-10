@@ -5,7 +5,6 @@ from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.content.channel import Channel
 from zope.component import getUtility
 from rer.newsletter.interfaces import IBlocksToHtml
-import json
 
 DEFAULT_STYLES = """
 .block.image {
