@@ -68,24 +68,22 @@ class IChannelSchema(model.Schema):
         required=True,
     )
 
-    header = schema.Text(
+    header = BlocksField(
         title=_("header_channel", default="Header of message"),
         description=_(
             "description_header_channel",
             default="Header for message of this channel",
         ),
         required=False,
-        default="",
     )
 
-    footer = schema.Text(
+    footer = BlocksField(
         title=_("footer_channel", default="Footer of message"),
         description=_(
             "description_footer_channel",
             default="Footer for message of this channel",
         ),
         required=False,
-        default="",
     )
 
     css_style = schema.Text(
@@ -147,3 +145,9 @@ class IMessage(Interface):
 
 class IMessageSchema(model.Schema):
     """a dexterity schema for message"""
+
+
+class IBlocksToHtml(Interface):
+    """
+    Utility that converts blocks to html
+    """

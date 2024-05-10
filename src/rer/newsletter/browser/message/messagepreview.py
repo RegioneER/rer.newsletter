@@ -3,29 +3,87 @@ from datetime import datetime
 from Products.Five import BrowserView
 from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.content.channel import Channel
+from zope.component import getUtility
+from rer.newsletter.interfaces import IBlocksToHtml
+import json
+
+DEFAULT_STYLES = """
+.block.image {
+  clear:both;
+}
+.block.align.right img {
+    margin-left: 1em;
+    float: right;
+}
+.block.align.left img {
+    margin-right: 1em;
+    float: left;
+}
+.block.gridBlock {
+    display: flex;
+}
+.block.gridBlock .row{
+    padding: 0 1em;
+}
+"""
 
 
 class MessagePreview(BrowserView):
     """view for message preview"""
 
     def getMessageStyle(self):
-        for obj in self.context.aq_chain:
-            if isinstance(obj, Channel):
-                return obj.css_style
-
-    def getChannel(self):
         channel = None
         for obj in self.context.aq_chain:
             if isinstance(obj, Channel):
                 channel = obj
                 break
-        return channel
+        return DEFAULT_STYLES + channel.css_style
+
+    @property
+    def channel(self):
+        for obj in self.context.aq_chain:
+            if isinstance(obj, Channel):
+                return obj
+        return None
 
     def getMessageHeader(self):
-        return self.getChannel().header if self.getChannel().header else ""
+        header = getattr(self.channel, "header", "")
+        if not header:
+            return ""
+
+        blocks_converter = getUtility(IBlocksToHtml)
+        html = blocks_converter(
+            context=self.context,
+            blocks=header.get("blocks", {}),
+            blocks_layout=header.get("blocks_layout", {}),
+        )
+
+        return f"""
+            <tr id="newsletter-header">
+                <td align="left" colspan="2">
+                    {html}
+                </td>
+            </tr>
+        """
 
     def getMessageFooter(self):
-        return self.getChannel().footer if self.getChannel().footer else ""
+        footer = getattr(self.channel, "footer", "")
+        if not footer:
+            return ""
+
+        blocks_converter = getUtility(IBlocksToHtml)
+        html = blocks_converter(
+            context=self.context,
+            blocks=footer.get("blocks", {}),
+            blocks_layout=footer.get("blocks_layout", {}),
+        )
+        return f"""
+            <tr id="newsletter-footer">
+                <td align="left" colspan="2">
+                    {html}
+                </td>
+            </tr>
+        """
 
     def getMessageSubHeader(self):
         return f"""

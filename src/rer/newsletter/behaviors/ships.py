@@ -5,6 +5,8 @@ from rer.newsletter.content.message import Message
 from zope.component import adapter
 from zope.interface import alsoProvides
 from zope.interface import Interface
+from zope.component import getUtility
+from rer.newsletter.interfaces import IBlocksToHtml
 
 
 class IShippableMarker(Interface):
@@ -32,4 +34,10 @@ class Shippable(object):
                 request=self.context.REQUEST,
             )()
         elif isinstance(self.context, Message):
-            return self.context.text.output if self.context.text else ""
+            # return self.context.text.output if self.context.text else ""
+            blocks_converter = getUtility(IBlocksToHtml)
+            return blocks_converter(
+                context=self.context,
+                blocks=getattr(self.context, "blocks", {}),
+                blocks_layout=getattr(self.context, "blocks_layout", {}),
+            )
