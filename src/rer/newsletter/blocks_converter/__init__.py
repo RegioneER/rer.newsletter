@@ -104,7 +104,11 @@ class BlocksToHtmlConverter:
         )
         if not blocks:
             return ""
-        root = bs('<div class="block gridBlock"></div>', "html.parser")
+        root = bs(
+            '<table class="gridBlock"><tbody><tr></tr></tbody></table>',
+            "html.parser",
+        )
+        tr = root.findAll("tr")[0]
 
         for block in blocks:
             handler = getattr(
@@ -114,9 +118,9 @@ class BlocksToHtmlConverter:
                 value = handler(block)
                 if value:
                     el = bs(value, "html.parser")
-                    row = root.new_tag("div", attrs={"class": "row"})
-                    row.append(el)
-                    root.div.append(row)
+                    td = root.new_tag("td", attrs={"class": "column"})
+                    td.append(el)
+                    tr.append(td)
         return root.prettify()  # prettify the html
 
 

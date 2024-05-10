@@ -48,10 +48,10 @@ class MessageSendingTest(form.Form):
 
     def _getMessage(self, channel, message, footer):
         content = IShippable(message).message_content
-        message_template = self.context.restrictedTraverse("@@messagepreview_view")
+        message_template = self.context.restrictedTraverse(
+            "@@messagepreview_view"
+        )
         parameters = {
-            "css": channel.css_style,
-            "message_header": channel.header if channel.header else "",
             "message_subheader": f"""
                 <tr>
                     <td align="left" colspan="2">
@@ -60,15 +60,15 @@ class MessageSendingTest(form.Form):
                       </div>
                     </td>
                 </tr>""",
-            "message_footer": channel.footer if channel.footer else "",
-            "message_content": f"""
+            "message_unsubscribe_default": f"""
                 <tr>
                     <td align="left" colspan="2">
-                    {content}
+                    <div class="newsletter-unsubscribe">
+                        {footer}
+                    </div>
                     </td>
                 </tr>
             """,
-            "message_unsubscribe_default": footer,
         }
 
         body = message_template(**parameters)
@@ -112,11 +112,15 @@ class MessageSendingTest(form.Form):
                 "enabled": ns_obj.standard_unsubscribe,
             }
             unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
-            body = self._getMessage(ns_obj, message_obj, unsubscribe_footer_text)
+            body = self._getMessage(
+                ns_obj, message_obj, unsubscribe_footer_text
+            )
 
             sender = compose_sender(channel=ns_obj)
 
-            nl_subject = " - " + ns_obj.subject_email if ns_obj.subject_email else ""
+            nl_subject = (
+                " - " + ns_obj.subject_email if ns_obj.subject_email else ""
+            )
 
             subject = "Messaggio di prova - " + message_obj.title + nl_subject
             # per mandare la mail non passo per l'utility

@@ -18,12 +18,6 @@ DEFAULT_STYLES = """
     margin-right: 1em;
     float: left;
 }
-.block.gridBlock {
-    display: flex;
-}
-.block.gridBlock .row{
-    padding: 0 1em;
-}
 """
 
 

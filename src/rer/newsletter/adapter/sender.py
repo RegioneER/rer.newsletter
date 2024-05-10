@@ -73,11 +73,8 @@ class BaseAdapter(object):
 
     def _getMessage(self, message, footer):
         logger.debug("getMessage %s %s", self.context.title, message.title)
-        content = IShippable(message).message_content
-        message_template = self.context.restrictedTraverse("@@messagepreview_view")
+        message_template = message.restrictedTraverse("@@messagepreview_view")
         parameters = {
-            "css": self.context.css_style,
-            "message_header": self.context.header if self.context.header else "",
             "message_subheader": f"""
                 <tr>
                     <td align="left" colspan="2">
@@ -86,14 +83,6 @@ class BaseAdapter(object):
                       </div>
                     </td>
                 </tr>""",
-            "message_footer": self.context.footer if self.context.footer else "",
-            "message_content": f"""
-                <tr>
-                    <td align="left" colspan="2">
-                    {content}
-                    </td>
-                </tr>
-            """,
             "message_unsubscribe_default": footer,
         }
 
@@ -136,7 +125,9 @@ class BaseAdapter(object):
         send_info = [x for x in details if x["uid"] == send_uid]
         if not send_info:
             return SEND_UID_NOT_FOUND
-        send_info[0]["send_date_end"] = datetime.today().strftime("%d/%m/%Y %H:%M:%S")
+        send_info[0]["send_date_end"] = datetime.today().strftime(
+            "%d/%m/%Y %H:%M:%S"
+        )
         send_info[0]["completed"] = completed
         send_info[0]["running"] = False
         return OK
@@ -161,7 +152,9 @@ class BaseAdapter(object):
         subscribers = self.get_annotations_for_channel(key=SUBSCRIBERS_KEY)
 
         nl_subject = (
-            " - " + self.context.subject_email if self.context.subject_email else ""
+            " - " + self.context.subject_email
+            if self.context.subject_email
+            else ""
         )
         sender = (
             self.context.sender_name
@@ -207,7 +200,9 @@ class BaseAdapter(object):
     def addToHistory(self, message):
         """Add to history that message is sent"""
 
-        list_history = [x for x in message.workflow_history.get("message_workflow")]
+        list_history = [
+            x for x in message.workflow_history.get("message_workflow")
+        ]
         current = api.user.get_current()
         entry = dict(
             action="Invio",

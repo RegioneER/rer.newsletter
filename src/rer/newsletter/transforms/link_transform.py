@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 # from lxml import etree
 from plone import api
+from plone.registry.interfaces import IRegistry
 from premailer import Premailer
 from Products.PortalTransforms.interfaces import ITransform
 from rer.newsletter.browser.settings import ISettingsSchema
+from zope.component import getUtility
 from zope.interface import implementer
+
 
 import re
 
@@ -38,14 +41,26 @@ class link_transform(object):
         p = Premailer(orig, strip_important=False)
         orig = p.transform()
 
-        # come riprendo gli elementi dal control panel
-        source_link = api.portal.get_registry_record("source_link", ISettingsSchema)
+        source_link = api.portal.get_registry_record(
+            "source_link", ISettingsSchema
+        )
         if not source_link:
             source_link = api.portal.get().absolute_url()
 
-        destination_link = api.portal.get_registry_record(
-            "destination_link", ISettingsSchema
-        )
+        # If volto frontend_domain is set, use it as destination link
+        try:
+            destination_link = api.portal.get_registry_record(
+                "volto.frontend_domain", default=""
+            )
+        except KeyError:
+            destination_link = ""
+        if destination_link.endswith("/"):
+            destination_link = destination_link[:-1]
+        if not destination_link:
+            # otherwise, use the newsletter one
+            destination_link = api.portal.get_registry_record(
+                "destination_link", ISettingsSchema
+            )
 
         # non è questo il modo migliore per fare il replace...
         # 1. non serve usare re.sub ma basta il replace di string
