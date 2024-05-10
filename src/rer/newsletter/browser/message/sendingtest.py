@@ -5,7 +5,6 @@ from plone import schema
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
-from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.content.channel import Channel
 from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
@@ -47,7 +46,9 @@ class MessageSendingTest(form.Form):
         return datetime.today().strftime("Newsletter %d-%m-%Y")
 
     def _getMessage(self, channel, message, footer):
-        message_template = self.context.restrictedTraverse("@@messagepreview_view")
+        message_template = self.context.restrictedTraverse(
+            "@@messagepreview_view"
+        )
         parameters = {
             "message_subheader": f"""
                 <tr>
@@ -109,11 +110,15 @@ class MessageSendingTest(form.Form):
                 "enabled": ns_obj.standard_unsubscribe,
             }
             unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
-            body = self._getMessage(ns_obj, message_obj, unsubscribe_footer_text)
+            body = self._getMessage(
+                ns_obj, message_obj, unsubscribe_footer_text
+            )
 
             sender = compose_sender(channel=ns_obj)
 
-            nl_subject = " - " + ns_obj.subject_email if ns_obj.subject_email else ""
+            nl_subject = (
+                " - " + ns_obj.subject_email if ns_obj.subject_email else ""
+            )
 
             subject = "Messaggio di prova - " + message_obj.title + nl_subject
             # per mandare la mail non passo per l'utility
