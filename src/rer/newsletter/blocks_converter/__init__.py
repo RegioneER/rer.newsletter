@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup as bs
 from copy import deepcopy
-from plone.restapi.blocks import visit_blocks, iter_block_transform_handlers
+from plone.restapi.blocks import iter_block_transform_handlers
+from plone.restapi.blocks import visit_blocks
 from plone.restapi.interfaces import IBlockFieldSerializationTransformer
 from rer.newsletter.blocks_converter.slate2html import slate_to_html
 from rer.newsletter.interfaces import IBlocksToHtml
@@ -21,9 +22,7 @@ class BlocksToHtmlConverter:
             return ""
         html = []
         for block in blocks:
-            handler = getattr(
-                self, f"block_handler_{block.get('@type', '')}", None
-            )
+            handler = getattr(self, f"block_handler_{block.get('@type', '')}", None)
             if handler and callable(handler):
                 value = handler(context=context, block=block)
                 if value:
@@ -111,9 +110,7 @@ class BlocksToHtmlConverter:
         tr = root.findAll("tr")[0]
 
         for block in blocks:
-            handler = getattr(
-                self, f"block_handler_{block.get('@type', '')}", None
-            )
+            handler = getattr(self, f"block_handler_{block.get('@type', '')}", None)
             if handler and callable(handler):
                 value = handler(block)
                 if value:

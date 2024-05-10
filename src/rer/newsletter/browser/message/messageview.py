@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from Products.Five.browser import BrowserView
-from zope.component import getUtility
 from rer.newsletter.interfaces import IBlocksToHtml
+from zope.component import getUtility
 
 
 class MessageView(BrowserView):

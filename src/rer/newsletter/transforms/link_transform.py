@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 # from lxml import etree
 from plone import api
-from plone.registry.interfaces import IRegistry
 from premailer import Premailer
 from Products.PortalTransforms.interfaces import ITransform
 from rer.newsletter.browser.settings import ISettingsSchema
-from zope.component import getUtility
 from zope.interface import implementer
-
 
 import re
 
@@ -41,9 +38,7 @@ class link_transform(object):
         p = Premailer(orig, strip_important=False)
         orig = p.transform()
 
-        source_link = api.portal.get_registry_record(
-            "source_link", ISettingsSchema
-        )
+        source_link = api.portal.get_registry_record("source_link", ISettingsSchema)
         if not source_link:
             source_link = api.portal.get().absolute_url()
 

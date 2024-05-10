@@ -2,11 +2,11 @@
 from plone import api
 from plone.app.contenttypes.content import Collection
 from rer.newsletter.content.message import Message
+from rer.newsletter.interfaces import IBlocksToHtml
 from zope.component import adapter
+from zope.component import getUtility
 from zope.interface import alsoProvides
 from zope.interface import Interface
-from zope.component import getUtility
-from rer.newsletter.interfaces import IBlocksToHtml
 
 
 class IShippableMarker(Interface):
