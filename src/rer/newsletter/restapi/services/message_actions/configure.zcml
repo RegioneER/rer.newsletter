@@ -1,0 +1,20 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:cache="http://namespaces.zope.org/cache"
+    >
+  
+  <!-- expander -->
+  <plone:service
+    method="GET"
+    name="@message-actions"
+    for="rer.newsletter.interfaces.IMessage"
+    factory=".get.MessageActionsGet"
+    permission="zope2.View"
+    />
+
+  <adapter factory=".get.MessageActions" name="message-actions"/>
+
+  <cache:ruleset ruleset="plone.content.dynamic" for=".get.MessageActionsGet" />
+  
+</configure>

@@ -45,38 +45,6 @@ class MessageSendingTest(form.Form):
         #         locale.setlocale(locale.LC_ALL, 'it_IT')
         return datetime.today().strftime("Newsletter %d-%m-%Y")
 
-    def _getMessage(self, channel, message, footer):
-        message_template = self.context.restrictedTraverse(
-            "@@messagepreview_view"
-        )
-        parameters = {
-            "message_subheader": f"""
-                <tr>
-                    <td align="left" colspan="2">
-                      <div class="newsletterTitle">
-                        <h1>{self.context.title}</h1>
-                      </div>
-                    </td>
-                </tr>""",
-            "message_unsubscribe_default": f"""
-                <tr>
-                    <td align="left" colspan="2">
-                    <div class="newsletter-unsubscribe">
-                        {footer}
-                    </div>
-                    </td>
-                </tr>
-            """,
-        }
-
-        body = message_template(**parameters)
-
-        # passo la mail per il transform
-        portal = api.portal.get()
-        body = portal.portal_transforms.convertTo("text/mail", body)
-
-        return body
-
     @button.buttonAndHandler(_("send_sendingtest", default="Send"))
     def handleSave(self, action):
         data, errors = self.extractData()
@@ -86,54 +54,7 @@ class MessageSendingTest(form.Form):
 
         try:
             # prendo l'email dai parametri
-            email = data["email"]
-            emails = re.compile("[,|;]").split(email)
-
-            ns_obj = None
-            for obj in self.context.aq_chain:
-                if isinstance(obj, Channel):
-                    ns_obj = obj
-                    break
-            else:
-                if not ns_obj:
-                    # non riesco a recuperare le info di un channel
-                    return
-            message_obj = self.context
-
-            unsubscribe_footer_template = self.context.restrictedTraverse(
-                "@@unsubscribe_channel_template"
-            )
-            parameters = {
-                "portal_name": get_site_title(),
-                "channel_name": ns_obj.title,
-                "unsubscribe_link": ns_obj.absolute_url(),
-                "enabled": ns_obj.standard_unsubscribe,
-            }
-            unsubscribe_footer_text = unsubscribe_footer_template(**parameters)
-            body = self._getMessage(
-                ns_obj, message_obj, unsubscribe_footer_text
-            )
-
-            sender = compose_sender(channel=ns_obj)
-
-            nl_subject = (
-                " - " + ns_obj.subject_email if ns_obj.subject_email else ""
-            )
-
-            subject = "Messaggio di prova - " + message_obj.title + nl_subject
-            # per mandare la mail non passo per l'utility
-            # in ogni caso questa mail viene mandata da plone
-            mailHost = api.portal.get_tool(name="MailHost")
-            for email in emails:
-                mailHost.send(
-                    body.getData(),
-                    mto=email.strip(),
-                    mfrom=sender,
-                    subject=subject,
-                    charset="utf-8",
-                    msg_type="text/html",
-                    immediate=True,
-                )
+            self.context.send_preview(email=data["email"])
 
         except SMTPRecipientsRefused:
             self.errors = "problemi con l'invio del messaggio"
