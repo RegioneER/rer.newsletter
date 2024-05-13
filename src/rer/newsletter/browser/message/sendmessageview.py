@@ -4,27 +4,12 @@ from plone.memoize.view import memoize
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
-from rer.newsletter.adapter.sender import IChannelSender
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.content.channel import Channel
 from rer.newsletter.utils import OK
 from z3c.form import button
 from z3c.form import form
 from zope.component import getMultiAdapter
-from zope.component import queryUtility
-
-
-try:
-    from collective.taskqueue.interfaces import ITaskQueue
-    from rer.newsletter.queue.handler import QUEUE_NAME
-    from rer.newsletter.queue.interfaces import IMessageQueue
-
-    HAS_TASKQUEUE = True
-except ImportError:
-    HAS_TASKQUEUE = False
-
-
-KEY = "rer.newsletter.message.details"
 
 
 class SendMessageView(form.Form):

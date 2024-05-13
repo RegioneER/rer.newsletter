@@ -5,16 +5,11 @@ from plone import schema
 from plone.z3cform.layout import wrap_form
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from rer.newsletter import _
-from rer.newsletter.content.channel import Channel
-from rer.newsletter.utils import compose_sender
-from rer.newsletter.utils import get_site_title
 from smtplib import SMTPRecipientsRefused
 from z3c.form import button
 from z3c.form import field
 from z3c.form import form
 from zope.interface import Interface
-
-import re
 
 
 class IMessageSendingTest(Interface):
