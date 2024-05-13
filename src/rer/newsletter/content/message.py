@@ -3,17 +3,17 @@ from Acquisition import aq_chain
 from plone import api
 from plone.app.contenttypes.content import Folder
 from plone.app.layout.viewlets.content import ContentHistoryView
-from rer.newsletter import _
 from rer.newsletter.adapter.sender import IChannelSender
 from rer.newsletter.content.channel import Channel
 from rer.newsletter.interfaces import IMessage
 from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
-from rer.newsletter.utils import OK
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
 from zope.interface import implementer
 
+
+import re
 
 try:
     from collective.taskqueue.interfaces import ITaskQueue
@@ -26,9 +26,6 @@ except ImportError:
 
 
 KEY = "rer.newsletter.message.details"
-
-
-import re
 
 
 @implementer(IMessage)
