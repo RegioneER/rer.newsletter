@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 from plone import api
+from plone.protect.interfaces import IDisableCSRFProtection
+from plone.restapi.deserializer import json_body
 from plone.restapi.services import Service
 from rer.newsletter import _
-from plone.restapi.deserializer import json_body
+from rer.newsletter.restapi.services.message_send.get import NEWSLETTER_COUNTER_KEY
 from rer.newsletter.utils import OK
-from plone.protect.interfaces import IDisableCSRFProtection
-from zope.interface import alsoProvides
-from rer.newsletter.restapi.services.message_send.get import (
-    NEWSLETTER_COUNTER_KEY,
-)
-from zope.annotation.interfaces import IAnnotations
 from zExceptions import BadRequest
+from zope.annotation.interfaces import IAnnotations
+from zope.interface import alsoProvides
 
 import pyotp
 

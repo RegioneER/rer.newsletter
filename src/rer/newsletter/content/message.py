@@ -12,8 +12,8 @@ from zope.component import getMultiAdapter
 from zope.component import queryUtility
 from zope.interface import implementer
 
-
 import re
+
 
 try:
     from collective.taskqueue.interfaces import ITaskQueue

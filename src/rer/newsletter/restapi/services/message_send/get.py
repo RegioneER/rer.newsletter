@@ -4,6 +4,7 @@ from zope.annotation.interfaces import IAnnotations
 
 import pyotp
 
+
 NEWSLETTER_COUNTER_KEY = "newsletter-send-counter"
 
 

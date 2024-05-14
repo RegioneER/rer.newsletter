@@ -2,8 +2,8 @@
 from plone import api
 from plone.restapi.deserializer import json_body
 from plone.restapi.services import Service
-from zExceptions import BadRequest
 from rer.newsletter import _
+from zExceptions import BadRequest
 
 
 class TestSendPost(Service):
