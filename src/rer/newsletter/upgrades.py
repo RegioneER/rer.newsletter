@@ -94,3 +94,14 @@ def migrate_to_1005(context):
         "profile-rer.newsletter:to_1005", "plone.app.registry"
     )
     logger.info("Updated to 1005")
+
+
+def migrate_to_1006(context):
+    to_remove = "plone.richtext"
+    to_add = "volto.blocks"
+    portal_types = api.portal.get_tool(name="portal_types")
+    behaviors = [
+        x for x in portal_types["Message"].behaviors if x != to_remove
+    ]
+    behaviors.append(to_add)
+    portal_types["Message"].behaviors = tuple(behaviors)
