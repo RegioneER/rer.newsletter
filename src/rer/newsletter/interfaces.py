@@ -110,7 +110,7 @@ class IChannelSchema(model.Schema):
         title=_("standard_unsubscribe", default="Standard unsubscribe link"),
         description=_(
             "descriptin_standard_unsubscribe",
-            default="Usa il link standard per l'unsubscribe",
+            default="Se selezionato, verrà usato un testo standard nelle mail, per la disiscrizione. In alternativa, andrà messo a mano nella configurazione del footer.",
         ),
         default=True,
         required=False,

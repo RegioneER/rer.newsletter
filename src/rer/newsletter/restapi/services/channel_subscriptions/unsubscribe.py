@@ -4,7 +4,6 @@ from plone.protect import interfaces
 from plone.protect.authenticator import createToken
 from plone.restapi.deserializer import json_body
 from plone.restapi.services import Service
-from rer.newsletter import logger
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
@@ -50,9 +49,21 @@ class NewsletterUnsubscribe(Service):
         if status != OK:
             if status == INEXISTENT_EMAIL:
                 raise BadRequest(
-                    api.portal.translate(_("unsubscribe_inexistent_mail"))
+                    api.portal.translate(
+                        _(
+                            "unsubscribe_inexistent_mail",
+                            default="Mail not found. Unable to unsubscribe.",
+                        )
+                    )
                 )
-            raise BadRequest(api.portal.translate(_("unsubscribe_generic")))
+            raise BadRequest(
+                api.portal.translate(
+                    _(
+                        "unsubscribe_generic",
+                        default="Unable to perform unsubscription. Please contact site administrators.",
+                    )
+                )
+            )
 
         # creo il token CSRF
         token = createToken()
