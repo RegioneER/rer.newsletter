@@ -2,8 +2,8 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:plone="http://namespaces.plone.org/plone"
     >
-  
-<plone:service
+
+  <plone:service
       method="POST"
       factory=".post.MessageSendPost"
       for="rer.newsletter.interfaces.IMessage"
@@ -16,5 +16,5 @@
       for="rer.newsletter.interfaces.IMessage"
       permission="rer.newsletter.SendMessage"
       name="@send-token"
-      />  
+      />
 </configure>

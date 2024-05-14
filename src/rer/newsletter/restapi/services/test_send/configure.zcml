@@ -2,12 +2,12 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:plone="http://namespaces.plone.org/plone"
     >
-  
-<plone:service
+
+  <plone:service
       method="POST"
       factory=".post.TestSendPost"
       for="rer.newsletter.interfaces.IMessage"
       permission="rer.newsletter.SendMessage"
       name="@test-send"
-      />  
+      />
 </configure>
