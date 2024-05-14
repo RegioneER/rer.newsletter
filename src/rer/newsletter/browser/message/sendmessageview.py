@@ -42,9 +42,7 @@ class SendMessageView(form.Form):
     @property
     @memoize
     def active_subscriptions(self):
-        channel = getMultiAdapter(
-            (self.channel, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.channel, self.request), IChannelSubscriptions)
         return channel.active_subscriptions
 
     @button.buttonAndHandler(_("send_sendingview", default="Send"))

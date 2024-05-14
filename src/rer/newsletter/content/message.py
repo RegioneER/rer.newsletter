@@ -30,7 +30,6 @@ KEY = "rer.newsletter.message.details"
 
 @implementer(IMessage)
 class Message(Folder):
-
     def get_channel(self):
         for parent in aq_chain(self):
             if isinstance(parent, Channel):
@@ -55,9 +54,7 @@ class Message(Folder):
 
         if api.content.get_state(obj=self) != "published":
             return False
-        return api.user.get_permissions(obj=self).get(
-            "rer.newsletter: Send Newsletter"
-        )
+        return api.user.get_permissions(obj=self).get("rer.newsletter: Send Newsletter")
 
     def message_already_sent(self):
         history = ContentHistoryView(self, self.REQUEST).fullHistory()
@@ -104,9 +101,7 @@ class Message(Folder):
 
         sender = compose_sender(channel=channel)
 
-        nl_subject = (
-            " - " + channel.subject_email if channel.subject_email else ""
-        )
+        nl_subject = " - " + channel.subject_email if channel.subject_email else ""
 
         subject = "Messaggio di prova - " + self.title + nl_subject
         # per mandare la mail non passo per l'utility

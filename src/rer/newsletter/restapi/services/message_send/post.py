@@ -15,7 +15,6 @@ import pyotp
 
 class MessageSendPost(Service):
     def reply(self):
-
         self.validate_token()
         # Disable CSRF protection
         alsoProvides(self.request, IDisableCSRFProtection)

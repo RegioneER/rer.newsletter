@@ -8,7 +8,6 @@ from zope.interface import implementer
 
 @implementer(IChannel)
 class Channel(Folder):
-
     def active_subscriptions(self):
         channel = getMultiAdapter((self, self.REQUEST), IChannelSubscriptions)
         return channel.active_subscriptions
