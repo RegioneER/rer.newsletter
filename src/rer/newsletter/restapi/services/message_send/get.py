@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from plone.restapi.services import Service
-from rer.newsletter import _
 from zope.annotation.interfaces import IAnnotations
 
 import pyotp

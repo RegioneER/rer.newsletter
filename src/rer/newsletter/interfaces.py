@@ -4,6 +4,7 @@ from plone import schema
 from plone.app.contenttypes.interfaces import ICollection
 from plone.namedfile import field as namedfile
 from plone.supermodel import model
+from rer.newsletter import _
 from zope.interface import Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
