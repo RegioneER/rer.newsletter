@@ -25,9 +25,10 @@ class MessageActions:
                 )
             }
         }
+
         can_manage = self.context.can_manage_newsletter()
         can_send = self.context.can_send_message()
-        if not can_manage or not can_send:
+        if not can_manage and not can_send:
             return result
 
         result["message-actions"]["can_manage"] = can_manage

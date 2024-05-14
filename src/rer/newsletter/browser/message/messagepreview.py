@@ -41,43 +41,10 @@ class MessagePreview(BrowserView):
         return None
 
     def getMessageHeader(self):
-        header = getattr(self.channel, "header", "")
-        if not header:
-            return ""
-
-        blocks_converter = getUtility(IBlocksToHtml)
-        html = blocks_converter(
-            context=self.context,
-            blocks=header.get("blocks", {}),
-            blocks_layout=header.get("blocks_layout", {}),
-        )
-
-        return f"""
-            <tr id="newsletter-header">
-                <td align="left" colspan="2">
-                    {html}
-                </td>
-            </tr>
-        """
+        return getattr(self.channel, "header", "")
 
     def getMessageFooter(self):
-        footer = getattr(self.channel, "footer", "")
-        if not footer:
-            return ""
-
-        blocks_converter = getUtility(IBlocksToHtml)
-        html = blocks_converter(
-            context=self.context,
-            blocks=footer.get("blocks", {}),
-            blocks_layout=footer.get("blocks_layout", {}),
-        )
-        return f"""
-            <tr id="newsletter-footer">
-                <td align="left" colspan="2">
-                    {html}
-                </td>
-            </tr>
-        """
+        return getattr(self.channel, "footer", "")
 
     def getMessageSubHeader(self):
         return f"""

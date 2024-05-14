@@ -68,7 +68,7 @@ class IChannelSchema(model.Schema):
         required=True,
     )
 
-    header = BlocksField(
+    header = schema.Text(
         title=_("header_channel", default="Header of message"),
         description=_(
             "description_header_channel",
@@ -77,7 +77,7 @@ class IChannelSchema(model.Schema):
         required=False,
     )
 
-    footer = BlocksField(
+    footer = schema.Text(
         title=_("footer_channel", default="Footer of message"),
         description=_(
             "description_footer_channel",

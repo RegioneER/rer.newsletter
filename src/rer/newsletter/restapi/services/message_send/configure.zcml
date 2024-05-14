@@ -4,10 +4,17 @@
     >
   
 <plone:service
-      method="GET"
+      method="POST"
       factory=".post.MessageSendPost"
       for="rer.newsletter.interfaces.IMessage"
       permission="rer.newsletter.SendMessage"
       name="@message-send"
+      />
+  <plone:service
+      method="GET"
+      factory=".get.SendTokenGet"
+      for="rer.newsletter.interfaces.IMessage"
+      permission="rer.newsletter.SendMessage"
+      name="@send-token"
       />  
 </configure>
