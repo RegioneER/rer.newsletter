@@ -3,8 +3,6 @@ from datetime import datetime
 from Products.Five import BrowserView
 from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.content.channel import Channel
-from rer.newsletter.interfaces import IBlocksToHtml
-from zope.component import getUtility
 
 
 DEFAULT_STYLES = """
