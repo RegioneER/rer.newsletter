@@ -4,52 +4,82 @@ from plone.protect import interfaces
 from plone.protect.authenticator import createToken
 from plone.restapi.deserializer import json_body
 from plone.restapi.services import Service
-from rer.newsletter import logger
+from rer.newsletter import _
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
+from rer.newsletter.utils import ALREADY_SUBSCRIBED
 from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
+from rer.newsletter.utils import INVALID_EMAIL
 from rer.newsletter.utils import SUBSCRIBED
 from rer.newsletter.utils import UNHANDLED
 from six import PY2
+from zExceptions import BadRequest
 from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
 
 
 class NewsletterSubscribe(Service):
-    def getData(self, data):
-        errors = []
-        if not data.get("email", None):
-            errors.append("invalid_email")
-        return {
-            "email": data.get("email", None),
-        }, errors
 
-    def handleSubscribe(self, postData):
+    def handle_subscribe(self, email):
         status = UNHANDLED
-        data, errors = self.getData(postData)
 
-        if errors:
-            return data, errors
+        if not self.context.is_subscribable:
 
-        email = data.get("email", "").lower()
-
-        if self.context.is_subscribable:
-            channel = getMultiAdapter(
-                (self.context, self.request), IChannelSubscriptions
+            raise BadRequest(
+                api.portal.translate(
+                    _(
+                        "channel_not_subscribable",
+                        default="Subscriptions to this channel are disabled.",
+                    )
+                )
             )
-            status, secret = channel.subscribe(email)
 
-        if status == SUBSCRIBED:
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
+        status, secret = channel.subscribe(email)
+
+        if status != SUBSCRIBED:
+            if status == ALREADY_SUBSCRIBED:
+                raise BadRequest(
+                    api.portal.translate(
+                        _(
+                            "channel_already_subscribed_error",
+                            default="There is already a subscription to this newsletter for address ${email}."
+                            " If you didn't have confirmed your subscription, it can be expired."
+                            " Try to unsubscribe and subscribe again.",
+                            mapping={"email": email},
+                        )
+                    )
+                )
+            elif status == INVALID_EMAIL:
+                raise BadRequest(
+                    api.portal.translate(
+                        _(
+                            "invalid_email",
+                            default="Invalid email address",
+                        )
+                    )
+                )
+            else:
+                raise BadRequest(
+                    api.portal.translate(
+                        _(
+                            "error_subscription",
+                            default="Unable to subscribe to this channel. Try to contact site administator.",
+                        )
+                    )
+                )
+        else:
             # creo il token CSRF
             token = createToken()
 
             # mando mail di conferma
-            url = self.context.absolute_url()
-            url += "/confirm-subscription?secret=" + secret
-            url += "&_authenticator=" + token
-            url += "&action=subscribe"
+            url = f"{self.context.absolute_url()}/confirm-subscription?secret={secret}&_authenticator={token}&action=subscribe"
 
-            mail_template = self.context.restrictedTraverse("@@activeuser_template")
+            mail_template = self.context.restrictedTraverse(
+                "@@activeuser_template"
+            )
 
             parameters = {
                 "title": self.context.title,
@@ -63,7 +93,9 @@ class NewsletterSubscribe(Service):
             mail_text = mail_template(**parameters)
 
             portal = api.portal.get()
-            mail_text = portal.portal_transforms.convertTo("text/mail", mail_text)
+            mail_text = portal.portal_transforms.convertTo(
+                "text/mail", mail_text
+            )
             sender = compose_sender(channel=self.context)
 
             channel_title = self.context.title
@@ -83,27 +115,23 @@ class NewsletterSubscribe(Service):
                 msg_type="text/html",
                 immediate=True,
             )
-            return data, errors
-
-        else:
-            if status == 2:
-                logger.exception("user already subscribed")
-                errors.append("user_already_subscribed")
-                return data, errors
-            else:
-                logger.exception("unhandled error subscribe user")
-                errors.append("Problems...{0}".format(status))
-                return data, errors
 
     def reply(self):
         data = json_body(self.request)
+        email = data.get("email", "").lower()
+        if not email:
+            raise BadRequest(
+                api.portal.translate(
+                    _(
+                        "missing_email_label",
+                        default="Missing required parameter: email.",
+                    )
+                )
+            )
+
         if "IDisableCSRFProtection" in dir(interfaces):
             alsoProvides(self.request, interfaces.IDisableCSRFProtection)
 
-        _data, errors = self.handleSubscribe(data)
+        self.handle_subscribe(email=email)
 
-        return {
-            "@id": self.request.get("URL"),
-            "errors": errors if errors else None,
-            "status": "user_subscribe_success" if not errors else "error",
-        }
+        return self.reply_no_content()

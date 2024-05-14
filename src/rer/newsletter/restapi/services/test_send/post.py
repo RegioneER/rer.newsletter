@@ -15,7 +15,7 @@ class TestSendPost(Service):
             raise BadRequest(
                 api.portal.translate(
                     _(
-                        "test_send_missing_email",
+                        "missing_email_label",
                         default="Missing required parameter: email.",
                     )
                 )
