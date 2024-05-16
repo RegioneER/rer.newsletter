@@ -13,7 +13,6 @@ from rer.newsletter.utils import MAIL_NOT_PRESENT
 from rer.newsletter.utils import OK
 from zope.component import getMultiAdapter
 
-import json
 import unittest
 
 
