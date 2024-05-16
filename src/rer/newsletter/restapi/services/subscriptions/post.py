@@ -31,7 +31,9 @@ class AddSubscriptionsPost(Service):
                 )
             )
 
-        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
         status = channel.addUser(email)
 
         if status != SUBSCRIBED:
@@ -72,7 +74,9 @@ class ImportSubscriptionsPost(Service):
         data = json_body(self.request)
         self.validate_form(data)
 
-        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
+        channel = getMultiAdapter(
+            (self.context, self.request), IChannelSubscriptions
+        )
         remove_from_list = data.get("remove_from_list", False)
         reset_list = data.get("reset_list", False)
 
@@ -121,7 +125,7 @@ class ImportSubscriptionsPost(Service):
         reg_tool = api.portal.get_tool(name="portal_registration")
 
         reader = csv.reader(
-            csv_file, delimiter=csv_separator, dialect="excel", quotechar="'"
+            csv_file, delimiter=csv_separator, dialect="excel", quotechar='"'
         )
         index = 1
         if has_header:
