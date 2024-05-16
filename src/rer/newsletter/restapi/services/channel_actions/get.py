@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
+from plone import api
 from plone.restapi.interfaces import IExpandableElement
 from plone.restapi.services import Service
 from zope.component import adapter
 from zope.interface import implementer
 from zope.interface import Interface
-from plone import api
 
 
 @implementer(IExpandableElement)
@@ -29,7 +29,6 @@ class ChannelActions:
             "rer.newsletter: Manage Newsletter"
         )
         if can_manage:
-
             result["channel-actions"]["can_manage"] = can_manage
 
         return result

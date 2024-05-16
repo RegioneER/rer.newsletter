@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
+from persistent.list import PersistentList
 from plone import api
 from plone.restapi.services import Service
 from rer.newsletter import _
-from zope.annotation.interfaces import IAnnotations
 from zExceptions import BadRequest
-from persistent.list import PersistentList
+from zope.annotation.interfaces import IAnnotations
 
 
 KEY = "rer.newsletter.channel.history"
 
 
 class SendHistoryDelete(Service):
-
     def reply(self):
         uids = self.request.get("uids", [])
         if not uids:

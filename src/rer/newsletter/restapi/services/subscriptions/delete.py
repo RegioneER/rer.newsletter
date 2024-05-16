@@ -2,20 +2,16 @@
 from plone import api
 from plone.restapi.services import Service
 from rer.newsletter import _
-from zope.annotation.interfaces import IAnnotations
-from zExceptions import BadRequest
-from persistent.list import PersistentList
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
+from rer.newsletter.utils import MAIL_NOT_PRESENT
 from rer.newsletter.utils import OK
 from rer.newsletter.utils import UNHANDLED
-from rer.newsletter.utils import MAIL_NOT_PRESENT
+from zExceptions import BadRequest
 from zope.component import getMultiAdapter
 
 
 class SubscriptionsDelete(Service):
-
     def reply(self):
-
         status = UNHANDLED
 
         email = self.request["email"]
@@ -30,9 +26,7 @@ class SubscriptionsDelete(Service):
                 )
             )
 
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
 
         if email == "all":
             channel.deleteAllUsers()

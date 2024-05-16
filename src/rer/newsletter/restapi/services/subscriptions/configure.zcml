@@ -17,7 +17,7 @@
       permission="rer.newsletter.ManageNewsletter"
       name="@export-subscriptions"
       />
-  
+
   <plone:service
       method="POST"
       factory=".post.ImportSubscriptionsPost"
@@ -32,7 +32,7 @@
       permission="rer.newsletter.ManageNewsletter"
       name="@subscriptions"
       />
-  
+
   <plone:service
       method="POST"
       factory=".post.AddSubscriptionsPost"

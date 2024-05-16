@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
+from base64 import b64decode
+from io import StringIO
 from plone import api
 from plone.restapi.deserializer import json_body
 from plone.restapi.services import Service
 from rer.newsletter import _
-from rer.newsletter import logger
-from rer.newsletter.adapter.sender import IChannelSender
+from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.utils import ALREADY_SUBSCRIBED
 from rer.newsletter.utils import INVALID_EMAIL
-from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
-from rer.newsletter.utils import SUBSCRIBED
 from rer.newsletter.utils import OK
+from rer.newsletter.utils import SUBSCRIBED
 from zExceptions import BadRequest
 from zope.component import getMultiAdapter
-from base64 import b64decode
-from io import StringIO
 
 import csv
 
@@ -33,9 +31,7 @@ class AddSubscriptionsPost(Service):
                 )
             )
 
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
         status = channel.addUser(email)
 
         if status != SUBSCRIBED:
@@ -76,9 +72,7 @@ class ImportSubscriptionsPost(Service):
         data = json_body(self.request)
         self.validate_form(data)
 
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
         remove_from_list = data.get("remove_from_list", False)
         reset_list = data.get("reset_list", False)
 

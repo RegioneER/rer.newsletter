@@ -4,17 +4,17 @@ from plone.protect import interfaces
 from plone.protect.authenticator import createToken
 from plone.restapi.deserializer import json_body
 from plone.restapi.services import Service
+from rer.newsletter import _
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
+from rer.newsletter.utils import INEXISTENT_EMAIL
 from rer.newsletter.utils import OK
 from rer.newsletter.utils import UNHANDLED
-from rer.newsletter.utils import INEXISTENT_EMAIL
 from six import PY2
+from zExceptions import BadRequest
 from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
-from zExceptions import BadRequest
-from rer.newsletter import _
 
 
 class NewsletterUnsubscribe(Service):
@@ -41,9 +41,7 @@ class NewsletterUnsubscribe(Service):
     def handle_unsubscribe(self, email):
         status = UNHANDLED
 
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
 
         status, secret = channel.unsubscribe(email)
         if status != OK:
@@ -71,9 +69,7 @@ class NewsletterUnsubscribe(Service):
         # mando mail di conferma
         url = f"{self.context.absolute_url()}/confirm-subscription?secret={secret}&_authenticator={token}&action=unsubscribe"
 
-        mail_template = self.context.restrictedTraverse(
-            "@@deleteuser_template"
-        )
+        mail_template = self.context.restrictedTraverse("@@deleteuser_template")
 
         parameters = {
             "header": self.context.header,

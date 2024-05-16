@@ -17,7 +17,6 @@ KEY = "rer.newsletter.channel.history"
 
 
 class SubscriptionsGet(Service):
-
     def reply(self):
         history = self.get_subscriptions()
         batch = HypermediaBatch(self.request, history)
@@ -36,9 +35,7 @@ class SubscriptionsGet(Service):
         text = self.request.form.get("text", "")
 
         status = UNHANDLED
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
         subscriptions, status = channel.exportUsersList()
         if status != OK:
             msg = api.portal.translate(
@@ -68,9 +65,7 @@ class ExportSubscriptionsGet(SubscriptionsGet):
         # predisporre download del file
 
         data = self.get_data()
-        self.request.response.setHeader(
-            "Content-Type", "text/comma-separated-values"
-        )
+        self.request.response.setHeader("Content-Type", "text/comma-separated-values")
         self.request.response.setHeader(
             "Content-Disposition",
             f'attachment; filename="{self.context.id}-user-list.csv"',

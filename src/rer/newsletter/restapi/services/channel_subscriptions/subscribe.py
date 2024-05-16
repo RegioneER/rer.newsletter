@@ -19,12 +19,10 @@ from zope.interface import alsoProvides
 
 
 class NewsletterSubscribe(Service):
-
     def handle_subscribe(self, email):
         status = UNHANDLED
 
         if not self.context.is_subscribable:
-
             raise BadRequest(
                 api.portal.translate(
                     _(
@@ -34,9 +32,7 @@ class NewsletterSubscribe(Service):
                 )
             )
 
-        channel = getMultiAdapter(
-            (self.context, self.request), IChannelSubscriptions
-        )
+        channel = getMultiAdapter((self.context, self.request), IChannelSubscriptions)
         status, secret = channel.subscribe(email)
 
         if status != SUBSCRIBED:
@@ -77,9 +73,7 @@ class NewsletterSubscribe(Service):
             # mando mail di conferma
             url = f"{self.context.absolute_url()}/confirm-subscription?secret={secret}&_authenticator={token}&action=subscribe"
 
-            mail_template = self.context.restrictedTraverse(
-                "@@activeuser_template"
-            )
+            mail_template = self.context.restrictedTraverse("@@activeuser_template")
 
             parameters = {
                 "title": self.context.title,
@@ -93,9 +87,7 @@ class NewsletterSubscribe(Service):
             mail_text = mail_template(**parameters)
 
             portal = api.portal.get()
-            mail_text = portal.portal_transforms.convertTo(
-                "text/mail", mail_text
-            )
+            mail_text = portal.portal_transforms.convertTo("text/mail", mail_text)
             sender = compose_sender(channel=self.context)
 
             channel_title = self.context.title

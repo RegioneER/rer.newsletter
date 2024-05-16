@@ -67,9 +67,7 @@ class BaseAdapter(object):
 
     @property
     def active_subscriptions(self):
-        return len(
-            [x for x in self.channel_subscriptions.values() if x["is_active"]]
-        )
+        return len([x for x in self.channel_subscriptions.values() if x["is_active"]])
 
     def subscribe(self, mail):
         subscriptions = self.channel_subscriptions
@@ -92,9 +90,7 @@ class BaseAdapter(object):
                 "email": mail,
                 "is_active": False,
                 "token": uuid_activation,
-                "creation_date": datetime.today().strftime(
-                    "%d/%m/%Y %H:%M:%S"
-                ),
+                "creation_date": datetime.today().strftime("%d/%m/%Y %H:%M:%S"),
             }
 
             transaction.commit()
@@ -194,9 +190,7 @@ class BaseAdapter(object):
                 "email": mail,
                 "is_active": True,
                 "token": six.text_type(uuid.uuid4()),
-                "creation_date": datetime.today().strftime(
-                    "%d/%m/%Y %H:%M:%S"
-                ),
+                "creation_date": datetime.today().strftime("%d/%m/%Y %H:%M:%S"),
             }
 
             transaction.commit()
@@ -248,9 +242,7 @@ class BaseAdapter(object):
                     "email": user,
                     "is_active": True,
                     "token": six.text_type(uuid.uuid4()),
-                    "creation_date": datetime.today().strftime(
-                        "%d/%m/%Y %H:%M:%S"
-                    ),
+                    "creation_date": datetime.today().strftime("%d/%m/%Y %H:%M:%S"),
                 }
             else:
                 logger.info("INVALID_EMAIL: %s", user)

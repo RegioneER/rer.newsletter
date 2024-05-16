@@ -31,9 +31,7 @@ class MessageActions:
 
         result["message-actions"]["can_manage"] = can_manage
         result["message-actions"]["can_send"] = can_send
-        result["message-actions"][
-            "already_sent"
-        ] = self.context.message_already_sent()
+        result["message-actions"]["already_sent"] = self.context.message_already_sent()
         result["message-actions"][
             "active_subscriptions"
         ] = self.context.active_subscriptions()

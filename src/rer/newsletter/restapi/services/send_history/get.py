@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
-from plone import api
+from plone.restapi.batching import HypermediaBatch
+from plone.restapi.serializer.converters import json_compatible
 from plone.restapi.services import Service
 from rer.newsletter import _
 from zope.annotation.interfaces import IAnnotations
-from plone.restapi.serializer.converters import json_compatible
-from plone.restapi.batching import HypermediaBatch
-from plone.restapi.deserializer import json_body
+
 
 KEY = "rer.newsletter.channel.history"
 
 
 class SendHistoryGet(Service):
-
     def reply(self):
         history = self.get_history()
         batch = HypermediaBatch(self.request, history)
