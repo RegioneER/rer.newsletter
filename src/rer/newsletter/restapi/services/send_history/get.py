@@ -2,7 +2,6 @@
 from plone.restapi.batching import HypermediaBatch
 from plone.restapi.serializer.converters import json_compatible
 from plone.restapi.services import Service
-from rer.newsletter import _
 from zope.annotation.interfaces import IAnnotations
 
 
