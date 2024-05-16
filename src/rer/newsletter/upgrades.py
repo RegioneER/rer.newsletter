@@ -97,6 +97,7 @@ def migrate_to_1005(context):
 
 
 def migrate_to_1006(context):
+    # Text -> Blocks
     to_remove = "plone.richtext"
     to_add = "volto.blocks"
     portal_types = api.portal.get_tool(name="portal_types")
@@ -105,3 +106,7 @@ def migrate_to_1006(context):
     ]
     behaviors.append(to_add)
     portal_types["Message"].behaviors = tuple(behaviors)
+
+    # change view
+    portal_types["Message"].default_view = "view"
+    portal_types["Message"].view_methods = ["view"]

@@ -15,7 +15,6 @@ from zope.annotation.interfaces import IAnnotations
 from zope.interface import implementer
 from zope.interface import Interface
 
-import json
 import re
 import six
 import transaction
@@ -68,7 +67,9 @@ class BaseAdapter(object):
 
     @property
     def active_subscriptions(self):
-        return len([x for x in self.channel_subscriptions.values() if x["is_active"]])
+        return len(
+            [x for x in self.channel_subscriptions.values() if x["is_active"]]
+        )
 
     def subscribe(self, mail):
         subscriptions = self.channel_subscriptions
@@ -91,7 +92,9 @@ class BaseAdapter(object):
                 "email": mail,
                 "is_active": False,
                 "token": uuid_activation,
-                "creation_date": datetime.today().strftime("%d/%m/%Y %H:%M:%S"),
+                "creation_date": datetime.today().strftime(
+                    "%d/%m/%Y %H:%M:%S"
+                ),
             }
 
             transaction.commit()
@@ -163,6 +166,14 @@ class BaseAdapter(object):
 
         return OK
 
+    def deleteAllUsers(self):
+        logger.info("delete all users from channel %s", self.context.title)
+        annotations = IAnnotations(self.context)
+        annotations[KEY] = PersistentDict({})
+        transaction.commit()
+
+        return OK
+
     def addUser(self, mail):
         logger.info("DEBUG: add user: %s %s", self.context.title, mail)
         subscriptions = self.channel_subscriptions
@@ -183,7 +194,9 @@ class BaseAdapter(object):
                 "email": mail,
                 "is_active": True,
                 "token": six.text_type(uuid.uuid4()),
-                "creation_date": datetime.today().strftime("%d/%m/%Y %H:%M:%S"),
+                "creation_date": datetime.today().strftime(
+                    "%d/%m/%Y %H:%M:%S"
+                ),
             }
 
             transaction.commit()
@@ -206,7 +219,6 @@ class BaseAdapter(object):
         return OK, subscription["token"]
 
     def exportUsersList(self):
-        logger.info("DEBUG: export users of a channel: %s", self.context.title)
         response = []
         subscriptions = self.channel_subscriptions
 
@@ -218,7 +230,7 @@ class BaseAdapter(object):
             element["creation_date"] = subscriber["creation_date"]
             response.append(element)
 
-        return json.dumps(response), OK
+        return response, OK
 
     def importUsersList(self, usersList):
         logger.info("DEBUG: import userslist in %s", self.context.title)
@@ -236,7 +248,9 @@ class BaseAdapter(object):
                     "email": user,
                     "is_active": True,
                     "token": six.text_type(uuid.uuid4()),
-                    "creation_date": datetime.today().strftime("%d/%m/%Y %H:%M:%S"),
+                    "creation_date": datetime.today().strftime(
+                        "%d/%m/%Y %H:%M:%S"
+                    ),
                 }
             else:
                 logger.info("INVALID_EMAIL: %s", user)

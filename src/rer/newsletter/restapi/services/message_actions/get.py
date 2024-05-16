@@ -20,7 +20,7 @@ class MessageActions:
             return {}
         result = {
             "message-actions": {
-                "@id": "{}/@message-actions".format(self.context.absolute_url())
+                "@id": f"{self.context.absolute_url()}/@message-actions"
             }
         }
 
@@ -31,7 +31,9 @@ class MessageActions:
 
         result["message-actions"]["can_manage"] = can_manage
         result["message-actions"]["can_send"] = can_send
-        result["message-actions"]["already_sent"] = self.context.message_already_sent()
+        result["message-actions"][
+            "already_sent"
+        ] = self.context.message_already_sent()
         result["message-actions"][
             "active_subscriptions"
         ] = self.context.active_subscriptions()

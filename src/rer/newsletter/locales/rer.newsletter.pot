@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2024-05-14 13:22+0000\n"
+"POT-Creation-Date: 2024-05-15 14:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,6 +140,16 @@ msgstr ""
 msgid "add_channel"
 msgstr ""
 
+#. Default: "There is already an active subscription for ${email}."
+#: rer/newsletter/restapi/services/subscriptions/post.py:42
+msgid "add_subscription_already_subscribed"
+msgstr ""
+
+#. Default: "Error adding ${email}."
+#: rer/newsletter/restapi/services/subscriptions/post.py:52
+msgid "add_subscription_generic_error"
+msgstr ""
+
 #. Default: "Add User"
 #: rer/newsletter/browser/channel/templates/manageusers.pt:77
 msgid "add_user"
@@ -197,9 +207,29 @@ msgstr ""
 msgid "css_style"
 msgstr ""
 
+#. Default: "You need to select at least one history or all."
+#: rer/newsletter/restapi/services/send_history/delete.py:20
+msgid "delete_history_missing_parameter"
+msgstr ""
+
 #. Default: "Cancella messaggio inviato"
 #: rer/newsletter/browser/channel/templates/channelhistoryview.pt:34
 msgid "delete_message_sent"
+msgstr ""
+
+#. Default: "Error deleting ${email}. Process stopped."
+#: rer/newsletter/restapi/services/subscriptions/delete.py:57
+msgid "delete_subscriptions_generic_error"
+msgstr ""
+
+#. Default: "You need to select at least one subscription or all."
+#: rer/newsletter/restapi/services/subscriptions/delete.py:26
+msgid "delete_subscriptions_missing_parameter"
+msgstr ""
+
+#. Default: "Addess ${email} not found. Process stopped."
+#: rer/newsletter/restapi/services/subscriptions/delete.py:48
+msgid "delete_subscriptions_wrong_email"
 msgstr ""
 
 #. Default: "Delete User"
@@ -436,7 +466,7 @@ msgstr ""
 #. Default: "Missing required parameter: email."
 #: rer/newsletter/restapi/services/channel_subscriptions/subscribe.py:125
 #: rer/newsletter/restapi/services/channel_subscriptions/unsubscribe.py:27
-#: rer/newsletter/restapi/services/test_send/post.py:17
+#: rer/newsletter/restapi/services/subscriptions/post.py:25
 msgid "missing_email_label"
 msgstr ""
 
@@ -541,6 +571,11 @@ msgstr ""
 #. Default: "Mail for subscribe to a channel"
 #: rer/newsletter/browser/channel/subscribe.py:27
 msgid "subscribe_user_description"
+msgstr ""
+
+#. Default: "There was an error fetching subscribers."
+#: rer/newsletter/restapi/services/subscriptions/get.py:41
+msgid "subscriptions_retrieve_error"
 msgstr ""
 
 #. Default: "Portlet class"
