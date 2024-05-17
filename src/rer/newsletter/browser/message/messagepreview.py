@@ -31,7 +31,8 @@ class MessagePreview(BrowserView):
                 break
         if not channel:
             return DEFAULT_STYLES
-        return DEFAULT_STYLES + getattr(channel, "css_style", "")
+        channel_styles = getattr(channel, "css_style", "") or ""
+        return DEFAULT_STYLES + channel_styles
 
     @property
     def channel(self):
