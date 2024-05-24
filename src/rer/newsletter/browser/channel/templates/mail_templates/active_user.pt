@@ -42,24 +42,15 @@
           <td align="left"
               colspan="2"
           >
-            <div class="newsletterTitle">
-              <h1>${title}</h1>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td align="left"
-              colspan="2"
-          >
             <p class="message_core">Per confermare la tua richiesta di iscrizione a Newsletter ${title}, &egrave; necessario collegarsi entro 48 ore al seguente link:
               <br />
               <a href="${activationUrl}">${activationUrl}</a>
-              <br />
-            Cordiali saluti
-              <br />
-            Redazione del portale ${portal_name}
             </p>
-            <br />
+            <p>
+              Cordiali saluti
+                <br />
+              Redazione del portale ${portal_name}
+            </p>
           </td>
         </tr>
         <span tal:replace="structure footer"></span>
