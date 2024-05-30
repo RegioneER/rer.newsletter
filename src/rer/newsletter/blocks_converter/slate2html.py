@@ -5,7 +5,9 @@ from lxml.html import builder as E
 from lxml.html import tostring
 
 import json
+import logging
 
+logger = logging.getLogger(__name__)
 
 SLATE_ACCEPTED_TAGS = ACCEPTED_TAGS + ["link"]
 
@@ -47,6 +49,9 @@ class Slate2HTML(object):
             handler = getattr(self, "handle_tag_{}".format(tagname), None)
             if not handler and tagname in SLATE_ACCEPTED_TAGS:
                 handler = self.handle_block
+        if not handler:
+            logger.warning(f"Unhandled tag: {tagname}. Skipping.")
+            return []
         res = handler(element)
         if isinstance(res, list):
             return res
@@ -86,6 +91,9 @@ class Slate2HTML(object):
         attributes = {"data-slate-data": json.dumps(data)}
 
         return el(*children, **attributes)
+
+    def handle_tag_hr(self, element):
+        return getattr(E, "HR")()
 
     def handle_block(self, element):
         """handle_block.

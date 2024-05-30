@@ -22,7 +22,9 @@ class BlocksToHtmlConverter:
             return ""
         html = []
         for block in blocks:
-            handler = getattr(self, f"block_handler_{block.get('@type', '')}", None)
+            handler = getattr(
+                self, f"block_handler_{block.get('@type', '')}", None
+            )
             if handler and callable(handler):
                 value = handler(context=context, block=block)
                 if value:
@@ -64,9 +66,11 @@ class BlocksToHtmlConverter:
         Return converted image block to HTML
         """
         scales_mapping = {"l": "large", "s": "mini", "m": "preview"}
-        image_scales = block.get("image_scales", {}).get("image", [])[0]
+        image_scales = block.get("image_scales", {}).get("image", [])
         if not image_scales:
             return ""
+
+        image_scales = image_scales[0]
         align = block.get("align", "")
         root_classes = ["block", "image"]
 
@@ -110,7 +114,9 @@ class BlocksToHtmlConverter:
         tr = root.findAll("tr")[0]
 
         for block in blocks:
-            handler = getattr(self, f"block_handler_{block.get('@type', '')}", None)
+            handler = getattr(
+                self, f"block_handler_{block.get('@type', '')}", None
+            )
             if handler and callable(handler):
                 value = handler(block)
                 if value:
