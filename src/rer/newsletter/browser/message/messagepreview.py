@@ -11,10 +11,12 @@ DEFAULT_STYLES = """
 }
 .block.align.right img {
     margin-left: 1em;
+    margin-bottom: 1em;
     float: right;
 }
 .block.align.left img {
     margin-right: 1em;
+    margin-bottom: 1em;
     float: left;
 }
 #footer {
