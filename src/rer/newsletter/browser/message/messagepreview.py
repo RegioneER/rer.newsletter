@@ -17,6 +17,9 @@ DEFAULT_STYLES = """
     margin-right: 1em;
     float: left;
 }
+#footer {
+    clear: both;
+}
 """
 
 
