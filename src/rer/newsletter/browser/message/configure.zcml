@@ -24,7 +24,7 @@
 
   <!-- default view for message -->
   <browser:page
-      name="message_view"
+      name="view"
       for="rer.newsletter.interfaces.IMessage"
       class=".messageview.MessageView"
       template="templates/messageview.pt"

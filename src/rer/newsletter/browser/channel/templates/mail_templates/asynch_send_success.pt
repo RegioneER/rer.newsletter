@@ -10,9 +10,9 @@
   <style tal:content="style"></style>
   <br />
   <p class="message_core">
-  L'invio del messaggio ${message_title}
+  L'invio del messaggio <b>${message_title}</b>
     <tal:subscribers condition="subscribers">a ${subscribers} iscritti</tal:subscribers>
-  del canale ${channel_name} &egrave; andato a buon fine.
+  del canale <b>${channel_name}</b> &egrave; andato a buon fine.
   </p>
   <br />
   <span tal:replace="structure footer"></span>

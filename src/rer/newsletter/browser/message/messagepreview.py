@@ -5,27 +5,52 @@ from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.content.channel import Channel
 
 
+DEFAULT_STYLES = """
+.block.image {
+  clear:both;
+}
+.block.align.right img {
+    margin-left: 1em;
+    margin-bottom: 1em;
+    float: right;
+}
+.block.align.left img {
+    margin-right: 1em;
+    margin-bottom: 1em;
+    float: left;
+}
+#footer {
+    clear: both;
+}
+"""
+
+
 class MessagePreview(BrowserView):
     """view for message preview"""
 
     def getMessageStyle(self):
-        for obj in self.context.aq_chain:
-            if isinstance(obj, Channel):
-                return obj.css_style
-
-    def getChannel(self):
         channel = None
         for obj in self.context.aq_chain:
             if isinstance(obj, Channel):
                 channel = obj
                 break
-        return channel
+        if not channel:
+            return DEFAULT_STYLES
+        channel_styles = getattr(channel, "css_style", "") or ""
+        return DEFAULT_STYLES + channel_styles
+
+    @property
+    def channel(self):
+        for obj in self.context.aq_chain:
+            if isinstance(obj, Channel):
+                return obj
+        return None
 
     def getMessageHeader(self):
-        return self.getChannel().header if self.getChannel().header else ""
+        return getattr(self.channel, "header", "")
 
     def getMessageFooter(self):
-        return self.getChannel().footer if self.getChannel().footer else ""
+        return getattr(self.channel, "footer", "")
 
     def getMessageSubHeader(self):
         return f"""

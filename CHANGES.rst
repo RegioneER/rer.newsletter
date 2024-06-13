@@ -5,8 +5,10 @@ Changelog
 3.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Add restapi endpoints to improve Volto compatibility.
+  [cekk]
+- Enable blocks on messages.
+  [cekk]
 
 3.0.2 (2024-05-06)
 ------------------

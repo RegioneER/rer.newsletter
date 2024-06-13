@@ -97,7 +97,7 @@ class ManageUsers(BrowserView):
         userList, status = channel.exportUsersList()
 
         if status == OK:
-            return userList
+            return json.dumps(userList)
         else:
             logger.exception(
                 "Error: {error} - channel: {channel}".format(

@@ -3,29 +3,13 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     >
 
+  <include package=".channel_actions" />
+  <include package=".channel_subscriptions" />
+  <include package=".message_actions" />
+  <include package=".message_send" />
+  <include package=".send_history" />
+  <include package=".subscriptions" />
+  <include package=".test_send" />
 
-  <plone:service
-      method="POST"
-      factory=".subscribe.NewsletterSubscribe"
-      for="rer.newsletter.interfaces.IChannel"
-      permission="zope2.View"
-      name="@subscribe-newsletter"
-      />
-
-  <plone:service
-      method="POST"
-      factory=".unsubscribe.NewsletterUnsubscribe"
-      for="rer.newsletter.interfaces.IChannel"
-      permission="zope2.View"
-      name="@unsubscribe-newsletter"
-      />
-
-  <plone:service
-      method="POST"
-      factory=".confirm_subscription.NewsletterConfirmSubscription"
-      for="rer.newsletter.interfaces.IChannel"
-      permission="zope2.View"
-      name="@confirm-subscription-newsletter"
-      />
 
 </configure>

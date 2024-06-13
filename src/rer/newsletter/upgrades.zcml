@@ -47,4 +47,12 @@
       destination="1005"
       handler=".upgrades.migrate_to_1005"
       />
+  <genericsetup:upgradeStep
+      title="Upgrade rer.newsletter to 1006"
+      description="Enable volto blocks in Message"
+      profile="rer.newsletter:default"
+      source="1005"
+      destination="1006"
+      handler=".upgrades.migrate_to_1006"
+      />
 </configure>

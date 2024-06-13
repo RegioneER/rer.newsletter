@@ -15,7 +15,6 @@ from zope.annotation.interfaces import IAnnotations
 from zope.interface import implementer
 from zope.interface import Interface
 
-import json
 import re
 import six
 import transaction
@@ -163,6 +162,14 @@ class BaseAdapter(object):
 
         return OK
 
+    def deleteAllUsers(self):
+        logger.info("delete all users from channel %s", self.context.title)
+        annotations = IAnnotations(self.context)
+        annotations[KEY] = PersistentDict({})
+        transaction.commit()
+
+        return OK
+
     def addUser(self, mail):
         logger.info("DEBUG: add user: %s %s", self.context.title, mail)
         subscriptions = self.channel_subscriptions
@@ -206,7 +213,6 @@ class BaseAdapter(object):
         return OK, subscription["token"]
 
     def exportUsersList(self):
-        logger.info("DEBUG: export users of a channel: %s", self.context.title)
         response = []
         subscriptions = self.channel_subscriptions
 
@@ -218,7 +224,7 @@ class BaseAdapter(object):
             element["creation_date"] = subscriber["creation_date"]
             response.append(element)
 
-        return json.dumps(response), OK
+        return response, OK
 
     def importUsersList(self, usersList):
         logger.info("DEBUG: import userslist in %s", self.context.title)

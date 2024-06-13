@@ -75,7 +75,6 @@ class IChannelSchema(model.Schema):
             default="Header for message of this channel",
         ),
         required=False,
-        default="",
     )
 
     footer = schema.Text(
@@ -85,7 +84,6 @@ class IChannelSchema(model.Schema):
             default="Footer for message of this channel",
         ),
         required=False,
-        default="",
     )
 
     css_style = schema.Text(
@@ -112,7 +110,7 @@ class IChannelSchema(model.Schema):
         title=_("standard_unsubscribe", default="Standard unsubscribe link"),
         description=_(
             "descriptin_standard_unsubscribe",
-            default="Usa il link standard per l'unsubscribe",
+            default="Se selezionato, verrà usato un testo standard nelle mail, per la disiscrizione. In alternativa, andrà messo a mano nella configurazione del footer.",
         ),
         default=True,
         required=False,
@@ -147,3 +145,9 @@ class IMessage(Interface):
 
 class IMessageSchema(model.Schema):
     """a dexterity schema for message"""
+
+
+class IBlocksToHtml(Interface):
+    """
+    Utility that converts blocks to html
+    """

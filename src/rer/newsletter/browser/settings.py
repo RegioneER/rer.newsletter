@@ -23,7 +23,8 @@ class ISettingsSchema(Interface):
     destination_link = schema.TextLine(
         title=_("destination_link", default="Link di destinazione"),
         description=_(
-            "description_destination_link", default="Indirizzo da sostituire"
+            "description_destination_link",
+            default="Indirizzo da sostituire. Se plone.volto è installato e il frontend_domain configurato, questo valore è ignorato.",
         ),
         required=False,
     )

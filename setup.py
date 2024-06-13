@@ -44,6 +44,7 @@ setup(
     zip_safe=False,
     python_requires=">=3.8",
     install_requires=[
+        "beautifulsoup4",
         "mailmanclient==3.1",
         "plone.api",
         "plone.app.tiles",
@@ -55,6 +56,7 @@ setup(
         "Products.GenericSetup>=1.8.2",
         "setuptools",
         "z3c.jbot",
+        "pyotp",
     ],
     extras_require={
         "test": [

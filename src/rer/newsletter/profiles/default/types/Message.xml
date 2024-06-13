@@ -20,9 +20,8 @@
     <element value="Image" />
   </property>
   <property name="allow_discussion">False</property>
-  <property name="default_view">message_view</property>
+  <property name="default_view">view</property>
   <property name="view_methods">
-    <element value="message_view" />
     <element value="view" />
   </property>
   <property name="default_view_fallback">False</property>
@@ -34,12 +33,12 @@
     <element value="plone.app.dexterity.behaviors.exclfromnav.IExcludeFromNavigation" />
     <element value="plone.app.dexterity.behaviors.id.IShortName" />
     <element value="plone.app.dexterity.behaviors.metadata.IDublinCore" />
-    <element value="plone.richtext" />
     <element value="plone.app.relationfield.behavior.IRelatedItems" />
     <element value="plone.app.versioningbehavior.behaviors.IVersionable" />
     <element value="plone.app.contenttypes.behaviors.tableofcontents.ITableOfContents" />
     <element value="plone.app.lockingbehavior.behaviors.ILocking" />
     <element value="rer.newsletter.behaviors.ships.IShippable" />
+    <element value="volto.blocks" />
   </property>
   <property name="schema">rer.newsletter.interfaces.IMessageSchema</property>
   <property name="model_source" />
