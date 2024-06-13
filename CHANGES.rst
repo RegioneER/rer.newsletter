@@ -2,7 +2,7 @@
 Changelog
 =========
 
-3.0.3 (unreleased)
+3.1.0 (2024-06-13)
 ------------------
 
 - Add restapi endpoints to improve Volto compatibility.
