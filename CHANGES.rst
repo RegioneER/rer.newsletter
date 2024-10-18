@@ -5,7 +5,8 @@ Changelog
 3.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed shippable collection
+  [eikichi18]
 
 
 3.1.0 (2024-06-13)
