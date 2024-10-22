@@ -2,7 +2,7 @@
 Changelog
 =========
 
-3.1.1 (unreleased)
+3.1.1 (2024-10-22)
 ------------------
 
 - Fixed shippable collection
