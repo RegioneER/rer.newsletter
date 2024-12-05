@@ -5,8 +5,8 @@ Changelog
 3.1.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Handle hr tag in slate blocks.
+  [cekk]
 
 3.1.1 (2024-10-22)
 ------------------
