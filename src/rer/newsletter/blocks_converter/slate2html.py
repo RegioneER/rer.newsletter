@@ -43,7 +43,7 @@ class Slate2HTML(object):
             element["type"] = "p"
         tagname = element["type"]
 
-        if element.get("data") and element["type"] not in SLATE_ACCEPTED_TAGS:
+        if element.get("data") and tagname not in SLATE_ACCEPTED_TAGS:
             handler = self.handle_slate_data_element
         else:
             handler = getattr(self, "handle_tag_{}".format(tagname), None)
@@ -93,7 +93,11 @@ class Slate2HTML(object):
         return el(*children, **attributes)
 
     def handle_tag_hr(self, element):
-        return getattr(E, "HR")()
+        elements = []
+        for child in element.get("children", []):
+            elements.extend(self.serialize(child))
+        elements.append(getattr(E, "HR")())
+        return elements
 
     def handle_block(self, element):
         """handle_block.
@@ -117,8 +121,14 @@ class Slate2HTML(object):
         for child in value:
             children += self.serialize(child)
 
-        # TO DO: handle unicode properly
-        return "".join(tostring(f).decode("utf-8") for f in children)
+        html = ""
+        for child in children:
+            if not isinstance(child, str):
+                child = tostring(child).decode("utf-8")
+            html += child
+        return html
+        # # TO DO: handle unicode properly
+        # return "".join(tostring(f).decode("utf-8") for f in children)
 
 
 def slate_to_html(value):
