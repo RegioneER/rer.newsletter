@@ -2,7 +2,7 @@
 Changelog
 =========
 
-3.1.2 (unreleased)
+3.1.2 (2024-12-05)
 ------------------
 
 - Handle hr tag in slate blocks.
