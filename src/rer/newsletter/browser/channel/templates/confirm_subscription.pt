@@ -5,19 +5,28 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="rer.newsletter">
 
-      <metal:block metal:fill-slot="style_slot">
-      </metal:block>
-
-      <metal:block metal:fill-slot="javascript_head_slot">
-      </metal:block>
-
       <!-- disattivo le portlet in questa view -->
       <metal:override fill-slot="top_slot"
           tal:define="disable_column_one python:request.set('disable_plone.leftcolumn',1);
                       disable_column_two python:request.set('disable_plone.rightcolumn',1);"/>
 
       <body>
+        <metal:description fill-slot="content-description">
+          <p class="discreet"
+            i18n:translate="confirm_subscribe_legend">
+            Clicking here, you will be subscribed to this channel.
+          </p>
+        </metal:description>
         <metal:content-core fill-slot="content-core">
+          <form action="${context/absolute_url}/confirm-subscription"
+                method="POST">
+              <input type="hidden" value="${request/secret}" name="secret" id="secret" />
+              <input type="hidden" value="true" name="submitted" id="submitted" />
+              <span tal:replace="structure context/@@authenticator/authenticator"/>
+              <div class="formControls">
+                <input class="context focus" type="submit" value="Confirm" i18n:attributes="value">
+              </div>
+          </form>
         </metal:content-core>
       </body>
 
