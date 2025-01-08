@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
-"POT-Creation-Date: 2023-05-22 10:13+0000\n"
+"POT-Creation-Date: 2025-01-08 16:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Filippo Campi <filippo.campi@redturtle.it>\n"
 "Language-Team: Italian <LL@li.org>\n"
@@ -14,556 +14,567 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: rer.newsletter\n"
 
-#: rer/newsletter/contentrules/forms.py:18
+#: ../contentrules/forms.py:18
 msgid "Add Rule for newsletter's subscribe"
 msgstr "Aggiungi una regola per l'iscrizione alla newsletter"
 
-#: rer/newsletter/contentrules/forms.py:43
+#: ../contentrules/forms.py:43
 msgid "Add Rule for newsletter's unsubscribe"
 msgstr "Aggiungi una regola per la disiscrizione dalla newsletter"
 
-#: rer/newsletter/behaviors/configure.zcml:13
+#: ../behaviors/configure.zcml:13
 msgid "Adds shippable workflows to content type"
 msgstr ""
 
-#: rer/newsletter/profiles/default/types/Channel.xml
+#: ../profiles/default/types/Channel.xml
 msgid "Channel"
 msgstr "Canale"
 
-#: rer/newsletter/profiles/default/controlpanel.xml
+#: ../profiles/default/controlpanel.xml
 msgid "Channel settings"
 msgstr "Impostazioni Newsletter"
 
-#: rer/newsletter/contentrules/forms.py:19
+#: ../contentrules/forms.py:19
 msgid "Configure element"
 msgstr "Configura elemento"
 
-#: rer/newsletter/browser/channel/templates/confirm_unsubscription.pt:27
+#: ../browser/channel/templates/confirm_subscription.pt:27
+#: ../browser/channel/templates/confirm_unsubscription.pt:27
 msgid "Confirm"
 msgstr "Conferma"
 
-#: rer/newsletter/profiles/default/types/Shippable_Collection.xml
+#: ../profiles/default/types/Shippable_Collection.xml
 msgid "Edit"
 msgstr "Modifica"
 
-#: rer/newsletter/contentrules/forms.py:30
+#: ../contentrules/forms.py:30
 msgid "Edit Rule for newsletter's subscribe"
 msgstr "Modifica la regola per l'iscrizione alla newsletter"
 
 #. Default: "Email"
-#: rer/newsletter/browser/message/sendingtest.py:24
+#: ../browser/message/sendingtest.py:24
 msgid "Email"
 msgstr "Email"
 
-#: rer/newsletter/profiles/default/sharing.xml
+#: ../profiles/default/sharing.xml
 msgid "Gestore newsletter"
 msgstr "Gestore newsletter"
 
-#: rer/newsletter/configure.zcml:49
+#: ../configure.zcml:49
 msgid "Installs the rer.newsletter add-on."
 msgstr "Installa rer.newsletter."
 
-#: rer/newsletter/contentrules/configure.zcml:63
+#: ../contentrules/configure.zcml:63
 msgid "Manda una email quando un utente conferma iscrizione"
 msgstr "Manda una email quando un utente conferma iscrizione"
 
-#: rer/newsletter/contentrules/configure.zcml:90
+#: ../contentrules/configure.zcml:90
 msgid "Manda una email quando un utente conferma la disiscrizione"
 msgstr "Manda una email quando un utente conferma la disiscrizione"
 
-#: rer/newsletter/contentrules/interfaces.py:29
-#: rer/newsletter/profiles/default/types/Message.xml
+#: ../contentrules/interfaces.py:29
+#: ../profiles/default/types/Message.xml
 msgid "Message"
 msgstr "Messaggio"
 
-#: rer/newsletter/tiles/configure.zcml:17
+#: ../tiles/configure.zcml:17
 msgid "Newsletter Subscribe"
 msgstr "Iscrizione alla newsletter"
 
-#: rer/newsletter/contentrules/interfaces.py:22
+#: ../contentrules/interfaces.py:22
 msgid "Receiver email"
 msgstr "Destinatario"
 
-#: rer/newsletter/contentrules/interfaces.py:15
+#: ../contentrules/interfaces.py:15
 msgid "Sender email"
 msgstr "Mittente"
 
-#: rer/newsletter/profiles/default/types/Shippable_Collection.xml
+#: ../profiles/default/types/Shippable_Collection.xml
 msgid "Shippable Collection"
 msgstr "Collezione Inviabile"
 
-#: rer/newsletter/behaviors/configure.zcml:13
+#: ../behaviors/configure.zcml:13
 msgid "Ships Behaviors"
 msgstr ""
 
-#: rer/newsletter/contentrules/interfaces.py:9
+#: ../contentrules/interfaces.py:9
 msgid "Subject"
 msgstr "Oggetto della email"
 
-#: rer/newsletter/contentrules/interfaces.py:10
+#: ../contentrules/interfaces.py:10
 msgid "Subject of the message"
 msgstr "Oggetto della email"
 
-#: rer/newsletter/contentrules/interfaces.py:23
+#: ../contentrules/interfaces.py:23
 msgid "The address where you want to send the e-mail message."
 msgstr "L'indirizzo dove vuoi che l'email sia spedita."
 
-#: rer/newsletter/contentrules/interfaces.py:16
+#: ../contentrules/interfaces.py:16
 msgid "The email address that sends the email. If no email is provided here, it will use the portal from address."
 msgstr "L'indirizzo che deve spedire l'email."
 
-#: rer/newsletter/contentrules/interfaces.py:30
+#: ../contentrules/interfaces.py:30
 msgid "Type in here the message that you want to mail. Somedefined content can be replaced: ${portal} will be replaced by the titleof the portal. ${url} will be replaced by the URL of the newsletter.${channel} will be replaced by the newsletter channel name. ${subscriber} will be replaced by subscriber name."
 msgstr "Digita il messaggio che vuoi inviare. Qualche contenuto può essere sostituito: ${portal} sarà sostituito dal titolo del portale. ${url} sarà sostituito con l'url del canale della newsletter. ${channel} sarà sostituito dal titolo del canale. ${subscriber} sarà sostituito dalla email della persona che si iscrive."
 
-#: rer/newsletter/configure.zcml:58
+#: ../configure.zcml:58
 msgid "Uninstalls the rer.newsletter add-on."
 msgstr "Disinstalla rer.newsletter."
 
-#: rer/newsletter/contentrules/configure.zcml:24
+#: ../contentrules/configure.zcml:24
 msgid "Utente conferma iscrizione al canale della newsletter"
 msgstr "Utente conferma iscrizione al canale della newsletter"
 
-#: rer/newsletter/contentrules/configure.zcml:18
+#: ../contentrules/configure.zcml:18
 msgid "Utente conferma la disiscrizione dal canale della newsletter"
 msgstr "Utente conferma la disiscrizione dal canale della newsletter"
 
-#: rer/newsletter/profiles/default/types/Shippable_Collection.xml
+#: ../profiles/default/types/Shippable_Collection.xml
 msgid "View"
 msgstr "Vista"
 
 #. Default: "Channel Created"
-#: rer/newsletter/browser/channel/add.py:34
+#: ../browser/channel/add.py:34
 msgid "add_channel"
 msgstr "Nuovo canale creato"
 
 #. Default: "Add User"
-#: rer/newsletter/browser/channel/templates/manageusers.pt:54
+#: ../browser/channel/templates/manageusers.pt:54
 msgid "add_user"
 msgstr "Aggiungi un utente"
 
 #. Default: "Add User"
-#: rer/newsletter/browser/channel/users/add.py:20
+#: ../browser/channel/users/add.py:20
 msgid "add_user_admin"
 msgstr "Aggiungi un utente"
 
 #. Default: "Add"
-#: rer/newsletter/browser/channel/users/add.py:34
+#: ../browser/channel/users/add.py:34
 msgid "add_user_admin_button"
 msgstr "Aggiunti un utente"
 
 #. Default: "Insert email for add user to a Channel"
-#: rer/newsletter/browser/channel/users/add.py:21
+#: ../browser/channel/users/add.py:21
 msgid "add_user_admin_description"
 msgstr "Inserisci una email per aggiungere un utente al canale."
 
+#. Default: "You are already subscribed to this channel."
+#: ../browser/channel/users/confirm_subscription.py:98
+msgid "already_active"
+msgstr "Ti sei già iscritto in questo canale."
+
 #. Default: "Channel Settings"
-#: rer/newsletter/browser/settings.py:46
+#: ../browser/settings.py:46
 msgid "channel_setting"
 msgstr "Impostazioni Newsletter"
 
 #. Default: "Import"
-#: rer/newsletter/browser/channel/users/usersimport.py:147
+#: ../browser/channel/users/usersimport.py:147
 msgid "charge_userimport"
 msgstr "Importa utenti"
 
 #. Default: "Come Back"
-#: rer/newsletter/browser/channel/templates/channelhistoryview.pt:10
-#: rer/newsletter/browser/channel/templates/channelview.pt:20
-#: rer/newsletter/browser/channel/templates/manageusers.pt:27
+#: ../browser/channel/templates/channelhistoryview.pt:10
+#: ../browser/channel/templates/channelview.pt:20
+#: ../browser/channel/templates/manageusers.pt:27
 msgid "come_back"
 msgstr "Torna indietro"
 
+#. Default: "Clicking here, you will be subscribed to this channel."
+#: ../browser/channel/templates/confirm_subscription.pt:15
+msgid "confirm_subscribe_legend"
+msgstr "Cliccando qui, confemi di volerti iscrivere a questa newsletter."
+
 #. Default: "Clicking here, you will be unsubscribed from this channel."
-#: rer/newsletter/browser/channel/templates/confirm_unsubscription.pt:15
+#: ../browser/channel/templates/confirm_unsubscription.pt:15
 msgid "confirm_unsubscribe_legend"
 msgstr "Cliccando qui, confermi di volerti disiscrivere da questa newsletter."
 
 #. Default: "Channel History"
-#: rer/newsletter/browser/channel/templates/channelviewlet.pt:12
+#: ../browser/channel/templates/channelviewlet.pt:12
 msgid "cronologia_canale"
 msgstr "Cronologia del canale"
 
 #. Default: "CSS Style"
-#: rer/newsletter/interfaces.py:91
+#: ../interfaces.py:91
 msgid "css_style"
 msgstr "Stili CSS"
 
 #. Default: "Cancella messaggio inviato"
-#: rer/newsletter/browser/channel/templates/channelhistoryview.pt:25
+#: ../browser/channel/templates/channelhistoryview.pt:25
 msgid "delete_message_sent"
 msgstr "Cancella messaggio inviato"
 
 #. Default: "Delete User"
-#: rer/newsletter/browser/channel/templates/manageusers.pt:60
+#: ../browser/channel/templates/manageusers.pt:60
 msgid "delete_user"
 msgstr "Elimina Utente"
 
 #. Default: "Channel ID"
-#: rer/newsletter/interfaces.py:100
+#: ../interfaces.py:100
 msgid "description_IDChannel"
 msgstr "ID univoco del canale."
 
 #. Default: "CSS class to add at the portlet"
-#: rer/newsletter/portlets/interface.py:38
+#: ../portlets/interface.py:38
 msgid "description_css_portlet_class"
 msgstr "Classi CSS da aggiungere alla portlet."
 
 #. Default: "style for mail"
-#: rer/newsletter/interfaces.py:92
+#: ../interfaces.py:92
 msgid "description_css_style"
 msgstr "Stili per la mail."
 
 #. Default: "Indirizzo da sostituire"
-#: rer/newsletter/browser/settings.py:28
+#: ../browser/settings.py:28
 msgid "description_destination_link"
 msgstr "Indirizzo da sostituire"
 
 #. Default: "Empties channel users list"
-#: rer/newsletter/browser/channel/users/usersimport.py:46
+#: ../browser/channel/users/usersimport.py:46
 msgid "description_empty_list"
 msgstr "Elimina tutti gli utenti dal canale."
 
 #. Default: "File must be a CSV"
-#: rer/newsletter/browser/channel/users/usersimport.py:39
+#: ../browser/channel/users/usersimport.py:39
 msgid "description_file"
 msgstr "Il file caricato deve essere in formato CSV."
 
 #. Default: "Footer for message of this channel"
-#: rer/newsletter/interfaces.py:83
+#: ../interfaces.py:83
 msgid "description_footer_channel"
 msgstr "Il footer per i messaggi inviati da questo canale."
 
 #. Default: "Header for message of this channel"
-#: rer/newsletter/interfaces.py:74
+#: ../interfaces.py:74
 msgid "description_header_channel"
 msgstr "L'header per i messaggi inviati da questo canale."
 
 #. Default: "if CSV File contains a header line"
-#: rer/newsletter/browser/channel/users/usersimport.py:68
+#: ../browser/channel/users/usersimport.py:68
 msgid "description_header_line"
 msgstr "Se il file CSV contiene una riga di intestazione."
 
 #. Default: "Newsletters"
-#: rer/newsletter/portlets/interface.py:45
+#: ../portlets/interface.py:45
 msgid "description_newsletter"
 msgstr "Newsletter"
 
 #. Default: "Title of the rendered portlet"
-#: rer/newsletter/portlets/interface.py:23
+#: ../portlets/interface.py:23
 msgid "description_portlet_header"
 msgstr "Titolo della portlet."
 
 #. Default: "Informativa sulla privacy per questo canale"
-#: rer/newsletter/interfaces.py:65
+#: ../interfaces.py:65
 msgid "description_privacy_channel"
 msgstr "Informativa sulla privacy per questo canale"
 
 #. Default: "Remove users of CSV from channel"
-#: rer/newsletter/browser/channel/users/usersimport.py:59
+#: ../browser/channel/users/usersimport.py:59
 msgid "description_remove_subscribers"
 msgstr "Rimuovi gli utenti del file CSV dal canale."
 
 #. Default: "Response email of channel"
-#: rer/newsletter/interfaces.py:58
+#: ../interfaces.py:58
 msgid "description_response_email"
 msgstr "Email di risposta del canale."
 
 #. Default: "Email of sender"
-#: rer/newsletter/interfaces.py:44
+#: ../interfaces.py:44
 msgid "description_sender_email"
 msgstr "Email del mittente."
 
 #. Default: "Fullname of sender"
-#: rer/newsletter/interfaces.py:37
+#: ../interfaces.py:37
 msgid "description_sender_name"
 msgstr "Nome complete del mittente."
 
 #. Default: "Separator of CSV file"
-#: rer/newsletter/browser/channel/users/usersimport.py:77
+#: ../browser/channel/users/usersimport.py:77
 msgid "description_separator"
 msgstr "Separatore del file CSV, i valori possibili sono ',' o ';'"
 
 #. Default: "Indirizzo da sostituire"
-#: rer/newsletter/browser/settings.py:18
+#: ../browser/settings.py:18
 msgid "description_source_link"
 msgstr "Indirizzo da sostituire"
 
 #. Default: "Subject for channel message"
-#: rer/newsletter/interfaces.py:51
+#: ../interfaces.py:51
 msgid "description_subject_mail"
 msgstr "Oggetto dei messaggi del canale."
 
 #. Default: "Link di destinazione"
-#: rer/newsletter/browser/settings.py:27
+#: ../browser/settings.py:27
 msgid "destination_link"
 msgstr "Link di destinazione"
 
 #. Default: "Email to send the test message"
-#: rer/newsletter/browser/message/sendingtest.py:25
+#: ../browser/message/sendingtest.py:25
 msgid "email_sendingtest_description"
 msgstr "Indirizzo email alla quale mandare l'email di test."
 
 #. Default: "Validità del token in ore"
-#: rer/newsletter/browser/settings.py:36
+#: ../browser/settings.py:36
 msgid "expired_time_token"
 msgstr "Validità del token in ore"
 
 #. Default: "Export Users List"
-#: rer/newsletter/browser/channel/templates/manageusers.pt:47
+#: ../browser/channel/templates/manageusers.pt:47
 msgid "export_user_list"
 msgstr "Esporta lista di utenti"
 
 #. Default: "Footer of message"
-#: rer/newsletter/interfaces.py:82
+#: ../interfaces.py:82
 msgid "footer_channel"
 msgstr "Foooter del messagio"
 
 #. Default: "Ti sei iscritto alla newsletter ${channel} del portale \"${site}\"."
-#: rer/newsletter/browser/channel/users/confirm_subscription.py:72
+#: ../browser/channel/users/confirm_subscription.py:76
 msgid "generic_activate_message_success"
 msgstr "Ti sei iscritto alla newsletter ${channel} del portale \"${site}\"."
 
 #. Default: "User Added."
-#: rer/newsletter/browser/channel/users/add.py:51
+#: ../browser/channel/users/add.py:51
 msgid "generic_add_message_success"
 msgstr "Utente aggiunto con successo."
 
 #. Default: "Succesfully unsubscribed."
-#: rer/newsletter/browser/channel/users/confirm_unsubscription.py:45
+#: ../browser/channel/users/confirm_unsubscription.py:45
 msgid "generic_delete_message_success"
 msgstr "Ti sei cancellato dalla newsletter."
 
 #. Default: "Unhandled problem with add of channel."
-#: rer/newsletter/browser/channel/add.py:41
+#: ../browser/channel/add.py:41
 msgid "generic_problem_add_channel"
 msgstr "Problema inespattetato con l'aggiunta del canale."
 
 #. Default: "User Subscribed"
-#: rer/newsletter/browser/channel/users/usersimport.py:193
+#: ../browser/channel/users/usersimport.py:193
 msgid "generic_subscribe_message_success"
 msgstr "Utente iscritto con successo. Controlla l'email..."
 
 #. Default: "Header of message"
-#: rer/newsletter/interfaces.py:73
+#: ../interfaces.py:73
 msgid "header_channel"
 msgstr "Intestazione del messaggio"
 
 #. Default: "Channel ID"
-#: rer/newsletter/interfaces.py:99
+#: ../interfaces.py:99
 msgid "idChannel"
 msgstr "Id del canale"
 
 #. Default: "Error parsing CSV file. Probably it has a different separator."
-#: rer/newsletter/browser/channel/users/usersimport.py:171
+#: ../browser/channel/users/usersimport.py:171
 msgid "import_error_index"
 msgstr "Errore nella lettura del file CSV. Probabilmente hai selezionato un separatore differente."
 
 #. Default: "<!-- <a href=\"users_import\" class=\"plone-btn plone-btn-primary pat-plone-modal\" data-pat-plone-modal=\"width: '770px',height: '430px',\" i18n:translate=\"import_user_list\"> --> Import Users List"
-#: rer/newsletter/browser/channel/templates/manageusers.pt:39
+#: ../browser/channel/templates/manageusers.pt:39
 msgid "import_user_list"
 msgstr "Importa la lista di utenti"
 
 #. Default: "Is Subscribable"
-#: rer/newsletter/interfaces.py:106
+#: ../interfaces.py:106
 msgid "is_subscribable"
 msgstr "Sottoscrivibile"
 
 #. Default: "Message Preview"
-#: rer/newsletter/browser/message/templates/messageviewlet.pt:4
+#: ../browser/message/templates/messageviewlet.pt:4
 msgid "message_preview"
 msgstr "Anteprima del messaggio"
 
 #. Default: "Message sent correctly to ${subscribers} subscribers."
-#: rer/newsletter/browser/message/sendmessageview.py:35
+#: ../browser/message/sendmessageview.py:35
 msgid "message_send"
 msgstr "Messaggio spedito correttamente a ${subscribers} iscritti."
 
 #. Default: "Unable to send the message to subscribers. Please contact the site administrator."
-#: rer/newsletter/browser/message/sendmessageview.py:43
+#: ../browser/message/sendmessageview.py:43
 msgid "message_send_error"
 msgstr "Impossibile spedire il messaggio agli iscritti. Per favore contatta l'amministratore del sito."
 
 #. Default: "Message test"
-#: rer/newsletter/browser/message/templates/messageviewlet.pt:12
+#: ../browser/message/templates/messageviewlet.pt:12
 msgid "message_test"
 msgstr "Test del messaggio"
 
 #. Default: "Informativa sulla privacy"
-#: rer/newsletter/interfaces.py:64
+#: ../interfaces.py:64
 msgid "privacy_channel"
 msgstr "Informativa sulla privacy"
 
-#: rer/newsletter/configure.zcml:49
+#: ../configure.zcml:49
 msgid "rer.newsletter"
 msgstr ""
 
-#: rer/newsletter/configure.zcml:58
+#: ../configure.zcml:58
 msgid "rer.newsletter (uninstall)"
 msgstr ""
 
 #. Default: "Re-send Message"
-#: rer/newsletter/browser/message/templates/messageviewlet.pt:26
+#: ../browser/message/templates/messageviewlet.pt:26
 msgid "resend_message_confirm"
 msgstr "Rimanda il messaggio"
 
 #. Default: "Response email"
-#: rer/newsletter/interfaces.py:57
+#: ../interfaces.py:57
 msgid "response_email"
 msgstr "Email dove rispondere"
 
 #. Default: "Send Message"
-#: rer/newsletter/browser/message/templates/messageviewlet.pt:22
+#: ../browser/message/templates/messageviewlet.pt:22
 msgid "send_message_confirm"
 msgstr "Invia Messaggio"
 
 #. Default: "Send"
-#: rer/newsletter/browser/message/sendingtest.py:38
+#: ../browser/message/sendingtest.py:38
 msgid "send_sendingtest"
 msgstr "Invia"
 
 #. Default: "Send"
-#: rer/newsletter/browser/message/sendmessageview.py:65
+#: ../browser/message/sendmessageview.py:65
 msgid "send_sendingview"
 msgstr "Invia"
 
 #. Default: "Sender email"
-#: rer/newsletter/interfaces.py:43
+#: ../interfaces.py:43
 msgid "sender_email"
 msgstr "Email del mittente"
 
 #. Default: "Sender Fullname"
-#: rer/newsletter/interfaces.py:36
+#: ../interfaces.py:36
 msgid "sender_name"
 msgstr "Nome completo del mittente"
 
 #. Default: "Link sorgente"
-#: rer/newsletter/browser/settings.py:17
+#: ../browser/settings.py:17
 msgid "source_link"
 msgstr "Link sorgente"
 
 #. Default: "Riceverai una e-mail per confermare l'iscrizione alla newsletter."
-#: rer/newsletter/browser/channel/subscribe.py:132
+#: ../browser/channel/subscribe.py:132
 msgid "status_user_subscribed"
 msgstr "Riceverai una e-mail per confermare l'iscrizione alla newsletter."
 
 #. Default: "Subject email"
-#: rer/newsletter/interfaces.py:50
+#: ../interfaces.py:50
 msgid "subject_email"
 msgstr "Oggetto dell'email"
 
 #. Default: "Subscribe"
-#: rer/newsletter/portlets/subscribe.pt:12
-#: rer/newsletter/tiles/subscribe.pt:17
+#: ../portlets/subscribe.pt:12
+#: ../tiles/subscribe.pt:17
 msgid "subscribe"
 msgstr "Iscriviti"
 
 #. Default: "Subscribe"
-#: rer/newsletter/browser/channel/subscribe.py:58
+#: ../browser/channel/subscribe.py:58
 msgid "subscribe_submit_label"
 msgstr "Iscriviti"
 
 #. Default: "Subscription Mail"
-#: rer/newsletter/browser/channel/subscribe.py:26
+#: ../browser/channel/subscribe.py:26
 msgid "subscribe_user"
 msgstr "Email di iscrizione"
 
 #. Default: "Mail for subscribe to a channel"
-#: rer/newsletter/browser/channel/subscribe.py:27
+#: ../browser/channel/subscribe.py:27
 msgid "subscribe_user_description"
 msgstr "Email per l'iscrizione ad un canale."
 
 #. Default: "Portlet class"
-#: rer/newsletter/portlets/interface.py:37
+#: ../portlets/interface.py:37
 msgid "title_css_portlet_class"
 msgstr "Classe portlet"
 
 #. Default: "Empties users list"
-#: rer/newsletter/browser/channel/users/usersimport.py:45
+#: ../browser/channel/users/usersimport.py:45
 msgid "title_empty_list"
 msgstr "Pulisci la lista di utenti"
 
 #. Default: "Header Line"
-#: rer/newsletter/browser/channel/users/usersimport.py:67
+#: ../browser/channel/users/usersimport.py:67
 msgid "title_header_line"
 msgstr "Intestazione"
 
 #. Default: "Newsletter"
-#: rer/newsletter/portlets/interface.py:44
+#: ../portlets/interface.py:44
 msgid "title_newsletter"
 msgstr "Newsletter"
 
 #. Default: "Header"
-#: rer/newsletter/portlets/interface.py:22
+#: ../portlets/interface.py:22
 msgid "title_portlet_header"
 msgstr "Intestazione"
 
 #. Default: "Remove subscribers of the list"
-#: rer/newsletter/browser/channel/users/usersimport.py:55
+#: ../browser/channel/users/usersimport.py:55
 msgid "title_remove_subscribers"
 msgstr "Rimuovi gli iscritti dalla lista"
 
 #. Default: "CSV separator"
-#: rer/newsletter/browser/channel/users/usersimport.py:76
+#: ../browser/channel/users/usersimport.py:76
 msgid "title_separator"
 msgstr "Separatore CSV"
 
 #. Default: "Users List File"
-#: rer/newsletter/browser/channel/users/usersimport.py:38
+#: ../browser/channel/users/usersimport.py:38
 msgid "title_users_list_file"
 msgstr "File di utenti"
 
 #. Default: "Unable to subscribe to this channel. Please contact site administrator."
-#: rer/newsletter/browser/channel/users/confirm_subscription.py:90
+#: ../browser/channel/users/confirm_subscription.py:92
 msgid "unable_to_subscribe"
 msgstr "Impossibile iscriversi a questo canale. Per favore contatta l'amministratore del sito."
 
 #. Default: "Unable to unsubscribe to this channel. Please contact site administrator."
-#: rer/newsletter/browser/channel/users/confirm_unsubscription.py:59
+#: ../browser/channel/users/confirm_unsubscription.py:59
 msgid "unable_to_unsubscribe"
 msgstr "Si è verificato un errore annullando la tua iscrizione da questo canale. Per favore contatta l'amministratore del sito."
 
 #. Default: "Unsubscribe"
-#: rer/newsletter/browser/channel/unsubscribe.py:52
+#: ../browser/channel/unsubscribe.py:52
 msgid "unsubscribe_button"
 msgstr "Cancellami"
 
 #. Default: "Mail for unsubscribe from channel"
-#: rer/newsletter/browser/channel/unsubscribe.py:29
+#: ../browser/channel/unsubscribe.py:29
 msgid "unsubscribe_email_description"
 msgstr "Email per disiscriversi dal canale"
 
 #. Default: "Unsubscription Email"
-#: rer/newsletter/browser/channel/unsubscribe.py:28
+#: ../browser/channel/unsubscribe.py:28
 msgid "unsubscribe_email_title"
 msgstr "Inserisci la tua e-mail per cancellarti dal canale"
 
 #. Default: "Unable to perform unsubscription. Please contact site administrators."
-#: rer/newsletter/browser/channel/unsubscribe.py:76
+#: ../browser/channel/unsubscribe.py:76
 msgid "unsubscribe_generic"
 msgstr "Impossibile eseguire la disiscrizione. Per favore contatta l'amministatore del sito."
 
 #. Default: "Mail not found. Unable to unsubscribe."
-#: rer/newsletter/browser/channel/unsubscribe.py:71
+#: ../browser/channel/unsubscribe.py:71
 msgid "unsubscribe_inexistent_mail"
 msgstr "Email non trovata. Impossibile eseguire la disiscrizione."
 
 #. Default: "Unable to unsubscribe to channel. Missing secret key."
-#: rer/newsletter/browser/channel/users/confirm_unsubscription.py:30
+#: ../browser/channel/users/confirm_unsubscription.py:30
 msgid "unsubscribe_missing_secret"
 msgstr "Impossibile disiscriversi a questo canale. Parametro mancante."
 
 #. Default: "Sei già iscritto a questa newsletter, oppure non hai ancora confermato l'iscrizione."
-#: rer/newsletter/browser/channel/subscribe.py:145
+#: ../browser/channel/subscribe.py:145
 msgid "user_already_subscribed"
 msgstr "Sei già iscritto a questa newsletter, oppure non hai ancora confermato l'iscrizione."
 
 #. Default: "Riceverai una e-mail per confermare la cancellazione dalla newsletter"
-#: rer/newsletter/browser/channel/unsubscribe.py:125
+#: ../browser/channel/unsubscribe.py:125
 msgid "user_unsubscribe_success"
 msgstr "Riceverai una e-mail per confermare la cancellazione dalla newsletter"
 
 #. Default: "User Manage"
-#: rer/newsletter/browser/channel/templates/channelviewlet.pt:4
+#: ../browser/channel/templates/channelviewlet.pt:4
 msgid "users_manage"
 msgstr "Gestione degli utenti"
