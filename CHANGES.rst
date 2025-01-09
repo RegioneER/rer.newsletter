@@ -5,7 +5,8 @@ Changelog
 1.3.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Handle subscribe with POST method, to avoid unwanted subscriptions or double clicks.
+  [cekk]
 
 
 1.3.0 (2023-06-20)
