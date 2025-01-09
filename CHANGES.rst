@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.3.1 (unreleased)
+1.3.1 (2025-01-09)
 ------------------
 
 - Handle subscribe with POST method, to avoid unwanted subscriptions or double clicks.
