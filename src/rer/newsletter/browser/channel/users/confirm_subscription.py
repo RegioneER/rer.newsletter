@@ -4,7 +4,7 @@ from Products.Five.browser import BrowserView
 from rer.newsletter import _
 from rer.newsletter.adapter.subscriptions import IChannelSubscriptions
 from rer.newsletter.contentrules.events import SubscriptionEvent
-from rer.newsletter.utils import OK
+from rer.newsletter.utils import OK, ALREADY_ACTIVE
 from rer.newsletter.utils import compose_sender
 from rer.newsletter.utils import get_site_title
 from zope.component import getMultiAdapter
@@ -53,6 +53,10 @@ class ConfirmSubscription(BrowserView):
         return OK
 
     def __call__(self):
+        submitted = self.request.form.get("submitted", "")
+        if not submitted or self.request.method != "POST":
+            return super(ConfirmSubscription, self).__call__()
+
         secret = self.request.get("secret")
 
         response = None
@@ -70,15 +74,14 @@ class ConfirmSubscription(BrowserView):
                 message_title="Iscrizione confermata",
             )
             status = _(
-                u"generic_activate_message_success",
-                default=u'Ti sei iscritto alla newsletter ${channel} del portale "${site}".',
+                "generic_activate_message_success",
+                default='Ti sei iscritto alla newsletter ${channel} del portale "${site}".',
                 mapping=dict(
                     channel=self.context.title, site=get_site_title()
                 ),
             )
-        if response == OK:
             api.portal.show_message(
-                message=status, request=self.request, type=u"info"
+                message=status, request=self.request, type="info"
             )
         else:
             logger.error(
@@ -86,14 +89,20 @@ class ConfirmSubscription(BrowserView):
                     token=secret, channel=self.context.absolute_url()
                 )
             )
+            msg = _(
+                "unable_to_subscribe",
+                default="Unable to subscribe to this channel."
+                " Please contact site administrator.",
+            )
+            if response == ALREADY_ACTIVE:
+                msg = _(
+                    "already_active",
+                    default="You are already subscribed to this channel.",
+                )
             api.portal.show_message(
-                message=_(
-                    "unable_to_subscribe",
-                    default=u"Unable to subscribe to this channel."
-                    u" Please contact site administrator.",
-                ),
+                message=msg,
                 request=self.request,
-                type=u"error",
+                type="error",
             )
 
-        return self.render()
+        return self.request.response.redirect(self.context.absolute_url())
