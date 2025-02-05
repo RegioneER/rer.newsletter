@@ -22,6 +22,9 @@ DEFAULT_STYLES = """
 #footer {
     clear: both;
 }
+.text-larger {
+    font-size: 1.75em;
+}
 """
 
 

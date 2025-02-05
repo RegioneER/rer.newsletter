@@ -30,8 +30,10 @@ class BlocksToHtmlConverter:
                 if value:
                     html.append(value)
         root = "".join(html)
-        soup = bs(root, "html.parser")  # make BeautifulSoup
-        return soup.prettify()  # prettify the html
+
+        # soup = bs(root, "html.parser")  # make BeautifulSoup
+        # return soup.prettify()  # prettify the html
+        return root
 
     def get_blocks(self, context, blocks, blocks_layout):
         """

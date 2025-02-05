@@ -5,8 +5,10 @@ Changelog
 3.1.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Handle text-larger class in slate2html.
+  [cekk]
+- Do not pretty slate2html output to avoid not needed spaces between tags.
+  [cekk]
 
 3.1.2 (2024-12-05)
 ------------------
