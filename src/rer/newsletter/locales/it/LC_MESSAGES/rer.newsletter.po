@@ -480,12 +480,12 @@ msgstr "Test del messaggio"
 #: rer/newsletter/restapi/services/channel_subscriptions/unsubscribe.py:27
 #: rer/newsletter/restapi/services/subscriptions/post.py:27
 msgid "missing_email_label"
-msgstr "Parametro obbligatorio mancante: email."
+msgstr "Dato obbligatorio mancante: email."
 
 #. Default: "Missing required parameter: file."
 #: rer/newsletter/restapi/services/subscriptions/post.py:106
 msgid "missing_file_label"
-msgstr "Parametro obbligatorio mancante: file."
+msgstr "Dato obbligatorio mancante: file."
 
 #. Default: "Informativa sulla privacy"
 #: rer/newsletter/interfaces.py:63

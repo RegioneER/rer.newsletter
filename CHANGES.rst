@@ -5,7 +5,8 @@ Changelog
 3.1.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Changed label from Parametro to Dato.
+  [eikichi18]
 
 
 3.1.2 (2024-12-05)
