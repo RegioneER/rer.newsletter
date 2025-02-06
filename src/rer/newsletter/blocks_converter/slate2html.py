@@ -34,15 +34,21 @@ class Slate2HTML(object):
         :param element:
         """
         if "text" in element:
-            if "\n" not in element["text"]:
-                return [element["text"]]
+            text_elements = element["text"].split("\n")
+            if element.get("style-text-larger", False):
+                text_elements = [
+                    E.SPAN(
+                        x,
+                        **{"class": "text-larger"},
+                    )
+                    for x in text_elements
+                ]
 
-            return join(E.BR, element["text"].split("\n"))
+            return join(E.BR, text_elements)
 
         if element["type"] == "paragraph":
             element["type"] = "p"
         tagname = element["type"]
-
         if element.get("data") and tagname not in SLATE_ACCEPTED_TAGS:
             handler = self.handle_slate_data_element
         else:
@@ -73,7 +79,6 @@ class Slate2HTML(object):
         children = []
         for child in element["children"]:
             children += self.serialize(child)
-
         return el(*children, **attributes)
 
     def handle_slate_data_element(self, element):
