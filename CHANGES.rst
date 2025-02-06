@@ -2,7 +2,7 @@
 Changelog
 =========
 
-3.1.3 (unreleased)
+3.1.3 (2025-02-06)
 ------------------
 
 - Handle text-larger class in slate2html.
