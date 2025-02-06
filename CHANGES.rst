@@ -9,6 +9,8 @@ Changelog
   [cekk]
 - Do not pretty slate2html output to avoid not needed spaces between tags.
   [cekk]
+- Changed label from Parametro to Dato.
+  [eikichi18]
 
 3.1.2 (2024-12-05)
 ------------------
