@@ -52,7 +52,7 @@ setup(
         "collective.volto.blocksfield",
         "redturtle.volto",
         "plone.restapi",
-        "premailer==3.1.1",
+        "premailer>=3.1.1",
         "Products.GenericSetup>=1.8.2",
         "setuptools",
         "z3c.jbot",
