@@ -1,4 +1,4 @@
-""" slate2html module """
+"""slate2html module"""
 
 from .config import ACCEPTED_TAGS
 from lxml.html import builder as E
@@ -44,7 +44,7 @@ class Slate2HTML(object):
                     for x in text_elements
                 ]
 
-            return join(E.BR, text_elements)
+            return join(E.BR(), text_elements)
 
         if element["type"] == "paragraph":
             element["type"] = "p"

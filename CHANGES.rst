@@ -5,7 +5,8 @@ Changelog
 3.1.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix handler for br tag in slate2html.
+  [cekk]
 
 
 3.1.3 (2025-02-06)
