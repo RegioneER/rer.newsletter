@@ -44,7 +44,7 @@
           >
             <p class="message_core">Per confermare la tua richiesta di iscrizione a Newsletter ${title}, &egrave; necessario collegarsi entro 48 ore al seguente link:
               <br />
-              <a href="${activationUrl}">${activationUrl}</a>
+              <a href="${activationUrl}">Conferma iscrizione</a>
             </p>
             <p>
               Cordiali saluti

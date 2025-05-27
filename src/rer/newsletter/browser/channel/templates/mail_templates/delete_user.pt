@@ -41,8 +41,8 @@
           <td align="left"
               colspan="2"
           >
-            <p class="message_core">Clicca per confermare la cancellazione
-              <a href="${activationUrl}">${activationUrl}</a></p>
+            <p class="message_core">Per confermare la cancellazione clicca sul link
+              <a href="${activationUrl}">Conferma la cancellazione</a></p>
             <br />
           </td>
         </tr>
