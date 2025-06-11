@@ -2,7 +2,7 @@
 Changelog
 =========
 
-3.1.4 (unreleased)
+3.1.4 (2025-06-11)
 ------------------
 
 - Fix handler for br tag in slate2html.
