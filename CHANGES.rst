@@ -13,7 +13,8 @@ Changelog
 
 - Fix handler for br tag in slate2html.
   [cekk]
-
+- Improve confirm/delete messages.
+  [cekk]
 
 3.1.3 (2025-02-06)
 ------------------
