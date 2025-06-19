@@ -2,7 +2,7 @@
 Changelog
 =========
 
-3.1.5 (unreleased)
+3.1.5 (2025-06-19)
 ------------------
 
 - Improve confirm/delete messages.
