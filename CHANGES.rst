@@ -5,15 +5,13 @@ Changelog
 3.1.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Improve confirm/delete messages.
+  [cekk]
 
 3.1.4 (2025-06-11)
 ------------------
 
 - Fix handler for br tag in slate2html.
-  [cekk]
-- Improve confirm/delete messages.
   [cekk]
 
 3.1.3 (2025-02-06)
