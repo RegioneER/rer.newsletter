@@ -12,7 +12,7 @@ jobs:
         plone: ['60']
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v5
       - name: Cache eggs
         uses: actions/cache@v4
         with:
