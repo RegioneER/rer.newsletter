@@ -2,7 +2,6 @@ name: 'Publiccode validation'
 
 on:
     - push
-    - pull_request
 
 jobs:
   publiccode_validation:
