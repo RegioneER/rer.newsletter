@@ -115,15 +115,15 @@ maintenance:
       name: Sara Turra
   contractors:
     - name: RedTurtle
-      until: '2020-08-31'
+      until: '2025-12-31'
       website: 'https://www.redturtle.it/'
   type: contract
 name: rer.newsletter
 platforms:
   - web
-releaseDate: '2020-03-15'
+releaseDate: '2025-06-19'
 softwareType: addon
-softwareVersion: 0.4.0
+softwareVersion: 3.1.5
 url: 'https://github.com/RegioneER/rer.newsletter'
 usedBy:
   - Regione Emilia-Romagna
