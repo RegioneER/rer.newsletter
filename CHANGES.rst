@@ -2,7 +2,7 @@
 Changelog
 =========
 
-3.1.6 (unreleased)
+3.1.6 (2026-06-17)
 ------------------
 
 - Wrap header/footer content in ``<tr>`` only if not already wrapped.
