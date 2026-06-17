@@ -4,7 +4,6 @@ from Products.Five import BrowserView
 from rer.newsletter.behaviors.ships import IShippable
 from rer.newsletter.content.channel import Channel
 
-
 DEFAULT_STYLES = """
 .block.image {
   clear:both;
@@ -50,10 +49,20 @@ class MessagePreview(BrowserView):
         return None
 
     def getMessageHeader(self):
-        return getattr(self.channel, "header", "")
+        content = getattr(self.channel, "header", "") or ""
+        if not content:
+            return ""
+        if "<tr" in content:
+            return content
+        return f"""<tr><td colspan="2">{content}</td></tr>"""
 
     def getMessageFooter(self):
-        return getattr(self.channel, "footer", "")
+        content = getattr(self.channel, "footer", "") or ""
+        if not content:
+            return ""
+        if "<tr" in content:
+            return content
+        return f"""<tr><td colspan="2">{content}</td></tr>"""
 
     def getMessageSubHeader(self):
         return f"""

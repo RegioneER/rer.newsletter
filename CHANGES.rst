@@ -5,7 +5,8 @@ Changelog
 3.1.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Wrap header/footer content in ``<tr>`` only if not already wrapped.
+  [cekk]
 
 
 3.1.5 (2025-06-19)
