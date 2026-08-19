@@ -5,7 +5,12 @@ Changelog
 3.1.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix "Gestore Newsletter" role: stop granting the generic "Add portal
+  content" permission site-wide, which unintentionally let the role add any
+  content type protected by it (e.g. "Venue"/"Luogo", "Bando"), not just
+  newsletters. Grant it back, locally, only on Channels via the
+  channel_workflow.
+  [fedevancin]
 
 
 3.1.6 (2026-06-17)

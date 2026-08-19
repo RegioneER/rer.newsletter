@@ -55,4 +55,12 @@
       destination="1006"
       handler=".upgrades.migrate_to_1006"
       />
+  <genericsetup:upgradeStep
+      title="Upgrade rer.newsletter to 1007"
+      description="Stop granting 'Gestore Newsletter' the generic 'Add portal content' permission site-wide; grant it, and 'Modify portal content', back locally on Channel only, alongside the scoped 'rer.newsletter: Add Message' permission"
+      profile="rer.newsletter:default"
+      source="1006"
+      destination="1007"
+      handler=".upgrades.migrate_to_1007"
+      />
 </configure>
