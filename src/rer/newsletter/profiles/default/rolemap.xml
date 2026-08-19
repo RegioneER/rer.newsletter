@@ -10,10 +10,13 @@
       <role name="Manager" />
       <role name="Site Administrator" />
     </permission>
-    <permission acquire="False"
+    <permission acquire="True"
                 name="rer.newsletter: Add Message"
     >
-</permission>
+      <role name="Manager" />
+      <role name="Site Administrator" />
+      <role name="Gestore Newsletter" />
+    </permission>
     <permission acquire="True"
                 name="rer.newsletter: Manage Newsletter"
     >
@@ -42,7 +45,6 @@
       <role name="Site Administrator" />
       <role name="Owner" />
       <role name="Contributor" />
-      <role name="Gestore Newsletter" />
     </permission>
   </permissions>
 </rolemap>
