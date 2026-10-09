@@ -108,10 +108,3 @@ def migrate_to_1006(context):
     # change view
     portal_types["Message"].default_view = "view"
     portal_types["Message"].view_methods = ["view"]
-
-
-def migrate_to_1007(context):
-    """Register Matomo tracking settings."""
-    setup_tool = api.portal.get_tool("portal_setup")
-    setup_tool.runImportStepFromProfile(default_profile, "plone.app.registry")
-    logger.info("Updated to 1007")

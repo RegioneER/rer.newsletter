@@ -55,12 +55,4 @@
       destination="1006"
       handler=".upgrades.migrate_to_1006"
       />
-  <genericsetup:upgradeStep
-      title="Upgrade rer.newsletter to 1007"
-      description="Register Matomo link tracking settings"
-      profile="rer.newsletter:default"
-      source="1006"
-      destination="1007"
-      handler=".upgrades.migrate_to_1007"
-      />
 </configure>

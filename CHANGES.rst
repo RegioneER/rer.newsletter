@@ -7,7 +7,7 @@ Changelog
 
 - Add Matomo campaign tracking parameters (``mtm_campaign``, ``mtm_source``,
   ``mtm_medium``, ``mtm_content``) to portal links in sent messages, when
-  ``MATOMO_SITE_ID`` env var is set. Can be disabled from the control panel.
+  ``MATOMO_SITE_ID`` env var is set.
   [fedevancin]
 
 

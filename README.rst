@@ -133,21 +133,22 @@ Matomo link tracking
 --------------------
 
 When a message is sent, Matomo campaign parameters are automatically appended
-to all the links that point to the portal:
+to all the links that point to the portal (same domain as ``source_link`` or
+``destination_link``):
 
 - ``mtm_campaign``: message id
 - ``mtm_source``: channel id
 - ``mtm_medium``: ``email``
-- ``mtm_content``: id (or content type, see below) of the linked content
+- ``mtm_content``: short name of the linked content (last segment of the url,
+  ignoring views like ``@@download/file`` or ``@@images/...``)
 
 External links, links already containing ``mtm_campaign`` and the
 unsubscribe link to the channel are left untouched. Test (preview) emails are
 not tracked.
 
 Tracking is enabled only if the ``MATOMO_SITE_ID`` environment variable is set
-on the Plone instance (usually the same value used by the frontend tracker).
-It can be disabled from the product's control panel, where you can also choose
-whether ``mtm_content`` should contain the content id or its type.
+(and not empty) on the Plone instance, usually the same value used by the
+frontend tracker.
 
 
 ============

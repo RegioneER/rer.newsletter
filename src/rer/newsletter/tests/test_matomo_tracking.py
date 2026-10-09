@@ -5,6 +5,7 @@ from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from rer.newsletter.browser.settings import ISettingsSchema
 from rer.newsletter.testing import RER_NEWSLETTER_INTEGRATION_TESTING
+from rer.newsletter.transforms.link_transform import get_content_short_name
 from unittest import mock
 from urllib.parse import parse_qs
 from urllib.parse import urlsplit
@@ -69,15 +70,30 @@ class TestMatomoTracking(unittest.TestCase):
         )
         self.assertEqual(self.get_hrefs(text), [self.document.absolute_url()])
 
-    def test_no_tracking_if_disabled(self):
+    def test_destination_link_domain_is_tracked(self):
         api.portal.set_registry_record(
-            "matomo_tracking_enabled", False, interface=ISettingsSchema
+            "source_link", self.portal_url, interface=ISettingsSchema
+        )
+        api.portal.set_registry_record(
+            "destination_link",
+            "https://www.example.it",
+            interface=ISettingsSchema,
         )
         text = self.convert(
-            '<a href="{}">link</a>'.format(self.document.absolute_url()),
+            '<a href="{}">link</a>'
+            '<a href="https://www.example.it/news/foo/">news</a>'.format(
+                self.document.absolute_url()
+            ),
             context=self.message,
         )
-        self.assertEqual(self.get_hrefs(text), [self.document.absolute_url()])
+        urls = self.get_hrefs(text)
+        self.assertTrue(
+            urls[0].startswith("https://www.example.it/my-document?")
+        )
+        self.assertEqual(
+            self.get_params(urls[0])["mtm_content"], "my-document"
+        )
+        self.assertEqual(self.get_params(urls[1])["mtm_content"], "foo")
 
     def test_no_tracking_without_message_context(self):
         text = self.convert(
@@ -121,16 +137,20 @@ class TestMatomoTracking(unittest.TestCase):
         url = self.get_hrefs(text)[0]
         self.assertEqual(self.get_params(url)["mtm_content"], "my-document")
 
-    def test_portal_type_content_param(self):
-        api.portal.set_registry_record(
-            "matomo_content_param", "portal_type", interface=ISettingsSchema
+    def test_content_short_name(self):
+        self.assertEqual(get_content_short_name("/news/foo", ""), "foo")
+        self.assertEqual(get_content_short_name("/news/foo/", ""), "foo")
+        self.assertEqual(
+            get_content_short_name(
+                "/foo/image.png/@@images/image/preview", ""
+            ),
+            "image.png",
         )
-        text = self.convert(
-            '<a href="{}">link</a>'.format(self.document.absolute_url()),
-            context=self.message,
-        )
-        url = self.get_hrefs(text)[0]
-        self.assertEqual(self.get_params(url)["mtm_content"], "document")
+        self.assertEqual(get_content_short_name("/foo/++api++/bar", ""), "foo")
+        self.assertEqual(get_content_short_name("/a%20b", ""), "a b")
+        self.assertEqual(get_content_short_name("/plone", "/plone"), "home")
+        self.assertEqual(get_content_short_name("/plone/foo", "/plone"), "foo")
+        self.assertEqual(get_content_short_name("/", ""), "home")
 
     def test_homepage_link(self):
         text = self.convert(
