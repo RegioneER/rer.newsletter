@@ -129,6 +129,27 @@ Inside the settings of the product there is a field that allows you to set
 validity time of the channel subscription token.
 
 
+Matomo link tracking
+--------------------
+
+When a message is sent, Matomo campaign parameters are automatically appended
+to all the links that point to the portal:
+
+- ``mtm_campaign``: message id
+- ``mtm_source``: channel id
+- ``mtm_medium``: ``email``
+- ``mtm_content``: id (or content type, see below) of the linked content
+
+External links, links already containing ``mtm_campaign`` and the
+unsubscribe link to the channel are left untouched. Test (preview) emails are
+not tracked.
+
+Tracking is enabled only if the ``MATOMO_SITE_ID`` environment variable is set
+on the Plone instance (usually the same value used by the frontend tracker).
+It can be disabled from the product's control panel, where you can also choose
+whether ``mtm_content`` should contain the content id or its type.
+
+
 ============
 Installation
 ============

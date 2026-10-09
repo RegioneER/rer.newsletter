@@ -4,6 +4,9 @@ from plone import api
 from premailer import Premailer
 from Products.PortalTransforms.interfaces import ITransform
 from rer.newsletter.browser.settings import ISettingsSchema
+from rer.newsletter.interfaces import IMessage
+from rer.newsletter.matomo import add_tracking_params
+from rer.newsletter.matomo import is_matomo_tracking_enabled
 from zope.interface import implementer
 
 import re
@@ -62,6 +65,17 @@ class link_transform(object):
         # 2. forse sarebbe più corretto usare un metodo di lxml
         if source_link and destination_link:
             orig = re.sub(source_link, destination_link, orig)
+
+        # newsletter messages pass themselves as context: add Matomo tracking
+        # params to portal links
+        message = kwargs.get("context")
+        if IMessage.providedBy(message) and is_matomo_tracking_enabled():
+            orig = add_tracking_params(
+                orig,
+                message=message,
+                channel=message.get_channel(),
+                base_url=destination_link,
+            )
 
         # tree = etree.HTML(orig)
         # tagList = tree.xpath('//a')
