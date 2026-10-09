@@ -179,9 +179,10 @@ class BaseAdapter(object):
         }
 
         body = message_template(**parameters)
-        # passo la mail per il transform
+        # passo la mail per il transform (con il messaggio come context, per
+        # il tracciamento Matomo dei link)
         portal = api.portal.get()
-        body = portal.portal_transforms.convertTo("text/mail", body)
+        body = portal.portal_transforms.convertTo("text/mail", body, context=message)
 
         return body
 
