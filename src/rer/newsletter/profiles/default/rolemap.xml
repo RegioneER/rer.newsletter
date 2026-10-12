@@ -15,7 +15,7 @@
     >
       <role name="Manager" />
       <role name="Site Administrator" />
-      <role name="Gestore Newsletter" />
+      <role name="Editor" />
     </permission>
     <permission acquire="True"
                 name="rer.newsletter: Manage Newsletter"

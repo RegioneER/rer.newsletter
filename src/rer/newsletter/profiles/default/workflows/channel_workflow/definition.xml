@@ -35,7 +35,6 @@
                     name="Add portal content"
     >
       <permission-role>Editor</permission-role>
-      <permission-role>Gestore Newsletter</permission-role>
       <permission-role>Manager</permission-role>
       <permission-role>Site Administrator</permission-role>
     </permission-map>
@@ -79,7 +78,6 @@
                     name="rer.newsletter: Add Message"
     >
       <permission-role>Editor</permission-role>
-      <permission-role>Gestore Newsletter</permission-role>
       <permission-role>Manager</permission-role>
       <permission-role>Site Administrator</permission-role>
     </permission-map>
@@ -99,8 +97,8 @@
     <permission-map acquired="True"
                     name="Add portal content"
     >
+      <permission-role>Editor</permission-role>
       <permission-role>Contributor</permission-role>
-      <permission-role>Gestore Newsletter</permission-role>
       <permission-role>Manager</permission-role>
       <permission-role>Site Administrator</permission-role>
     </permission-map>
@@ -137,8 +135,8 @@
     <permission-map acquired="True"
                     name="rer.newsletter: Add Message"
     >
+      <permission-role>Editor</permission-role>
       <permission-role>Contributor</permission-role>
-      <permission-role>Gestore Newsletter</permission-role>
       <permission-role>Manager</permission-role>
       <permission-role>Site Administrator</permission-role>
     </permission-map>

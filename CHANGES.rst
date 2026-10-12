@@ -10,6 +10,10 @@ Changelog
   content type protected by it (e.g. "Venue"/"Luogo", "Bando"), not just
   newsletters. Grant it back, locally, only on Channels via the
   channel_workflow.
+- Align permissions: only Manager/Site Administrator can add Channels, only
+  Editors (and Manager/Site Administrator) can add Messages. "Gestore
+  Newsletter" can manage subscriptions but can no longer create Messages
+  unless it also has the Editor role.
   [fedevancin]
 
 
