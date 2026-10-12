@@ -5,7 +5,16 @@ Changelog
 3.1.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix "Gestore Newsletter" role: stop granting the generic "Add portal
+  content" permission site-wide, which unintentionally let the role add any
+  content type protected by it (e.g. "Venue"/"Luogo", "Bando"), not just
+  newsletters. Grant it back, locally, only on Channels via the
+  channel_workflow.
+- Align permissions: only Manager/Site Administrator can add Channels, only
+  Editors (and Manager/Site Administrator) can add Messages. "Gestore
+  Newsletter" can manage subscriptions but can no longer create Messages
+  unless it also has the Editor role.
+  [fedevancin]
 
 
 3.1.6 (2026-06-17)

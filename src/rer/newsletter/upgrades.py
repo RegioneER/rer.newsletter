@@ -8,7 +8,6 @@ from zope.annotation.interfaces import IAnnotations
 
 import re
 
-
 default_profile = "profile-rer.newsletter:default"
 
 KEY = "rer.newsletter.channel.history"
@@ -101,10 +100,52 @@ def migrate_to_1006(context):
     to_remove = "plone.richtext"
     to_add = "volto.blocks"
     portal_types = api.portal.get_tool(name="portal_types")
-    behaviors = [x for x in portal_types["Message"].behaviors if x != to_remove]
+    behaviors = [
+        x for x in portal_types["Message"].behaviors if x != to_remove
+    ]
     behaviors.append(to_add)
     portal_types["Message"].behaviors = tuple(behaviors)
 
     # change view
     portal_types["Message"].default_view = "view"
     portal_types["Message"].view_methods = ["view"]
+
+
+def _update_channel_role_mappings():
+    """
+    Recompute the workflow-derived local permissions on existing Channels.
+
+    ``updateRoleMappingsFor`` lives on the workflow *definition*
+    (e.g. ``channel_workflow``), not on ``portal_workflow`` itself, so it
+    has to be looked up per-object via ``getWorkflowsFor``.
+    """
+    workflow_tool = api.portal.get_tool("portal_workflow")
+    for brain in api.content.find(portal_type="Channel"):
+        obj = brain.getObject()
+        for wf in workflow_tool.getWorkflowsFor(obj):
+            if hasattr(wf, "updateRoleMappingsFor"):
+                wf.updateRoleMappingsFor(obj)
+
+
+def migrate_to_1007(context):
+    """
+    Fix "Gestore Newsletter" permissions.
+
+    The role used to be granted the generic "Add portal content" permission
+    site-wide, which unintentionally let a Newsletter Manager add any
+    content type protected by it (e.g. "Venue"/"Luogo", "Bando"), not just
+    newsletters.
+
+    Two things are needed to fix this without breaking newsletter creation:
+
+    - Stop granting "Add portal content" site-wide, and grant the properly
+      scoped "rer.newsletter: Add Message" permission instead.
+    - Grant "Add portal content" and "Modify portal content" back, locally,
+      only on Channels (via channel_workflow).
+    """
+    setup_tool = api.portal.get_tool("portal_setup")
+    setup_tool.runImportStepFromProfile(default_profile, "rolemap")
+    setup_tool.runImportStepFromProfile(default_profile, "workflow")
+
+    _update_channel_role_mappings()
+    logger.info("Updated to 1007")
