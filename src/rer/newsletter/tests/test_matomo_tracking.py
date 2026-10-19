@@ -138,38 +138,27 @@ class TestMatomoTracking(unittest.TestCase):
         self.assertEqual(self.get_params(url)["mtm_content"], "my-document")
 
     def test_content_short_name(self):
-        self.assertEqual(get_content_short_name("/news/foo", ""), "foo")
-        self.assertEqual(get_content_short_name("/news/foo/", ""), "foo")
+        self.assertEqual(get_content_short_name("/news/foo"), "foo")
+        self.assertEqual(get_content_short_name("/news/foo/"), "foo")
         self.assertEqual(
-            get_content_short_name(
-                "/foo/image.png/@@images/image/preview", ""
-            ),
+            get_content_short_name("/foo/image.png/@@images/image/preview"),
             "image.png",
         )
-        self.assertEqual(get_content_short_name("/foo/++api++/bar", ""), "foo")
-        self.assertEqual(get_content_short_name("/a%20b", ""), "a b")
-        self.assertEqual(get_content_short_name("/plone", "/plone"), "home")
-        self.assertEqual(get_content_short_name("/plone/foo", "/plone"), "foo")
-        self.assertEqual(get_content_short_name("/", ""), "home")
+        self.assertEqual(get_content_short_name("/foo/++api++/bar"), "foo")
+        self.assertEqual(get_content_short_name("/a%20b"), "a b")
+        self.assertEqual(get_content_short_name("/"), "home")
+        self.assertEqual(get_content_short_name(""), "home")
 
     def test_homepage_link(self):
+        api.portal.set_registry_record(
+            "destination_link",
+            "https://www.example.it",
+            interface=ISettingsSchema,
+        )
         text = self.convert(
             '<a href="{}">link</a>'.format(self.portal_url),
             context=self.message,
         )
         url = self.get_hrefs(text)[0]
+        self.assertTrue(url.startswith("https://www.example.it?"))
         self.assertEqual(self.get_params(url)["mtm_content"], "home")
-
-    def test_manually_tracked_link_untouched(self):
-        href = "{}?mtm_campaign=custom".format(self.document.absolute_url())
-        text = self.convert(
-            '<a href="{}">link</a>'.format(href), context=self.message
-        )
-        self.assertEqual(self.get_hrefs(text), [href])
-
-    def test_channel_link_untouched(self):
-        text = self.convert(
-            '<a href="{}">unsubscribe</a>'.format(self.channel.absolute_url()),
-            context=self.message,
-        )
-        self.assertEqual(self.get_hrefs(text), [self.channel.absolute_url()])

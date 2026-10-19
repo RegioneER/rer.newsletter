@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # from lxml import etree
 from plone import api
 from premailer import Premailer
@@ -18,96 +17,48 @@ import re
 
 
 HREF_RE = re.compile(
-    r"""(<a\b[^>]*?\bhref\s*=\s*)(["'])(.*?)\2""", re.I | re.S
+    r"""(<a\b[^>]*?\bhref\s*=\s*)(["'])(.*?)\2""", re.IGNORECASE | re.DOTALL
 )
 
 
-def is_matomo_tracking_enabled():
-    """Matomo is configured for this instance: MATOMO_SITE_ID env var is set
-    (same value used by the Volto frontend). Buildout default is a literal "".
-    """
-    return bool(os.environ.get("MATOMO_SITE_ID", "").strip().strip("\"'"))
-
-
-def get_content_short_name(path, base_path):
+def get_content_short_name(path):
     """Return the short name of the linked content: last path segment,
     ignoring views and traversers (@@download/file, @@images/..., ++api++).
     """
-    if base_path and (path == base_path or path.startswith(base_path + "/")):
-        path = path[len(base_path) :]
     segments = []
     for segment in path.split("/"):
-        if segment.startswith("@") or segment.startswith("++"):
+        if segment.startswith(("@", "++")):
             break
         if segment:
             segments.append(segment)
-    if not segments:
-        return "home"
-    return unquote(segments[-1])
+    return unquote(segments[-1]) if segments else "home"
 
 
-def add_tracking_url_params(url, message, channel_url, base_urls):
-    """Return the url with Matomo params, or unchanged if it does not point
-    to the portal.
+def add_tracking_params(text, message, portal_url):
+    """Add Matomo tracking params to all links that point to the portal
+    (same domain of portal_url, the one links have been rewritten to).
     """
-    parts = urlsplit(url)
-    if parts.scheme not in ("http", "https"):
-        return url
-    bases = [urlsplit(x) for x in base_urls]
-    base = [x for x in bases if x.netloc.lower() == parts.netloc.lower()]
-    if not base:
-        return url
-    query = parse_qsl(parts.query, keep_blank_values=True)
-    if any(key == "mtm_campaign" for key, value in query):
-        # already tracked by hand
-        return url
-    if channel_url and parts.path.rstrip("/") == urlsplit(
-        channel_url
-    ).path.rstrip("/"):
-        # unsubscribe link
-        return url
-
-    channel = message.get_channel()
-    query.extend(
-        [
-            ("mtm_campaign", message.getId()),
-            ("mtm_source", channel.getId() if channel is not None else ""),
-            ("mtm_medium", "email"),
-            (
-                "mtm_content",
-                get_content_short_name(
-                    path=parts.path, base_path=base[0].path.rstrip("/")
-                ),
-            ),
-        ]
-    )
-    return urlunsplit(parts._replace(query=urlencode(query)))
-
-
-def add_tracking_params(text, message, source_link, destination_link):
-    """Add Matomo tracking params to all portal links in the given html."""
-    base_urls = [x for x in (destination_link, source_link) if x]
-    channel = message.get_channel()
-    channel_url = ""
-    if channel is not None:
-        channel_url = channel.absolute_url()
-        if source_link and destination_link:
-            channel_url = re.sub(source_link, destination_link, channel_url)
+    host = urlsplit(portal_url).netloc.lower()
+    params = [
+        ("mtm_campaign", message.getId()),
+        ("mtm_source", message.get_channel().getId()),
+        ("mtm_medium", "email"),
+    ]
 
     def replace(match):
-        href = html.unescape(match.group(3))
-        new_href = add_tracking_url_params(
-            url=href,
-            message=message,
-            channel_url=channel_url,
-            base_urls=base_urls,
-        )
-        if new_href == href:
+        parts = urlsplit(html.unescape(match.group(3)))
+        if (
+            parts.scheme not in ("http", "https")
+            or parts.netloc.lower() != host
+        ):
             return match.group(0)
+        query = parse_qsl(parts.query, keep_blank_values=True)
+        query += params + [("mtm_content", get_content_short_name(parts.path))]
+        href = urlunsplit(parts._replace(query=urlencode(query)))
         return "{prefix}{quote}{href}{quote}".format(
             prefix=match.group(1),
             quote=match.group(2),
-            href=html.escape(new_href, quote=True),
+            href=html.escape(href, quote=True),
         )
 
     return HREF_RE.sub(replace, text)
@@ -115,7 +66,7 @@ def add_tracking_params(text, message, source_link, destination_link):
 
 # capire come usare questa classe
 @implementer(ITransform)
-class link_transform(object):
+class link_transform:
     """
     convert all source_link in destination_link and apply all style
     """
@@ -155,8 +106,7 @@ class link_transform(object):
             )
         except KeyError:
             destination_link = ""
-        if destination_link.endswith("/"):
-            destination_link = destination_link[:-1]
+        destination_link = destination_link.removesuffix("/")
         if not destination_link:
             # otherwise, use the newsletter one
             destination_link = api.portal.get_registry_record(
@@ -172,13 +122,16 @@ class link_transform(object):
         # newsletter messages pass themselves as context: add Matomo tracking
         # params to portal links
         message = kwargs.get("context")
-        if IMessage.providedBy(message) and is_matomo_tracking_enabled():
-            orig = add_tracking_params(
-                orig,
-                message=message,
-                source_link=source_link,
-                destination_link=destination_link,
+        if IMessage.providedBy(message):
+            is_matomo_tracking_enabled = bool(
+                os.environ.get("MATOMO_SITE_ID", "").strip().strip("\"'")
             )
+            if is_matomo_tracking_enabled:
+                orig = add_tracking_params(
+                    orig,
+                    message=message,
+                    portal_url=destination_link or source_link,
+                )
 
         # tree = etree.HTML(orig)
         # tagList = tree.xpath('//a')

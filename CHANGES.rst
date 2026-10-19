@@ -5,9 +5,7 @@ Changelog
 3.1.7 (unreleased)
 ------------------
 
-- Add Matomo campaign tracking parameters (``mtm_campaign``, ``mtm_source``,
-  ``mtm_medium``, ``mtm_content``) to portal links in sent messages, when
-  ``MATOMO_SITE_ID`` env var is set.
+- Add Matomo campaign tracking parameters to portal links in sent messages.
   [fedevancin]
 
 
