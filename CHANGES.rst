@@ -5,7 +5,8 @@ Changelog
 3.1.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add Matomo campaign tracking parameters to portal links in sent messages.
+  [fedevancin]
 
 
 3.1.6 (2026-06-17)
