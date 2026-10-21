@@ -119,9 +119,8 @@ def migrate_to_1007(context):
 
     wf_tool = api.portal.get_tool("portal_workflow")
     wf = wf_tool.getWorkflowById("channel_workflow")
-    catalog = api.portal.get_tool("portal_catalog")
-    for brain in catalog.unrestrictedSearchResults(portal_type="Channel"):
-        channel = brain._unrestrictedGetObject()
+    for brain in api.content.find(portal_type="Channel"):
+        channel = brain.getObject()
         if wf not in wf_tool.getWorkflowsFor(channel):
             continue
         if wf.updateRoleMappingsFor(channel):
