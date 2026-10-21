@@ -9,6 +9,8 @@ Changelog
   ``Access contents information``, so they are not visible (nor searchable)
   by anonymous users. Upgrade step to 1007 updates existing channels.
   [TheSaintSimon]
+- Add Matomo campaign tracking parameters to portal links in sent messages.
+  [fedevancin]
 
 
 3.1.6 (2026-06-17)
