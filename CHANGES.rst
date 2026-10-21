@@ -5,7 +5,10 @@ Changelog
 3.1.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix ``channel_workflow``: private channels no longer acquire ``View`` and
+  ``Access contents information``, so they are not visible (nor searchable)
+  by anonymous users. Upgrade step to 1007 updates existing channels.
+  [TheSaintSimon]
 
 
 3.1.6 (2026-06-17)
