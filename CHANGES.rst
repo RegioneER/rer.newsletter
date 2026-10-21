@@ -2,7 +2,7 @@
 Changelog
 =========
 
-3.1.7 (unreleased)
+3.2.0 (2026-10-21)
 ------------------
 
 - Fix ``channel_workflow``: private channels no longer acquire ``View`` and
