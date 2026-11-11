@@ -53,6 +53,8 @@ class SubscriptionTileTests(TestCase):
 
     def test_able_to_subscribe_if_channel_is_subscribeable(self):
         self.channel.is_subscribable = True
+        # private channels are not visible to anonymous users
+        api.content.transition(obj=self.channel, transition="publish")
         transaction.commit()
 
         self.unprivileged_browser.open(

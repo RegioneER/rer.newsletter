@@ -2,9 +2,20 @@
 Changelog
 =========
 
-3.1.7 (unreleased)
+3.2.1 (unreleased)
 ------------------
 
+- Add Matomo campaign tracking parameters to portal links in sent messages.
+  [fedevancin]
+
+
+3.2.0 (2026-10-21)
+------------------
+
+- Fix ``channel_workflow``: private channels no longer acquire ``View`` and
+  ``Access contents information``, so they are not visible (nor searchable)
+  by anonymous users. Upgrade step to 1007 updates existing channels.
+  [TheSaintSimon]
 - Add Matomo campaign tracking parameters to portal links in sent messages.
   [fedevancin]
 

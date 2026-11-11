@@ -108,3 +108,22 @@ def migrate_to_1006(context):
     # change view
     portal_types["Message"].default_view = "view"
     portal_types["Message"].view_methods = ["view"]
+
+
+def migrate_to_1007(context):
+    """
+    Private channels no longer acquire View and Access contents information
+    """
+    setup_tool = api.portal.get_tool("portal_setup")
+    setup_tool.runImportStepFromProfile(default_profile, "workflow")
+
+    wf_tool = api.portal.get_tool("portal_workflow")
+    wf = wf_tool.getWorkflowById("channel_workflow")
+    for brain in api.content.find(portal_type="Channel"):
+        channel = brain.getObject()
+        if wf not in wf_tool.getWorkflowsFor(channel):
+            continue
+        if wf.updateRoleMappingsFor(channel):
+            channel.reindexObjectSecurity()
+            logger.info("Updated security for %s", brain.getPath())
+    logger.info("Updated to 1007")
