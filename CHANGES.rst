@@ -2,7 +2,7 @@
 Changelog
 =========
 
-3.2.1 (unreleased)
+3.2.1 (2026-11-11)
 ------------------
 
 - Changed the Matomo ``mtm_medium`` to ``newsletter`` instead of ``email``.
