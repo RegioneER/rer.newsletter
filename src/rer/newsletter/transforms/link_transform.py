@@ -15,7 +15,6 @@ import html
 import os
 import re
 
-
 HREF_RE = re.compile(
     r"""(<a\b[^>]*?\bhref\s*=\s*)(["'])(.*?)\2""", re.IGNORECASE | re.DOTALL
 )
@@ -42,7 +41,7 @@ def add_tracking_params(text, message, portal_url):
     params = [
         ("mtm_campaign", message.getId()),
         ("mtm_source", message.get_channel().getId()),
-        ("mtm_medium", "email"),
+        ("mtm_medium", "newsletter"),
     ]
 
     def replace(match):
