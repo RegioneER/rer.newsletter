@@ -138,7 +138,7 @@ or ``source_link`` if no destination is set):
 
 - ``mtm_campaign``: message id
 - ``mtm_source``: channel id
-- ``mtm_medium``: ``email``
+- ``mtm_medium``: ``newsletter``
 - ``mtm_content``: short name of the linked content (last segment of the url,
   ignoring views like ``@@download/file`` or ``@@images/...``)
 

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Tests for Matomo link tracking in sent messages."""
+
 from plone import api
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
@@ -57,7 +58,7 @@ class TestMatomoTracking(unittest.TestCase):
             {
                 "mtm_campaign": "my-message",
                 "mtm_source": "my-channel",
-                "mtm_medium": "email",
+                "mtm_medium": "newsletter",
                 "mtm_content": "my-document",
             },
         )

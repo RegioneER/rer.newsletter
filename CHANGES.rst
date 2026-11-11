@@ -5,7 +5,8 @@ Changelog
 3.2.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Changed the Matomo ``mtm_medium`` to ``newsletter`` instead of ``email``.
+  [fedevancin]
 
 
 3.2.0 (2026-10-21)
