@@ -5,7 +5,7 @@ Changelog
 3.2.1 (unreleased)
 ------------------
 
-- Add Matomo campaign tracking parameters to portal links in sent messages.
+- Changed the Matomo ``mtm_medium`` to ``newsletter`` instead of ``email``.
   [fedevancin]
 
 
