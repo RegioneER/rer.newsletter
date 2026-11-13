@@ -63,4 +63,12 @@
       destination="1007"
       handler=".upgrades.migrate_to_1007"
       />
+  <genericsetup:upgradeStep
+      title="Adjust content-type behavior names"
+      description="Convert old-style behavior names to short names"
+      profile="rer.newsletter:default"
+      source="1007"
+      destination="1008"
+      handler=".upgrades.migrate_to_1008"
+      />
 </configure>
