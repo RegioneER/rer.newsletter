@@ -439,6 +439,16 @@ msgstr "Importa la lista di utenti"
 msgid "invalid_email"
 msgstr "Indirizzo email non valido."
 
+#. Default: "If selected, the links to the portal contained in the messages sent by this channel will be tracked with Matomo campaign parameters. It requires the optional Matomo plugin MarketingCampaignsReporting and the MATOMO_SITE_ID environment variable."
+#: rer/newsletter/interfaces.py
+msgid "description_matomo_tracking"
+msgstr "Se selezionato, i link al portale presenti nei messaggi inviati da questo canale vengono tracciati con i parametri di campagna di Matomo. Richiede il plugin Matomo facoltativo MarketingCampaignsReporting e la variabile d'ambiente MATOMO_SITE_ID."
+
+#. Default: "Matomo link tracking"
+#: rer/newsletter/interfaces.py
+msgid "matomo_tracking"
+msgstr "Tracciamento dei link con Matomo"
+
 #. Default: "Is Subscribable"
 #: rer/newsletter/interfaces.py:105
 msgid "is_subscribable"

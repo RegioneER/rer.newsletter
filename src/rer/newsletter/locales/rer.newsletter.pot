@@ -442,6 +442,16 @@ msgstr ""
 msgid "invalid_email"
 msgstr ""
 
+#. Default: "If selected, the links to the portal contained in the messages sent by this channel will be tracked with Matomo campaign parameters. It requires the optional Matomo plugin MarketingCampaignsReporting and the MATOMO_SITE_ID environment variable."
+#: rer/newsletter/interfaces.py
+msgid "description_matomo_tracking"
+msgstr ""
+
+#. Default: "Matomo link tracking"
+#: rer/newsletter/interfaces.py
+msgid "matomo_tracking"
+msgstr ""
+
 #. Default: "Is Subscribable"
 #: rer/newsletter/interfaces.py:105
 msgid "is_subscribable"

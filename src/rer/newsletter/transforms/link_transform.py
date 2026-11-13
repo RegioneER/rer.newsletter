@@ -125,7 +125,10 @@ class link_transform:
             is_matomo_tracking_enabled = bool(
                 os.environ.get("MATOMO_SITE_ID", "").strip().strip("\"'")
             )
-            if is_matomo_tracking_enabled:
+            channel = message.get_channel()
+            if is_matomo_tracking_enabled and getattr(
+                channel, "matomo_tracking", False
+            ):
                 orig = add_tracking_params(
                     orig,
                     message=message,

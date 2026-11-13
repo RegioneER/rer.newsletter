@@ -5,7 +5,11 @@ Changelog
 3.2.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add the ``matomo_tracking`` boolean field to the channel (disabled by
+  default): Matomo link tracking is now applied only to the messages of the
+  channels where it is enabled. Document the dependency on the optional
+  Matomo plugin MarketingCampaignsReporting.
+  [fedevancin]
 
 
 3.2.1 (2026-11-11)
