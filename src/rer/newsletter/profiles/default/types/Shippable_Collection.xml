@@ -34,15 +34,15 @@
   <property name="behaviors"
             purge="false"
   >
-    <element value="plone.app.content.interfaces.INameFromTitle" />
+    <element value="plone.namefromtitle" />
     <element value="plone.app.contenttypes.behaviors.collection.ICollection" />
-    <element value="plone.app.dexterity.behaviors.discussion.IAllowDiscussion" />
-    <element value="plone.app.dexterity.behaviors.id.IShortName" />
-    <element value="plone.app.dexterity.behaviors.exclfromnav.IExcludeFromNavigation" />
-    <element value="plone.app.dexterity.behaviors.metadata.IDublinCore" />
+    <element value="plone.allowdiscussion" />
+    <element value="plone.shortname" />
+    <element value="plone.excludefromnavigation" />
+    <element value="plone.dublincore" />
     <element value="plone.richtext" />
-    <element value="plone.app.relationfield.behavior.IRelatedItems" />
-    <element value="plone.app.lockingbehavior.behaviors.ILocking" />
+    <element value="plone.relateditems" />
+    <element value="plone.locking" />
     <element value="rer.newsletter.behaviors.ships.IShippable" />
   </property>
 

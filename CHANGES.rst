@@ -5,7 +5,8 @@ Changelog
 3.2.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Convert old-style behavior names to short names for Channel, Message and Shippable Collection (upgrade-step 1008).
+  [cekk]
 
 
 3.2.1 (2026-11-11)
