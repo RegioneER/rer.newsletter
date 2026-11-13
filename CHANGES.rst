@@ -2,7 +2,7 @@
 Changelog
 =========
 
-3.2.2 (unreleased)
+3.3.0 (2026-11-13)
 ------------------
 
 - Convert old-style behavior names to short names for Channel, Message and Shippable Collection (upgrade-step 1008).
