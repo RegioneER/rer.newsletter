@@ -115,6 +115,19 @@ class IChannelSchema(model.Schema):
         default=True,
         required=False,
     )
+    matomo_tracking = schema.Bool(
+        title=_("matomo_tracking", default="Matomo link tracking"),
+        description=_(
+            "description_matomo_tracking",
+            default="If selected, the links to the portal contained in the "
+            "messages sent by this channel will be tracked with Matomo "
+            "campaign parameters. It requires the optional Matomo plugin "
+            "MarketingCampaignsReporting and the MATOMO_SITE_ID environment "
+            "variable.",
+        ),
+        default=False,
+        required=False,
+    )
 
     logo_header_mail = namedfile.NamedBlobImage(
         title=_("logo_header_mail", default="Logo per l'header delle e-mail"),

@@ -132,9 +132,9 @@ validity time of the channel subscription token.
 Matomo link tracking
 --------------------
 
-When a message is sent, Matomo campaign parameters are automatically appended
-to all the links that point to the portal (same domain as ``destination_link``,
-or ``source_link`` if no destination is set):
+When tracking is enabled, Matomo campaign parameters are appended to all the
+links of a sent message that point to the portal (same domain as
+``destination_link``, or ``source_link`` if no destination is set):
 
 - ``mtm_campaign``: message id
 - ``mtm_source``: channel id
@@ -144,9 +144,18 @@ or ``source_link`` if no destination is set):
 
 External links are left untouched. Test (preview) emails are not tracked.
 
-Tracking is enabled only if the ``MATOMO_SITE_ID`` environment variable is set
-(and not empty) on the Plone instance, usually the same value used by the
-frontend tracker.
+Tracking is **disabled by default** and must be enabled explicitly, channel by
+channel, with the ``Matomo link tracking`` checkbox in the channel settings
+(``matomo_tracking`` field), so the feature can be rolled out gradually.
+
+It also requires the ``MATOMO_SITE_ID`` environment variable to be set (and
+not empty) on the Plone instance, usually the same value used by the frontend
+tracker.
+
+The ``mtm_*`` parameters are meant to be consumed by the Matomo plugin
+`MarketingCampaignsReporting <https://plugins.matomo.org/MarketingCampaignsReporting>`_,
+which is **not part of Matomo Core** and is optional: install and activate it
+on your Matomo instance to get the campaign reports.
 
 
 ============

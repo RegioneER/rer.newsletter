@@ -26,6 +26,7 @@ class TestMatomoTracking(unittest.TestCase):
         self.channel = api.content.create(
             container=self.portal, type="Channel", title="My channel"
         )
+        self.channel.matomo_tracking = True
         self.message = api.content.create(
             container=self.channel, type="Message", title="My message"
         )
@@ -68,6 +69,14 @@ class TestMatomoTracking(unittest.TestCase):
             '<a href="{}">link</a>'.format(self.document.absolute_url()),
             context=self.message,
             site_id='""',
+        )
+        self.assertEqual(self.get_hrefs(text), [self.document.absolute_url()])
+
+    def test_no_tracking_if_channel_flag_is_off(self):
+        self.channel.matomo_tracking = False
+        text = self.convert(
+            '<a href="{}">link</a>'.format(self.document.absolute_url()),
+            context=self.message,
         )
         self.assertEqual(self.get_hrefs(text), [self.document.absolute_url()])
 
